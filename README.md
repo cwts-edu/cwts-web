@@ -1,5 +1,19 @@
 # www.cwts.edu implemented with Astro.build
 
+## TODO
+
+* [x] Setup Netlify deployment: https://cwts-www.netlify.app/
+* [ ] Integrate with netlify CMS
+* [ ] Multilingual support
+* [ ] CSS framework
+* Components
+  * [ ] Header component without navigation
+  * [ ] Footer component
+  * [ ] Desktop navigation
+  * [ ] Mobile navigation
+  * [ ] Section page side navigation
+* Homepage widgets
+
 ## Project Structure
 
 <dl>
