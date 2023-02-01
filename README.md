@@ -44,11 +44,9 @@ All commands are run from the root of the project, from a terminal:
 
 ## Styling
 
-The project uses [bootstrap 5.2+](https://getbootstrap.com/docs/5.2/getting-started/introduction) as base of css framework. It is defined as a [global CSS](https://docs.astro.build/en/guides/styling/#global-styles) to define styles for the whole page. Change global styles in `/src/layouts/global.scss`.
-
-Individual components should use [scoped styles](https://docs.astro.build/en/guides/styling/#scoped-styles) if it specific style can not be implemented with bootstrap classes.
+The project uses [tailwind CSS](https://tailwindcss.com/) as base of css framework. Try to avoid defining component specific styles but use utility classes to apply styles.
 
 ## Resources
 
 * [Astro documentation](https://docs.astro.build)
-* [Bootstrap 5.2 documentation](https://getbootstrap.com/docs/5.2/getting-started/introduction/)
+* [tailwind CSS](https://tailwindcss.com/)

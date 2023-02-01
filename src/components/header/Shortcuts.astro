@@ -1,0 +1,45 @@
+---
+interface Props {
+    rootClassName?: Iterable<string> | string;
+    itemClassName?: Iterable<string> | string;
+    buttonClassName?: Iterable<string> | string;
+}
+
+const { rootClassName, itemClassName, buttonClassName } = Astro.props;
+
+const shortcuts = [
+    {
+        name: "2023課程時間表",
+        url: "#",
+    },
+    {
+        name: "訂閲咨詢",
+        url: "#",
+    },
+    {
+        name: "索取資料",
+        url: "#",
+    },
+    {
+        name: "線上圖書查詢",
+        url: "#",
+    },
+    {
+        name: "奉獻支持",
+        url: "#",
+    },
+];
+---
+
+<ul class:list={rootClassName}>
+    {
+        shortcuts.map((item) => (
+            <li class:list={itemClassName}>
+                <a href={item.url}>{item.name}</a>
+            </li>
+        ))
+    }
+    <li>
+        <button class:list={buttonClassName}>申請入學</button>
+    </li>
+</ul>

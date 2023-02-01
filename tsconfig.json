@@ -11,7 +11,13 @@
       ],
       "@layouts/*": [
         "src/layouts/*"
+      ],
+      "@assets/*": [
+        "src/assets/*"
       ]
-    }
+    },
+    "types": [
+      "@astrojs/image/client"
+    ],
   }
 }
