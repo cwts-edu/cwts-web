@@ -1,0 +1,13 @@
+- name: 2023課程時間表
+  url: "#"
+- name: 訂閲咨詢
+  url: "#"
+- name: 索取資料
+  url: "#"
+- name: 線上圖書查詢
+  url: "#"
+- name: 奉獻支持
+  url: "#"
+- name: 申請入學
+  url: "#"
+  type: button

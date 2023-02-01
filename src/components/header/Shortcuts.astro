@@ -7,39 +7,30 @@ interface Props {
 
 const { rootClassName, itemClassName, buttonClassName } = Astro.props;
 
-const shortcuts = [
-    {
-        name: "2023課程時間表",
-        url: "#",
-    },
-    {
-        name: "訂閲咨詢",
-        url: "#",
-    },
-    {
-        name: "索取資料",
-        url: "#",
-    },
-    {
-        name: "線上圖書查詢",
-        url: "#",
-    },
-    {
-        name: "奉獻支持",
-        url: "#",
-    },
-];
+import shortcuts from "@data/shortcuts";
 ---
 
 <ul class:list={rootClassName}>
     {
-        shortcuts.map((item) => (
-            <li class:list={itemClassName}>
-                <a href={item.url}>{item.name}</a>
-            </li>
-        ))
+        shortcuts.map((item) => {
+            switch (item.type) {
+                case "button":
+                    return (
+                        <li class:list={itemClassName}>
+                            <a href={item.url} class:list={buttonClassName}>
+                                {item.name}
+                            </a>
+                        </li>
+                    );
+                default:
+                    return (
+                        <li class:list={itemClassName}>
+                            <a href={item.url}>{item.name}</a>
+                        </li>
+                    );
+            }
+            if (item.type == "button") {
+            }
+        })
     }
-    <li>
-        <button class:list={buttonClassName}>申請入學</button>
-    </li>
 </ul>

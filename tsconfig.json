@@ -14,10 +14,13 @@
       ],
       "@assets/*": [
         "src/assets/*"
+      ],
+      "@data/*": [
+        "src/data/*"
       ]
     },
     "types": [
-      "@astrojs/image/client"
+      "@astrojs/image/client",
     ],
   }
 }
