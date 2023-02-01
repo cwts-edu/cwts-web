@@ -1,19 +1,13 @@
 ---
-import { Picture } from "@astrojs/image/components";
 import Shortcuts from "./Shortcuts.astro";
-import logoImage from "@assets/logo.png";
+import logoImage from "@assets/main-logo-black.svg";
 ---
 
 <header class="lg:max-w-screen-lg mx-auto">
     <div class="flex mt-4 items-stretch">
         <div class="p-2 grow-0 mx-auto md:mx-0">
             <a href="/" title="Rooted in Scripture, Diligent in Prayer">
-                <Picture
-                    src={logoImage}
-                    alt="CWTS Logo"
-                    width={300}
-                    widths={[300, 450, 600]}
-                />
+                <img src={logoImage} width="300" />
             </a>
         </div>
         <div class="p-2 grow hidden lg:flex flex-col justify-between items-end">
