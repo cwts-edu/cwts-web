@@ -1,10 +1,11 @@
 ---
 import Shortcuts from "./Shortcuts.astro";
+import Navbar from "./Navbar.astro";
 import logoImage from "@assets/main-logo-black.svg";
 ---
 
 <header class="lg:max-w-screen-lg mx-auto">
-    <div class="flex mt-4 items-stretch">
+    <div class="flex mt-4 items-stretch gap-5">
         <div class="p-2 grow-0 mx-auto md:mx-0">
             <a href="/" title="Rooted in Scripture, Diligent in Prayer">
                 <img src={logoImage} width="300" />
@@ -15,10 +16,10 @@ import logoImage from "@assets/main-logo-black.svg";
                 rootClassName="flex justify-end list-none gap-3 items-baseline"
                 buttonClassName="py-0.5 px-3 rounded-full border border-1 border-gray-500"
             />
-            <div>nav</div>
+            <Navbar />
         </div>
     </div>
-    <div class="basis-full p-1 border-t-2 border-purple-900 hidden lg:block">
+    <div class="basis-full p-1 border-t-2 border-purple hidden lg:block">
         language search
     </div>
 </header>
