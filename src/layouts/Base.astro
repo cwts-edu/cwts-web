@@ -4,13 +4,19 @@ export interface Props {
 }
 
 const { title } = Astro.props;
-
-import Head from "@components/base/Head.astro";
 ---
 
 <!DOCTYPE html>
 <html lang="en">
-	<Head title={title} />
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width" />
+		<title>{title}</title>
+
+		<style lang="scss" is:global>
+			@import "./global";
+		</style>
+	</head>
 	<body>
 		<slot />
 	</body>
