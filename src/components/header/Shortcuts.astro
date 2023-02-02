@@ -1,30 +1,25 @@
 ---
-interface Props {
-    rootClassName?: Iterable<string> | string;
-    itemClassName?: Iterable<string> | string;
-    buttonClassName?: Iterable<string> | string;
-}
-
-const { rootClassName, itemClassName, buttonClassName } = Astro.props;
-
 import shortcuts from "@data/shortcuts";
 ---
 
-<ul class:list={rootClassName}>
+<ul class="flex justify-end list-none gap-4 items-baseline">
     {
         shortcuts.map((item) => {
             switch (item.type) {
                 case "button":
                     return (
-                        <li class:list={itemClassName}>
-                            <a href={item.url} class:list={buttonClassName}>
+                        <li>
+                            <a
+                                href={item.url}
+                                class="py-0.5 px-3 rounded-full border border-1 border-gray-500"
+                            >
                                 {item.name}
                             </a>
                         </li>
                     );
                 default:
                     return (
-                        <li class:list={itemClassName}>
+                        <li>
                             <a href={item.url}>{item.name}</a>
                         </li>
                     );
