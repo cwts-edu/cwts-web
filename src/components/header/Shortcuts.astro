@@ -8,7 +8,7 @@ import shortcuts from "@data/shortcuts";
             switch (item.type) {
                 case "button":
                     return (
-                        <li>
+                        <li class="shrink-0">
                             <a
                                 href={item.url}
                                 class="py-0.5 px-3 rounded-full border border-1 border-gray-500"
@@ -19,7 +19,7 @@ import shortcuts from "@data/shortcuts";
                     );
                 default:
                     return (
-                        <li>
+                        <li class="shrink-0">
                             <a href={item.url}>{item.name}</a>
                         </li>
                     );
