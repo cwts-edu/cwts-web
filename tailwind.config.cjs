@@ -1,4 +1,5 @@
 const colors = require('tailwindcss/colors');
+const defaultTheme = require('tailwindcss/defaultTheme');
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -36,6 +37,10 @@ module.exports = {
 			gray: colors.gray,
 			white: colors.white,
 			black: colors.black,
+		},
+		fontFamily: {
+			'sans': 'Helvetica, Tahoma, Arial, "PingFang TC", "Heiti TC", "微軟正黑體", "Microsoft JhengHei", "Noto Sans CJK", sans-serif',
+			'serif': defaultTheme.fontFamily.sans,
 		}
 	},
 	plugins: [],

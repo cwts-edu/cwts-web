@@ -1,31 +1,27 @@
 ---
-const menuItems = [
-    "認識基神",
-    "成爲學生",
-    "學生資源",
-    "培育中心",
-    "基督徒教育大會",
-    "基督工人論壇",
-    "學院動態",
-];
+import OptionalLink from "@components/common/OptionalLink.astro";
+import NavbarDropdown from "./NavbarDropdown.astro";
+import menu from "@data/menu";
 ---
 
 <style>
-    ul > li:hover > ul {
-        display: flex;
+    li:hover :global(.dropdown) {
+        display: block;
     }
 </style>
 
 <ul class="list-none flex relative">
     {
-        menuItems.map((item) => (
+        menu.map((topItem) => (
             <>
                 <li class="block px-2 py-1 text-purple hover:bg-purple hover:text-white cursor-pointer">
-                    {item}
-                    <ul class="absolute top-full left-0 w-full bg-violet z-50 hidden cursor-auto p-2 justify-around">
-                        <li>{item}</li>
-                        <li>{item}</li>
-                    </ul>
+                    <OptionalLink link={topItem} />
+
+                    {topItem.children && (
+                        <div class="dropdown hidden absolute top-full right-0 w-full z-50 cursor-auto">
+                            <NavbarDropdown items={topItem.children} />
+                        </div>
+                    )}
                 </li>
             </>
         ))

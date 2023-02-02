@@ -1,0 +1,29 @@
+---
+import NavbarBigDropdown from "./NavbarBigDropdown.astro";
+import OptionalLink from "@components/common/OptionalLink.astro";
+import type { MenuItem } from "@data/menu";
+
+export interface Props {
+    items: MenuItem[];
+}
+
+const { items } = Astro.props;
+
+if (items.length == 0) return null;
+
+const bigMenu: boolean = items[0].children != null;
+---
+
+{
+    bigMenu ? (
+        <NavbarBigDropdown items={items} />
+    ) : (
+        <ul class="bg-violet flex flex-row flex-wrap p-2">
+            {items.map((item) => (
+                <li class="basis-1/3 p-0.5">
+                    <OptionalLink link={item} />
+                </li>
+            ))}
+        </ul>
+    )
+}
