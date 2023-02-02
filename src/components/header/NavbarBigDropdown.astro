@@ -17,9 +17,9 @@ const { items } = Astro.props;
                     <OptionalLink link={item} />
                 </div>
                 {item.children && (
-                    <ul class="text-sm ml-2">
+                    <ul class="text-sm leading-4 ml-2">
                         {item.children.map((subItem) => (
-                            <li>
+                            <li class="py-1">
                                 <OptionalLink link={subItem} />
                             </li>
                         ))}
