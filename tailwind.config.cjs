@@ -39,7 +39,7 @@ module.exports = {
 			black: colors.black,
 		},
 		fontFamily: {
-			'sans': 'Helvetica, Tahoma, Arial, "PingFang TC", "Heiti TC", "微軟正黑體", "Microsoft JhengHei", "Noto Sans CJK", sans-serif',
+			'sans': 'Helvetica, Tahoma, Arial, "PingFang TC", "Heiti TC", "\u5fae\u8edf\u6b63\u9ed1\u9ad4", "Microsoft JhengHei", "Noto Sans CJK", sans-serif',
 			'serif': defaultTheme.fontFamily.sans,
 		}
 	},
