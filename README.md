@@ -50,3 +50,7 @@ The project uses [tailwind CSS](https://tailwindcss.com/) as base of css framewo
 
 * [Astro documentation](https://docs.astro.build)
 * [tailwind CSS](https://tailwindcss.com/)
+
+## Known issue
+
+* Added svgo 2.8.0 dependency manually due to [a bug in astro-icon](https://github.com/natemoo-re/astro-icon/issues/72#issuecomment-1369597045)
