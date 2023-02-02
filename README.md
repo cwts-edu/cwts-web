@@ -7,9 +7,9 @@
 * [ ] Multilingual support
 * [x] CSS framework
 * Components
-  * [ ] Header component without navigation
+  * [x] Header component without navigation
   * [ ] Footer component
-  * [ ] Desktop navigation
+  * [x] Desktop navigation
   * [ ] Mobile navigation
   * [ ] Section page side navigation
 * Homepage widgets
