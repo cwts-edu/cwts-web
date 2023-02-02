@@ -1,6 +1,7 @@
 ---
 import Shortcuts from "./Shortcuts.astro";
 import Navbar from "./Navbar.astro";
+import { Icon } from "astro-icon";
 import logoImage from "@assets/main-logo-black.svg";
 ---
 
@@ -16,7 +17,24 @@ import logoImage from "@assets/main-logo-black.svg";
             <Navbar />
         </div>
     </div>
-    <div class="basis-full p-1 border-t-2 border-purple hidden lg:block">
-        language search
+    <div
+        class="basis-full p-1 border-t-2 border-purple hidden lg:flex justify-end gap-4 py-2 text-sm"
+    >
+        <ul class="list-none flex gap-4">
+            <li><a href="#">English</a></li>
+            <li><a href="#">繁體中文</a></li>
+        </ul>
+        <form class="inline-flex gap-1">
+            <input
+                class="rounded-full border border-gray-500 px-3 w-32"
+                type="text"
+            />
+            <button type="submit">
+                <Icon
+                    class="w-4 h-4 inline-flex text-purple"
+                    name="ion:search-sharp"
+                />
+            </button>
+        </form>
     </div>
 </header>
