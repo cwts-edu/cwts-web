@@ -12,7 +12,7 @@ import menu from "@data/menu";
           <OptionalLink link={topItem} />
 
           {topItem.children && (
-            <div class="opacity-0 h-0 absolute top-full right-0 w-full z-50 cursor-auto group-hover/nav:opacity-100 group-hover/nav:h-auto transition-all motion-reduce:transition-none">
+            <div class="opacity-0 scale-y-0 absolute top-full right-0 w-full z-50 cursor-auto group-hover/nav:opacity-100 group-hover/nav:scale-y-100 transition-[opacity] motion-reduce:transition-none">
               <NavbarDropdown items={topItem.children} />
             </div>
           )}
