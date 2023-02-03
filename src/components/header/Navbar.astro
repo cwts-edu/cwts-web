@@ -6,7 +6,8 @@ import menu from "@data/menu";
 
 <style>
     li:hover :global(.dropdown) {
-        display: block;
+        opacity: 1;
+        transform: scaleY(1);
     }
 </style>
 
@@ -18,7 +19,7 @@ import menu from "@data/menu";
                     <OptionalLink link={topItem} />
 
                     {topItem.children && (
-                        <div class="dropdown hidden absolute top-full right-0 w-full z-50 cursor-auto">
+                        <div class="dropdown opacity-0 scale-y-0 absolute top-full right-0 w-full z-50 cursor-auto transition-[opacity] duration-200 motion-reduce:transition-none">
                             <NavbarDropdown items={topItem.children} />
                         </div>
                     )}
