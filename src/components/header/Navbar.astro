@@ -10,6 +10,7 @@ import menu from "@data/menu";
       <>
         <li
           class:list={[
+            "nav",
             // let the children to refer the parent hover status
             // https://tailwindcss.com/docs/hover-focus-and-other-states#styling-based-on-parent-state
             "group/nav",
@@ -28,11 +29,12 @@ import menu from "@data/menu";
           {topItem.children && (
             <div
               class:list={[
+                "nav-content",
                 // show the menu when parent link is in hover. hidden class will disable transition, do not use
-                "opacity-0 invisible group-hover/nav:opacity-100 group-hover/nav:visible",
+                "opacity-0 invisible group-[.nav-on]/nav:opacity-100 group-[.nav-on]/nav:visible",
                 // initially the menu is behind all content so that initial mouse cursor won't accidentally hover
                 // over dropdown menu and activate the dropdown
-                "-z-10 group-hover/nav:z-10",
+                "-z-10 group-[.nav-on]/nav:z-10",
                 // place right below the navbar with same width
                 "absolute top-full right-0 w-full",
                 // override the mouse cursor back to default
@@ -49,3 +51,55 @@ import menu from "@data/menu";
     ))
   }
 </ul>
+
+<script>
+  function setNavOn(nav: Element) {
+    nav.classList.add("nav-on");
+  }
+  function setNavOff(nav: Element) {
+    nav.classList.remove("nav-on");
+  }
+  function setNavOffAll() {
+    document.querySelectorAll(".nav").forEach((nav) => {
+      setNavOff(nav);
+    });
+  }
+  function isInsideSelector(elem: Element, selector: string) {
+    while (true) {
+      if (elem.matches(selector)) return true;
+      if (elem.parentElement != null) {
+        elem = elem.parentElement;
+      } else {
+        break;
+      }
+    }
+    return false;
+  }
+  document.querySelectorAll(".nav").forEach((nav) => {
+    nav.addEventListener("mouseenter", () => {
+      setNavOn(nav);
+    });
+    nav.addEventListener("mouseleave", () => {
+      setNavOff(nav);
+    });
+    nav.addEventListener("touchend", (ev: Event) => {
+      if (isInsideSelector(ev.target as Element, ".nav-content")) {
+        return;
+      }
+      if (nav.classList.contains("nav-on")) {
+        setNavOffAll();
+      } else {
+        setNavOffAll();
+        setNavOn(nav);
+      }
+    });
+  });
+  window.addEventListener("touchend", (ev: Event) => {
+    if (
+      !isInsideSelector(ev.target as Element, ".nav") &&
+      !isInsideSelector(ev.target as Element, ".nav-content")
+    ) {
+      setNavOffAll();
+    }
+  });
+</script>
