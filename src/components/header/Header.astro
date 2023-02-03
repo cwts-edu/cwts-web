@@ -8,37 +8,35 @@ import logoImage from "@assets/main-logo-black.svg";
 ---
 
 <header>
-    <div class="lg:max-w-screen-lg mx-auto lg:p-0 md:p-10">
-        <div class="flex mt-4 items-stretch gap-5">
-            <div class="p-2 grow-0 mx-auto md:mx-0">
-                <a href="/" title="Rooted in Scripture, Diligent in Prayer">
-                    <img src={logoImage} width="300" />
-                </a>
-            </div>
-            <div
-                class="p-1 grow hidden lg:flex flex-col justify-between items-end"
-            >
-                <Shortcuts />
-                <Navbar />
-            </div>
-        </div>
-        <div
-            class="basis-full p-1 border-t-2 border-purple hidden lg:flex justify-end gap-4 py-2 text-sm"
-        >
-            <LanguagePicker />
-            <form class="inline-flex gap-1">
-                <input
-                    class="rounded-full border border-gray-400 px-3 w-32"
-                    type="text"
-                />
-                <button type="submit">
-                    <Icon
-                        class="w-4 h-4 inline-flex text-purple"
-                        name="search-sharp"
-                    />
-                </button>
-            </form>
-        </div>
+  <div class="lg:max-w-screen-lg mx-auto lg:p-0 md:p-10">
+    <div class="flex mt-4 items-stretch gap-5">
+      <div class="p-2 grow-0 mx-auto md:mx-0">
+        <a href="/" title="Rooted in Scripture, Diligent in Prayer">
+          <img src={logoImage} width="300" />
+        </a>
+      </div>
+      <div class="p-1 grow hidden lg:flex flex-col justify-between items-end">
+        <Shortcuts />
+        <Navbar />
+      </div>
     </div>
-    <MobileNavbar />
+    <div
+      class="basis-full p-1 border-t-2 border-purple hidden lg:flex justify-end gap-4 py-2 text-sm"
+    >
+      <LanguagePicker />
+      <form class="inline-flex gap-1">
+        <input
+          class="rounded-full border border-gray-400 px-3 w-32"
+          type="text"
+        />
+        <button type="submit">
+          <Icon
+            class="w-4 h-4 inline-flex text-purple align-text-bottom"
+            name="search-sharp"
+          />
+        </button>
+      </form>
+    </div>
+  </div>
+  <MobileNavbar />
 </header>

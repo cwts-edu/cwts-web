@@ -4,33 +4,33 @@ import shortcuts from "@data/shortcuts";
 ---
 
 <ul class="flex justify-end list-none gap-4 items-baseline">
-    {
-        shortcuts.map((item) => {
-            switch (item.type) {
-                case "button":
-                    return (
-                        <li class="shrink-0">
-                            <a
-                                href={item.url}
-                                class="py-1 px-2 rounded-full border border-gray-400"
-                            >
-                                {item.name}
-                                <Icon
-                                    class="inline h-4 text-purple"
-                                    name="angle-right"
-                                />
-                            </a>
-                        </li>
-                    );
-                default:
-                    return (
-                        <li class="shrink-0">
-                            <a href={item.url}>{item.name}</a>
-                        </li>
-                    );
-            }
-            if (item.type == "button") {
-            }
-        })
-    }
+  {
+    shortcuts.map((item) => {
+      switch (item.type) {
+        case "button":
+          return (
+            <li class="shrink-0">
+              <a
+                href={item.url}
+                class="py-1 px-2 rounded-full border border-gray-400"
+              >
+                {item.name}
+                <Icon
+                  class="inline h-4 text-purple align-text-bottom"
+                  name="angle-right"
+                />
+              </a>
+            </li>
+          );
+        default:
+          return (
+            <li class="shrink-0">
+              <a href={item.url}>{item.name}</a>
+            </li>
+          );
+      }
+      if (item.type == "button") {
+      }
+    })
+  }
 </ul>
