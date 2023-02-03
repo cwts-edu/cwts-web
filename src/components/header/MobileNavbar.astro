@@ -3,9 +3,9 @@ import LanguagePicker from "./LanguagePicker.astro";
 import { Icon } from "astro-icon";
 ---
 
-<div id="menuContainer" class="group">
+<div id="menuContainer" class="group/menu">
   <div
-    class="flex flex-col bg-violet lg:hidden fixed md:top-0 max-md:bottom-0 md:h-12 h-16 w-full text-white text-lg px-6 overflow-hidden over group-[.menu-on]:h-full transition-all"
+    class="flex flex-col bg-violet lg:hidden fixed md:top-0 max-md:bottom-0 md:h-12 h-16 w-full text-white text-lg px-6 overflow-hidden over group-[.menu-on]/menu:h-full transition-all motion-reduce:transition-none"
   >
     <div
       class="flex w-full md:h-12 h-16 justify-between items-center grow-0 shrink-0"
@@ -15,11 +15,11 @@ import { Icon } from "astro-icon";
         <a id="menuToggler">
           目錄
           <Icon
-            class="group-[.menu-on]:hidden inline h-4 text-white align-baseline"
+            class="group-[.menu-on]/menu:hidden inline h-4 text-white align-baseline"
             name="menu"
           />
           <Icon
-            class="group-[.menu-on]:inline hidden h-4 text-white align-baseline"
+            class="group-[.menu-on]/menu:inline hidden h-4 text-white align-baseline"
             name="close"
           />
         </a>
