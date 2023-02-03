@@ -1,11 +1,44 @@
 ---
 import LanguagePicker from "./LanguagePicker.astro";
+import { Icon } from "astro-icon";
 ---
 
-<div
-    class="bg-violet lg:hidden fixed md:top-0 md:bottom-auto top-auto bottom-0 md:h-12 h-16 w-full text-white text-lg py-2 px-6"
->
-    <div class="flex w-full h-full justify-between items-center">
-        <LanguagePicker />
+<div id="menuContainer" class="group">
+  <div
+    class="flex flex-col bg-violet lg:hidden fixed md:top-0 max-md:bottom-0 md:h-12 h-16 w-full text-white text-lg px-6 overflow-hidden over group-[.menu-on]:h-full transition-all"
+  >
+    <div
+      class="flex w-full md:h-12 h-16 justify-between items-center grow-0 shrink-0"
+    >
+      <LanguagePicker />
+      <div class="flex">
+        <a id="menuToggler">
+          目錄
+          <Icon
+            class="group-[.menu-on]:hidden inline h-4 text-white align-baseline"
+            name="menu"
+          />
+          <Icon
+            class="group-[.menu-on]:inline hidden h-4 text-white align-baseline"
+            name="close"
+          />
+        </a>
+      </div>
     </div>
+    <div class="grow overflow-y-scroll">
+      <p>Item 1</p>
+      <p>Item 2</p>
+      <p>Item 3</p>
+      <p>Item 4</p>
+      <p>Item 5</p>
+      <p>Item 6</p>
+      <p>Item 7</p>
+    </div>
+    <div>Menu footer</div>
+  </div>
 </div>
+<script>
+  document.getElementById("menuToggler")?.addEventListener("click", () => {
+    document.getElementById("menuContainer")?.classList.toggle("menu-on");
+  });
+</script>
