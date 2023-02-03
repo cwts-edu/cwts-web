@@ -8,11 +8,39 @@ import menu from "@data/menu";
   {
     menu.map((topItem) => (
       <>
-        <li class="group/nav block px-2 py-1 text-purple hover:bg-purple hover:text-white cursor-pointer shrink-0">
+        <li
+          class:list={[
+            // let the children to refer the parent hover status
+            // https://tailwindcss.com/docs/hover-focus-and-other-states#styling-based-on-parent-state
+            "group/nav",
+            // basic placement
+            "block px-2 py-1",
+            // color change when in hover
+            "text-purple hover:bg-purple hover:text-white",
+            // mouse cursor is a hand
+            "cursor-pointer",
+            // do not shrink if not enough space. shrinking makes the link text to wrap. we'd rater expand the size
+            "shrink-0",
+          ]}
+        >
           <OptionalLink link={topItem} />
 
           {topItem.children && (
-            <div class="opacity-0 invisible absolute top-full right-0 w-full z-50 cursor-auto group-hover/nav:opacity-100 group-hover/nav:visible transition-all motion-reduce:transition-none">
+            <div
+              class:list={[
+                // show the menu when parent link is in hover. hidden class will disable transition, do not use
+                "opacity-0 invisible group-hover/nav:opacity-100 group-hover/nav:visible",
+                // initially the menu is behind all content so that initial mouse cursor won't accidentally hover
+                // over dropdown menu and activate the dropdown
+                "-z-10 group-hover/nav:z-10",
+                // place right below the navbar with same width
+                "absolute top-full right-0 w-full",
+                // override the mouse cursor back to default
+                "cursor-auto",
+                // dropdown animation only on opacity to avoid glitches animating on z-index
+                "transition-[opacity] motion-reduce:transition-none",
+              ]}
+            >
               <NavbarDropdown items={topItem.children} />
             </div>
           )}

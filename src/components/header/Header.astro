@@ -8,30 +8,97 @@ import logoImage from "@assets/main-logo-black.svg";
 ---
 
 <header>
-  <div class="lg:max-w-screen-lg mx-auto lg:p-0 md:p-10">
-    <div class="flex mt-4 items-stretch gap-5">
-      <div class="p-2 grow-0 mx-auto md:mx-0">
+  <div
+    class:list={[
+      // Desktop width at lg breakpoint
+      "lg:max-w-screen-lg",
+      // Center in screen
+      "mx-auto",
+      // Tablet view margin for top navigation bar
+      "md:max-lg:p-10",
+    ]}
+  >
+    <div
+      class:list={[
+        // flex row
+        "flex pt-4",
+        // grow the children to fill the whole row
+        "items-stretch",
+        // leave gap between logo and nav area
+        "gap-5",
+      ]}
+    >
+      <div
+        class:list={[
+          // padding around logo
+          "p-2",
+          // logo area doesn't grow
+          "grow-0",
+          // Center in mobile view, left-aligned in desktop and tablet view
+          "mx-auto md:mx-0",
+        ]}
+      >
         <a href="/" title="Rooted in Scripture, Diligent in Prayer">
           <img src={logoImage} width="300" />
         </a>
       </div>
-      <div class="p-1 grow hidden lg:flex flex-col justify-between items-end">
+      <div
+        class:list={[
+          // padding around nav area
+          "p-2",
+          // take extra space in the row
+          "grow",
+          // hidden in mobile and tablet view, leaving logo alone in the row
+          "hidden",
+          // desktop view is a column
+          "lg:flex flex-col",
+          // shortcut links and navbar should be spread to top and bottom of the column
+          "justify-between",
+          // and they should be aligned to the right
+          "items-end",
+        ]}
+      >
         <Shortcuts />
         <Navbar />
       </div>
     </div>
     <div
-      class="basis-full p-1 border-t-2 border-purple hidden lg:flex justify-end gap-4 py-2 text-sm"
+      class:list={[
+        // padding around language picker and search row
+        "p-2",
+        // 0.875rem/14px font size
+        "text-sm",
+        // draw a horizontal line above the bar
+        "border-t-2 border-purple",
+        // show only in desktop view
+        "hidden lg:flex",
+        // items move to the right
+        "justify-end",
+        // gap between language picker and search form
+        "gap-4",
+      ]}
     >
       <LanguagePicker />
-      <form class="inline-flex gap-1">
+      <form class="flex gap-1">
         <input
-          class="rounded-full border border-gray-400 px-3 w-32"
+          class:list={[
+            // pill button
+            "rounded-full border border-gray-400 px-3",
+            // control width 8rem
+            "w-32",
+          ]}
           type="text"
         />
         <button type="submit">
           <Icon
-            class="w-4 h-4 inline-flex text-purple align-text-bottom"
+            class:list={[
+              // same size as text: 14px
+              "w-4 h-4",
+              // treat it as a text and align with the rest of the text
+              "inline-block align-text-bottom",
+              // color
+              "text-purple",
+            ]}
             name="search-sharp"
           />
         </button>

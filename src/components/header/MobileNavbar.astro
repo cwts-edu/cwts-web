@@ -5,22 +5,70 @@ import { Icon } from "astro-icon";
 
 <div id="menuContainer" class="group/menu">
   <div
-    class="flex flex-col z-50 bg-violet lg:hidden fixed md:top-0 max-md:bottom-0 md:max-h-12 max-h-16 w-full text-white text-lg px-6 overflow-hidden over group-[.menu-on]/menu:max-h-full transition-all motion-reduce:transition-none"
+    class:list={[
+      // hidden in desktop view
+      "lg:hidden",
+      // Column of navbar and menu
+      "flex flex-col",
+      // bring to the top layer
+      "z-50",
+      // background color
+      "bg-violet",
+      // white text color and 18px font size
+      "text-white text-lg",
+      // fixed on the viewport
+      "fixed",
+      // tablet view sticky to the top, phone view sticky to the bottom
+      "md:top-0 max-md:bottom-0",
+      // different height in tablet and phone views when collapsed
+      "md:max-h-12 max-h-16",
+      // no scroll bar when collapsed
+      "overflow-hidden",
+      // when the menu is toggled on, set max height is full viewport. actual height is based on content
+      "group-[.menu-on]/menu:max-h-full",
+      // full width
+      "w-full",
+      // padding on left and right ends
+      "px-6",
+      // transition animation
+      "transition-all motion-reduce:transition-none",
+    ]}
   >
     <div
-      class="flex w-full md:h-12 h-16 justify-between items-center grow-0 shrink-0"
+      class:list={[
+        // flex row taking full width
+        "flex w-full",
+        // different height, should be consistant with max-height of parent when collapsed
+        "md:h-12 h-16",
+        // language picker and menu button should be at both end of the bar
+        "justify-between",
+        // in case they are not in same height, they should be aligned in the middle vertially
+        "items-center",
+        // no matter how parent changes the size, the bar size should stay the same
+        "grow-0 shrink-0",
+      ]}
     >
       <LanguagePicker />
       <div class="flex">
         <a id="menuToggler" class="cursor-pointer">
           目錄
           <Icon
-            class="group-[.menu-on]/menu:hidden inline h-5 text-white align-text-bottom"
             name="menu"
+            class:list={[
+              // show menu icon when collapsed
+              "group-[.menu-on]/menu:hidden inline",
+              // set similar size as text and align with text
+              "h-5 align-text-bottom",
+            ]}
           />
           <Icon
-            class="group-[.menu-on]/menu:inline hidden h-5 text-white align-text-bottom"
             name="close"
+            class:list={[
+              // show close icon when expanded
+              "group-[.menu-on]/menu:inline hidden",
+              // set similar size as text and align with text
+              "h-5 align-text-bottom",
+            ]}
           />
         </a>
       </div>
@@ -38,14 +86,25 @@ import { Icon } from "astro-icon";
   </div>
   <div
     id="menuBack"
-    class="group-[.menu-on]/menu:fixed group-[.menu-on]/menu:block left-0 top-0 w-full h-full z-10 bg-black opacity-80 hidden"
+    class:list={[
+      // hidden by default, show on menu is expanded
+      "hidden group-[.menu-on]/menu:block",
+      // take the full screen
+      "fixed left-0 top-0 w-full h-full",
+      // behind the menu but above everything else
+      "z-40",
+      // color and transparency
+      "bg-black opacity-80",
+    ]}
   >
   </div>
 </div>
 <script>
+  // Toggle the menu state when the toggler buttom is pressed
   document.getElementById("menuToggler")?.addEventListener("click", () => {
     document.getElementById("menuContainer")?.classList.toggle("menu-on");
   });
+  // Collapse the menu when backdrop is clicked
   document.getElementById("menuBack")?.addEventListener("click", () => {
     document.getElementById("menuContainer")?.classList.remove("menu-on");
   });
