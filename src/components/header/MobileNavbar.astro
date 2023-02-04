@@ -1,6 +1,19 @@
 ---
 import LanguagePicker from "./LanguagePicker.astro";
 import { Icon } from "astro-icon";
+import OptionalLink from "@components/common/OptionalLink.astro";
+import NavbarBigDropdown from "./NavbarBigDropdown.astro";
+import { default as menu, MenuItem } from "@data/menu";
+import NavbarDropdown from "./NavbarDropdown.astro";
+
+function isBigSubmenu(submenu: MenuItem): boolean {
+  return (
+    submenu.children != null &&
+    submenu.children.length > 0 &&
+    submenu.children[0]?.children != null &&
+    submenu.children[0].children.length > 0
+  );
+}
 ---
 
 <div id="menuContainer" class="group/menu">
@@ -74,15 +87,79 @@ import { Icon } from "astro-icon";
       </div>
     </div>
     <div class="grow overflow-y-auto">
-      <p>Item 1</p>
-      <p>Item 2</p>
-      <p>Item 3</p>
-      <p>Item 4</p>
-      <p>Item 5</p>
-      <p>Item 6</p>
-      <p>Item 7</p>
+      {
+        menu.map(
+          (topItem) =>
+            topItem.children && (
+              <>
+                <div class="group/submenu submenu-container first:border-t-0 border-t border-gray-300">
+                  <div
+                    class:list={[
+                      "submenu-toggler",
+                      "flex justify-between",
+                      "py-2",
+                      "text-2xl",
+                    ]}
+                  >
+                    <div>
+                      <OptionalLink link={topItem} />
+                    </div>
+                    <div>
+                      <Icon
+                        name="expand-circle-down"
+                        class:list={[
+                          // rotate up-side-down when expanded
+                          "group-[.submenu-on]/submenu:rotate-180",
+                          // set similar size as text and align with text
+                          "h-7 align-text-bottom",
+                        ]}
+                      />
+                    </div>
+                  </div>
+                  <div
+                    class:list={[
+                      "max-h-0 group-[.submenu-on]/submenu:max-h-[1000rem]",
+                      "overflow-y-hidden",
+                      "group-[.submenu-on]/submenu:transition-all motion-reduce:transition-none",
+                    ]}
+                  >
+                    {topItem.children && (
+                      <NavbarDropdown
+                        items={topItem.children}
+                        singleColumn={true}
+                      />
+                    )}
+                  </div>
+                </div>
+              </>
+            )
+        )
+      }
+      {
+        menu.map(
+          (topItem) =>
+            !topItem.children && (
+              <>
+                <div class="group/submenu submenu-container first:border-t-0 border-t border-gray-3">
+                  <div
+                    class:list={[
+                      "submenu-toggler",
+                      "flex justify-between",
+                      "py-2",
+                      "text-2xl",
+                    ]}
+                  >
+                    <div>
+                      <OptionalLink link={topItem} />
+                    </div>
+                  </div>
+                </div>
+              </>
+            )
+        )
+      }
+      <div>Menu footer</div>
     </div>
-    <div>Menu footer</div>
   </div>
   <div
     id="menuBack"
@@ -100,12 +177,23 @@ import { Icon } from "astro-icon";
   </div>
 </div>
 <script>
-  // Toggle the menu state when the toggler buttom is pressed
-  document.getElementById("menuToggler")?.addEventListener("click", () => {
-    document.getElementById("menuContainer")?.classList.toggle("menu-on");
-  });
-  // Collapse the menu when backdrop is clicked
-  document.getElementById("menuBack")?.addEventListener("click", () => {
-    document.getElementById("menuContainer")?.classList.remove("menu-on");
+  import Toggler from "@scripts/toggle";
+  const menuToggler = new Toggler(
+    document.getElementById("menuContainer"),
+    "menu-on"
+  );
+  menuToggler.attachToggler(document.getElementById("menuToggler"));
+  menuToggler.attachCloser(document.getElementById("menuBack"));
+
+  const submenuTogglerList: Toggler[] = [];
+  document.querySelectorAll(".submenu-container").forEach((elem: Element) => {
+    const submenuToggler = new Toggler(elem, "submenu-on");
+    submenuTogglerList.push(submenuToggler);
+    elem.querySelector(".submenu-toggler")?.addEventListener("click", () => {
+      submenuToggler.toggle();
+      submenuTogglerList.forEach((t) => {
+        if (t != submenuToggler) t.off();
+      });
+    });
   });
 </script>

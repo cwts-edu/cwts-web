@@ -3,29 +3,29 @@ import OptionalLink from "@components/common/OptionalLink.astro";
 import type { MenuItem } from "@data/menu";
 
 export interface Props {
-    items: MenuItem[];
+  items: MenuItem[];
 }
 
 const { items } = Astro.props;
 ---
 
 <div class="bg-violet flex flex-row flex-wrap p-1.5">
-    {
-        items.map((item) => (
-            <div class="basis-1/3 p-0.5">
-                <div class="border-b border-white mr-5 mb-1">
-                    <OptionalLink link={item} />
-                </div>
-                {item.children && (
-                    <ul class="text-sm leading-4 ml-2">
-                        {item.children.map((subItem) => (
-                            <li class="py-1">
-                                <OptionalLink link={subItem} />
-                            </li>
-                        ))}
-                    </ul>
-                )}
-            </div>
-        ))
-    }
+  {
+    items.map((item) => (
+      <div class="md:basis-1/3 basis-1/2 p-0.5 grow">
+        <div class="border-b border-white mr-5 mb-1">
+          <OptionalLink link={item} />
+        </div>
+        {item.children && (
+          <ul class="text-sm leading-4 ml-2">
+            {item.children.map((subItem) => (
+              <li class="py-1">
+                <OptionalLink link={subItem} />
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    ))
+  }
 </div>

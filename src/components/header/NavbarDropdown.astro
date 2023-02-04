@@ -4,10 +4,11 @@ import OptionalLink from "@components/common/OptionalLink.astro";
 import type { MenuItem } from "@data/menu";
 
 export interface Props {
-    items: MenuItem[];
+  items: MenuItem[];
+  singleColumn?: boolean;
 }
 
-const { items } = Astro.props;
+const { items, singleColumn = false } = Astro.props;
 
 if (items.length == 0) return null;
 
@@ -15,15 +16,23 @@ const bigMenu: boolean = items[0].children != null;
 ---
 
 {
-    bigMenu ? (
-        <NavbarBigDropdown items={items} />
-    ) : (
-        <ul class="bg-violet flex flex-row flex-wrap p-2">
-            {items.map((item) => (
-                <li class="basis-1/3 p-0.5">
-                    <OptionalLink link={item} />
-                </li>
-            ))}
-        </ul>
-    )
+  bigMenu ? (
+    <NavbarBigDropdown items={items} />
+  ) : (
+    <ul class="bg-violet flex flex-row flex-wrap p-1.5">
+      {items.map((item) => (
+        <li
+          class:list={[
+            "p-0.5",
+            {
+              "basis-1/3": !singleColumn,
+              "basis-full": singleColumn,
+            },
+          ]}
+        >
+          <OptionalLink link={item} />
+        </li>
+      ))}
+    </ul>
+  )
 }
