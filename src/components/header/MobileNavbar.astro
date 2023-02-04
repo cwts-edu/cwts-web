@@ -2,17 +2,22 @@
 import LanguagePicker from "./LanguagePicker.astro";
 import { Icon } from "astro-icon";
 import OptionalLink from "@components/common/OptionalLink.astro";
-import NavbarBigDropdown from "./NavbarBigDropdown.astro";
 import { default as menu, MenuItem } from "@data/menu";
 import NavbarDropdown from "./NavbarDropdown.astro";
+import { default as shortcuts, Shortcut } from "@data/shortcuts";
+import logoTextEn from "@assets/logo-text-en-light-violet.svg";
 
-function isBigSubmenu(submenu: MenuItem): boolean {
-  return (
-    submenu.children != null &&
-    submenu.children.length > 0 &&
-    submenu.children[0]?.children != null &&
-    submenu.children[0].children.length > 0
-  );
+const shortcutsRows: Shortcut[][] = [];
+let shortcutsRow: Shortcut[] = [];
+shortcuts.forEach((shortcut) => {
+  if (shortcut.breakBefore == true && shortcutsRow.length > 0) {
+    shortcutsRows.push(shortcutsRow);
+    shortcutsRow = [];
+  }
+  shortcutsRow.push(shortcut);
+});
+if (shortcutsRow.length > 0) {
+  shortcutsRows.push(shortcutsRow);
 }
 ---
 
@@ -158,7 +163,59 @@ function isBigSubmenu(submenu: MenuItem): boolean {
             )
         )
       }
-      <div>Menu footer</div>
+      <form
+        class:list={[
+          // position and sizing
+          "my-2 px-6 py-2 text-xl text-black",
+          // rounded white box
+          "bg-white rounded-lg",
+          // flexbox row
+          "flex justify-between",
+        ]}
+      >
+        <div class="grow">
+          <input class="w-full" type="text" placeholder="搜尋" />
+        </div>
+        <div>
+          <Icon name="search-sharp" class="text-purple h-7 align-text-bottom" />
+        </div>
+      </form>
+      <div class:list={["flex flex-col items-start py-5 gap-4 text-base"]}>
+        {
+          shortcutsRows.map((row) => (
+            <ul class="list-none flex gap-5">
+              {row.map((item) => {
+                switch (item.type) {
+                  case "button":
+                    return (
+                      <li>
+                        <a
+                          href={item.url}
+                          class="py-1 px-3 rounded-full bg-white text-violet text-xl"
+                        >
+                          {item.name}
+                          <Icon
+                            class="inline h-6 align-text-bottom text-purple"
+                            name="angle-right"
+                          />
+                        </a>
+                      </li>
+                    );
+                  default:
+                    return (
+                      <li>
+                        <a href={item.url}>{item.name}</a>
+                      </li>
+                    );
+                }
+              })}
+            </ul>
+          ))
+        }
+      </div>
+      <div class="pt-3 pb-12">
+        <img src={logoTextEn} height="70" />
+      </div>
     </div>
   </div>
   <div
