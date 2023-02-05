@@ -1,0 +1,76 @@
+---
+import footerLogo from "@assets/main-logo-white.svg";
+import { Icon } from "astro-icon";
+
+import footerBg from "@assets/logo-text-zh-light-purple.svg";
+const footBgUrl = `url('${footerBg}')`;
+---
+
+<style define:vars={{ footBgUrl }} is:global>
+  .footer {
+    background-image: var(--footBgUrl);
+  }
+</style>
+
+<div
+  class:list={[
+    "footer bg-purple text-white bg-contain bg-no-repeat bg-bottom max-md:mb-16",
+  ]}
+>
+  <div
+    class="flex md:flex-row flex-col md:justify-between gap-8 mx-auto lg:max-w-screen-lg px-4 pt-16 pb-28"
+  >
+    <div class="flex flex-col gap-3 grow-[2]">
+      <div>
+        <img src={footerLogo} width="300" />
+      </div>
+      <div>
+        <Icon
+          name="location-on-outline"
+          class="inline-block align-text-bottom w-5 h-5 mr-2"
+        />1975 Concourse Dr, San Jose, CA 95131 USA
+      </div>
+      <div>
+        <Icon
+          name="fax"
+          class="inline-block align-text-bottom w-5 h-5 mr-2"
+        />(408)433-9855 (Fax)
+      </div>
+    </div>
+    <div class="flex flex-col grow">
+      <div class="pb-2 border-white border-b">聯絡我們</div>
+      <div class="flex justify-between flex-wrap">
+        <div class="flex flex-col gap-1 p-1">
+          <div>Main</div>
+          <div>
+            <Icon
+              name="phone"
+              class="inline-block align-text-bottom w-5 h-5 mr-2"
+            />(408)433-2280
+          </div>
+          <div>
+            <Icon
+              name="email-outline"
+              class="inline-block align-text-bottom w-5 h-5 mr-2"
+            />admin@cwts.edu
+          </div>
+        </div>
+        <div class="flex flex-col gap-1 p-1">
+          <div>Admissions</div>
+          <div>
+            <Icon
+              name="phone"
+              class="inline-block align-text-bottom w-5 h-5 mr-2"
+            />(408)433-2280
+          </div>
+          <div>
+            <Icon
+              name="email-outline"
+              class="inline-block align-text-bottom w-5 h-5 mr-2"
+            />admin@cwts.edu
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
