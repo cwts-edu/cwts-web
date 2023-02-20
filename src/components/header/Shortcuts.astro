@@ -3,7 +3,7 @@ import { Icon } from "astro-icon";
 import shortcuts from "@data/shortcuts";
 ---
 
-<ul class="flex justify-end list-none gap-4 items-baseline font-medium">
+<ul class="flex justify-end list-none gap-6 items-baseline font-medium">
   {
     shortcuts.map((item) => {
       switch (item.type) {
@@ -12,7 +12,7 @@ import shortcuts from "@data/shortcuts";
             <li class="shrink-0">
               <a
                 href={item.url}
-                class="py-1 px-2 rounded-lg border border-gray-400"
+                class="py-1.5 px-4 rounded-lg border border-gray-400"
               >
                 {item.name}
                 <Icon

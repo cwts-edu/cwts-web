@@ -19,6 +19,9 @@ shortcuts.forEach((shortcut) => {
 if (shortcutsRow.length > 0) {
   shortcutsRows.push(shortcutsRow);
 }
+
+const menuWithChildren = menu.filter((menuItem) => !!menuItem.children);
+const menuWithoutChildren = menu.filter((menuItem) => !menuItem.children);
 ---
 
 <div id="menuContainer" class="group/menu">
@@ -46,10 +49,11 @@ if (shortcutsRow.length > 0) {
       "group-[.menu-on]/menu:max-h-full",
       // full width
       "w-full",
-      // padding on left and right ends
-      "px-6",
       // transition animation
       "transition-all motion-reduce:transition-none",
+      // When expanded, add little round corners on top (mobile) or down (tablet)
+      "group-[.menu-on]/menu:max-md:rounded-t-lg",
+      "group-[.menu-on]/menu:md:rounded-b-lg",
     ]}
   >
     <div
@@ -64,6 +68,8 @@ if (shortcutsRow.length > 0) {
         "items-center",
         // no matter how parent changes the size, the bar size should stay the same
         "grow-0 shrink-0",
+        // padding on left and right ends
+        "px-6",
       ]}
     >
       <LanguagePicker />
@@ -91,74 +97,78 @@ if (shortcutsRow.length > 0) {
         </a>
       </div>
     </div>
-    <div class="grow overflow-y-auto">
+    <div class="grow overflow-y-auto px-6">
       {
-        menu.map(
-          (topItem) =>
-            topItem.children && (
-              <>
-                <div class="group/submenu submenu-container first:border-t-0 border-t border-gray-300">
-                  <div
-                    class:list={[
-                      "submenu-toggler",
-                      "flex justify-between",
-                      "py-2",
-                      "text-2xl",
-                    ]}
-                  >
-                    <div>
-                      <OptionalLink link={topItem} />
-                    </div>
-                    <div>
-                      <Icon
-                        name="expand-circle-down"
-                        class:list={[
-                          // rotate up-side-down when expanded
-                          "group-[.submenu-on]/submenu:rotate-180",
-                          // set similar size as text and align with text
-                          "h-7 align-text-bottom",
-                        ]}
-                      />
-                    </div>
+        menuWithChildren &&
+          menuWithChildren.map((topItem) => (
+            <>
+              <div class="group/submenu submenu-container first:border-t-0 border-t border-gray-300">
+                <div
+                  class:list={[
+                    "submenu-toggler",
+                    "flex justify-between",
+                    "py-2",
+                    "text-2xl",
+                    "font-medium",
+                  ]}
+                >
+                  <div>
+                    <OptionalLink link={topItem} />
                   </div>
-                  <div
-                    class:list={[
-                      "max-h-0 group-[.submenu-on]/submenu:max-h-[1000rem]",
-                      "overflow-y-hidden",
-                      "group-[.submenu-on]/submenu:transition-all motion-reduce:transition-none",
-                    ]}
-                  >
-                    <NavbarDropdown
-                      items={topItem.children}
-                      singleColumn={true}
+                  <div>
+                    <Icon
+                      name="expand-circle-down"
+                      class:list={[
+                        // rotate up-side-down when expanded
+                        "group-[.submenu-on]/submenu:rotate-180",
+                        // set similar size as text and align with text
+                        "h-7 align-text-bottom",
+                      ]}
                     />
                   </div>
                 </div>
-              </>
-            )
-        )
+                <div
+                  class:list={[
+                    "max-h-0 group-[.submenu-on]/submenu:max-h-[1000rem]",
+                    "overflow-y-hidden",
+                    "group-[.submenu-on]/submenu:transition-all motion-reduce:transition-none",
+                  ]}
+                >
+                  <NavbarDropdown
+                    items={topItem.children}
+                    singleColumn={true}
+                  />
+                </div>
+              </div>
+            </>
+          ))
       }
       {
-        menu.map(
-          (topItem) =>
-            !topItem.children && (
+        menuWithoutChildren && (
+          <div
+            class:list={[
+              "first:border-t-0 border-t border-gray-3 ",
+              "py-2",
+              "text-2xl",
+              "flex",
+            ]}
+          >
+            {menuWithoutChildren.map((topItem) => (
               <>
-                <div class="group/submenu submenu-container first:border-t-0 border-t border-gray-3">
-                  <div
-                    class:list={[
-                      "submenu-toggler",
-                      "flex justify-between",
-                      "py-2",
-                      "text-2xl",
-                    ]}
-                  >
-                    <div>
-                      <OptionalLink link={topItem} />
-                    </div>
+                <div
+                  class:list={[
+                    "first:border-l-0",
+                    "border-l border-white",
+                    "first:pl-0 px-3",
+                  ]}
+                >
+                  <div>
+                    <OptionalLink link={topItem} />
                   </div>
                 </div>
               </>
-            )
+            ))}
+          </div>
         )
       }
       <form
@@ -181,10 +191,10 @@ if (shortcutsRow.length > 0) {
           />
         </div>
       </form>
-      <div class:list={["flex flex-col items-start py-5 gap-4 text-base"]}>
+      <div class:list={["flex flex-col items-start py-4 gap-6 text-lg"]}>
         {
           shortcutsRows.map((row) => (
-            <ul class="list-none flex gap-5">
+            <ul class="list-none flex gap-6">
               {row.map((item) => {
                 switch (item.type) {
                   case "button":
@@ -192,7 +202,7 @@ if (shortcutsRow.length > 0) {
                       <li>
                         <a
                           href={item.url}
-                          class="py-1.5 px-3 rounded-xl bg-white text-maxpurple text-xl"
+                          class="py-1.5 px-4 rounded-xl bg-white text-maxpurple text-xl"
                         >
                           {item.name}
                           <Icon

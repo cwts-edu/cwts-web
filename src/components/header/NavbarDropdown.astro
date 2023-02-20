@@ -20,7 +20,8 @@ const bigMenu: boolean = items[0].children != null;
       {items.map((item) => (
         <div
           class:list={[
-            "p-0.5 grow",
+            "p-1.5 grow",
+            "lg:text-base	text-xl lg:text-base",
             {
               "basis-1/3": !singleColumn,
               "basis-full": singleColumn,
@@ -31,7 +32,7 @@ const bigMenu: boolean = items[0].children != null;
             <OptionalLink link={item} />
           </div>
           {item.children && (
-            <ul class="text-sm leading-4 ml-2">
+            <ul class="text-base lg:text-sm ml-2">
               {item.children.map((subItem) => (
                 <li class="py-1">
                   <OptionalLink link={subItem} />
@@ -43,11 +44,12 @@ const bigMenu: boolean = items[0].children != null;
       ))}
     </div>
   ) : (
-    <ul class="bg-maxpurple flex flex-row flex-wrap p-1.5">
+    <ul class="bg-maxpurple flex flex-row flex-wrap px-1 py-1.5">
       {items.map((item) => (
         <li
           class:list={[
-            "p-0.5",
+            "p-1.5",
+            "lg:text-base	text-xl lg:text-base",
             {
               "basis-1/3": !singleColumn,
               "basis-full": singleColumn,
