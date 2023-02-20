@@ -30,7 +30,7 @@ import logoImage from "@assets/main-logo-black.svg";
     >
       <div
         class:list={[
-          // padding around logo
+          // padding below logo
           "py-2",
           // logo area doesn't grow
           "grow-0",
@@ -45,7 +45,7 @@ import logoImage from "@assets/main-logo-black.svg";
       <div
         class:list={[
           // padding around nav area
-          "p-2",
+          "px-2 pt-2",
           // take extra space in the row
           "grow",
           // hidden in mobile and tablet view, leaving logo alone in the row
@@ -69,7 +69,7 @@ import logoImage from "@assets/main-logo-black.svg";
         // 0.875rem/14px font size
         "text-sm",
         // draw a horizontal line above the bar
-        "border-t-2 border-purple",
+        "border-t-2 border-darkviolet",
         // show only in desktop view
         "hidden lg:flex",
         // items move to the right
@@ -82,8 +82,8 @@ import logoImage from "@assets/main-logo-black.svg";
       <form class="flex gap-1">
         <input
           class:list={[
-            // pill button
-            "rounded-full border border-gray-400 px-3",
+            // rounded button
+            "rounded-lg border border-gray-400 px-3",
             // control width 8rem
             "w-32",
           ]}
@@ -97,7 +97,7 @@ import logoImage from "@assets/main-logo-black.svg";
               // treat it as a text and align with the rest of the text
               "inline-block align-text-bottom",
               // color
-              "text-purple",
+              "text-darkviolet",
             ]}
             name="search-sharp"
           />

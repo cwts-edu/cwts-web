@@ -31,7 +31,7 @@ if (shortcutsRow.length > 0) {
       // bring to the top layer
       "z-50",
       // background color
-      "bg-violet",
+      "bg-maxpurple",
       // white text color and 18px font size
       "text-white text-lg",
       // fixed on the viewport
@@ -128,12 +128,10 @@ if (shortcutsRow.length > 0) {
                       "group-[.submenu-on]/submenu:transition-all motion-reduce:transition-none",
                     ]}
                   >
-                    {topItem.children && (
-                      <NavbarDropdown
-                        items={topItem.children}
-                        singleColumn={true}
-                      />
-                    )}
+                    <NavbarDropdown
+                      items={topItem.children}
+                      singleColumn={true}
+                    />
                   </div>
                 </div>
               </>
@@ -177,7 +175,10 @@ if (shortcutsRow.length > 0) {
           <input class="w-full" type="text" placeholder="搜尋" />
         </div>
         <div>
-          <Icon name="search-sharp" class="text-purple h-7 align-text-bottom" />
+          <Icon
+            name="search-sharp"
+            class="text-darkviolet h-7 align-text-bottom"
+          />
         </div>
       </form>
       <div class:list={["flex flex-col items-start py-5 gap-4 text-base"]}>
@@ -191,11 +192,11 @@ if (shortcutsRow.length > 0) {
                       <li>
                         <a
                           href={item.url}
-                          class="py-1 px-3 rounded-full bg-white text-violet text-xl"
+                          class="py-1.5 px-3 rounded-xl bg-white text-maxpurple text-xl"
                         >
                           {item.name}
                           <Icon
-                            class="inline h-6 align-text-bottom text-purple"
+                            class="inline h-6 align-text-bottom text-darkviolet"
                             name="angle-right"
                           />
                         </a>

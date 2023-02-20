@@ -1,106 +1,79 @@
-- name: 認識基神
+- name: 基神介绍
   children:
-    - name: 認識我們
-      children:
-        - name: 信仰告白
-          url: "#"
-        - name: 基神特色
-          url: "#"
-        - name: 異象和使命宣告
-          url: "#"
-        - name: 院長的話
-          url: "#"
-        - name: 未來發展
-          url: "#"
-        - name: CWTS EFFECTIVENESS STATEMENT
-          url: "#"
-        - name: 學院概覽 CATALOG
-          url: "#"
-        - name: 認證
-          url: "#"
-        - name: 基神簡介
-          url: "#"
-    - name: 組織人事
-      children:
-        - name: 師資介紹
-          url: "#"
-        - name: 董事團隊
-          url: "#"
-        - name: 行政團隊
-          url: "#"
-        - name: CWTS NONDISCRIMINATION POLICY
-          url: "#"
-    - name: 消息聯絡
-      children:
-        - name: 聯絡我們
-          url: "#"
-        - name: 影音中心
-          url: "#"
-        - name: 行事曆
-          url: "#"
-        - name: 各期院訊
-          url: "#"
-        - name: 訂閱基神電子院訊
-          url: "#"
-- name: 成爲學生
+    - name: 信仰告白
+      url: "#"
+    - name: 異象和使命
+      url: "#"
+    - name: 學院歷史
+      url: "#"
+    - name: 基神特色
+      url: "#"
+    - name: 近期發展
+      url: "#"
+    - name: 學院認證
+      url: "#"
+    - name: 董事會
+      url: "#"
+    - name: 行政團隊
+      url: "#"
+- name: 教務資訊
   children:
-    - name: 瞭解招生
+    - name: 學位學制
       url: "#"
-    - name: 學制學位
+    - name: 全網絡聖工碩士學位
       url: "#"
-    - name: 修讀方式
+    - name: 學院總覽
       url: "#"
-    - name: 網路課程
+    - name: 學位課程表
       url: "#"
-    - name: 獎助學金
+    - name: 注冊須知
       url: "#"
-    - name: 申請入學
+    - name: 教務章程
       url: "#"
-    - name: 校園生活
-      url: "#"
-- name: 學生資源
-  children:
-    - name: 校曆
-      url: "#"
-    - name: 課程資訊
-      url: "#"
-    - name: 2023 教牧博士課程
-      url: "#"
-    - name: 註冊須知及學費查詢
-      url: "#"
-    - name: 學生會
+    - name: 教授團隊
       url: "#"
     - name: 圖書館
       url: "#"
-    - name: 教会机构招聘消息
+- name: 招生資訊
+  children:
+    - name: 學位申請資格和程序
+      url: "#"
+      children:
+        - name: 博士學位課程
+          url: "#"
+        - name: 碩士學位課程
+          url: "#"
+        - name: 文憑課程
+          url: "#"
+        - name: 培育中心證書課程
+          url: "#"
+    - name: F-1 國際生要求
+      url: "#"
+    - name: 學費和獎助學金
+      url: "#"
+- name: 學生生活
+  children:
+    - name: 校曆
+      url: "#"
+    - name: 早會
+      url: "#"
+    - name: 早禱
+      url: "#"
+    - name: 宿舍
+      url: "#"
+    - name: 聘牧信息
       url: "#"
 - name: 培育中心
-  children:
-    - name: 中心簡介
-      url: "#"
-    - name: 成為學生
-      url: "#"
-    - name: 證書類別
-      url: "#"
-    - name: 近期課程
-      url: "#"
-    - name: 學生資源
-      url: "#"
-- name: 基督徒教育大會
-  children:
-    - name: BABC 使命宣言與目標
-      url: "#"
-    - name: BABC - 2022
-      url: "#"
-    - name: 歷屆大會回顧
-      url: "#"
-- name: 基督工人論壇
   url: "#"
-- name: 學院動態
+- name: 校園活動
   children:
-    - name: 學院消息
+    - name: 灣區基督徒教育大會
       url: "#"
-    - name: 基神週會
+    - name: 基督工人論壇 回顧
       url: "#"
-    - name: 好文靜讀
+    - name: “陳道明牧師”神學講堂
       url: "#"
+    - name: 基神季刊
+      url: "#"
+- name: 校友專頁
+  url: "#"

@@ -1,5 +1,4 @@
 ---
-import NavbarBigDropdown from "./NavbarBigDropdown.astro";
 import OptionalLink from "@components/common/OptionalLink.astro";
 import type { MenuItem } from "@data/menu";
 
@@ -17,13 +16,39 @@ const bigMenu: boolean = items[0].children != null;
 
 {
   bigMenu ? (
-    <NavbarBigDropdown items={items} />
+    <div class="bg-maxpurple flex flex-row flex-wrap p-1.5">
+      {items.map((item) => (
+        <div
+          class:list={[
+            "p-0.5 grow",
+            {
+              "basis-1/3": !singleColumn,
+              "basis-full": singleColumn,
+            },
+          ]}
+        >
+          <div class="font-medium">
+            <OptionalLink link={item} />
+          </div>
+          {item.children && (
+            <ul class="text-sm leading-4 ml-2">
+              {item.children.map((subItem) => (
+                <li class="py-1">
+                  <OptionalLink link={subItem} />
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      ))}
+    </div>
   ) : (
-    <ul class="bg-violet flex flex-row flex-wrap p-1.5">
+    <ul class="bg-maxpurple flex flex-row flex-wrap p-1.5">
       {items.map((item) => (
         <li
           class:list={[
             "p-0.5",
+            "font-medium",
             {
               "basis-1/3": !singleColumn,
               "basis-full": singleColumn,

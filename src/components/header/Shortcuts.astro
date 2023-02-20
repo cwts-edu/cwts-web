@@ -12,11 +12,11 @@ import shortcuts from "@data/shortcuts";
             <li class="shrink-0">
               <a
                 href={item.url}
-                class="py-1 px-2 rounded-full border border-gray-400"
+                class="py-1 px-2 rounded-lg border border-gray-400"
               >
                 {item.name}
                 <Icon
-                  class="inline h-4 text-purple align-text-bottom"
+                  class="inline h-4 text-rebeccapurple align-text-bottom"
                   name="angle-right"
                 />
               </a>
@@ -25,7 +25,9 @@ import shortcuts from "@data/shortcuts";
         default:
           return (
             <li class="shrink-0">
-              <a href={item.url}>{item.name}</a>
+              <a class="text-rebeccapurple" href={item.url}>
+                {item.name}
+              </a>
             </li>
           );
       }
