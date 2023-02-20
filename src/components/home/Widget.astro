@@ -1,0 +1,42 @@
+---
+import { Icon } from "astro-icon";
+
+export interface Props {
+  title: string;
+  moreText: string;
+  moreLink: string;
+  widgetClass?: string[];
+  moreClass?: string[];
+  moreArrowClass?: string[];
+}
+
+const { title, moreText, moreLink, widgetClass, moreClass, moreArrowClass } =
+  Astro.props;
+---
+
+<div class:list={[...(widgetClass || [])]}>
+  <div class:list={["mx-auto lg:max-w-screen-lg", "px-4 py-12"]}>
+    <div class:list={["flex justify-between pb-7"]}>
+      <div class="text-xl font-medium">{title}</div>
+      <div>
+        <a
+          href={moreLink}
+          class:list={[
+            "text-base py-1.5 px-4 rounded-lg border",
+            ...(moreClass || []),
+          ]}
+        >
+          {moreText}
+          <Icon
+            class:list={[
+              "inline h-4 align-text-bottom",
+              ...(moreArrowClass || []),
+            ]}
+            name="angle-right"
+          />
+        </a>
+      </div>
+    </div>
+    <slot />
+  </div>
+</div>
