@@ -27,7 +27,7 @@ const bigMenu: boolean = items[0].children != null;
             },
           ]}
         >
-          <div class="font-medium">
+          <div>
             <OptionalLink link={item} />
           </div>
           {item.children && (
@@ -48,7 +48,6 @@ const bigMenu: boolean = items[0].children != null;
         <li
           class:list={[
             "p-0.5",
-            "font-medium",
             {
               "basis-1/3": !singleColumn,
               "basis-full": singleColumn,
