@@ -1,6 +1,35 @@
 ---
 import Widget from "./Widget.astro";
+import Carousel, { Props as CarouselProps } from "./Carousel";
+
+const carouselProps: CarouselProps = {
+  items: [
+    {
+      link: "#",
+      image: "/carousel/2023-Spring-class.jpg",
+    },
+    {
+      link: "#",
+      image: "/carousel/2023spring-recruitment.jpg",
+    },
+    {
+      link: "#",
+      image: "/carousel/CWTS-day.jpg",
+    },
+    {
+      link: "#",
+      image: "/carousel/MCM-online.jpg",
+    },
+  ],
+};
 ---
+
+<style is:global>
+  :root {
+    --swiper-navigation-color: #410659 !important;
+    --swiper-theme-color: #410659 !important;
+  }
+</style>
 
 <Widget
   title="最近信息"
@@ -9,5 +38,5 @@ import Widget from "./Widget.astro";
   widgetClass={["bg-darkviolet text-white"]}
   moreClass={["border-none bg-white text-darkviolet"]}
 >
-  carousel here
+  <Carousel items={carouselProps.items} client:idle />
 </Widget>

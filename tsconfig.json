@@ -1,8 +1,5 @@
-// [Typescript guide](https://docs.astro.build/en/guides/typescript/)
 {
-  // https://docs.astro.build/en/guides/typescript/#setup
   "extends": "astro/tsconfigs/strict",
-  // https://docs.astro.build/en/guides/typescript/#import-aliases
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
@@ -23,7 +20,9 @@
       ]
     },
     "types": [
-      "@astrojs/image/client",
+      "@astrojs/image/client"
     ],
+    "jsx": "react-jsx",
+    "jsxImportSource": "react"
   }
 }
