@@ -29,7 +29,7 @@ const carouselProps: CarouselProps = {
     --swiper-navigation-color: white !important;
     --swiper-theme-color: white !important;
     --swiper-pagination-bullet-inactive-color: #aaa;
-    --swiper-navigation-size: 32px;
+    --swiper-navigation-size: 24px;
     --swiper-pagination-space: 36px;
   }
   .swiper {
@@ -50,6 +50,7 @@ const carouselProps: CarouselProps = {
   .swiper-rtl .swiper-button-next {
     left: 0;
     padding-left: var(--swiper-navigation-sides-offset, 10px);
+    padding-right: calc(var(--swiper-navigation-size) / 2);
     background: linear-gradient(
       90deg,
       rgba(255, 255, 255, 0.7),
@@ -60,6 +61,7 @@ const carouselProps: CarouselProps = {
   .swiper-rtl .swiper-button-prev {
     right: 0;
     padding-right: var(--swiper-navigation-sides-offset, 10px);
+    padding-left: calc(var(--swiper-navigation-size) / 2);
     background: linear-gradient(
       -90deg,
       rgba(255, 255, 255, 0.7),
