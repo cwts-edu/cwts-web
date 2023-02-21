@@ -31,6 +31,13 @@ const carouselProps: CarouselProps = {
     --swiper-pagination-bullet-inactive-color: #aaa;
     --swiper-navigation-size: 24px;
     --swiper-pagination-space: 36px;
+    --swiper-navigation-sides-offset: 12px;
+  }
+  @media (min-width: 768px) {
+    :root {
+      --swiper-navigation-size: 42px;
+      --swiper-navigation-sides-offset: 20px;
+    }
   }
   .swiper {
     padding-bottom: var(--swiper-pagination-space);
