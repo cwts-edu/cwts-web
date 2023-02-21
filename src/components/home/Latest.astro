@@ -26,8 +26,45 @@ const carouselProps: CarouselProps = {
 
 <style is:global>
   :root {
-    --swiper-navigation-color: #410659 !important;
-    --swiper-theme-color: #410659 !important;
+    --swiper-navigation-color: white !important;
+    --swiper-theme-color: white !important;
+    --swiper-pagination-bullet-inactive-color: #aaa;
+    --swiper-navigation-size: 32px;
+    --swiper-pagination-space: 36px;
+  }
+  .swiper {
+    padding-bottom: var(--swiper-pagination-space);
+  }
+  .swiper-button-next,
+  .swiper-button-prev {
+    top: 0;
+    margin-top: 0;
+    height: calc(100% - var(--swiper-pagination-space));
+  }
+  .swiper-button-next:after,
+  .swiper-button-prev:after {
+    margin-top: auto;
+    margin-bottom: auto;
+  }
+  .swiper-button-prev,
+  .swiper-rtl .swiper-button-next {
+    left: 0;
+    padding-left: var(--swiper-navigation-sides-offset, 10px);
+    background: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.7),
+      rgba(255, 255, 255, 0)
+    );
+  }
+  .swiper-button-next,
+  .swiper-rtl .swiper-button-prev {
+    right: 0;
+    padding-right: var(--swiper-navigation-sides-offset, 10px);
+    background: linear-gradient(
+      -90deg,
+      rgba(255, 255, 255, 0.7),
+      rgba(255, 255, 255, 0)
+    );
   }
 </style>
 
