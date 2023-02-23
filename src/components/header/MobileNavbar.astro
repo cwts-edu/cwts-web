@@ -261,7 +261,6 @@ const menuWithoutChildren = menu.filter((menuItem) => !menuItem.children);
     elem.querySelector(".submenu-toggler")?.addEventListener("click", () => {
       // Fix the menuInner height on mobile view
       let menuInner = document.getElementById("menuInner")!;
-      console.log(menuInner.offsetTop);
       if (menuInner.offsetTop > 0) {
         menuInner.style.height = `${menuInner.offsetHeight}px`;
       }
