@@ -6,6 +6,9 @@ module.exports = {
   content: ["./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}"],
   theme: {
     colors: {
+      darkerviolet: {
+        DEFAULT: "#330047",
+      },
       darkviolet: {
         DEFAULT: "#410659",
       },
