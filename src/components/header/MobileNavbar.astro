@@ -26,6 +26,7 @@ const menuWithoutChildren = menu.filter((menuItem) => !menuItem.children);
 
 <div id="menuContainer" class="group/menu">
   <div
+    id="menuInner"
     class:list={[
       // hidden in desktop view
       "lg:hidden",
@@ -135,7 +136,7 @@ const menuWithoutChildren = menu.filter((menuItem) => !menuItem.children);
                   ]}
                 >
                   <NavbarDropdown
-                    items={topItem.children}
+                    items={topItem.children!}
                     singleColumn={true}
                   />
                 </div>
@@ -258,6 +259,10 @@ const menuWithoutChildren = menu.filter((menuItem) => !menuItem.children);
     const submenuToggler = new Toggler(elem, "submenu-on");
     submenuTogglerList.push(submenuToggler);
     elem.querySelector(".submenu-toggler")?.addEventListener("click", () => {
+      // Fix the menuInner height
+      let menuInner = document.getElementById("menuInner")!;
+      menuInner.style.height = `${menuInner.offsetHeight}px`;
+
       submenuToggler.toggle();
       submenuTogglerList.forEach((t) => {
         if (t != submenuToggler) t.off();
