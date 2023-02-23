@@ -16,6 +16,8 @@
       url: "#"
     - name: 行政團隊
       url: "#"
+    - name: Effectiveness Statement
+      url: "#"
 - name: 教務資訊
   children:
     - name: 學位學制
