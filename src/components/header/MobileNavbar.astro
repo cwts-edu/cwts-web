@@ -2,7 +2,7 @@
 import LanguagePicker from "./LanguagePicker.astro";
 import { Icon } from "astro-icon";
 import OptionalLink from "@components/common/OptionalLink.astro";
-import { default as menu, MenuItem } from "@data/menu";
+import getMenu from "@data/menu";
 import NavbarDropdown from "./NavbarDropdown.astro";
 import { default as shortcuts, Shortcut } from "@data/shortcuts";
 import logoTextEn from "@assets/logo-text-en-light-violet.svg";
@@ -20,6 +20,7 @@ if (shortcutsRow.length > 0) {
   shortcutsRows.push(shortcutsRow);
 }
 
+const menu = await getMenu();
 const menuWithChildren = menu.filter((menuItem) => !!menuItem.children);
 const menuWithoutChildren = menu.filter((menuItem) => !menuItem.children);
 ---

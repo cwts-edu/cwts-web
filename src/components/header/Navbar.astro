@@ -1,7 +1,8 @@
 ---
 import OptionalLink from "@components/common/OptionalLink.astro";
 import NavbarDropdown from "./NavbarDropdown.astro";
-import menu from "@data/menu";
+import getMenu from "@data/menu";
+const menu = await getMenu();
 ---
 
 <ul class="list-none flex relative">

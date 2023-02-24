@@ -1,23 +1,14 @@
 - name: 基神介绍
   children:
-    - name: 信仰告白
-      url: "#"
-    - name: 異象和使命
-      url: "#"
-    - name: 學院歷史
-      url: "#"
-    - name: 基神特色
-      url: "#"
-    - name: 近期發展
-      url: "#"
-    - name: 學院認證
-      url: "#"
-    - name: 董事會
-      url: "#"
-    - name: 行政團隊
-      url: "#"
-    - name: Effectiveness Statement
-      url: "#"
+    - slug: zh/intro/statement-of-faith
+    - slug: zh/intro/vision-and-mission
+    - slug: zh/intro/history
+    - slug: zh/intro/feature
+    - slug: zh/intro/development
+    - slug: zh/intro/accreditation
+    - slug: zh/intro/board
+    - slug: zh/intro/administration
+    - slug: zh/intro/effectiveness-statement
 - name: 教務資訊
   children:
     - name: 學位學制

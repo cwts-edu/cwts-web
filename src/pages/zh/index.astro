@@ -1,0 +1,8 @@
+---
+import Redirect from "@layouts/Redirect.astro";
+
+let a = import.meta.glob("/src/pages/**/index.astro", { import: "title" });
+console.log(await a["/src/pages/index.astro"]());
+---
+
+<Redirect target="/" />

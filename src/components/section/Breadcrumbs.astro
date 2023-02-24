@@ -1,0 +1,50 @@
+---
+import { getEntryBySlug } from "astro:content";
+import Container from "@components/common/Container.astro";
+
+export interface Props {
+  slug: string;
+  showCurrent?: boolean;
+}
+
+const { slug, showCurrent = false } = Astro.props;
+
+interface LinkInfo {
+  title: string;
+  link: string;
+}
+
+async function getLinkInfoBySlug(s: string): Promise<LinkInfo | undefined> {
+  const page = await getEntryBySlug("pages", s);
+  return (
+    page && {
+      title: page.data.title,
+      link: "/" + page.slug,
+    }
+  );
+}
+
+const parts = slug.split("/");
+let links = await Promise.all(
+  parts.map((part, index) => getLinkInfoBySlug(parts.slice(0, index).join("/")))
+);
+if (showCurrent) {
+  links.push(await getLinkInfoBySlug(slug));
+}
+links = links.filter((link) => link);
+
+if (links.length == 0) return undefined;
+---
+
+<div class="bg-maxpurple text-white text-xl font-semibold">
+  <Container classList={["py-2"]}>
+    {
+      links.map((link, index) => (
+        <>
+          {index > 0 && " / "}
+          <a href={link!.link}>{link!.title}</a>
+        </>
+      ))
+    }
+  </Container>
+</div>

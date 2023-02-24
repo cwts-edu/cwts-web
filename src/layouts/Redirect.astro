@@ -1,0 +1,19 @@
+---
+export interface Props {
+  target: string;
+}
+
+const { target } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="refresh" content={`0; url='${target}'`} />
+  </head>
+  <body>
+    <p>點擊<a href={target}>這裏</a>跳轉。</p>
+    <p>Please follow <a href={target}>this link</a>.</p>
+  </body>
+</html>
