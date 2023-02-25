@@ -2,8 +2,8 @@
 import Base, { Props as BaseProps } from "./Base.astro";
 import Breadcrumbs, { getLinks } from "@components/section/Breadcrumbs.astro";
 import Container from "@components/common/Container.astro";
-import { getSite } from "@data/site";
-import { getLanguageBySlug } from "@data/language";
+import { getSite } from "@libs/site";
+import { getLanguageBySlug } from "@libs/language";
 
 export interface Props extends BaseProps {
   slug: string;

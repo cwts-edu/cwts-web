@@ -1,4 +1,4 @@
-import translation from "./translation.yml";
+import translation from "@data/translation.yml";
 
 export type Language = "zh" | "en";
 

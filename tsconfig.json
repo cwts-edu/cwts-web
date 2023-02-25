@@ -17,6 +17,9 @@
       ],
       "@scripts/*": [
         "src/scripts/*"
+      ],
+      "@libs/*": [
+        "src/libs/*"
       ]
     },
     "types": [

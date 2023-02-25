@@ -2,11 +2,11 @@
 import LanguagePicker from "./LanguagePicker.astro";
 import { Icon } from "astro-icon";
 import OptionalLink from "@components/common/OptionalLink.astro";
-import getMenu from "@data/menu";
+import getMenu from "@libs/menu";
 import NavbarDropdown from "./NavbarDropdown.astro";
-import { default as shortcuts, Shortcut } from "@data/shortcuts";
+import { default as shortcuts, Shortcut } from "@libs/shortcuts";
 import logoTextEn from "@assets/logo-text-en-light-violet.svg";
-import { Language, T } from "@data/language";
+import { Language, T } from "@libs/language";
 
 export interface Props {
   language: Language;

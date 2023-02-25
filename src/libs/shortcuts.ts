@@ -1,4 +1,4 @@
-import shortcuts from "./shortcuts.yml";
+import shortcuts from "@data/shortcuts.yml";
 
 export interface Shortcut {
   name: string;

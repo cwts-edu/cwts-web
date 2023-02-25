@@ -1,4 +1,4 @@
-import type { Language } from "./language";
+import type { Language } from "../libs/language";
 
 interface Site {
   title: string;

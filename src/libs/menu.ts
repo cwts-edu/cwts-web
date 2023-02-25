@@ -17,7 +17,7 @@ function isMenuDataSlug(data: MenuData): data is MenuDataPage {
 }
 
 import { getEntryBySlug } from "astro:content";
-import _menu from "./menu.yml";
+import _menu from "@data/menu.yml";
 
 const menu = _menu as MenuData[];
 
