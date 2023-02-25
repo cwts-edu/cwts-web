@@ -1,0 +1,23 @@
+backend:
+  name: github
+  repo: saintfish/cwts-www
+  branch: master
+media_folder: "public/uploads"
+public_folder: "/uploads"
+collections:
+  - name: zh_about
+    label: About (zh)
+    folder: src/content/pages/zh/about
+    identifier_field: fields.slug
+    slug: "{{fields.slug}}"
+    create: true
+    fields:
+      - label: "Slug"
+        name: "slug"
+        widget: "string"
+      - label: "Title"
+        name: "title"
+        widget: "string"
+      - label: "Body"
+        name: "body"
+        widget: "markdown"
