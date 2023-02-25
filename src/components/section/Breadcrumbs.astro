@@ -1,6 +1,6 @@
 ---
-import { getEntryBySlug } from "astro:content";
 import Container from "@components/common/Container.astro";
+import { getBreadcrumbList } from "@libs/breadcrumbs";
 
 export interface Props {
   slug: string;
@@ -9,42 +9,7 @@ export interface Props {
 
 const { slug, showCurrent = false } = Astro.props;
 
-interface LinkInfo {
-  title: string;
-  link: string;
-}
-
-export async function getLinks(
-  slug: string,
-  includeCurrent: boolean
-): Promise<LinkInfo[]> {
-  async function getLinkInfoBySlug(s: string): Promise<LinkInfo | undefined> {
-    const page = await getEntryBySlug("pages", s);
-    return (
-      page && {
-        title: page.data.title,
-        link: "/" + page.slug,
-      }
-    );
-  }
-
-  const parts = slug.split("/");
-  const links = await Promise.all(
-    parts.map((_, index) => getLinkInfoBySlug(parts.slice(0, index).join("/")))
-  );
-  if (includeCurrent) {
-    links.push(await getLinkInfoBySlug(slug));
-  }
-  const result: LinkInfo[] = [];
-  links.forEach((link) => {
-    if (link) {
-      result.push(link);
-    }
-  });
-  return result;
-}
-
-const links = await getLinks(slug, showCurrent || false);
+const links = await getBreadcrumbList(slug, showCurrent || false);
 
 if (links.length == 0) return undefined;
 ---

@@ -1,11 +1,13 @@
 ---
-import Base, { Props as BaseProps } from "./Base.astro";
-import Breadcrumbs, { getLinks } from "@components/section/Breadcrumbs.astro";
+import Base from "./Base.astro";
+import Breadcrumbs from "@components/section/Breadcrumbs.astro";
 import Container from "@components/common/Container.astro";
 import { getSite } from "@libs/site";
 import { getLanguageBySlug } from "@libs/language";
+import { getBreadcrumbList } from "@libs/breadcrumbs";
 
-export interface Props extends BaseProps {
+export interface Props {
+  title: string;
   slug: string;
 }
 
@@ -14,10 +16,10 @@ const { title, slug } = Astro.props;
 const language = getLanguageBySlug(slug);
 const site = getSite(language);
 
-const links = await getLinks(slug, false);
+const breadcrumbs = await getBreadcrumbList(slug, false);
 const pageTitle = [
   title,
-  ...links.map((link) => link.title).reverse(),
+  ...breadcrumbs.map((link) => link.title).reverse(),
   site.shortTitle,
 ].join(" - ");
 ---
