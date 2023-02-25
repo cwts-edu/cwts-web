@@ -1,0 +1,3 @@
+---
+title: Master of Theology
+---

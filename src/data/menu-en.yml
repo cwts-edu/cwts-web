@@ -7,21 +7,15 @@
     - page: en/about/development
     - page: en/about/accreditation
     - page: en/about/effectiveness-statement
-- name: 教務資訊
+- page: en/academic
+  noUrl: true
   children:
-    - name: 學位學制
-      url: "#"
-    - name: 全網絡聖工碩士學位
-      url: "#"
-    - name: 學院總覽
-      url: "#"
-    - name: 學位課程表
-      url: "#"
-    - name: 注冊須知
-      url: "#"
-    - name: 教務章程
-      url: "#"
-    - name: 教授團隊
-      url: "#"
-    - name: 圖書館
-      url: "#"
+    - page: en/academic/degrees-programs
+      children:
+        - page: en/academic/degrees-programs/doctor-of-ministry
+        - page: en/academic/degrees-programs/master-of-theology
+        - page: en/academic/degrees-programs/master-of-divinity
+        - page: en/academic/degrees-programs/master-of-biblical-studies
+        - page: en/academic/degrees-programs/master-of-christian-ministry
+        - page: en/academic/degrees-programs/diploma
+        - page: en/academic/degrees-programs/certificate
