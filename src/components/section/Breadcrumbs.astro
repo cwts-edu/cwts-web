@@ -14,24 +14,37 @@ interface LinkInfo {
   link: string;
 }
 
-async function getLinkInfoBySlug(s: string): Promise<LinkInfo | undefined> {
-  const page = await getEntryBySlug("pages", s);
-  return (
-    page && {
-      title: page.data.title,
-      link: "/" + page.slug,
-    }
+export async function getLinks(
+  slug: string,
+  includeCurrent: boolean
+): Promise<LinkInfo[]> {
+  async function getLinkInfoBySlug(s: string): Promise<LinkInfo | undefined> {
+    const page = await getEntryBySlug("pages", s);
+    return (
+      page && {
+        title: page.data.title,
+        link: "/" + page.slug,
+      }
+    );
+  }
+
+  const parts = slug.split("/");
+  const links = await Promise.all(
+    parts.map((_, index) => getLinkInfoBySlug(parts.slice(0, index).join("/")))
   );
+  if (includeCurrent) {
+    links.push(await getLinkInfoBySlug(slug));
+  }
+  const result: LinkInfo[] = [];
+  links.forEach((link) => {
+    if (link) {
+      result.push(link);
+    }
+  });
+  return result;
 }
 
-const parts = slug.split("/");
-let links = await Promise.all(
-  parts.map((part, index) => getLinkInfoBySlug(parts.slice(0, index).join("/")))
-);
-if (showCurrent) {
-  links.push(await getLinkInfoBySlug(slug));
-}
-links = links.filter((link) => link);
+const links = await getLinks(slug, showCurrent || false);
 
 if (links.length == 0) return undefined;
 ---

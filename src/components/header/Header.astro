@@ -5,6 +5,13 @@ import { Icon } from "astro-icon";
 import MobileNavbar from "./MobileNavbar.astro";
 import LanguagePicker from "./LanguagePicker.astro";
 import logoImage from "@assets/main-logo-black.svg";
+import type { Language } from "@data/language";
+
+export interface Props {
+  language: Language;
+}
+
+const { language } = Astro.props;
 ---
 
 <header>
@@ -105,5 +112,5 @@ import logoImage from "@assets/main-logo-black.svg";
       </form>
     </div>
   </div>
-  <MobileNavbar />
+  <MobileNavbar language={language} />
 </header>

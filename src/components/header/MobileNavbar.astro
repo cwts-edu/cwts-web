@@ -6,6 +6,13 @@ import getMenu from "@data/menu";
 import NavbarDropdown from "./NavbarDropdown.astro";
 import { default as shortcuts, Shortcut } from "@data/shortcuts";
 import logoTextEn from "@assets/logo-text-en-light-violet.svg";
+import { Language, T } from "@data/language";
+
+export interface Props {
+  language: Language;
+}
+
+const { language } = Astro.props;
 
 const shortcutsRows: Shortcut[][] = [];
 let shortcutsRow: Shortcut[] = [];
@@ -77,7 +84,7 @@ const menuWithoutChildren = menu.filter((menuItem) => !menuItem.children);
       <LanguagePicker />
       <div class="flex">
         <a id="menuToggler" class="cursor-pointer">
-          目錄
+          {T("menu", language)}
           <Icon
             name="menu"
             class:list={[
@@ -184,7 +191,11 @@ const menuWithoutChildren = menu.filter((menuItem) => !menuItem.children);
         ]}
       >
         <div class="grow">
-          <input class="w-full" type="text" placeholder="搜尋" />
+          <input
+            class="w-full"
+            type="text"
+            placeholder={T("search", language)}
+          />
         </div>
         <div>
           <Icon

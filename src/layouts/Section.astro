@@ -1,8 +1,9 @@
 ---
-import { getEntryBySlug } from "astro:content";
 import Base, { Props as BaseProps } from "./Base.astro";
-import Breadcrumbs from "@components/section/Breadcrumbs.astro";
+import Breadcrumbs, { getLinks } from "@components/section/Breadcrumbs.astro";
 import Container from "@components/common/Container.astro";
+import { getSite } from "@data/site";
+import { getLanguageBySlug } from "@data/language";
 
 export interface Props extends BaseProps {
   slug: string;
@@ -10,10 +11,18 @@ export interface Props extends BaseProps {
 
 const { title, slug } = Astro.props;
 
-const page = await getEntryBySlug("pages", slug);
+const language = getLanguageBySlug(slug);
+const site = getSite(language);
+
+const links = await getLinks(slug, false);
+const pageTitle = [
+  title,
+  ...links.map((link) => link.title).reverse(),
+  site.shortTitle,
+].join(" - ");
 ---
 
-<Base title={title}>
+<Base title={pageTitle} language={language}>
   <div><Breadcrumbs slug={slug} /></div>
   <Container classList={["py-6"]}>
     <article class="prose prose-xl max-w-none">

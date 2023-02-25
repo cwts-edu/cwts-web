@@ -1,23 +1,25 @@
 ---
 import Footer from "@components/footer/Footer.astro";
 import Header from "@components/header/Header.astro";
+import type { Language } from "@data/language";
 
 export interface Props {
   title: string;
+  language: Language;
 }
 
-const { title } = Astro.props;
+const { title, language } = Astro.props;
 ---
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang={language}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <title>{title}</title>
   </head>
   <body class="overflow-y-scroll">
-    <Header />
+    <Header language={language} />
     <slot />
     <Footer />
   </body>
