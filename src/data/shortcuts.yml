@@ -1,8 +1,18 @@
-- name: 奉獻支持
-  url: "#"
-- name: 聯絡我們
-  url: "#"
-- name: 申請入學
-  url: "#"
-  type: button
-  breakBefore: true
+zh:
+  - name: 奉獻支持
+    url: "#"
+  - name: 聯絡我們
+    url: "#"
+  - name: 申請入學
+    url: "#"
+    type: button
+    breakBefore: true
+en:
+  - name: Give
+    url: "#"
+  - name: Contact
+    url: "#"
+  - name: Apply
+    url: "#"
+    type: button
+    breakBefore: true

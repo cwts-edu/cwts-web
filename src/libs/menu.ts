@@ -17,9 +17,6 @@ function isMenuDataSlug(data: MenuData): data is MenuDataPage {
 }
 
 import { getEntryBySlug } from "astro:content";
-import _menu from "@data/menu.yml";
-
-const menu = _menu as MenuData[];
 
 export interface MenuItem {
   name: string;
@@ -51,6 +48,19 @@ async function convertMenuDataToMenuItem(data: MenuData): Promise<MenuItem> {
   }
 }
 
-export default async function getMenu(): Promise<MenuItem[]> {
+async function convertMenu(menu: MenuData[]): Promise<MenuItem[]> {
   return await Promise.all(menu.map(async (m) => convertMenuDataToMenuItem(m)));
+}
+
+import menuZh from "@data/menu-zh.yml";
+import menuEn from "@data/menu-en.yml";
+import type { Language } from "./language";
+
+const menu = {
+  en: await convertMenu(menuEn as MenuData[]),
+  zh: await convertMenu(menuZh as MenuData[]),
+};
+
+export default async function getMenu(language: Language): Promise<MenuItem[]> {
+  return menu[language];
 }

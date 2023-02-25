@@ -2,10 +2,24 @@
 import OptionalLink from "@components/common/OptionalLink.astro";
 import NavbarDropdown from "./NavbarDropdown.astro";
 import getMenu from "@libs/menu";
-const menu = await getMenu();
+import type { Language } from "@libs/language";
+
+export interface Props {
+  language: Language;
+}
+
+const { language } = Astro.props;
+const menu = await getMenu(language);
 ---
 
-<ul class="list-none flex relative">
+<ul
+  class:list={[
+    // dropdown position is relative to this
+    "relative",
+    // Flexbox and justify content to the right
+    "flex justify-end",
+  ]}
+>
   {
     menu.map((topItem) => (
       <>
@@ -38,6 +52,8 @@ const menu = await getMenu();
                 "-z-10 group-[.nav-on]/nav:z-10",
                 // place right below the navbar with same width
                 "absolute top-full right-0 w-full",
+                // min width 60 charactors in case parent is not wide enough
+                "min-w-[60ch]",
                 // override the mouse cursor back to default
                 "cursor-auto",
                 // dropdown animation only on opacity to avoid glitches animating on z-index

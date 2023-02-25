@@ -4,7 +4,8 @@ import { Icon } from "astro-icon";
 import OptionalLink from "@components/common/OptionalLink.astro";
 import getMenu from "@libs/menu";
 import NavbarDropdown from "./NavbarDropdown.astro";
-import { default as shortcuts, Shortcut } from "@libs/shortcuts";
+import type { Shortcut } from "@libs/shortcuts";
+import getShortcuts from "@libs/shortcuts";
 import logoTextEn from "@assets/logo-text-en-light-violet.svg";
 import { Language, T } from "@libs/language";
 
@@ -14,6 +15,7 @@ export interface Props {
 
 const { language } = Astro.props;
 
+const shortcuts = getShortcuts(language);
 const shortcutsRows: Shortcut[][] = [];
 let shortcutsRow: Shortcut[] = [];
 shortcuts.forEach((shortcut) => {
@@ -27,7 +29,7 @@ if (shortcutsRow.length > 0) {
   shortcutsRows.push(shortcutsRow);
 }
 
-const menu = await getMenu();
+const menu = await getMenu(language);
 const menuWithChildren = menu.filter((menuItem) => !!menuItem.children);
 const menuWithoutChildren = menu.filter((menuItem) => !menuItem.children);
 ---

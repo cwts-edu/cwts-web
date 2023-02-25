@@ -1,6 +1,15 @@
 ---
+import getShortcuts from "@libs/shortcuts";
 import { Icon } from "astro-icon";
-import shortcuts from "@libs/shortcuts";
+import type { Language } from "@libs/language";
+
+export interface Props {
+  language: Language;
+}
+
+const { language } = Astro.props;
+
+const shortcuts = getShortcuts(language);
 ---
 
 <ul class="flex justify-end list-none gap-6 items-baseline font-medium">
