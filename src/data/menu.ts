@@ -3,16 +3,17 @@ interface MenuDataLink {
   url?: string;
 }
 
-interface MenuDataSlug {
-  slug: string;
+interface MenuDataPage {
+  page: string;
+  noUrl?: boolean;
 }
 
-type MenuData = (MenuDataLink | MenuDataSlug) & {
+type MenuData = (MenuDataLink | MenuDataPage) & {
   children?: MenuData[];
 };
 
-function isMenuDataSlug(data: MenuData): data is MenuDataSlug {
-  return (data as MenuDataSlug).slug !== undefined;
+function isMenuDataSlug(data: MenuData): data is MenuDataPage {
+  return (data as MenuDataPage).page !== undefined;
 }
 
 import { getEntryBySlug } from "astro:content";
@@ -34,11 +35,11 @@ async function convertMenuDataToMenuItem(data: MenuData): Promise<MenuItem> {
     );
   }
   if (isMenuDataSlug(data)) {
-    const page = await getEntryBySlug("pages", data.slug);
-    if (!page) throw new Error("Menu page not found: " + data.slug);
+    const page = await getEntryBySlug("pages", data.page);
+    if (!page) throw new Error("Menu page not found: " + data.page);
     return {
       name: page.data.title,
-      url: "/" + page.slug,
+      url: (!data.noUrl && "/" + page.slug) || undefined,
       children,
     };
   } else {

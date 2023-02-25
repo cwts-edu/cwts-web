@@ -1,14 +1,15 @@
-- name: 基神介绍
+- page: "zh/intro"
+  noUrl: true
   children:
-    - slug: zh/intro/statement-of-faith
-    - slug: zh/intro/vision-and-mission
-    - slug: zh/intro/history
-    - slug: zh/intro/feature
-    - slug: zh/intro/development
-    - slug: zh/intro/accreditation
-    - slug: zh/intro/board
-    - slug: zh/intro/administration
-    - slug: zh/intro/effectiveness-statement
+    - page: zh/intro/statement-of-faith
+    - page: zh/intro/vision-and-mission
+    - page: zh/intro/history
+    - page: zh/intro/feature
+    - page: zh/intro/development
+    - page: zh/intro/accreditation
+    - page: zh/intro/board
+    - page: zh/intro/administration
+    - page: zh/intro/effectiveness-statement
 - name: 教務資訊
   children:
     - name: 學位學制
