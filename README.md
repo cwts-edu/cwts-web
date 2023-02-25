@@ -8,10 +8,10 @@
 * [x] CSS framework
 * Components
   * [x] Header component without navigation
-  * [ ] Footer component
+  * [x] Footer component
   * [x] Desktop navigation
-  * [ ] Mobile navigation
-  * [ ] Section page side navigation
+  * [x] Mobile navigation
+  * [x] Section page breadcrumbs
 * Homepage widgets
 
 ## Project Structure
@@ -45,6 +45,46 @@ All commands are run from the root of the project, from a terminal:
 ## Styling
 
 The project uses [tailwind CSS](https://tailwindcss.com/) as base of css framework. Try to avoid defining component specific styles but use utility classes to apply styles.
+
+## Section Pages
+
+Section pages are defined in 2 parts:
+
+* `src/content/pages`: Markdown files that defines the content and path
+* `src/pages/[...slug].astro`: Read the content of content pages, apply the layout template
+* `src/pages/other/path.astro`: Apply page specific layout template to specific page
+
+To create a new page, create a new Markdown or MDX file in `src/content/pages`. It will generate a new page in corresponding place. If special style is needed:
+
+* Add HTML code into Markdown. Tailwind classes are available for styling;
+* Use MDX which can import custom component;
+* Create a new page in `src/pages` in corresponding path to apply a different layout template.
+
+## Menu
+
+Menu items are defined in `src/data/menu.yml`. An item can be specified in 2 ways.
+
+First referring to a page:
+
+```yaml
+page: path/to/the/page
+noUrl: true  # Optionally create a non-clickable menu item
+```
+
+The value of `page` field is the path under `src/content/pages` without file extension name. The page title is used as the menu item name, and the page URL is the target of the menu link.
+
+Build will fail if a menu item refers to an non-existing page. So it is perfered way to link to internal pages.
+
+The second way is setting the menu item name and URL directly:
+
+```yaml
+name: Menu Item Name
+url: /path/to/the/url
+```
+
+The `url` can be anything, even to external sites. If `url` is missing, the menu item is not clickable.
+
+Both menu items can have children menu. The UI component, namely `src/components/header/MobileNavbar.astro` and `src/components/header/Navbar.astro`, will choose the right style to render the children. Currently we render up to 3 levels of menu items.
 
 ## Resources
 
