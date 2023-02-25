@@ -1,0 +1,50 @@
+---
+import Base from "./Base.astro";
+import Breadcrumbs from "@components/section/Breadcrumbs.astro";
+import Container from "@components/common/Container.astro";
+import { getSite } from "@libs/site";
+import { getLanguageBySlug } from "@libs/language";
+
+export interface Props {
+  title: string;
+  slug: string;
+  titleCover: string;
+  proseClassList?: string[];
+}
+
+const { title, slug, titleCover, proseClassList = [] } = Astro.props;
+
+const language = getLanguageBySlug(slug);
+const site = getSite(language);
+const titleCoverBgUrl = `url('${titleCover}')`;
+---
+
+<style define:vars={{ titleCoverBgUrl }}>
+  .title-cover {
+    background-image: var(--titleCoverBgUrl);
+  }
+</style>
+
+<Base title={`${title} - ${site.shortTitle}`} language={language}>
+  <Breadcrumbs slug={slug} />
+  <article class:list={["prose prose-xl max-w-none", ...proseClassList]}>
+    <div class:list={["title-cover", "bg-cover bg-center", "not-prose"]}>
+      <Container classList={["relative", "h-40"]}>
+        <h1
+          class:list={[
+            "absolute left-6 bottom-3",
+            "bg-[#ffffff80] rounded-lg",
+            "px-2 py-1",
+            "font-semibold text-3xl",
+            "text-maxpurple",
+          ]}
+        >
+          {title}
+        </h1>
+      </Container>
+    </div>
+    <Container classList={["py-6"]}>
+      <slot />
+    </Container>
+  </article>
+</Base>

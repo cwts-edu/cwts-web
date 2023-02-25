@@ -4,31 +4,26 @@ import Breadcrumbs from "@components/section/Breadcrumbs.astro";
 import Container from "@components/common/Container.astro";
 import { getSite } from "@libs/site";
 import { getLanguageBySlug } from "@libs/language";
-import { getBreadcrumbList } from "@libs/breadcrumbs";
 
 export interface Props {
   title: string;
   slug: string;
+  proseClassList?: string[];
 }
 
-const { title, slug } = Astro.props;
+const { title, slug, proseClassList = [] } = Astro.props;
 
 const language = getLanguageBySlug(slug);
 const site = getSite(language);
-
-const breadcrumbs = await getBreadcrumbList(slug, false);
-const pageTitle = [
-  title,
-  ...breadcrumbs.map((link) => link.title).reverse(),
-  site.shortTitle,
-].join(" - ");
 ---
 
-<Base title={pageTitle} language={language}>
-  <div><Breadcrumbs slug={slug} /></div>
+<Base title={`${title} - ${site.shortTitle}`} language={language}>
+  <Breadcrumbs slug={slug} />
   <Container classList={["py-6"]}>
-    <article class="prose prose-xl max-w-none">
-      <h1>{title}</h1>
+    <article class:list={["prose prose-xl max-w-none", ...proseClassList]}>
+      <slot name="title">
+        <h1>{title}</h1>
+      </slot>
       <slot />
     </article>
   </Container>

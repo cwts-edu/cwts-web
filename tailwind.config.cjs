@@ -5,22 +5,24 @@ const defaultTheme = require("tailwindcss/defaultTheme");
 module.exports = {
   content: ["./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}"],
   theme: {
-    colors: {
-      darkerviolet: {
-        DEFAULT: "#330047",
+    extend: {
+      colors: {
+        darkerviolet: {
+          DEFAULT: "#330047",
+        },
+        darkviolet: {
+          DEFAULT: "#410659",
+        },
+        maxpurple: {
+          DEFAULT: "#6E4080",
+        },
+        rebeccapurple: {
+          DEFAULT: "#6126A2",
+        },
+        darkblue: {
+          DEFAULT: "#211F54",
+        },
       },
-      darkviolet: {
-        DEFAULT: "#410659",
-      },
-      maxpurple: {
-        DEFAULT: "#6E4080",
-      },
-      rebeccapurple: {
-        DEFAULT: "#6126A2",
-      },
-      gray: colors.gray,
-      white: colors.white,
-      black: colors.black,
     },
     fontFamily: {
       sans: [
