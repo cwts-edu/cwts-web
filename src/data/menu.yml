@@ -1,15 +1,15 @@
-- page: "zh/intro"
+- page: "zh/about"
   noUrl: true
   children:
-    - page: zh/intro/statement-of-faith
-    - page: zh/intro/vision-and-mission
-    - page: zh/intro/history
-    - page: zh/intro/feature
-    - page: zh/intro/development
-    - page: zh/intro/accreditation
-    - page: zh/intro/board
-    - page: zh/intro/administration
-    - page: zh/intro/effectiveness-statement
+    - page: zh/about/statement-of-faith
+    - page: zh/about/vision-and-mission
+    - page: zh/about/history
+    - page: zh/about/feature
+    - page: zh/about/development
+    - page: zh/about/accreditation
+    - page: zh/about/board
+    - page: zh/about/administration
+    - page: zh/about/effectiveness-statement
 - name: 教務資訊
   children:
     - name: 學位學制

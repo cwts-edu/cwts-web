@@ -21,6 +21,6 @@ const { title, language } = Astro.props;
   <body class="overflow-y-scroll">
     <Header language={language} />
     <slot />
-    <Footer />
+    <Footer language={language} />
   </body>
 </html>
