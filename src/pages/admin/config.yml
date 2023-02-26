@@ -1,7 +1,7 @@
 backend:
   name: github
   repo: saintfish/cwts-www
-  branch: master
+  branch: cms-test
 media_folder: "/public/uploads"
 public_folder: "/uploads"
 collections:
