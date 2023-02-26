@@ -2,22 +2,42 @@ backend:
   name: github
   repo: saintfish/cwts-www
   branch: master
-media_folder: "public/uploads"
+media_folder: "/public/uploads"
 public_folder: "/uploads"
 collections:
-  - name: zh_about
-    label: About (zh)
+  - name: zh-about
+    label: 基神介绍
     folder: src/content/pages/zh/about
-    identifier_field: fields.slug
-    slug: "{{fields.slug}}"
-    create: true
+    create: false
+    delete: false
     fields:
-      - label: "Slug"
-        name: "slug"
-        widget: "string"
-      - label: "Title"
-        name: "title"
-        widget: "string"
-      - label: "Body"
-        name: "body"
-        widget: "markdown"
+      - label: Title
+        name: title
+        widget: string
+      - label: Body
+        name: body
+        widget: markdown
+  - name: en-about
+    label: About
+    folder: src/content/pages/en/about
+    create: false
+    delete: false
+    fields:
+      - label: Title
+        name: title
+        widget: string
+      - label: Body
+        name: body
+        widget: markdown
+  - name: en-academic
+    label: Academic
+    folder: src/content/pages/en/academic
+    create: false
+    delete: false
+    fields:
+      - label: Title
+        name: title
+        widget: string
+      - label: Body
+        name: body
+        widget: markdown
