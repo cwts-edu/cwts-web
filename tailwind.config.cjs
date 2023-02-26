@@ -1,6 +1,24 @@
 const colors = require("tailwindcss/colors");
 const defaultTheme = require("tailwindcss/defaultTheme");
 
+const defaultFont = [
+  "Helvetica",
+  "Tahoma",
+  "Arial",
+  '"PingFang TC"',
+  '"PingFang SC"',
+  '"Heiti TC"',
+  '"微軟正黑體"',
+  '"Microsoft JhengHei"',
+  '"微软雅黑"',
+  '"Microsoft YaHei"',
+  '"Noto Sans TC"',
+  '"Noto Sans SC"',
+  "Roboto",
+  '"Segoe UI"',
+  "sans-serif",
+];
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ["./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}"],
@@ -25,24 +43,9 @@ module.exports = {
       },
     },
     fontFamily: {
-      sans: [
-        "Helvetica",
-        "Tahoma",
-        "Arial",
-        '"PingFang TC"',
-        '"PingFang SC"',
-        '"Heiti TC"',
-        '"微軟正黑體"',
-        '"Microsoft JhengHei"',
-        '"微软雅黑"',
-        '"Microsoft YaHei"',
-        '"Noto Sans TC"',
-        '"Noto Sans SC"',
-        "Roboto",
-        '"Segoe UI"',
-        "sans-serif",
-      ],
+      sans: defaultFont,
       serif: defaultTheme.fontFamily.serif,
+      ui: ['"Roboto Condensed"', ...defaultFont],
     },
     screens: {
       sm: "640px",
