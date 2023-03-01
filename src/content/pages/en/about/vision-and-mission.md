@@ -1,5 +1,6 @@
 ---
 title: Vision and Mission
+order: 102
 ---
 
 ## Vision Statement

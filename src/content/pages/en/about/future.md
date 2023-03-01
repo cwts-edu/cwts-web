@@ -1,5 +1,6 @@
 ---
 title: Our Future Goals
+order: 104
 ---
 
 We are working diligently towards the following goals in the future:

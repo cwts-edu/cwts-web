@@ -19,10 +19,10 @@ export interface Props {
 }
 
 const { page } = Astro.props;
-const { title } = page.data;
+const { title, coverImage = "/images/default.cover.jpg" } = page.data;
 const { Content } = await page.render();
 ---
 
-<Section title={title} slug={page.slug}>
+<Section title={title} slug={page.slug} coverImage={coverImage}>
   <Content />
 </Section>

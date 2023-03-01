@@ -8,23 +8,37 @@ import { getLanguageBySlug } from "@libs/language";
 export interface Props {
   title: string;
   slug: string;
+  coverImage: string;
   proseClassList?: string[];
 }
 
-const { title, slug, proseClassList = [] } = Astro.props;
+const { title, slug, coverImage, proseClassList = [] } = Astro.props;
 
 const language = getLanguageBySlug(slug);
 const site = getSite(language);
+const coverImageUrl = `url('${coverImage}')`;
 ---
+
+<style define:vars={{ coverImageUrl }}>
+  .title-cover {
+    background-image: var(--coverImageUrl);
+  }
+</style>
 
 <Base title={`${title} - ${site.shortTitle}`} language={language}>
   <Breadcrumbs slug={slug} />
-  <Container classList={["py-6"]}>
-    <article class:list={["prose prose-xl max-w-none", ...proseClassList]}>
-      <slot name="title">
-        <h1>{title}</h1>
-      </slot>
+  <article class:list={["prose prose-xl max-w-none", ...proseClassList]}>
+    <div class:list={["title-cover", "bg-cover bg-center", "not-prose"]}>
+      <Container classList={["h-40"]}>
+        <div class:list={["flex items-end", "w-full h-full py-3"]}>
+          <h1 class:list={["font-semibold text-3xl", "text-white"]}>
+            {title}
+          </h1>
+        </div>
+      </Container>
+    </div>
+    <Container classList={["pt-3 pb-6"]}>
       <slot />
-    </article>
-  </Container>
+    </Container>
+  </article>
 </Base>

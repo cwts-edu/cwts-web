@@ -1,6 +1,8 @@
 ---
 title: 異象和使命
+order: 102
 ---
+
 ## Vision Statement
 
 Our vision is to glorify the Triune God as an influential and respected theological institution that supports Chinese churches in fulfilling the Great Commission of Jesus Christ.

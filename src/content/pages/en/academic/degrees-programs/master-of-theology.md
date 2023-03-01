@@ -1,3 +1,4 @@
 ---
-title: Master of Theology
+title: Master of Theology\
+order: 201.2
 ---

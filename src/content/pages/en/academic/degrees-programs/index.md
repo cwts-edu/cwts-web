@@ -1,5 +1,6 @@
 ---
 title: Degrees and Programs
+order: 201
 ---
 
 CWTS offers one Doctor of Ministry program, four Master degree programs (Theology, Divinity, Biblical Studies, Christian Ministry), two Diploma programs (Christian Studies, Church Leadership), and one Certificate program (Children Ministry). Credit hours and years required for their completion are as follows:

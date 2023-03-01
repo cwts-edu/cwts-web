@@ -1,5 +1,6 @@
 ---
 title: Accreditation
+order: 105
 ---
 
 **The Association of Theological Schools (ATS)**
