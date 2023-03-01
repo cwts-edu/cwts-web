@@ -63,6 +63,8 @@ module.exports = {
             "--tw-prose-body": colors.black,
             "--tw-prose-headings": themeColors.darkviolet,
             "--tw-prose-lead": themeColors.darkblue,
+            "--tw-prose-counters": "inherit",
+            "--tw-prose-bullets": "inherit",
             fontSize: rem(20),
             lineHeight: round(28 / 20),
             h1: {
