@@ -1,0 +1,26 @@
+---
+import listChildren from "@libs/listing";
+
+export interface Props {
+  slug: string;
+}
+
+const { slug } = Astro.props;
+
+const children = await listChildren(slug);
+if (children.length === 0) {
+  return;
+}
+---
+
+<div>
+  {
+    children.map((child) => (
+      <div>
+        <img src={child.thumbnail} />
+        {child.title}
+        <a href={child.url}>More</a>
+      </div>
+    ))
+  }
+</div>
