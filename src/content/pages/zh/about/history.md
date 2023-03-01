@@ -1,4 +1,4 @@
 ---
 title: 學院歷史
-order: 130
+order: 103
 ---

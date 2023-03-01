@@ -66,7 +66,7 @@ module.exports = {
             fontSize: rem(20),
             lineHeight: round(28 / 20),
             h1: {
-              fontSize: em(30, 30),
+              fontSize: em(30, 20),
               marginTop: em(30, 30),
               marginBottom: em(30, 30),
             },
@@ -74,6 +74,7 @@ module.exports = {
               fontSize: em(28, 20),
               marginTop: em(28, 28),
               marginBottom: em(28, 28),
+              fontWeight: "600",
             },
             '[class~="lead"]': {
               fontSize: em(20, 20),

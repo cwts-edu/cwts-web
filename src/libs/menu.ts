@@ -6,6 +6,7 @@ interface MenuDataLink {
 interface MenuDataPage {
   page: string;
   noUrl?: boolean;
+  includeChildren?: boolean;
 }
 
 type MenuData = (MenuDataLink | MenuDataPage) & {
@@ -30,6 +31,11 @@ async function convertMenuDataToMenuItem(data: MenuData): Promise<MenuItem> {
     children = await Promise.all(
       data.children.map((child) => convertMenuDataToMenuItem(child))
     );
+  } else if (isMenuDataSlug(data) && data.includeChildren) {
+    children = (await listChildren(data.page)).map((child) => ({
+      name: child.title,
+      url: child.url,
+    }));
   }
   if (isMenuDataSlug(data)) {
     const page = await getEntryBySlug("pages", data.page);
@@ -55,6 +61,7 @@ async function convertMenu(menu: MenuData[]): Promise<MenuItem[]> {
 import menuZh from "@data/menu-zh.yml";
 import menuEn from "@data/menu-en.yml";
 import type { Language } from "./language";
+import listChildren from "./listing";
 
 const menu = {
   en: await convertMenu(menuEn as MenuData[]),
