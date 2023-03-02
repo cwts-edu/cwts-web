@@ -13,14 +13,20 @@ if (children.length === 0) {
 }
 ---
 
-<div>
+<aside
+  class:list={[
+    "not-prose gap-12",
+    "grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1",
+  ]}
+>
   {
     children.map((child) => (
-      <div>
-        <img src={child.thumbnail} />
-        {child.title}
-        <a href={child.url}>More</a>
+      <div class="md:w-fit w-full">
+        <a href={child.url}>
+          <img width="240" class="max-sm:w-full" src={child.thumbnail} />
+          <div class="py-1 text-xl text-darkblue">{child.title}</div>
+        </a>
       </div>
     ))
   }
-</div>
+</aside>
