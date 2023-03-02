@@ -16,7 +16,7 @@ const bigMenu: boolean = items[0].children != null;
 
 {
   bigMenu ? (
-    <div class="bg-maxpurple flex flex-row flex-wrap p-1.5">
+    <div class="bg-maxpurple flex flex-row flex-wrap p-1.5 drop-shadow-md">
       {items.map((item) => (
         <div
           class:list={[
@@ -44,7 +44,7 @@ const bigMenu: boolean = items[0].children != null;
       ))}
     </div>
   ) : (
-    <ul class="bg-maxpurple flex flex-row flex-wrap px-1 py-1.5">
+    <ul class="bg-maxpurple flex flex-row flex-wrap px-1 py-1.5 drop-shadow-md">
       {items.map((item) => (
         <li
           class:list={[

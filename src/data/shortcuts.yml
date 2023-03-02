@@ -1,17 +1,17 @@
 zh:
   - name: 奉獻支持
-    url: "#"
+    url: "/zh/donation"
   - name: 聯絡我們
-    url: "#"
+    url: "/zh/contact"
   - name: 申請入學
     url: "#"
     type: button
     breakBefore: true
 en:
   - name: Give
-    url: "#"
+    url: "/en/donation"
   - name: Contact
-    url: "#"
+    url: "/en/contact"
   - name: Apply
     url: "#"
     type: button

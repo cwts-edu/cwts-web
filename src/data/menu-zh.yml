@@ -4,46 +4,21 @@
 - page: "zh/academic"
   noUrl: true
   includeChildren: true
-- name: 招生資訊
+- page: "zh/admissions"
+  noUrl: true
   children:
-    - name: 學位申請資格和程序
+    - page: "zh/admissions/application-procedure"
+      includeChildren: true
+    - page: "zh/admissions/international"
+    - page: "zh/admissions/tuition-scholarship"
       url: "#"
-      children:
-        - name: 博士學位課程
-          url: "#"
-        - name: 碩士學位課程
-          url: "#"
-        - name: 文憑課程
-          url: "#"
-        - name: 培育中心證書課程
-          url: "#"
-    - name: F-1 國際生要求
-      url: "#"
-    - name: 學費和獎助學金
-      url: "#"
-- name: 學生生活
-  children:
-    - name: 校曆
-      url: "#"
-    - name: 早會
-      url: "#"
-    - name: 早禱
-      url: "#"
-    - name: 宿舍
-      url: "#"
-    - name: 聘牧信息
-      url: "#"
-- name: 培育中心
-  url: "#"
-- name: 校園活動
-  children:
-    - name: 灣區基督徒教育大會
-      url: "#"
-    - name: 基督工人論壇 回顧
-      url: "#"
-    - name: “陳道明牧師”神學講堂
-      url: "#"
-    - name: 基神季刊
-      url: "#"
-- name: 校友專頁
-  url: "#"
+- page: "zh/student-life"
+  noUrl: true
+  includeChildren: true
+- page: "zh/ministry-institute"
+  noUrl: true
+  includeChildren: true
+- page: "zh/news-events"
+  noUrl: true
+  includeChildren: true
+- page: "zh/alumni"
