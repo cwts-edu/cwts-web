@@ -4,7 +4,7 @@ zh:
   - name: 聯絡我們
     url: "/zh/contact"
   - name: 申請入學
-    url: "#"
+    url: "/zh/admissions/application-procedure"
     type: button
     breakBefore: true
 en:
