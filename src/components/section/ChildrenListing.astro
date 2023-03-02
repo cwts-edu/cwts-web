@@ -24,7 +24,9 @@ if (children.length === 0) {
       <div class="md:w-fit w-full">
         <a href={child.url}>
           <img width="240" class="max-sm:w-full" src={child.thumbnail} />
-          <div class="py-1 text-xl text-darkblue">{child.title}</div>
+          <div class="py-1 text-xl text-darkblue font-medium">
+            {child.title}
+          </div>
         </a>
       </div>
     ))
