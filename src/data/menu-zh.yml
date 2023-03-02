@@ -1,24 +1,9 @@
 - page: "zh/about"
   noUrl: true
   includeChildren: true
-- name: 教務資訊
-  children:
-    - name: 學位學制
-      url: "#"
-    - name: 全網絡聖工碩士學位
-      url: "#"
-    - name: 學院總覽
-      url: "#"
-    - name: 學位課程表
-      url: "#"
-    - name: 注冊須知
-      url: "#"
-    - name: 教務章程
-      url: "#"
-    - name: 教授團隊
-      url: "#"
-    - name: 圖書館
-      url: "#"
+- page: "zh/academic"
+  noUrl: true
+  includeChildren: true
 - name: 招生資訊
   children:
     - name: 學位申請資格和程序
