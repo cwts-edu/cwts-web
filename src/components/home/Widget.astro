@@ -18,12 +18,12 @@ const { title, moreText, moreLink, widgetClass, moreClass, moreArrowClass } =
 <div class:list={[...(widgetClass || [])]}>
   <Container classList={["md:py-12 py-6"]}>
     <div class:list={["flex justify-between items-center md:pb-6 pb-5"]}>
-      <div class="text-xl font-medium">{title}</div>
+      <div class="text-3xl font-medium">{title}</div>
       <div>
         <a
           href={moreLink}
           class:list={[
-            "text-base py-1.5 px-4 rounded-lg border",
+            "text-xl py-1.5 px-4 rounded-lg border",
             ...(moreClass || []),
           ]}
         >
