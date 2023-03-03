@@ -1,6 +1,14 @@
 ---
 import Widget from "./Widget.astro";
 import Carousel, { Props as CarouselProps } from "./Carousel";
+import type { Language } from "@libs/language";
+import { T } from "@libs/language";
+
+export interface Props {
+  language: Language;
+}
+
+const { language } = Astro.props;
 
 const carouselProps: CarouselProps = {
   items: [
@@ -78,8 +86,8 @@ const carouselProps: CarouselProps = {
 </style>
 
 <Widget
-  title="最近信息"
-  moreText="所有信息"
+  title={T("latest_news", language)}
+  moreText={T("more_news", language)}
   moreLink="#"
   widgetClass={["bg-darkviolet text-white"]}
   moreClass={["border-none bg-white text-darkviolet"]}
