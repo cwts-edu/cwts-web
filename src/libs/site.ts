@@ -1,15 +1,10 @@
 import type { Language } from "../libs/language";
 
-interface Site {
-  title: string;
-  shortTitle: string;
-}
-
 type SiteConfig = {
   [language in Language]: Site;
 };
 
-const site: SiteConfig = {
+const siteData = {
   en: {
     title: "Christian Witness Theological Seminary",
     shortTitle: "CWTS",
@@ -20,6 +15,13 @@ const site: SiteConfig = {
   },
 };
 
-export function getSite(language: Language): Site {
-  return site[language];
+class Site {
+  title(language: Language): string {
+    return siteData[language].title;
+  }
+  shortTitle(language: Language): string {
+    return siteData[language].shortTitle;
+  }
 }
+
+export default new Site();

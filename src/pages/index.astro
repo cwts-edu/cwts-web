@@ -1,13 +1,12 @@
 ---
 import type { Language } from "@libs/language";
-import { getSite } from "@libs/site";
+import site from "@libs/site";
 import Base from "@layouts/Base.astro";
 import News from "@components/home/News.astro";
 
 const language: Language = "zh";
-const site = getSite(language);
 ---
 
-<Base title={site.title} language={language}>
+<Base title={site.title(language)} language={language}>
   <News language={language} />
 </Base>
