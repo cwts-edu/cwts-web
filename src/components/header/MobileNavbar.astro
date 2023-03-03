@@ -93,7 +93,7 @@ const menuWithoutChildren = menu.filter((menuItem) => !menuItem.children);
               // show menu icon when collapsed
               "group-[.menu-on]/menu:hidden inline",
               // set similar size as text and align with text
-              "h-5 align-text-bottom",
+              "h-5 align-middle",
             ]}
           />
           <Icon
@@ -102,7 +102,7 @@ const menuWithoutChildren = menu.filter((menuItem) => !menuItem.children);
               // show close icon when expanded
               "group-[.menu-on]/menu:inline hidden",
               // set similar size as text and align with text
-              "h-5 align-text-bottom",
+              "h-5 align-middle",
             ]}
           />
         </a>
@@ -133,7 +133,7 @@ const menuWithoutChildren = menu.filter((menuItem) => !menuItem.children);
                         // rotate up-side-down when expanded
                         "group-[.submenu-on]/submenu:rotate-180",
                         // set similar size as text and align with text
-                        "h-7 align-text-bottom",
+                        "h-7 align-middle",
                       ]}
                     />
                   </div>
@@ -200,10 +200,7 @@ const menuWithoutChildren = menu.filter((menuItem) => !menuItem.children);
           />
         </div>
         <div>
-          <Icon
-            name="search-sharp"
-            class="text-darkviolet h-7 align-text-bottom"
-          />
+          <Icon name="search-sharp" class="text-darkviolet h-7 align-middle" />
         </div>
       </form>
       <div class:list={["flex flex-col items-start py-4 gap-6 text-lg"]}>
@@ -221,7 +218,7 @@ const menuWithoutChildren = menu.filter((menuItem) => !menuItem.children);
                         >
                           {item.name}
                           <Icon
-                            class="inline h-6 align-text-bottom text-darkviolet"
+                            class="inline h-6 align-middle text-darkviolet"
                             name="angle-right"
                           />
                         </a>
