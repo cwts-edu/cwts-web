@@ -33,16 +33,20 @@ const footBgUrl = `url('${footerBg}')`;
         <img src={footerLogo} width="300" height="68.5" />
       </div>
       <div>
-        <Icon
-          name="location-on-outline"
-          class="inline-block align-text-bottom w-5 h-5 mr-2"
-        />1975 Concourse Dr, San Jose, CA 95131 USA
+        <a href="https://goo.gl/maps/jRva7GkXnB9k1G7g6" target="_blank">
+          <Icon
+            name="location-on-outline"
+            class="inline-block align-text-bottom w-5 h-5 mr-2"
+          />1975 Concourse Dr, San Jose, CA 95131 USA
+        </a>
       </div>
       <div>
-        <Icon
-          name="fax"
-          class="inline-block align-text-bottom w-5 h-5 mr-2"
-        />(408)433-9855 (Fax)
+        <a href="fax:+1-408-433-9855">
+          <Icon
+            name="fax"
+            class="inline-block align-text-bottom w-5 h-5 mr-2"
+          />(408)433-9855 (Fax)
+        </a>
       </div>
     </div>
     <div class="flex flex-col grow">
@@ -53,37 +57,46 @@ const footBgUrl = `url('${footerBg}')`;
         <div class="flex flex-col gap-3 py-3 sm:max-md:pr-16">
           <div class="text-xl">Main</div>
           <div>
-            <Icon
-              name="phone"
-              class="inline-block align-text-bottom w-5 h-5 mr-2"
-            />(408)433-2280
+            <a href="tel:+1-408-433-2280">
+              <Icon
+                name="phone"
+                class="inline-block align-text-bottom w-5 h-5 mr-2"
+              />(408)433-2280
+            </a>
           </div>
           <div>
-            <Icon
-              name="email-outline"
-              class="inline-block align-text-bottom w-5 h-5 mr-2"
-            />admin@cwts.edu
+            <a href="mailto:admin@cwts.edu">
+              <Icon
+                name="email-outline"
+                class="inline-block align-text-bottom w-5 h-5 mr-2"
+              />admin@cwts.edu
+            </a>
           </div>
         </div>
         <div class="flex flex-col gap-3 py-3 sm:max-md:pr-16">
           <div class="text-xl">Admissions</div>
           <div>
-            <Icon
-              name="phone"
-              class="inline-block align-text-bottom w-5 h-5 mr-2"
-            />(408)433-2280 ext 101
+            <a href="tel:+1-408-433-2280,101">
+              <Icon
+                name="phone"
+                class="inline-block align-text-bottom w-5 h-5 mr-2"
+              />(408)433-2280 ext 101
+            </a>
           </div>
           <div>
-            <Icon
-              name="email-outline"
-              class="inline-block align-text-bottom w-5 h-5 mr-2"
-            />admissions@cwts.edu
+            <a href="mailto:admissions@cwts.edu">
+              <Icon
+                name="email-outline"
+                class="inline-block align-text-bottom w-5 h-5 mr-2"
+              />admissions@cwts.edu
+            </a>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
-<div class="bg-darkerviolet font-ui text-white text-center max-md:mb-16">
-  All Content &copy; 2023 Christian Witness Theological Seminary
+
+  <div class="bg-darkerviolet font-ui text-white text-center max-md:mb-16">
+    All Content &copy; 2023 Christian Witness Theological Seminary
+  </div>
 </div>
