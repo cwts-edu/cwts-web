@@ -3,6 +3,8 @@ import Widget from "./Widget.astro";
 import Carousel, { Props as CarouselProps } from "./Carousel";
 import type { Language } from "@libs/language";
 import { T } from "@libs/language";
+import { getCollection } from "astro:content";
+import { isRenderTemplateResult } from "astro/dist/runtime/server/render/astro";
 
 export interface Props {
   language: Language;
@@ -30,6 +32,20 @@ const carouselProps: CarouselProps = {
     },
   ],
 };
+
+const news = await Promise.all(
+  (
+    await getCollection("news")
+  )
+    .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+    .slice(0, 4)
+    .map(async (page) => ({
+      title: page.data.title,
+      thumbnail: page.data.thumbnail,
+      url: page.data.url,
+      Content: (await page.render()).Content,
+    }))
+);
 ---
 
 <style is:global>
@@ -93,4 +109,28 @@ const carouselProps: CarouselProps = {
   moreClass={["border-none bg-white text-darkviolet"]}
 >
   <Carousel items={carouselProps.items} client:idle />
+
+  <div
+    class:list={[
+      "flex gap-3 scrollbar-hide pt-4",
+      "lg:justify-between",
+      "max-lg:overflow-x-auto",
+    ]}
+  >
+    {
+      news.map((item) => (
+        <div class="w-[12.5rem] shrink-0">
+          <a href={item.url}>
+            <div>
+              <img width="200" height="110" src={item.thumbnail} />
+            </div>
+            <div class="text-base py-2">{item.title}</div>
+            <div class="text-xs whitespace-normal">
+              <item.Content />
+            </div>
+          </a>
+        </div>
+      ))
+    }
+  </div>
 </Widget>

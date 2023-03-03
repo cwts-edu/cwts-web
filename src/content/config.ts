@@ -9,4 +9,13 @@ const pages = defineCollection({
   }),
 });
 
-export const collections = { pages };
+const news = defineCollection({
+  schema: z.object({
+    title: z.string(),
+    date: z.date(),
+    thumbnail: z.string(),
+    url: z.string(),
+  }),
+});
+
+export const collections = { pages, news };

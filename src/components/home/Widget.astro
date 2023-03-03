@@ -1,5 +1,6 @@
 ---
 import { Icon } from "astro-icon";
+import Container from "@components/common/Container.astro";
 
 export interface Props {
   title: string;
@@ -15,7 +16,7 @@ const { title, moreText, moreLink, widgetClass, moreClass, moreArrowClass } =
 ---
 
 <div class:list={[...(widgetClass || [])]}>
-  <div class:list={["mx-auto lg:container", "px-4 md:py-12 py-6"]}>
+  <Container classList={["md:py-12 py-6"]}>
     <div class:list={["flex justify-between items-center md:pb-6 pb-5"]}>
       <div class="text-xl font-medium">{title}</div>
       <div>
@@ -38,5 +39,5 @@ const { title, moreText, moreLink, widgetClass, moreClass, moreArrowClass } =
       </div>
     </div>
     <slot />
-  </div>
+  </Container>
 </div>
