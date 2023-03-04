@@ -13,16 +13,23 @@
   - [x] Mobile navigation
   - [x] Section page breadcrumbs
 - Homepage widgets
-  - [ ] Latest news
+  - [x] Latest news
   - [ ] Degree information
   - [ ] Faculty
   - [ ] Videos
-  - [ ] Banner
+  - [ ] Vision and mission
   - [ ] Icons
 - Special section pages
   - [ ] Programs and degrees
   - [ ] Job listing
+  - [ ] Faculty
+- Content component
+  - [ ] Video Embedding
   - [ ] PDF Embedding
+  - [ ] Buttons
+- Content management
+  - [ ] Refactor the code to load from data files
+  - [ ] Define schema for data files
 
 ## Project Structure
 
