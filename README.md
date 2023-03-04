@@ -2,17 +2,27 @@
 
 ## TODO
 
-* [x] Setup Netlify deployment: https://cwts-www.netlify.app/
-* [ ] Integrate with netlify CMS
-* [ ] Multilingual support
-* [x] CSS framework
-* Components
-  * [x] Header component without navigation
-  * [x] Footer component
-  * [x] Desktop navigation
-  * [x] Mobile navigation
-  * [x] Section page breadcrumbs
-* Homepage widgets
+- [x] Setup Netlify deployment: https://cwts-www.netlify.app/
+- [x] Integrate with netlify CMS
+- [x] Multilingual support
+- [x] CSS framework
+- Components
+  - [x] Header component without navigation
+  - [x] Footer component
+  - [x] Desktop navigation
+  - [x] Mobile navigation
+  - [x] Section page breadcrumbs
+- Homepage widgets
+  - [ ] Latest news
+  - [ ] Degree information
+  - [ ] Faculty
+  - [ ] Videos
+  - [ ] Banner
+  - [ ] Icons
+- Special section pages
+  - [ ] Programs and degrees
+  - [ ] Job listing
+  - [ ] PDF Embedding
 
 ## Project Structure
 
@@ -25,11 +35,44 @@
 <dd>Reusable components used in pages and layouts</dd>
 <dt>src/content</dt>
 <dd>Content collections, e.g. sub-section pages, faculty bio</dd>
+<dt>src/data</dt>
+<dd>Data files to config various parts of the site</dd>
+<dt>src/scripts</dt>
+<dd>Client-side scripts</dd>
+<dt>src/libs</dt>
+<dd>Server-side scripts</dd>
+<dt>src/icons</dt>
+<dd>Icon svg files used by Icon component. They are included in html inline.</dd>
+<dt>src/assets</dt>
+<dd>Images and CSS imported by Astro. They will be optimized by Astro.</dd>
 <dt>public</dt>
 <dd>Static files</dd>
 </dl>
 
-## Commands
+## Development environment
+
+### Prerequisites
+
+- [Nodejs](https://nodejs.org/)
+- [VS Code](https://code.visualstudio.com/) or any other text editors
+- [GitHub Desktop](https://desktop.github.com/)
+
+### First time setup
+
+1. Install Nodejs
+2. Use Github Desktop to clone the [repo](https://github.com/saintfish/cwts-www)
+3. Open the project directory in VS Code
+4. In VS Code terminal, run `npm install` under project directory
+
+### Run dev server for the first time
+
+1. Run `npm run dev` to start the dev server
+2. Click the link `http://localhost:3000/` in the terminal output
+3. Press ctrl+c to stop the server
+
+The first few steps only need to be done once. Running the `npm` command to start the development.
+
+### Commands
 
 All commands are run from the root of the project, from a terminal:
 
@@ -50,15 +93,15 @@ The project uses [tailwind CSS](https://tailwindcss.com/) as base of css framewo
 
 Section pages are defined in 2 parts:
 
-* `src/content/pages`: Markdown files that defines the content and path
-* `src/pages/[...slug].astro`: Read the content of content pages, apply the layout template
-* `src/pages/other/path.astro`: Apply page specific layout template to specific page
+- `src/content/pages`: Markdown files that defines the content and path
+- `src/pages/[...slug].astro`: Read the content of content pages, apply the layout template
+- `src/pages/other/path.astro`: Apply page specific layout template to specific page
 
 To create a new page, create a new Markdown or MDX file in `src/content/pages`. It will generate a new page in corresponding place. If special style is needed:
 
-* Add HTML code into Markdown. Tailwind classes are available for styling;
-* Use MDX which can import custom component;
-* Create a new page in `src/pages` in corresponding path to apply a different layout template.
+- Add HTML code into Markdown. Tailwind classes are available for styling;
+- Use MDX which can import custom component;
+- Create a new page in `src/pages` in corresponding path to apply a different layout template.
 
 ## Menu
 
@@ -68,7 +111,7 @@ First referring to a page:
 
 ```yaml
 page: path/to/the/page
-noUrl: true  # Optionally create a non-clickable menu item
+noUrl: true # Optionally create a non-clickable menu item
 ```
 
 The value of `page` field is the path under `src/content/pages` without file extension name. The page title is used as the menu item name, and the page URL is the target of the menu link.
@@ -88,9 +131,9 @@ Both menu items can have children menu. The UI component, namely `src/components
 
 ## Resources
 
-* [Astro documentation](https://docs.astro.build)
-* [tailwind CSS](https://tailwindcss.com/)
+- [Astro documentation](https://docs.astro.build)
+- [tailwind CSS](https://tailwindcss.com/)
 
 ## Known issue
 
-* Added svgo 2.8.0 dependency manually due to [a bug in astro-icon](https://github.com/natemoo-re/astro-icon/issues/72#issuecomment-1369597045)
+- Added svgo 2.8.0 dependency manually due to [a bug in astro-icon](https://github.com/natemoo-re/astro-icon/issues/72#issuecomment-1369597045)
