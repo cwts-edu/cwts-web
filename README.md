@@ -12,6 +12,7 @@
   - [x] Desktop navigation
   - [x] Mobile navigation
   - [x] Section page breadcrumbs
+  - [x] Section page listing
 - Homepage widgets
   - [x] Latest news
   - [ ] Degree information
