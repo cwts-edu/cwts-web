@@ -1,0 +1,33 @@
+@layer components {
+  .tabs {
+    @apply flex flex-wrap;
+
+    input[type="radio"] {
+      @apply absolute w-0 h-0 opacity-0;
+    }
+
+    & > section {
+      @apply order-last w-full hidden;
+    }
+
+    & > input[type="radio"]:checked + label + section {
+      @apply block;
+    }
+  }
+
+  .accordion {
+    @apply flex flex-col;
+
+    input[type="radio"] {
+      @apply absolute w-0 h-0 opacity-0;
+    }
+
+    & > section {
+      @apply hidden;
+    }
+
+    & > input[type="radio"]:checked + label + section {
+      @apply block;
+    }
+  }
+}

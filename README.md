@@ -15,7 +15,7 @@
   - [x] Section page listing
 - Homepage widgets
   - [x] Latest news
-  - [ ] Degree information
+  - [x] Degree information
   - [ ] Faculty
   - [ ] Videos
   - [ ] Vision and mission

@@ -5,9 +5,10 @@ import image from "@astrojs/image";
 import tailwind from "@astrojs/tailwind";
 import yaml from "@rollup/plugin-yaml";
 import compress from "astro-compress";
-
-// https://astro.build/config
 import react from "@astrojs/react";
+
+import postcss_import from "postcss-import";
+import tailwindcss_nesting from "tailwindcss/nesting";
 
 // https://astro.build/config
 export default defineConfig({
@@ -18,10 +19,15 @@ export default defineConfig({
     tailwind({
       config: { applyBaseStyles: false },
     }),
-    compress(),
     react(),
+    compress(),
   ],
   vite: {
     plugins: [yaml()],
+    css: {
+      postcss: {
+        plugins: [postcss_import, tailwindcss_nesting],
+      },
+    },
   },
 });

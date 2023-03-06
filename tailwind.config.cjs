@@ -1,5 +1,6 @@
 const colors = require("tailwindcss/colors");
 const defaultTheme = require("tailwindcss/defaultTheme");
+const plugin = require("tailwindcss/plugin");
 
 const round = (num) =>
   num
@@ -30,6 +31,7 @@ const defaultFont = [
 const themeColors = {
   darkerviolet: "#330047",
   darkviolet: "#410659",
+  lightpurple: "#93729F",
   maxpurple: "#6E4080",
   rebeccapurple: "#6126A2",
   darkblue: "#211F54",
@@ -41,21 +43,12 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        darkerviolet: {
-          DEFAULT: themeColors.darkerviolet,
-        },
-        darkviolet: {
-          DEFAULT: themeColors.darkviolet,
-        },
-        maxpurple: {
-          DEFAULT: themeColors.maxpurple,
-        },
-        rebeccapurple: {
-          DEFAULT: themeColors.rebeccapurple,
-        },
-        darkblue: {
-          DEFAULT: themeColors.darkblue,
-        },
+        ...Object.keys(themeColors).reduce((result, key) => {
+          result[key] = {
+            DEFAULT: themeColors[key],
+          };
+          return result;
+        }, {}),
       },
       typography: (theme) => ({
         DEFAULT: {
@@ -64,6 +57,7 @@ module.exports = {
             "--tw-prose-headings": themeColors.darkviolet,
             "--tw-prose-counters": "inherit",
             "--tw-prose-bullets": "inherit",
+            "max-width": "none",
             fontSize: rem(20),
             lineHeight: round(28 / 20),
             h1: {
@@ -85,6 +79,31 @@ module.exports = {
             },
           },
         },
+        tabs: {
+          css: {
+            "--tw-prose-body": theme.colors.black,
+            "--tw-prose-headings": theme.colors.black,
+            fontSize: rem(16),
+            h1: {
+              fontSize: em(20, 16),
+            },
+            h1: {
+              fontSize: em(20, 16),
+              marginTop: em(8, 20),
+              marginBottom: em(8, 20),
+            },
+            h2: {
+              fontSize: em(18, 16),
+              marginTop: em(8, 18),
+              marginBottom: em(8, 18),
+            },
+            li: {
+              marginTop: "0",
+              marginBottom: "0",
+              marginLeft: "0",
+            },
+          },
+        },
       }),
     },
     fontFamily: {
@@ -102,5 +121,15 @@ module.exports = {
   plugins: [
     require("@tailwindcss/typography"),
     require("tailwind-scrollbar-hide"),
+    plugin(function ({ addVariant, e }) {
+      addVariant("activetab", [
+        ".tabs-component > input[type='radio']:checked + label&",
+        ".tabs-component > input[type='radio']:checked + label &",
+      ]);
+      addVariant("activepanel", [
+        ".tabs-component > input[type='radio']:checked + label + section&",
+        ".tabs-component > input[type='radio']:checked + label + section &",
+      ]);
+    }),
   ],
 };

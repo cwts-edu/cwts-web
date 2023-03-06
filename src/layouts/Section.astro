@@ -15,7 +15,7 @@ export interface Props {
 
 const { title, slug, coverImage, proseClassList = [] } = Astro.props;
 
-const language = getLanguageBySlug(slug);
+const { language } = getLanguageBySlug(slug);
 const coverImageUrl = `url('${coverImage}')`;
 ---
 

@@ -1,5 +1,12 @@
 @import url("./fonts.css");
+@import url("./tabs.css");
 /* The integration's default injected base.css file */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .widget-title {
+    @apply lg:text-3xl text-2xl font-medium;
+  }
+}

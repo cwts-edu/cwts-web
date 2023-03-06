@@ -1,17 +1,90 @@
 ---
 import Container from "@components/common/Container.astro";
+import Tabs from "@components/common/Tabs.astro";
+import getDegreesWidgetData from "@libs/degrees_widget";
+import { Icon } from "astro-icon";
+const data = await getDegreesWidgetData("zh");
 ---
+
+<style>
+  .degrees {
+    &.tabs {
+    }
+  }
+</style>
 
 <div class="bg-neutral-100">
   <Container classList={["lg:py-12 py-6"]}>
     <div class:list={["flex flex-col lg:flex-row", "gap-6"]}>
-      <div class="lg:w-[25%]">
-        <div class="lg:text-3xl text-2xl font-medium">學製綜覽</div>
+      <div class="lg:w-[25%] grow-0 shrink-0">
+        <div class="widget-title">學製綜覽</div>
         <p class="lg:text-4xl text-3xl leading-snug font-semibold pt-6">
           基神設有12種不同的學位認證，讓每一位學生都能選擇適合自己的課程。
         </p>
       </div>
-      <div class="grow"></div>
+      <div class="grow">
+        <Tabs
+          id="degrees"
+          classNames={["degrees", "md:tabs", "max-md:accordion"]}
+          tabClassNames={[
+            "text-xl grow flex cursor-pointer",
+            "md:py-2 md:px-4 md:flex-col md:border-l md:first-of-type:border-l-0 md:border-darkviolet md:border-dashed md:items-center md:gap-1",
+            "max-md:py-2 max-md:px-3 max-md:gap-3 max-md:text-while max-md:font-medium max-md:text-white max-md:bg-maxpurple max-md:items-center max-md:border-t-2",
+            "md:activetab:text-darkviolet md:activetab:font-medium",
+          ]}
+        >
+          {
+            data.map((item) => (
+              <>
+                <tab>
+                  <Icon class="h-5" name="scholar" />
+                  <div class="grow">{item.page.data.title}</div>
+                  <Icon
+                    class="md:hidden h-6 activetab:rotate-180"
+                    name="expand-circle-down"
+                  />
+                </tab>
+                <panel>
+                  {!item.children && (
+                    <div class="prose prose-tabs py-4">
+                      <item.Content />
+                    </div>
+                  )}
+                  {item.children && (
+                    <Tabs
+                      id="degree-masters"
+                      classNames={["tabs", "bg-lightpurple justify-between"]}
+                      tabClassNames={[
+                        "text-white p-2 cursor-pointer activetab:font-semibold",
+                      ]}
+                      panelClassNames={["bg-neutral-100"]}
+                    >
+                      {item.children.map((child) => (
+                        <>
+                          <tab>
+                            <span class="max-sm:hidden">
+                              {child.page.data.title}
+                            </span>
+                            <span class="sm:hidden">
+                              {child.page.data.shortTitle ||
+                                child.page.data.title}
+                            </span>
+                          </tab>
+                          <panel>
+                            <div class="prose prose-tabs py-4">
+                              <child.Content />
+                            </div>
+                          </panel>
+                        </>
+                      ))}
+                    </Tabs>
+                  )}
+                </panel>
+              </>
+            ))
+          }
+        </Tabs>
+      </div>
     </div>
   </Container>
 </div>

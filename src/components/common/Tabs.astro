@@ -1,0 +1,67 @@
+---
+import { parse, NodeType, HTMLElement } from "node-html-parser";
+
+export interface Props {
+  id: string;
+  classNames?: string[];
+  tabClassNames?: string[];
+  panelClassNames?: string[];
+  selectedIndex?: number;
+}
+
+const {
+  id,
+  classNames = [],
+  tabClassNames = [],
+  panelClassNames = [],
+  selectedIndex = 0,
+} = Astro.props;
+
+const slot = await Astro.slots.render("default");
+const elements = parse(slot);
+const tabs = elements.childNodes
+  .filter(
+    (e) =>
+      e.nodeType == NodeType.ELEMENT_NODE && (e as HTMLElement).tagName == "TAB"
+  )
+  .map((e) => (e as HTMLElement).innerHTML.trim());
+const panels = elements.childNodes
+  .filter(
+    (e) =>
+      e.nodeType == NodeType.ELEMENT_NODE &&
+      (e as HTMLElement).tagName == "PANEL"
+  )
+  .map((e) => (e as HTMLElement).innerHTML.trim());
+---
+
+<div class:list={["tabs-component", ...classNames]}>
+  {
+    tabs.map((tabs, index) => {
+      const panel = panels[index] || "";
+      return (
+        <>
+          <input
+            type="radio"
+            name={`${id}-input`}
+            id={`${id}-input-${index}`}
+            role="tab"
+            checked={index == selectedIndex}
+          />
+          <label
+            class:list={tabClassNames}
+            for={`${id}-input-${index}`}
+            id={`${id}-label-${index}`}
+          >
+            <Fragment set:html={tabs} />
+          </label>
+          <section
+            class:list={panelClassNames}
+            aria-labelledby={`${id}-label-${index}`}
+          >
+            <Fragment set:html={panel} />
+          </section>
+        </>
+      );
+    })
+  }
+</div>
