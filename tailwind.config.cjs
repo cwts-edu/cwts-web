@@ -127,8 +127,8 @@ module.exports = {
         ".tabs-component > input[type='radio']:checked + label &",
       ]);
       addVariant("activepanel", [
-        ".tabs-component > input[type='radio']:checked + label + section&",
-        ".tabs-component > input[type='radio']:checked + label + section &",
+        ".tabs-component > input[type='radio']:checked + label + &.panel",
+        ".tabs-component > input[type='radio']:checked + label + .panel &",
       ]);
     }),
   ],

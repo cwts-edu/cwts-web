@@ -54,12 +54,12 @@ const panels = elements.childNodes
           >
             <Fragment set:html={tabs} />
           </label>
-          <section
-            class:list={panelClassNames}
+          <div
+            class:list={["panel", ...panelClassNames]}
             aria-labelledby={`${id}-label-${index}`}
           >
             <Fragment set:html={panel} />
-          </section>
+          </div>
         </>
       );
     })
