@@ -4,39 +4,51 @@ import Container from "@components/common/Container.astro";
 
 export interface Props {
   title: string;
-  moreText: string;
-  moreLink: string;
-  widgetClass?: string[];
+  moreText?: string;
+  moreLink?: string;
+  classNames?: string[];
+  titleClass?: string[];
   moreClass?: string[];
   moreArrowClass?: string[];
 }
 
-const { title, moreText, moreLink, widgetClass, moreClass, moreArrowClass } =
-  Astro.props;
+const {
+  title,
+  moreText,
+  moreLink,
+  classNames,
+  titleClass,
+  moreClass,
+  moreArrowClass,
+} = Astro.props;
 ---
 
-<div class:list={[...(widgetClass || [])]}>
+<div class:list={[...(classNames || [])]}>
   <Container classList={["md:py-12 py-6"]}>
     <div class:list={["flex justify-between items-center md:pb-6 pb-5"]}>
-      <div class="widget-title">{title}</div>
-      <div>
-        <a
-          href={moreLink}
-          class:list={[
-            "text-xl py-1.5 px-4 rounded-lg border",
-            ...(moreClass || []),
-          ]}
-        >
-          {moreText}
-          <Icon
-            class:list={[
-              "inline-block h-5 align-middle",
-              ...(moreArrowClass || []),
-            ]}
-            name="angle-right"
-          />
-        </a>
-      </div>
+      <div class:list={["widget-title", ...(titleClass || [])]}>{title}</div>
+      {
+        moreText && (
+          <div>
+            <a
+              href={moreLink}
+              class:list={[
+                "text-xl py-1.5 px-4 rounded-lg border",
+                ...(moreClass || []),
+              ]}
+            >
+              {moreText}
+              <Icon
+                class:list={[
+                  "inline-block h-5 align-middle",
+                  ...(moreArrowClass || []),
+                ]}
+                name="angle-right"
+              />
+            </a>
+          </div>
+        )
+      }
     </div>
     <slot />
   </Container>

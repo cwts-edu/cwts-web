@@ -4,6 +4,7 @@ import site from "@libs/site";
 import Base from "@layouts/Base.astro";
 import News from "@components/home/News.astro";
 import Degrees from "@components/home/Degrees.astro";
+import StudyModes from "@components/home/StudyModes.astro";
 
 const language: Language = "zh";
 ---
@@ -11,4 +12,5 @@ const language: Language = "zh";
 <Base title={site.title(language)} language={language}>
   <News language={language} />
   <Degrees />
+  <StudyModes />
 </Base>

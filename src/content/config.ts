@@ -25,4 +25,16 @@ const degreesWidget = defineCollection({
   }),
 });
 
-export const collections = { pages, news, "degrees-widget": degreesWidget };
+const studyModeWidget = defineCollection({
+  schema: z.object({
+    title: z.string(),
+    order: z.number(),
+  }),
+});
+
+export const collections = {
+  pages,
+  news,
+  "degrees-widget": degreesWidget,
+  "study-mode-widget": studyModeWidget,
+};
