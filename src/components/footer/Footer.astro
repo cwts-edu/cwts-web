@@ -9,20 +9,12 @@ export interface Props {
 }
 
 const { language } = Astro.props;
-
-import footerBg from "@assets/logo-text-zh-light-purple.svg";
-const footBgUrl = `url('${footerBg}')`;
 ---
-
-<style define:vars={{ footBgUrl }}>
-  .footer {
-    background-image: var(--footBgUrl);
-  }
-</style>
 
 <div
   class:list={[
-    "footer font-ui bg-darkviolet text-white bg-contain bg-no-repeat bg-bottom",
+    "font-ui bg-darkviolet text-white bg-contain bg-no-repeat bg-bottom",
+    "bg-[url('/images/bg-footer.svg')]",
   ]}
 >
   <div
