@@ -4,7 +4,7 @@ import type { MarkdownInstance } from "astro";
 
 export interface DegreesWidgetDataItem {
   slug: string;
-  page: CollectionEntry<"degrees_widget">;
+  page: CollectionEntry<"degrees-widget">;
   Content: MarkdownInstance<{}>["Content"];
   children?: DegreesWidgetDataItem[];
 }
@@ -18,7 +18,7 @@ import data from "@data/degrees_widget.yml";
 
 async function findAndConvertData(
   raw: RawDataItem,
-  contentMap: { [slug: string]: CollectionEntry<"degrees_widget"> }
+  contentMap: { [slug: string]: CollectionEntry<"degrees-widget"> }
 ): Promise<DegreesWidgetDataItem> {
   if (!(raw.slug in contentMap))
     throw new Error(`Cannot find ${raw.slug} in degrees_widget content`);
@@ -40,11 +40,11 @@ export default async function getDegreesWidgetData(
   language: Language
 ): Promise<DegreesWidgetDataItem[]> {
   const contents = await getCollection(
-    "degrees_widget",
+    "degrees-widget",
     ({ slug }) => getLanguageBySlug(slug).language === language
   );
 
-  const contentMap: { [slug: string]: CollectionEntry<"degrees_widget"> } = {};
+  const contentMap: { [slug: string]: CollectionEntry<"degrees-widget"> } = {};
   contents.map((page) => {
     contentMap[getLanguageBySlug(page.slug).slug] = page;
   });

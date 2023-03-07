@@ -18,11 +18,11 @@ const news = defineCollection({
   }),
 });
 
-const degrees_widget = defineCollection({
+const degreesWidget = defineCollection({
   schema: z.object({
     title: z.string(),
     shortTitle: z.optional(z.string()),
   }),
 });
 
-export const collections = { pages, news, degrees_widget };
+export const collections = { pages, news, "degrees-widget": degreesWidget };
