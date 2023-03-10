@@ -4,6 +4,7 @@ import { getFacultyMetadata } from "@libs/faculty";
 import { Language, T } from "@libs/language";
 import FacultyRow from "./FacultyRow";
 import Widget from "./Widget.astro";
+import type { Messages } from "./FacultyRow";
 
 export interface Props {
   language: Language;
@@ -13,6 +14,12 @@ const { language } = Astro.props;
 
 const faculty = getFacultyMetadata(language, ["faculty"]);
 const seniorAdjunct = getFacultyMetadata(language, ["senior-adjunct"]);
+const messages: Messages = {
+  course_prefix: T("course_prefix", language),
+  course_separator: T("course_separator", language),
+  position_prefix: T("position_prefix", language),
+  position_separator: T("position_separator", language),
+};
 ---
 
 <Widget
@@ -24,11 +31,11 @@ const seniorAdjunct = getFacultyMetadata(language, ["senior-adjunct"]);
       {T("faculty", language)}
     </span>
   </div>
-  <FacultyRow faculty={faculty} language={language} client:idle />
+  <FacultyRow faculty={faculty} messages={messages} client:idle />
   <div class="mb-5 text-xl">
     <span class="py-1 border-white border-b">
       {T("senior_adjunct_faculty", language)}
     </span>
   </div>
-  <FacultyRow faculty={seniorAdjunct} language={language} client:idle />
+  <FacultyRow faculty={seniorAdjunct} messages={messages} client:idle />
 </Widget>

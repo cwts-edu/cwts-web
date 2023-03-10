@@ -4,14 +4,20 @@ import "swiper/css";
 import "swiper/css/free-mode";
 import "./faculty-row.css";
 import type { FacultyMetadata } from "@libs/faculty";
-import { T, Language } from "@libs/language";
 
-interface Props {
-  faculty: FacultyMetadata[];
-  language: Language;
+export interface Messages {
+  position_prefix: string;
+  position_separator: string;
+  course_prefix: string;
+  course_separator: string;
 }
 
-export default function FacultyRow({ faculty, language }: Props) {
+export interface Props {
+  faculty: FacultyMetadata[];
+  messages: Messages;
+}
+
+export default function FacultyRow({ faculty, messages }: Props) {
   return (
     <Swiper
       className="faculty-row"
@@ -30,13 +36,13 @@ export default function FacultyRow({ faculty, language }: Props) {
             <div className="py-0.5 text-xs">
               {person.positions && (
                 <div className="my-1">
-                  {T("position_prefix", language)}
-                  {person.positions.join(T("position_separator", language))}
+                  {messages.position_prefix}
+                  {person.positions.join(messages.position_separator)}
                 </div>
               )}
               <div className="my-1">
-                {T("course_prefix", language)}
-                {person.courses.join(T("course_separator", language))}
+                {messages.course_prefix}
+                {person.courses.join(messages.course_separator)}
               </div>
             </div>
             <div className="py-0.5 text-xs">
