@@ -1,5 +1,5 @@
 .faculty-row {
   .swiper-slide {
-    @apply w-52;
+    @apply w-52 select-none;
   }
 }
