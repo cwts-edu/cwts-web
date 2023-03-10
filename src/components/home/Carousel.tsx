@@ -4,6 +4,7 @@ import "swiper/css";
 import "swiper/css/autoplay";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
+import "./carousel.css";
 
 interface CarouselItem {
   image: string;
@@ -17,6 +18,7 @@ export interface Props {
 export default function Carousel(props: Props) {
   return (
     <Swiper
+      className="carousel"
       navigation={true}
       pagination={{
         clickable: true,
