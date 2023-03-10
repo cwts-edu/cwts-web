@@ -1,7 +1,7 @@
 ---
 title: 靈命養成與塑造
 date: 2023-02-28
-thumbnail: /news/2023靈命養成-445x250.jpg
+thumbnail: /images/news/2023靈命養成-445x250.jpg
 url: "#"
 ---
 

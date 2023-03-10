@@ -1,7 +1,7 @@
 ---
 title: 2023 基神一月院訊
 date: 2023-02-25
-thumbnail: /news/2023a2.png
+thumbnail: /images/news/2023a2.png
 url: "#"
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: 處境化的基督教倫理
 date: 2023-03-01
-thumbnail: /news/2023基督教倫理-445x250.jpg
+thumbnail: /images/news/2023基督教倫理-445x250.jpg
 url: "#"
 ---
 
