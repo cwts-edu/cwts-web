@@ -16,7 +16,8 @@
 - Homepage widgets
   - [x] Latest news
   - [x] Degree information
-  - [ ] Faculty
+  - [x] Study mode
+  - [x] Faculty
   - [ ] Videos
   - [ ] Vision and mission
   - [ ] Icons

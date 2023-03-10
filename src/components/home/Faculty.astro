@@ -1,0 +1,34 @@
+---
+import "@libs/faculty";
+import { getFacultyMetadata } from "@libs/faculty";
+import { Language, T } from "@libs/language";
+import FacultyRow from "./FacultyRow";
+import Widget from "./Widget.astro";
+
+export interface Props {
+  language: Language;
+}
+
+const { language } = Astro.props;
+
+const faculty = getFacultyMetadata(language, ["faculty"]);
+const seniorAdjunct = getFacultyMetadata(language, ["senior-adjunct"]);
+---
+
+<Widget
+  title={T("faculty_members", language)}
+  classNames={["bg-[#291F1F] text-white"]}
+>
+  <div class="mb-5 text-xl">
+    <span class="py-1 border-white border-b">
+      {T("faculty", language)}
+    </span>
+  </div>
+  <FacultyRow faculty={faculty} language={language} client:idle />
+  <div class="mb-5 text-xl">
+    <span class="py-1 border-white border-b">
+      {T("senior_adjunct_faculty", language)}
+    </span>
+  </div>
+  <FacultyRow faculty={seniorAdjunct} language={language} client:idle />
+</Widget>

@@ -13,3 +13,24 @@ latest_news:
 more_news:
   en: More
   zh: 所有信息
+faculty_members:
+  en: Faculty Members
+  zh: 師資介紹
+faculty:
+  en: Faculty
+  zh: 專任教授
+senior_adjunct_faculty:
+  en: Senior Adjunct Faculty
+  zh: 資深客座教授
+position_prefix:
+  en:
+  zh: 現任：
+position_separator:
+  en: ", "
+  zh: ", "
+course_prefix:
+  en:
+  zh: 主授：
+course_separator:
+  en: ", "
+  zh: ", "

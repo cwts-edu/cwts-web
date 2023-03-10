@@ -32,9 +32,24 @@ const studyModeWidget = defineCollection({
   }),
 });
 
+const faculty = defineCollection({
+  schema: z.object({
+    photo: z.optional(z.string()),
+    name: z.string(),
+    category: z.enum(["faculty", "senior-adjunct", "adjunct"]),
+    order: z.number(),
+    positions: z.optional(z.array(z.string())),
+    courses: z.array(z.string()),
+    degrees: z.array(z.string()),
+    moreDegrees: z.optional(z.array(z.string())),
+    former: z.optional(z.array(z.string())),
+  }),
+});
+
 export const collections = {
   pages,
   news,
+  faculty,
   "degrees-widget": degreesWidget,
   "study-mode-widget": studyModeWidget,
 };

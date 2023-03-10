@@ -1,0 +1,5 @@
+.faculty-row {
+  .swiper-slide {
+    @apply w-52;
+  }
+}
