@@ -27,7 +27,7 @@ export default function FacultyRow({ faculty, language }: Props) {
               <img src={person.photo} className="w-full"></img>
             </div>
             <div className="py-2 text-center">{person.name}</div>
-            <div className="my-1 text-xs">
+            <div className="py-0.5 text-xs">
               {person.positions && (
                 <div className="my-1">
                   {T("position_prefix", language)}
@@ -39,7 +39,7 @@ export default function FacultyRow({ faculty, language }: Props) {
                 {person.courses.join(T("course_separator", language))}
               </div>
             </div>
-            <div className="my-1 text-xs">
+            <div className="py-0.5 text-xs">
               {person.degrees.map((degree) => (
                 <div className="my-1">{degree}</div>
               ))}
