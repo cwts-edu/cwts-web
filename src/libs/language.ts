@@ -10,10 +10,11 @@ export function getLanguageBySlug(slug: string): {
   language: Language;
   slug: string;
 } {
-  const parts = slug.split("/", 2);
-  if (parts.length < 1)
-    throw new Error("Unable to get language from slug: " + slug);
-  if (isLanguage(parts[0])) return { language: parts[0], slug: parts[1] };
+  const index = slug.indexOf("/");
+  if (index < 0) throw new Error("Unable to get language from slug: " + slug);
+  const language = slug.substring(0, index);
+  const remaining = slug.substring(index + 1);
+  if (isLanguage(language)) return { language, slug: remaining };
   throw new Error("Unable to get language from slug: " + slug);
 }
 

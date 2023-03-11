@@ -34,3 +34,6 @@ course_prefix:
 course_separator:
   en: ", "
   zh: ", "
+former_prefix:
+  en: "Former Ministries: "
+  zh: "曾任："

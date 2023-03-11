@@ -55,6 +55,8 @@ module.exports = {
           css: {
             "--tw-prose-body": themeColors.darkblue,
             "--tw-prose-headings": themeColors.darkviolet,
+            "--tw-prose-links": themeColors.darkviolet,
+            "--tw-prose-bold": "inherit",
             "--tw-prose-counters": "inherit",
             "--tw-prose-bullets": "inherit",
             "max-width": "none",
