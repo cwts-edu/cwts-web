@@ -46,8 +46,10 @@ export default function FacultyRow({ faculty, messages }: Props) {
               </div>
             </div>
             <div className="py-0.5 text-xs">
-              {person.degrees.map((degree) => (
-                <div className="my-1">{degree}</div>
+              {person.degrees.map((degree, index) => (
+                <div className="my-1" key={index}>
+                  {degree}
+                </div>
               ))}
             </div>
           </a>
