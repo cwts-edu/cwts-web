@@ -6,6 +6,7 @@ import MobileNavbar from "./MobileNavbar.astro";
 import LanguagePicker from "./LanguagePicker.astro";
 import logoImage from "@assets/main-logo-black.svg";
 import type { Language } from "@libs/language";
+import site from "@libs/site";
 
 export interface Props {
   language: Language;
@@ -45,7 +46,10 @@ const { language } = Astro.props;
           "mx-auto md:mx-0",
         ]}
       >
-        <a href="/" title="Rooted in Scripture, Diligent in Prayer">
+        <a
+          href={site.home(language)}
+          title="Rooted in Scripture, Diligent in Prayer"
+        >
           <img src={logoImage} width="300" height="68.5" />
         </a>
       </div>

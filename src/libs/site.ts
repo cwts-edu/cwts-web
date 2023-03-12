@@ -1,17 +1,15 @@
 import type { Language } from "../libs/language";
 
-type SiteConfig = {
-  [language in Language]: Site;
-};
-
 const siteData = {
   en: {
     title: "Christian Witness Theological Seminary",
     shortTitle: "CWTS",
+    home: "/en",
   },
   zh: {
     title: "CWTS 基督工人神學院",
     shortTitle: "基督工人神學院",
+    home: "/",
   },
 };
 
@@ -21,6 +19,9 @@ class Site {
   }
   shortTitle(language: Language): string {
     return siteData[language].shortTitle;
+  }
+  home(language: Language): string {
+    return siteData[language].home;
   }
 }
 
