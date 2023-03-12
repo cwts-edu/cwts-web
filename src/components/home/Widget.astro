@@ -1,5 +1,4 @@
 ---
-import { Icon } from "astro-icon";
 import Container from "@components/common/Container.astro";
 import Button from "@components/common/Button.astro";
 
@@ -27,10 +26,12 @@ const {
 <div class:list={[...(classNames || [])]}>
   <Container classList={["md:py-12 py-6"]}>
     <div class:list={["flex justify-between items-center md:pb-6 pb-5"]}>
-      <div class:list={["widget-title", ...(titleClass || [])]}>{title}</div>
+      <div class:list={["widget-title grow", ...(titleClass || [])]}>
+        {title}
+      </div>
       {
         moreText && (
-          <div>
+          <div class="shrink-0">
             <Button
               url={moreLink}
               text={moreText}
