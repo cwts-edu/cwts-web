@@ -1,4 +1,5 @@
 ---
+import Button from "@components/common/Button.astro";
 import Container from "@components/common/Container.astro";
 import { Language, T } from "@libs/language";
 
@@ -20,6 +21,18 @@ const { language } = Astro.props;
       <div>
         <div class="widget-title">{T("vision", language)}</div>
         <div class="pt-3 text-xl">{T("vision_statement", language)}</div>
+      </div>
+      <div class="flex gap-3">
+        <Button
+          url={`${language}/about/vision-and-mission`}
+          text={T("learn_more", language)}
+          classNames={["btn-xl"]}
+        />
+        <Button
+          url="#"
+          text={T("apply_now", language)}
+          classNames={["btn-xl btn-reversed"]}
+        />
       </div>
     </div>
   </Container>

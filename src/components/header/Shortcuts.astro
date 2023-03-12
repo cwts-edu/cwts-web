@@ -2,6 +2,7 @@
 import getShortcuts from "@libs/shortcuts";
 import { Icon } from "astro-icon";
 import type { Language } from "@libs/language";
+import Button from "@components/common/Button.astro";
 
 export interface Props {
   language: Language;
@@ -19,16 +20,11 @@ const shortcuts = getShortcuts(language);
         case "button":
           return (
             <li class="shrink-0">
-              <a
-                href={item.url}
-                class="py-1.5 px-4 rounded-lg border border-gray-400"
-              >
-                {item.name}
-                <Icon
-                  class="inline h-4 text-rebeccapurple align-middle"
-                  name="angle-right"
-                />
-              </a>
+              <Button
+                url={item.url}
+                text={item.name}
+                classNames={["btn-gray btn-arrow-rebeccapurple"]}
+              />
             </li>
           );
         default:

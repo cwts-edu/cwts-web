@@ -1,6 +1,7 @@
 ---
 import { Icon } from "astro-icon";
 import Container from "@components/common/Container.astro";
+import Button from "@components/common/Button.astro";
 
 export interface Props {
   title: string;
@@ -30,22 +31,11 @@ const {
       {
         moreText && (
           <div>
-            <a
-              href={moreLink}
-              class:list={[
-                "text-xl py-1.5 px-4 rounded-lg border",
-                ...(moreClass || []),
-              ]}
-            >
-              {moreText}
-              <Icon
-                class:list={[
-                  "inline-block h-5 align-middle",
-                  ...(moreArrowClass || []),
-                ]}
-                name="angle-right"
-              />
-            </a>
+            <Button
+              url={moreLink}
+              text={moreText}
+              classNames={["btn-xl", ...(moreClass || [])]}
+            />
           </div>
         )
       }

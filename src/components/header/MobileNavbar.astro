@@ -8,6 +8,7 @@ import type { Shortcut } from "@libs/shortcuts";
 import getShortcuts from "@libs/shortcuts";
 import logoTextEn from "@assets/logo-text-en-light-violet.svg";
 import { Language, T } from "@libs/language";
+import Button from "@components/common/Button.astro";
 
 export interface Props {
   language: Language;
@@ -217,16 +218,11 @@ const menuWithoutChildren = menu.filter((menuItem) => !menuItem.children);
                   case "button":
                     return (
                       <li>
-                        <a
-                          href={item.url}
-                          class="py-1.5 px-4 rounded-xl bg-white text-maxpurple text-xl"
-                        >
-                          {item.name}
-                          <Icon
-                            class="inline h-4 align-middle text-darkviolet"
-                            name="angle-right"
-                          />
-                        </a>
+                        <Button
+                          classNames={["btn-xl"]}
+                          url={item.url}
+                          text={item.name}
+                        />
                       </li>
                     );
                   default:

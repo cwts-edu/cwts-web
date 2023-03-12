@@ -9,4 +9,62 @@
   .widget-title {
     @apply lg:text-3xl text-2xl font-medium;
   }
+
+  .btn {
+    @apply text-maxpurple bg-white py-1.5 px-4 rounded-lg border border-maxpurple font-bold;
+
+    svg {
+      @apply h-3;
+    }
+
+    &-lg {
+      @apply text-lg;
+
+      svg {
+        @apply h-3.5;
+      }
+    }
+
+    &-xl {
+      @apply text-xl py-2 px-5;
+
+      svg {
+        @apply h-4;
+      }
+    }
+
+    &-reversed {
+      @apply text-white bg-maxpurple;
+    }
+
+    &-darkviolet {
+      @apply text-darkviolet border-darkviolet;
+    }
+
+    &-darkviolet-reversed {
+      @apply text-white bg-darkviolet;
+    }
+
+    &-gray {
+      @apply text-black border-gray-400;
+    }
+
+    &-arrow-maxpurple {
+      & svg {
+        @apply text-maxpurple;
+      }
+    }
+
+    &-arrow-darkviolet {
+      & svg {
+        @apply text-darkviolet;
+      }
+    }
+
+    &-arrow-rebeccapurple {
+      & svg {
+        @apply text-rebeccapurple;
+      }
+    }
+  }
 }
