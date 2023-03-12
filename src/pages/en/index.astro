@@ -4,11 +4,13 @@ import site from "@libs/site";
 import Base from "@layouts/Base.astro";
 import News from "@components/home/News.astro";
 import VisionAndMission from "@components/home/VisionAndMission.astro";
+import WhyUs from "@components/home/WhyUs.astro";
 
 const language: Language = "en";
 ---
 
 <Base title={site.title(language)} language={language}>
   <VisionAndMission language={language} />
+  <WhyUs language={language} />
   <News language={language} />
 </Base>

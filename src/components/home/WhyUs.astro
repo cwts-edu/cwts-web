@@ -1,0 +1,29 @@
+---
+import Container from "@components/common/Container.astro";
+import data from "@data/why-us.yml";
+import { Language, T } from "@libs/language";
+import Widget from "./Widget.astro";
+
+export interface Props {
+  language: Language;
+}
+
+const { language } = Astro.props;
+---
+
+<Widget title={T("why_us", language)}>
+  <div
+    class="grid md:grid-cols-[repeat(4,fit-content(25%))] max-md:grid-cols-[repeat(2,fit-content(50%))] max-md:grid-rows-2 md:place-content-between place-content-around"
+  >
+    {
+      data.map((item) => (
+        <div class="text-center">
+          <div class="mb-4">
+            <img class="w-20 h-20 inline-block" src={item.image} />
+          </div>
+          <div class="text-xl">{item[language]}</div>
+        </div>
+      ))
+    }
+  </div>
+</Widget>
