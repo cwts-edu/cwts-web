@@ -7,11 +7,11 @@
 
 @layer components {
   .widget-title {
-    @apply lg:text-3xl text-2xl font-medium;
+    @apply lg:text-3xl text-2xl font-medium whitespace-nowrap;
   }
 
   .btn {
-    @apply text-maxpurple bg-white py-1.5 px-4 rounded-lg border border-maxpurple font-medium;
+    @apply text-maxpurple bg-white py-1.5 px-4 rounded-lg border border-maxpurple font-medium whitespace-nowrap;
 
     svg {
       @apply h-3;
