@@ -11,7 +11,7 @@
   }
 
   .btn {
-    @apply text-maxpurple bg-white py-1.5 px-4 rounded-lg border border-maxpurple font-bold;
+    @apply text-maxpurple bg-white py-1.5 px-4 rounded-lg border border-maxpurple font-medium;
 
     svg {
       @apply h-3;
