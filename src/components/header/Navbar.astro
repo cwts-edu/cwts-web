@@ -39,7 +39,7 @@ const menu = await getMenu(language);
             "shrink-0",
           ]}
         >
-          <OptionalLink link={topItem} />
+          <OptionalLink url={topItem.url}>{topItem.name}</OptionalLink>
 
           {topItem.children && (
             <div

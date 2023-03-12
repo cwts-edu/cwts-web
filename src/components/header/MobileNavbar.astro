@@ -125,7 +125,9 @@ const menuWithoutChildren = menu.filter((menuItem) => !menuItem.children);
                   ]}
                 >
                   <div>
-                    <OptionalLink link={topItem} />
+                    <OptionalLink url={topItem.url}>
+                      {topItem.name}
+                    </OptionalLink>
                   </div>
                   <div>
                     <Icon
@@ -175,7 +177,9 @@ const menuWithoutChildren = menu.filter((menuItem) => !menuItem.children);
                   ]}
                 >
                   <div>
-                    <OptionalLink link={topItem} />
+                    <OptionalLink url={topItem.url}>
+                      {topItem.name}
+                    </OptionalLink>
                   </div>
                 </div>
               </>

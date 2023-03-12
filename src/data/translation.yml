@@ -22,6 +22,9 @@ faculty:
 senior_adjunct_faculty:
   en: Senior Adjunct Faculty
   zh: 資深客座教授
+adjunct_faculty:
+  en: Adjunct Faculty
+  zh: 客座教授
 position_prefix:
   en:
   zh: 現任：

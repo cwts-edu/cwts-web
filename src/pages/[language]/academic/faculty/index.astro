@@ -1,0 +1,63 @@
+---
+import OptionalLink from "@components/common/OptionalLink.astro";
+import Section from "@layouts/Section.astro";
+import { FacultyMetadata, getFacultyMetadata } from "@libs/faculty";
+import { Language, T } from "@libs/language";
+import { getEntryBySlug } from "astro:content";
+
+export function getStaticPaths() {
+  return ["zh"].map((language) => ({
+    params: {
+      language,
+    },
+  }));
+}
+
+const language = Astro.params.language as Language;
+const slug = `${language}/academic/faculty`;
+const page = await getEntryBySlug("pages", slug);
+if (!page) return;
+const { title, coverImage = "/images/default.cover.jpg" } = page.data;
+const faculty = getFacultyMetadata(language);
+const categoryMessages: Record<FacultyMetadata["category"], string> = {
+  faculty: T("faculty", language),
+  "senior-adjunct": T("senior_adjunct_faculty", language),
+  adjunct: T("adjunct_faculty", language),
+};
+---
+
+<Section slug={slug} title={title} coverImage={coverImage}>
+  <div class="not-prose flex flex-col">
+    {
+      faculty.map((person) => (
+        <div class="py-4 first:border-t-0 border-t border-maxpurple flex items-center gap-6">
+          <div class="shrink-0 grow-0 w-24 h-24 bg-[#D9D9D9]">
+            <OptionalLink url={person.url}>
+              {person.photo && <img src={person.photo} />}
+            </OptionalLink>
+          </div>
+          <div class="grow flex flex-col gap-2">
+            <div class="flex max-md:flex-col gap-2 items-baseline text-darkviolet">
+              <div class="text-2xl font-semibold">
+                <OptionalLink url={person.url}>{person.name}</OptionalLink>
+              </div>
+              {person.positions && (
+                <div class="text-sm">
+                  {person.positions.join(T("position_separator", language))}
+                </div>
+              )}
+            </div>
+            <div class="flex max-md:flex-col justify-between gap-2 text-darkblue items-baseline">
+              <div class="text-sm font-semibold">
+                {person.courses.join(T("course_separator", language))}
+              </div>
+              <div class="text-sm font-semibold">
+                {categoryMessages[person.category]}
+              </div>
+            </div>
+          </div>
+        </div>
+      ))
+    }
+  </div>
+</Section>

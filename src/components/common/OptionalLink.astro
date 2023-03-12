@@ -1,14 +1,17 @@
 ---
-interface Link {
-    name: string;
-    url?: string;
-}
-
 export interface Props {
-    link: Link;
+  url?: string;
 }
 
-const { link } = Astro.props;
+const { url } = Astro.props;
 ---
 
-{link.url ? <a href={link.url}>{link.name}</a> : link.name}
+{
+  url ? (
+    <a href={url}>
+      <slot />
+    </a>
+  ) : (
+    <slot />
+  )
+}
