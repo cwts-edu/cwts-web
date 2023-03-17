@@ -7,18 +7,18 @@
 
 @layer components {
   .widget-title {
-    @apply lg:text-3xl text-2xl font-medium whitespace-nowrap;
+    @apply text-3xl font-medium whitespace-nowrap;
   }
 
   .btn {
-    @apply text-maxpurple bg-white py-1.5 px-4 rounded-lg border border-maxpurple font-medium whitespace-nowrap;
+    @apply inline-flex flex-nowrap gap-2 items-center text-maxpurple bg-white py-1 pl-4 pr-3 rounded-lg border border-maxpurple font-medium;
 
     svg {
       @apply h-3;
     }
 
     &-lg {
-      @apply text-lg;
+      @apply text-lg py-1.5;
 
       svg {
         @apply h-3.5;
@@ -26,7 +26,7 @@
     }
 
     &-xl {
-      @apply text-xl py-2 px-5;
+      @apply text-xl;
 
       svg {
         @apply h-4;
