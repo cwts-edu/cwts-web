@@ -19,7 +19,7 @@ const { language } = Astro.props;
 
 <Widget title={T("why_us", language)}>
   <div
-    class="grid md:grid-cols-[repeat(4,minmax(6rem,25%))] max-md:grid-cols-[repeat(2,minmax(6rem,50%))] max-md:grid-rows-2 md:place-content-between place-content-around gap-6"
+    class="grid md:grid-cols-[repeat(4,max-content)] max-md:grid-cols-[repeat(2,max-content)] max-md:grid-rows-2 md:place-content-between place-content-around gap-6"
   >
     {
       data.map((item) => (
