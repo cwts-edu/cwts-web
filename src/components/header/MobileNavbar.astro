@@ -86,7 +86,7 @@ const menuWithoutChildren = menu.filter((menuItem) => !menuItem.children);
     >
       <LanguagePicker />
       <div class="flex">
-        <a id="menuToggler" class="cursor-pointer">
+        <a role="button" id="menuToggler" class="cursor-pointer">
           {T("menu", language)}
           <Icon
             name="menu"
