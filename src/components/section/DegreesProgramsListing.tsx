@@ -56,7 +56,7 @@ export default function (props: Props) {
           setCurrentValue={setCategory}
         ></CategorySelector>
       </div>
-      <div className="gap-12 py-8 grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 text-darkblue">
+      <div className="gap-12 py-8 grid grid-cols-1 sm:max-md:grid-cols-2 md:grid-cols-3 text-darkblue">
         {items.map((item) => (
           <div key={item.slug} className="w-fit max-sm:w-full">
             <a href={item.url}>
