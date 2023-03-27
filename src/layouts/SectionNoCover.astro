@@ -8,16 +8,17 @@ import Base from "./Base.astro";
 export interface Props {
   language: Language;
   title: string;
+  titleClass?: string[];
   slug: string;
 }
 
-const { language, title, slug } = Astro.props;
+const { language, title, titleClass = [], slug } = Astro.props;
 ---
 
 <Base language={language} title={`${title} - ${site.shortTitle(language)}`}>
   <Breadcrumbs slug={slug} />
   <Container classList={["pb-6"]}>
-    <h1 class="pt-6 text-3xl font-bold text-darkviolet max-md:text-center">
+    <h1 class:list={["pt-6 text-3xl font-bold text-darkviolet", ...titleClass]}>
       {title}
     </h1>
     <slot />

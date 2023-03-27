@@ -30,7 +30,12 @@ const language = getLanguageBySlug(slug).language;
 const Content = (await page.render()).Content;
 ---
 
-<SectionNoCover language={language} title={page.data.name} slug={slug}>
+<SectionNoCover
+  language={language}
+  title={page.data.name}
+  slug={slug}
+  titleClass={["max-md:text-center"]}
+>
   {
     page.data.positions && (
       <div class="text-xl my-2 max-md:text-center">
