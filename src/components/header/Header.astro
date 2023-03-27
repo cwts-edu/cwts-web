@@ -85,6 +85,8 @@ const { language } = Astro.props;
         "hidden lg:flex",
         // items move to the right
         "justify-end",
+        // align vertially in the center
+        "items-center",
         // gap between language picker and search form
         "gap-4",
       ]}
@@ -94,7 +96,7 @@ const { language } = Astro.props;
         <input
           class:list={[
             // rounded button
-            "rounded-lg border border-gray-400 px-3",
+            "rounded-lg border border-gray-400 focus:ring-maxpurple focus:border-maxpurple px-3 py-0",
             // control width 8rem
             "w-32",
           ]}

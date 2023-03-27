@@ -195,18 +195,18 @@ const menuWithoutChildren = menu.filter((menuItem) => !menuItem.children);
           // rounded white box
           "bg-white rounded-lg",
           // flexbox row
-          "flex justify-between",
+          "flex justify-between items-center",
         ]}
       >
         <div class="grow">
           <input
-            class="w-full"
+            class="w-full border-0 py-1"
             type="text"
             placeholder={T("search", language)}
           />
         </div>
         <div>
-          <Icon name="search-sharp" class="text-darkviolet h-7 align-middle" />
+          <Icon name="search-sharp" class="text-darkviolet h-7" />
         </div>
       </form>
       <div class:list={["flex flex-col items-start py-4 gap-6 text-lg"]}>
