@@ -1,8 +1,5 @@
 ---
-import Container from "@components/common/Container.astro";
-import Breadcrumbs from "@components/section/Breadcrumbs.astro";
-import Base from "@layouts/Base.astro";
-import site from "@libs/site";
+import SectionNoCover from "@layouts/SectionNoCover.astro";
 import { getLanguageBySlug, T } from "@libs/language";
 import { CollectionEntry, getCollection } from "astro:content";
 
@@ -33,55 +30,46 @@ const language = getLanguageBySlug(slug).language;
 const Content = (await page.render()).Content;
 ---
 
-<Base
-  language={language}
-  title={`${page.data.name} - ${site.shortTitle(language)}`}
->
-  <Breadcrumbs slug={slug} />
-  <Container classList={["pb-6"]}>
-    <h1 class="pt-6 pb-2 text-3xl font-bold text-darkviolet max-md:text-center">
-      {page.data.name}
-    </h1>
+<SectionNoCover language={language} title={page.data.name} slug={slug}>
+  {
+    page.data.positions && (
+      <div class="text-xl my-2 max-md:text-center">
+        {page.data.positions.join(T("position_separator", language))}
+      </div>
+    )
+  }
+  <div
+    class="mt-2 mb-6 flex gap-16 max-md:flex-col items-start max-md:items-stretch max-md:gap-6"
+  >
     {
-      page.data.positions && (
-        <div class="text-xl pb-2 max-md:text-center">
-          {page.data.positions.join(T("position_separator", language))}
+      page.data.photo && (
+        <div class="grow-0 shrink-0 flex justify-center">
+          <img src={page.data.photo} width="240" height="240" />
         </div>
       )
     }
-    <div
-      class="pb-6 flex gap-16 max-md:flex-col items-start max-md:items-stretch max-md:gap-6"
-    >
+    <div class="flex flex-col gap-7 text-darkblue text-xl grow">
+      <div>
+        <p><b>{T("course_prefix", language)}</b></p>
+        <p>{page.data.courses.join(T("course_separator", language))}</p>
+      </div>
       {
-        page.data.photo && (
-          <div class="grow-0 shrink-0 flex justify-center">
-            <img src={page.data.photo} width="240" height="240" />
+        page.data.former && (
+          <div>
+            <p>
+              <b>{T("former_prefix", language)}</b>
+            </p>
+            {page.data.former.map((position) => (
+              <p>{position}</p>
+            ))}
           </div>
         )
       }
-      <div class="flex flex-col gap-7 text-darkblue text-xl grow">
-        <div>
-          <p><b>{T("course_prefix", language)}</b></p>
-          <p>{page.data.courses.join(T("course_separator", language))}</p>
-        </div>
-        {
-          page.data.former && (
-            <div>
-              <p>
-                <b>{T("former_prefix", language)}</b>
-              </p>
-              {page.data.former.map((position) => (
-                <p>{position}</p>
-              ))}
-            </div>
-          )
-        }
-      </div>
     </div>
-    <div
-      class="prose prose-ul:list-none prose-ul:pl-0 prose-li:ml-0 prose-li:pl-0 prose-li:my-2"
-    >
-      <Content />
-    </div>
-  </Container>
-</Base>
+  </div>
+  <div
+    class="prose prose-ul:list-none prose-ul:pl-0 prose-li:ml-0 prose-li:pl-0 prose-li:my-2"
+  >
+    <Content />
+  </div>
+</SectionNoCover>

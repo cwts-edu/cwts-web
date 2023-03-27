@@ -5,6 +5,10 @@
 @tailwind components;
 @tailwind utilities;
 
+::selection {
+  @apply text-white bg-maxpurple/70;
+}
+
 @layer components {
   .widget-title {
     @apply text-3xl font-medium whitespace-nowrap;

@@ -1,0 +1,58 @@
+---
+import { Language, T } from "@libs/language";
+import { getEntryBySlug } from "astro:content";
+import SectionNoCover from "@layouts/SectionNoCover.astro";
+import DegreesProgramsListing from "@components/section/DegreesProgramsListing";
+import {
+  DegreesProgramsMetadata,
+  getDegreesPrograms,
+} from "@libs/degrees_programs";
+
+export function getStaticPaths() {
+  return ["zh"].map((language) => ({
+    params: {
+      language,
+    },
+  }));
+}
+
+function getCategories(data: DegreesProgramsMetadata[]) {
+  const categoriesWithDups = data.map((value) => value.category);
+  return categoriesWithDups.filter(
+    (value, index) => categoriesWithDups.indexOf(value) == index
+  );
+}
+
+const language = Astro.params.language as Language;
+const slug = `${language}/academic/degrees-programs`;
+const page = await getEntryBySlug("pages", slug);
+if (!page) return;
+const Content = (await page.render()).Content;
+
+const data = await getDegreesPrograms(language);
+const categories = [
+  {
+    label: T("degree_type", language),
+    value: "all",
+  },
+  ...getCategories(data).map((category) => ({
+    label: T(category, language),
+    value: category,
+  })),
+];
+const messages = {
+  credits: T("credits", language),
+};
+---
+
+<SectionNoCover language={language} title={page.data.title} slug={slug}>
+  <div class="prose my-4">
+    <Content />
+    <DegreesProgramsListing
+      data={data}
+      categories={categories}
+      messages={messages}
+      client:load
+    />
+  </div>
+</SectionNoCover>

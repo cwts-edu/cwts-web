@@ -123,6 +123,7 @@ module.exports = {
   plugins: [
     require("@tailwindcss/typography"),
     require("tailwind-scrollbar-hide"),
+    require("flowbite/plugin"),
     plugin(function ({ addVariant, e }) {
       addVariant("activetab", [
         ".tabs-component > input[type='radio']:checked + label&",

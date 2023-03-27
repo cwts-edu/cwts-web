@@ -1,0 +1,7 @@
+---
+title: 兒童事工證書
+length: 1年半
+credits: 16
+order: 402
+category: certificate
+---

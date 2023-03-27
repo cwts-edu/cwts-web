@@ -33,6 +33,7 @@
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.9",
+    "flowbite": "^1.6.4",
     "svgo": "~2.8.0",
     "tailwind-scrollbar-hide": "^1.1.7"
   }

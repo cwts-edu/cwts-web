@@ -46,10 +46,22 @@ const faculty = defineCollection({
   }),
 });
 
+const degreesPrograms = defineCollection({
+  schema: z.object({
+    title: z.string(),
+    order: z.number(),
+    thumbnail: z.optional(z.string()),
+    length: z.optional(z.string()),
+    credits: z.number(),
+    category: z.enum(["doctor", "master", "diploma", "certificate"]),
+  }),
+});
+
 export const collections = {
   pages,
   news,
   faculty,
   "degrees-widget": degreesWidget,
   "study-mode-widget": studyModeWidget,
+  "degrees-programs": degreesPrograms,
 };
