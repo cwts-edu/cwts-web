@@ -19,12 +19,21 @@
   - [x] Study mode
   - [x] Faculty
   - [ ] Videos
-  - [ ] Vision and mission
-  - [ ] Icons
+  - [x] Vision and mission
+  - [x] Icons
 - Special section pages
-  - [ ] Programs and degrees
+  - [x] Programs and degrees
   - [ ] Job listing
-  - [ ] Faculty
+  - [x] Faculty
+- Contents
+  - Chinese
+    - [ ] intro section
+    - [ ] academic section
+    - [ ] admissions section
+    - [ ] student-life section
+    - [ ] ministry-institute section
+    - [ ] news-events section
+  - [ ] English
 - Content component
   - [ ] Video Embedding
   - [ ] PDF Embedding
