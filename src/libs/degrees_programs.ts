@@ -3,6 +3,7 @@ import { getLanguageBySlug, Language } from "./language";
 
 export type DegreesProgramsMetadata =
   CollectionEntry<"degrees-programs">["data"] & {
+    language: Language;
     slug: string;
     url: string;
     thumbnail: string;
@@ -24,7 +25,8 @@ export async function getDegreesPrograms(
         const { language, slug } = getLanguageBySlug(page.slug);
         return {
           ...page.data,
-          slug: page.slug,
+          language,
+          slug,
           url: `/${language}/academic/degrees-programs/${slug}`,
           thumbnail:
             page.data.thumbnail || "/images/degrees-programs/default-cover.jpg",

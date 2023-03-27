@@ -1,0 +1,65 @@
+---
+import SectionNoCover from "@layouts/SectionNoCover.astro";
+import {
+  DegreesProgramsMetadata,
+  getDegreesPrograms,
+} from "@libs/degrees_programs";
+import { getLanguageBySlug, T } from "@libs/language";
+import { getCollection, getEntryBySlug } from "astro:content";
+
+export async function getStaticPaths() {
+  const languages = [
+    ...new Set(
+      (await getCollection("degrees-programs")).map(
+        (page) => getLanguageBySlug(page.slug).language
+      )
+    ),
+  ];
+  const pages = (
+    await Promise.all(
+      languages.map(async (language) => await getDegreesPrograms(language))
+    )
+  ).flat();
+  return pages.map((page) => ({
+    params: {
+      language: page.language,
+      slug: page.slug,
+    },
+    props: {
+      metadata: page,
+    },
+  }));
+}
+
+export interface Props {
+  metadata: DegreesProgramsMetadata;
+}
+
+const { metadata } = Astro.props;
+
+const page = await getEntryBySlug(
+  "degrees-programs",
+  `${metadata.language}/${metadata.slug}`
+);
+if (!page) return;
+
+const Content = (await page.render()).Content;
+const { language } = metadata;
+---
+
+<SectionNoCover
+  language={language}
+  title={metadata.title}
+  slug={`${metadata.language}/academic/degrees-programs/${metadata.slug}`}
+>
+  <div
+    class="text-darkblue text-xl font-semibold border-b-2 border-maxpurple my-1"
+  >
+    {T("(", language)}{metadata.length}{T(",", language)}{metadata.credits}{
+      T(" ", language)
+    }{T("credits", language)}{T(")", language)}
+  </div>
+  <div class="prose">
+    <Content />
+  </div>
+</SectionNoCover>
