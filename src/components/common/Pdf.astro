@@ -1,0 +1,15 @@
+---
+export interface Props {
+  url: string;
+  title: string;
+}
+
+const { url, title } = Astro.props;
+---
+
+<figure>
+  <figcaption><a href={url}>{title}</a></figcaption>
+  <object data={url} type="application/pdf" width="100%" height="600px">
+    <a href={url}>Download</a>
+  </object>
+</figure>
