@@ -87,6 +87,11 @@ module.exports = {
             figure: {
               marginTop: em(20, 20),
               marginBottom: em(20, 20),
+              marginLeft: "auto",
+              marginRight: "auto",
+            },
+            "figure > img": {
+              margin: "0",
             },
           },
         },

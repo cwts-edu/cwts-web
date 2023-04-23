@@ -1,0 +1,15 @@
+---
+export interface Props {
+  imageUrl: string;
+  title: string;
+  height?: number;
+}
+
+const { imageUrl, title, height } = Astro.props;
+const style = (height && `height: ${height}px`) || null;
+---
+
+<figure>
+  <img src={imageUrl} alt={title} style={style} />
+  <figcaption>{title}</figcaption>
+</figure>

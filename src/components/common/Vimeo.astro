@@ -12,7 +12,6 @@ const playerUrl = `https://player.vimeo.com/video/${id}`;
 ---
 
 <figure>
-  <figcaption>{title}</figcaption>
   <iframe
     src={playerUrl}
     width={width}
@@ -20,4 +19,5 @@ const playerUrl = `https://player.vimeo.com/video/${id}`;
     loading="lazy"
     frameborder="0"
     allowfullscreen="allowfullscreen"></iframe>
+  <figcaption>{title}</figcaption>
 </figure>
