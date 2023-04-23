@@ -6,7 +6,7 @@
 @tailwind utilities;
 
 ::selection {
-  @apply text-white bg-maxpurple/70;
+  @apply text-white bg-darkviolet/80;
 }
 
 @layer components {
