@@ -79,6 +79,15 @@ module.exports = {
               marginTop: em(20, 20),
               marginBottom: em(20, 20),
             },
+            img: {
+              maxHeight: em(600, 20),
+              display: "block",
+              margin: "0 auto",
+            },
+            figure: {
+              marginTop: em(20, 20),
+              marginBottom: em(20, 20),
+            },
           },
         },
         tabs: {
