@@ -10,7 +10,6 @@ function isImageFile(file: string): boolean {
 async function* walk(dir: string): AsyncGenerator<string> {
   for await (const d of await fs.promises.opendir(dir)) {
     const entry = path.join(dir, d.name);
-    console.log(entry);
     if (d.isDirectory()) yield* walk(entry);
     else if (d.isFile()) yield entry;
   }
@@ -20,6 +19,16 @@ async function* walkImageFiles(dir: string): AsyncGenerator<string> {
   for await (const f of walk(dir)) {
     if (isImageFile(f)) yield f;
   }
+}
+
+function logSharpOutput(file: string) {
+  return (err: Error, info: sharp.OutputInfo) => {
+    if (err) {
+      console.error(`Error ${file}: ${err}`);
+    } else {
+      console.log(`Processed ${file}`);
+    }
+  };
 }
 
 async function convertCovers(srcDir: string, destDir: string) {
@@ -34,7 +43,6 @@ async function convertCovers(srcDir: string, destDir: string) {
         fit: sharp.fit.cover,
         position: sharp.gravity.center,
       })
-      // .gamma(2.2, 1.4)
       .modulate({ brightness: 0.4, saturation: 0.4 })
       .jpeg({ quality: 60 })
       .toFile(
@@ -46,7 +54,8 @@ async function convertCovers(srcDir: string, destDir: string) {
             ext: ".jpg",
             name: parsedPath.name + ".cover",
           })
-        )
+        ),
+        logSharpOutput(f)
       );
     await sharp(f)
       .resize({
@@ -65,7 +74,8 @@ async function convertCovers(srcDir: string, destDir: string) {
             ext: ".jpg",
             name: parsedPath.name + ".thumbnail",
           })
-        )
+        ),
+        logSharpOutput(f)
       );
   }
 }
