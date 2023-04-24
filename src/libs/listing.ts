@@ -1,4 +1,5 @@
 import { getCollection, getEntryBySlug, CollectionEntry } from "astro:content";
+import site from "./site";
 
 export interface ListingItem {
   url: string;
@@ -23,7 +24,7 @@ export default async function listChildren(
 
   return children.map((page) => ({
     url: "/" + page.slug,
-    thumbnail: page.data.thumbnail || "/images/default.thumbnail.jpg",
+    thumbnail: page.data.thumbnail || site.defaultThumbnail,
     title: page.data.title,
   }));
 }

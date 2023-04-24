@@ -1,6 +1,8 @@
 ---
 title: 基神介绍
 order: 100
+coverImage: "/images/covers/about.cover.jpg"
+thumbnail: "/images/covers/about.thumbnail.jpg"
 ---
 
 一九六四年春，于力工牧師和一些信徒領受了為神國度訓練工人的異象，這異象到一九七三年得以初步實現。第一年有五位學生，借用柏克萊福音教會上課，並於三藩市灣區一些教會中實習。

@@ -8,7 +8,8 @@
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "process-images": "ts-node --esm tools/process-images.ts"
   },
   "dependencies": {
     "@astrojs/image": "^0.13.1",
@@ -36,6 +37,7 @@
     "@tailwindcss/typography": "^0.5.9",
     "flowbite": "^1.6.4",
     "svgo": "~2.8.0",
-    "tailwind-scrollbar-hide": "^1.1.7"
+    "tailwind-scrollbar-hide": "^1.1.7",
+    "ts-node": "^10.9.1"
   }
 }

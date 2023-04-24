@@ -1,6 +1,7 @@
 ---
 import { CollectionEntry, getCollection } from "astro:content";
 import Section from "@layouts/Section.astro";
+import site from "@libs/site";
 
 export async function getStaticPaths() {
   const pages = await getCollection("pages");
@@ -19,7 +20,7 @@ export interface Props {
 }
 
 const { page } = Astro.props;
-const { title, coverImage = "/images/default.cover.jpg" } = page.data;
+const { title, coverImage = site.defaultCover } = page.data;
 const { Content } = await page.render();
 ---
 

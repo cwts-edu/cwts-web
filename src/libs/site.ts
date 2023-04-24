@@ -23,6 +23,8 @@ class Site {
   home(language: Language): string {
     return siteData[language].home;
   }
+  defaultCover = "/images/covers/default.cover.jpg";
+  defaultThumbnail = "/images/covers/default.thumbnail.jpg";
 }
 
 export default new Site();
