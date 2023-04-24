@@ -10,6 +10,6 @@ const style = (height && `height: ${height}px`) || null;
 ---
 
 <figure>
-  <img src={imageUrl} alt={title} style={style} />
+  <img src={imageUrl} alt={title} style={style} loading="lazy" />
   <figcaption>{title}</figcaption>
 </figure>
