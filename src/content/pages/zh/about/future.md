@@ -1,6 +1,8 @@
 ---
 title: 近期發展
 order: 105
+coverImage: "/images/covers/about/future.cover.jpg"
+thumbnail: "/images/covers/about/future.thumbnail.jpg"
 ---
 
 師資團隊

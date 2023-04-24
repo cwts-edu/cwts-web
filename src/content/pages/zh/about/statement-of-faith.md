@@ -1,6 +1,8 @@
 ---
 title: 信仰告白
 order: 101
+coverImage: "/images/covers/about/statement-of-faith.cover.jpg"
+thumbnail: "/images/covers/about/statement-of-faith.thumbnail.jpg"
 ---
 
 我們相信：

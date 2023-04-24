@@ -1,6 +1,8 @@
 ---
 title: 學院認證
 order: 107
+coverImage: "/images/covers/about/accreditation.cover.jpg"
+thumbnail: "/images/covers/about/accreditation.thumbnail.jpg"
 ---
 
 為「美加神學院協會」(The Association of Theological Schools, [ATS]) 正式會員，獲得以下學位的認證：

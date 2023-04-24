@@ -1,6 +1,8 @@
 ---
 title: 異象和使命
 order: 102
+coverImage: "/images/covers/about/vision-and-mission.cover.jpg"
+thumbnail: "/images/covers/about/vision-and-mission.thumbnail.jpg"
 ---
 
 ## Vision Statement

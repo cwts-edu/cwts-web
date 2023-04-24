@@ -1,6 +1,8 @@
 ---
 title: 行政團隊
 order: 109
+coverImage: "/images/covers/about/administration.cover.jpg"
+thumbnail: "/images/covers/about/administration.thumbnail.jpg"
 ---
 
 | 職位/ 部門                      | 姓名            | +分機 |

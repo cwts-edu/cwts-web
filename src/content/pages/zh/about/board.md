@@ -1,6 +1,8 @@
 ---
 title: 董事會
 order: 108
+coverImage: "/images/covers/about/board.cover.jpg"
+thumbnail: "/images/covers/about/board.thumbnail.jpg"
 ---
 
 - 陳道明 牧師/博士（榮譽主席）

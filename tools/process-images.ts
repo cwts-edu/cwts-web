@@ -36,6 +36,8 @@ async function convertCovers(srcDir: string, destDir: string) {
   for await (const f of walkImageFiles(basedir)) {
     const relpath = path.relative(basedir, f);
     const parsedPath = path.parse(relpath);
+    const targetDir = path.resolve(destDir, parsedPath.dir);
+    await fs.promises.mkdir(targetDir, { recursive: true });
     await sharp(f)
       .resize({
         width: 1440,
