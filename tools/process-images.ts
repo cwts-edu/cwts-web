@@ -44,7 +44,7 @@ async function convertCovers(srcDir: string, destDir: string) {
         position: sharp.gravity.center,
       })
       .modulate({ brightness: 0.4, saturation: 0.4 })
-      .jpeg({ quality: 60 })
+      .jpeg({ quality: 80 })
       .toFile(
         path.resolve(
           destDir,
@@ -64,7 +64,7 @@ async function convertCovers(srcDir: string, destDir: string) {
         fit: sharp.fit.cover,
         position: sharp.gravity.center,
       })
-      .jpeg({ quality: 50 })
+      .jpeg({ quality: 80 })
       .toFile(
         path.resolve(
           destDir,
