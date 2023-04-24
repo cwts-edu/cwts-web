@@ -8,6 +8,10 @@ import react from "@astrojs/react";
 import postcss_import from "postcss-import";
 import tailwindcss_nesting from "tailwindcss/nesting";
 import mdx from "@astrojs/mdx";
+import {
+  remarkExtendedTable,
+  extendedTableHandlers,
+} from "remark-extended-table";
 
 // https://astro.build/config
 export default defineConfig({
@@ -30,6 +34,12 @@ export default defineConfig({
       postcss: {
         plugins: [postcss_import, tailwindcss_nesting],
       },
+    },
+  },
+  markdown: {
+    remarkPlugins: [remarkExtendedTable],
+    remarkRehype: {
+      handlers: Object.assign({}, extendedTableHandlers),
     },
   },
 });

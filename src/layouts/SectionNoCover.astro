@@ -17,7 +17,7 @@ const { language, title, titleClass = [], slug } = Astro.props;
 
 <Base language={language} title={`${title} - ${site.shortTitle(language)}`}>
   <Breadcrumbs slug={slug} />
-  <Container classList={["pb-6"]}>
+  <Container classList={["pb-6 bg-beige"]}>
     <h1 class:list={["pt-6 text-3xl font-bold text-darkviolet", ...titleClass]}>
       {title}
     </h1>

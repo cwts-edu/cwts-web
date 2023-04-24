@@ -35,6 +35,7 @@ const themeColors = {
   maxpurple: "#6E4080",
   rebeccapurple: "#6126A2",
   darkblue: "#211F54",
+  beige: "#F8F5F4",
 };
 
 /** @type {import('tailwindcss').Config} */
@@ -59,6 +60,8 @@ module.exports = {
             "--tw-prose-bold": "inherit",
             "--tw-prose-counters": "inherit",
             "--tw-prose-bullets": "inherit",
+            "--tw-prose-th-borders": colors.gray[600],
+            "--tw-prose-td-borders": colors.gray[500],
             "max-width": "none",
             fontSize: rem(20),
             lineHeight: round(28 / 20),
@@ -92,6 +95,28 @@ module.exports = {
             },
             "figure > img": {
               margin: "0",
+            },
+            table: {
+              backgroundColor: colors.white,
+            },
+            "thead th, tbody td, tfoot td": {
+              paddingTop: em(4, 20),
+              paddingRight: em(10, 20),
+              paddingBottom: em(4, 20),
+              paddingLeft: em(10, 20),
+              borderRightWidth: "1px",
+              borderRightColor: "var(--tw-prose-td-borders)",
+            },
+            "thead th:last-child, tbody td:last-child, tfoot td:last-child": {
+              borderRightWidth: "0",
+              paddingRight: em(10, 20),
+            },
+            "thead th:first-child, tbody td:first-child, tfoot td:first-child":
+              {
+                paddingRight: em(10, 20),
+              },
+            iframe: {
+              maxWidth: "100%",
             },
           },
         },
