@@ -7,7 +7,7 @@ order: 208.2
 
 1. 互借方法：
    1. 申請「館際互借」之前，圖書館用戶必須確認借閱資料是在本館無法取得。這包括圖書館目錄系統(KOHA)和本館的線上資料庫 ATLAS & ProQuest Religion。
-   1. 填寫網上的「館際互借」申請表。圖書館同工收到申請後，核實無誤，則會進行館際互借。
+   1. 填寫網上的[「館際互借」申請表」](https://docs.google.com/forms/d/e/1FAIpQLSf6Or5P3hgldmdmUqBUuXMgNJSUwaQX7NPr5gHx019ECDlDrg/viewform)。圖書館同工收到申請後，核實無誤，則會進行館際互借。
 1. 資格：「館際互借」只限於本校的碩士科 (ThM, MDiv, MCS, MABS) 與博士科(DMin)學生，以及教授和同工。
 1. 相關規定：
    1. 「館際互借」的借閱不包括對方圖書館以下的資料和物件：
