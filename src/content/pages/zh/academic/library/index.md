@@ -1,6 +1,8 @@
 ---
 title: 圖書館
 order: 208
+coverImage: "/images/covers/academic/library.cover.jpg"
+thumbnail: "/images/covers/academic/library.thumbnail.jpg"
 ---
 
 本院圖書館分設有藏書室、電腦區和參考書閱覽室，面積共約三千五百平方呎，採用美國國會圖書館分類編目，以電腦管理。

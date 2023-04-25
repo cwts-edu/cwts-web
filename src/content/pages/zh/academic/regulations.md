@@ -1,6 +1,8 @@
 ---
 title: 教務章程
 order: 206
+coverImage: "/images/covers/academic/regulations.cover.jpg"
+thumbnail: "/images/covers/academic/regulations.thumbnail.jpg"
 ---
 
 ## 修讀學分

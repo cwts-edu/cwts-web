@@ -4,6 +4,7 @@ length: 2年
 credits: 30
 order: 200
 category: master
+thumbnail: "/images/covers/degrees-programs/master.thumbnail.jpg"
 ---
 
 本課程為有負擔於教導事奉、渴望在聖經和神學上更進一步的學生，或有意繼續攻讀博士學位的學生提供進深的訓練。課程內容涵蓋聖經研究、神學研究以及教學與講道能力等各個方面，學生可以從舊約、新約以及系統神學三個方向中擇一修讀。

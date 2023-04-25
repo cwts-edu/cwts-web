@@ -4,6 +4,7 @@ length: 2年
 credits: 60
 order: 202
 category: master
+thumbnail: "/images/covers/degrees-programs/master.thumbnail.jpg"
 ---
 
 本課程旨在裝備學員日在教會教導神學和聖經，並日後可以在聖經方面作進深研究。

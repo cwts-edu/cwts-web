@@ -4,6 +4,7 @@ length: 3年
 credits: 90
 order: 201
 category: master
+thumbnail: "/images/covers/degrees-programs/master.thumbnail.jpg"
 ---
 
 本課程是為預備全職事奉者提供基本和全面的訓練。內容包括聖經研究、神 學研究、事奉技巧及操練。除課堂學習外，學生須接受學院安排的屬靈操 練，及參與實習工作四學期。

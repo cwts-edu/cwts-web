@@ -21,3 +21,5 @@
   noUrl: true
   includeChildren: true
 - page: "zh/alumni"
+  noUrl: true
+  includeChildren: true

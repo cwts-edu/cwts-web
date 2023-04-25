@@ -4,6 +4,7 @@ length: 1年半
 credits: 30
 order: 301
 category: diploma
+thumbnail: "/images/covers/degrees-programs/diploma-in-church-leadership.thumbnail.jpg"
 ---
 
 本課程為平信徒領袖提供訓練，裝備他們在教會裡擔任長執、團契導師等職事。課程全部的學分可轉至本院碩士學位課程。

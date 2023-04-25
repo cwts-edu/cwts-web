@@ -1,6 +1,8 @@
 ---
 title: 個人研究專用小單間
 order: 208.3
+coverImage: "/images/covers/academic/library.cover.jpg"
+thumbnail: "/images/covers/academic/library.thumbnail.jpg"
 ---
 
 ## 關於圖書館個人研究專用小單間申請

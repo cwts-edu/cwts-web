@@ -4,6 +4,7 @@ length: 2年
 credits: 60
 order: 203
 category: master
+thumbnail: "/images/covers/degrees-programs/master.thumbnail.jpg"
 ---
 
 本課程是為預備全職或帶職事奉者提供基本的訓練。課程內容著重實踐及聖經科目﹐並分為四項主修﹕教牧事工﹑家庭事工﹑兒童事工﹑宣教事工。學生須接受學院安排的屬靈操練，並參與實習工作二學期。

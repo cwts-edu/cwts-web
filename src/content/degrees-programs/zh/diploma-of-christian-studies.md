@@ -4,6 +4,7 @@ length: 1年
 credits: 30
 order: 300
 category: diploma
+thumbnail: "/images/covers/degrees-programs/diploma-of-christian-studies.thumbnail.jpg"
 ---
 
 本課程是為有志全職或帶職事奉，但又未能全時間修讀學位的信徒而設的基礎訓練，全時間修讀者通常於一年內完成。課程全部學分可轉至本院碩士學位課程。

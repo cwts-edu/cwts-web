@@ -1,6 +1,8 @@
 ---
 title: 注冊須知
 order: 205
+coverImage: "/images/covers/academic/registration-notice.cover.jpg"
+thumbnail: "/images/covers/academic/registration-notice.thumbnail.jpg"
 ---
 
 1. 學生每學期須按註冊處規定，準時交註冊表，在繳付學費後才算完成註冊手續。學費在每學期註冊時應全部繳交，若需分期或延遲繳交，須先向註冊主任申請並取得批准。

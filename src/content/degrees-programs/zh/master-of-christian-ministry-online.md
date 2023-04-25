@@ -4,6 +4,7 @@ length: 3年
 credits: 60
 order: 204
 category: master
+thumbnail: "/images/covers/degrees-programs/master.thumbnail.jpg"
 ---
 
 基督教聖工碩士網路課程是為遠距離同學設計的﹐其課程和學位與以上校本部的基督教聖工碩士課程相同。不同之處在於網路課程分為三學期: 春季、夏季、秋季，都是網路授課。聖工碩士網路課程沒有專業方向科目的要求，修讀本學位的同學只是需要任意選修 4 個學分的實用選修科目。以下是 2022 至 2025 學年的課程表。

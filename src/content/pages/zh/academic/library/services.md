@@ -1,6 +1,8 @@
 ---
 title: 圖書館服務
 order: 208.1
+coverImage: "/images/covers/academic/library.cover.jpg"
+thumbnail: "/images/covers/academic/library.thumbnail.jpg"
 ---
 
 ## 借閱對象:

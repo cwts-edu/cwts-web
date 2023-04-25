@@ -1,6 +1,8 @@
 ---
 title: 館際互借 Interlibrary Loan (ILL)
 order: 208.2
+coverImage: "/images/covers/academic/library.cover.jpg"
+thumbnail: "/images/covers/academic/library.thumbnail.jpg"
 ---
 
 基督工人神學院圖書館提供「館際互借」的服務，方便師生同工取得本館未收藏的圖書、專文、論文等研究資料。

@@ -4,4 +4,5 @@ length: 1年半
 credits: 16
 order: 401
 category: certificate
+thumbnail: "/images/covers/degrees-programs/certificate-of-family-ministry.thumbnail.jpg"
 ---
