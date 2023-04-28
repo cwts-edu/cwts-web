@@ -1,5 +1,5 @@
 ---
-title: 碩士與文憑
+title: 碩士學位與文憑
 order: 301.3
 coverImage: "/images/covers/degrees-programs/diploma-of-christian-studies.cover.jpg"
 thumbnail: "/images/covers/degrees-programs/diploma-of-christian-studies.thumbnail.jpg"
