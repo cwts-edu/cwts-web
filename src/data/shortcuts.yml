@@ -13,6 +13,6 @@ en:
   - name: Contact
     url: "/en/contact"
   - name: Apply
-    url: "#"
+    url: "/en/academic/degrees-programs"
     type: button
     breakBefore: true
