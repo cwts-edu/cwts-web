@@ -1,18 +1,40 @@
 ---
+import Button from "@components/common/Button.astro";
 import Container from "@components/common/Container.astro";
 import Tabs from "@components/common/Tabs.astro";
 import getDegreesWidgetData from "@libs/degrees_widget";
+import { Language, T } from "@libs/language";
 import { Icon } from "astro-icon";
-const data = await getDegreesWidgetData("zh");
+
+export interface Props {
+  language: Language;
+}
+
+const { language } = Astro.props;
+const data = await getDegreesWidgetData(language);
+
+// English title is longer. We can only use one-row layout in xl screen size.
+const layoutSwitchClass =
+  language === "zh"
+    ? {
+        topLevelClass: "lg:flex-row",
+        titleColClass: "lg:w-[25%]",
+      }
+    : {
+        topLevelClass: "xl:flex-row",
+        titleColClass: "xl:w-[25%]",
+      };
 ---
 
 <div class="bg-neutral-100">
   <Container classList={["lg:py-12 py-6"]}>
-    <div class:list={["flex flex-col lg:flex-row", "gap-6"]}>
-      <div class="lg:w-[25%] grow-0 shrink-0">
-        <div class="widget-title">學製綜覽</div>
+    <div
+      class:list={["flex flex-col", layoutSwitchClass.topLevelClass, "gap-6"]}
+    >
+      <div class:list={["grow-0 shrink-0", layoutSwitchClass.titleColClass]}>
+        <div class="widget-title">{T("programs_degrees", language)}</div>
         <p class="text-4xl leading-snug font-semibold pt-6">
-          基神設有12種不同的學位認證，讓每一位學生都能選擇適合自己的課程。
+          {T("degree_slogan", language)}
         </p>
       </div>
       <div class="grow">
@@ -77,6 +99,13 @@ const data = await getDegreesWidgetData("zh");
             ))
           }
         </Tabs>
+        <div>
+          <Button
+            text={T("learn_more", language)}
+            url={`/${language}/academic/degrees-programs`}
+            classNames={["btn-darkviolet"]}
+          />
+        </div>
       </div>
     </div>
   </Container>
