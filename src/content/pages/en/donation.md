@@ -5,7 +5,13 @@ coverImage: "/images/covers/donation.cover.jpg"
 thumbnail: "/images/covers/donation.thumbnail.jpg"
 ---
 
-<p class="text-maxpurple font-senibold">Donation categories are as follows: (Please choose one and write it in the note section of your offering):</p>
+Dear brothers and sisters: Praise the Lord, it is His own spirit that inspired you to open this page, and is willing to work with us with dedication and intercession to fulfill the mission of "cultivating workers in the kingdom of God".
+
+"For as his share is who goes down into the battle, so shall his share be who stays by the baggage. They shall share alike." (1 Samuel 30:24).
+
+From all of Christian Witness Theological Seminary with deep gratitude in the Lord!
+
+<p class="text-maxpurple font-senibold">Donation categories are as follows: (Please choose one and make note in your offering):</p>
 
 <p>1. General Fund 2. Scholarship 3. Building Fund 4. Friends of CWTS 5. Matching Fund 6. Other</p>
 
@@ -19,7 +25,7 @@ Accounting Department Christian Witness Theological Seminary\
 1975 Concourse Dr.\
 San Jose, CA 95131
 
-Note: Please write your donation category and mailing address.
+Note: Please note your donation category and mailing address.
 
 </div>
 <div class="bg-white p-4 mt-6 mb-6 font-semibold">
@@ -35,13 +41,13 @@ If this is your first time using Zelle to donate to CWTS, please send an email t
 <div class="bg-white p-4 mt-6 mb-6 font-semibold">
 <h3 class="mt-0 border-b border-maxpurple">Credit Card Donation</h3>
 
-[Click here to download the Credit Card Donation Form](<(/docs/CreditCardDonationForm2.pdf) and mail the completed form to our school, or take a picture of the completed form and email it to acctdept@cwts.edu.
+[Click to download the Credit Card Donation Form](/docs/CreditCardDonationForm2.pdf) and mail the completed form to the seminary, or take a picture of the completed form and email it to acctdept@cwts.edu.
 
 </div>
 <div class="bg-white p-4 mt-6 mb-6 font-semibold">
 <h3 class="mt-0 border-b border-maxpurple">Online Giving</h3>
 
-Please click the Online Giving button below to enter the Tithe.ly Christian organization donation platform. After entering your credit card and personal information and donation category (Give to), click the final Give button below (you can also check Remember me to remember the entered information for your next donation).
+Please click the Online Giving button below to enter Tithe.ly. Simply enter your credit card and personal information and donation category (Give to). When finished, click the final “Give” button.
 
 <p><button class="tithely-give-btn" style="background-color: #26af5f; border: none; color: #fff; padding: 10px 30px; font-size: 17px; cursor: pointer; background-image: none; border-radius: 3px; text-shadow: none; font-weight: normal;" data-church-id="217731">Online Giving</button> <script src="https://tithe.ly/widget/v3/give.js?3"></script> <script>var tw = create_tithely_widget();</script></p>
 
