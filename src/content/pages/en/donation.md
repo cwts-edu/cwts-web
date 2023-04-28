@@ -7,7 +7,7 @@ thumbnail: "/images/covers/donation.thumbnail.jpg"
 
 <p class="text-maxpurple font-senibold">Donation categories are as follows: (Please choose one and write it in the note section of your offering):</p>
 
-<p>1. Recurring Fund 2. Scholarship Fund 3. School Building Fund 4. Friends of CWTS 5. Matching Gifts 6. Other</p>
+<p>1. General Fund 2. Scholarship 3. Building Fund 4. Friends of CWTS 5. Matching Fund 6. Other</p>
 
 <div class="bg-white p-4 mt-6 mb-6 font-semibold">
 <h3 class="mt-0 border-b border-maxpurple">Donation by Check</h3>
