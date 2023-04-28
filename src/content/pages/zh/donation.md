@@ -4,3 +4,69 @@ order: 1000
 coverImage: "/images/covers/donation.cover.jpg"
 thumbnail: "/images/covers/donation.thumbnail.jpg"
 ---
+
+親愛的弟兄姊妹: 感謝主，是祂自己的靈感動您打開了這個頁面， 並願意以奉獻和代禱和我們一起同工，來踐行“培養神國度工人”的使命。
+
+“上陣的得多少, 看守器具的也得多少; 應當大家平分” (撒母耳記上 30:24)。
+
+基督工人神學院全體在主裡深深感恩！
+
+<p class="text-maxpurple font-senibold">捐款項目如下: (請選擇一項寫在您的奉獻備註裡)：</p>
+
+<p>1. 經常費用  2. 助學金  3. 建校基金  4. 基神之友  5. 对等奉献  6. 其他</p>
+
+<div class="bg-white p-4 mt-6 mb-6 font-semibold">
+<h3 class="mt-0 border-b border-maxpurple">支票奉獻</h3>
+
+抬頭: CWTS 郵寄地址:
+
+Accounting Department Christian Witness Theological Seminary\
+1975 Concourse Dr.\
+San Jose, CA 95131
+
+註：請填寫捐款項目和您的郵件地址。
+
+</div>
+
+<div class="bg-white p-4 mt-6 mb-6 font-semibold">
+<h3 class="mt-0 border-b border-maxpurple">Zelle 奉獻</h3>
+
+神學院 Zelle ID: donations@cwts.edu
+
+註: 請填入您的正式姓名，聯繫電話，郵寄地址以及捐款項目。
+
+若是第一次使用 Zelle 捐款給基神，請在使用 Zelle 轉帳後，發送一封郵件給 acctdept@cwts.edu 郵件裡也請提供您的正式姓名，聯繫電話, 捐款金额。
+
+</div>
+
+<div class="bg-white p-4 mt-6 mb-6 font-semibold">
+<h3 class="mt-0 border-b border-maxpurple">信用卡奉獻</h3>
+
+[請按此下載信用卡奉獻表](/docs/CreditCardDonationForm2.pdf) 填寫後郵寄至本院或手機拍照填寫後的奉獻表，email 至 acctdept@cwts.edu。
+
+</div>
+
+<div class="bg-white p-4 mt-6 mb-6 font-semibold">
+<h3 class="mt-0 border-b border-maxpurple">網上奉獻</h3>
+
+請點擊下方 Online Giving 的按鍵，進入 Tithe.ly 基督教組織奉獻平臺，輸入信用卡及個人資料和奉獻項目 (Give to) 後，點擊最後下方 Give 的金額即可 (亦可勾 Remember me 記住所輸入的資料，以方便下次奉獻)
+
+<p><button class="tithely-give-btn" style="background-color: #26af5f; border: none; color: #fff; padding: 10px 30px; font-size: 17px; cursor: pointer; background-image: none; border-radius: 3px; text-shadow: none; font-weight: normal;" data-church-id="217731">Online Giving</button> <script src="https://tithe.ly/widget/v3/give.js?3"></script> <script>var tw = create_tithely_widget();</script></p>
+
+</div>
+
+<div class="bg-white p-4 mt-6 mb-6 font-semibold">
+<h3 class="mt-0 border-b border-maxpurple">電匯奉獻</h3>
+
+請郵件聯繫會計部以便獲得基神銀行帳戶相關信息。 Email: acctdept@cwts.edu
+
+</div>
+
+<div class="bg-white p-4 mt-6 mb-6 font-semibold">
+<h3 class="mt-0 border-b border-maxpurple">股票或基金奉獻</h3>
+
+請郵件聯繫會計部以便獲得具體的相關信息。 Email: acctdept@cwts.edu
+
+</div>
+
+任何與奉獻有關的問題，請聯絡本院會計部。 電話: [408-433-2280 x 114](tel:+1-408-433-2280,114) 電郵: acctdept@cwts.edu
