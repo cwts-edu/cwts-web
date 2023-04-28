@@ -4,6 +4,7 @@ import Carousel, { Props as CarouselProps } from "./Carousel";
 import type { Language } from "@libs/language";
 import { T } from "@libs/language";
 import { getCollection } from "astro:content";
+import carouselData from "@data/carousel.yml";
 
 export interface Props {
   language: Language;
@@ -12,24 +13,7 @@ export interface Props {
 const { language } = Astro.props;
 
 const carouselProps: CarouselProps = {
-  items: [
-    {
-      link: "#",
-      image: "/images/carousel/2023-Spring-class.jpg",
-    },
-    {
-      link: "#",
-      image: "/images/carousel/2023spring-recruitment.jpg",
-    },
-    {
-      link: "#",
-      image: "/images/carousel/CWTS-day.jpg",
-    },
-    {
-      link: "#",
-      image: "/images/carousel/MCM-online.jpg",
-    },
-  ],
+  items: carouselData,
 };
 
 const news = await Promise.all(
