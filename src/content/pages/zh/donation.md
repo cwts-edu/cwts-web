@@ -18,8 +18,9 @@ thumbnail: "/images/covers/donation.thumbnail.jpg"
 <div class="bg-white p-4 mt-6 mb-6 font-semibold">
 <h3 class="mt-0 border-b border-maxpurple">支票奉獻</h3>
 
-抬頭: CWTS 郵寄地址:
+抬頭: CWTS
 
+郵寄地址:\
 Accounting Department Christian Witness Theological Seminary\
 1975 Concourse Dr.\
 San Jose, CA 95131
