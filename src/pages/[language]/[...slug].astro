@@ -2,17 +2,22 @@
 import { CollectionEntry, getCollection } from "astro:content";
 import Section from "@layouts/Section.astro";
 import site from "@libs/site";
+import { getLanguageBySlug } from "@libs/language";
 
 export async function getStaticPaths() {
   const pages = await getCollection("pages");
-  return pages.map((page) => ({
-    params: {
-      slug: page.slug,
-    },
-    props: {
-      page,
-    },
-  }));
+  return pages.map((page) => {
+    const { language, slug } = getLanguageBySlug(page.slug);
+    return {
+      params: {
+        language,
+        slug,
+      },
+      props: {
+        page,
+      },
+    };
+  });
 }
 
 export interface Props {
