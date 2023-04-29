@@ -5,11 +5,11 @@ coverImage: "/images/covers/donation.cover.jpg"
 thumbnail: "/images/covers/donation.thumbnail.jpg"
 ---
 
-Dear brothers and sisters: Praise the Lord, it is His own spirit that inspired you to open this page, and is willing to work with us with dedication and intercession to fulfill the mission of "cultivating workers in the kingdom of God".
+Dear brothers and sisters, we are delighted that the Spirit of the Lord has inspired you to open this page in response to His calling for you to support CWTS monetarily and also in prayer. Thank you for partnering with us in our quest to fulfill our mission of "cultivating workers for the Kingdom of God".
 
-"For as his share is who goes down into the battle, so shall his share be who stays by the baggage. They shall share alike." (1 Samuel 30:24).
+“The share of the man who stayed with the supplies is to be the same as that of him who went down to the battle. All will share alike. 1 Samuel 30:24b).
 
-From all of Christian Witness Theological Seminary with deep gratitude in the Lord!
+The faculty, staff, and student body of CWTS are deeply grateful for your gracious support.
 
 <p class="text-maxpurple font-senibold">Donation categories are as follows: (Please choose one and make note in your offering):</p>
 
