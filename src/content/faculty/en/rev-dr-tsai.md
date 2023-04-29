@@ -12,11 +12,11 @@ courses:
   - New Testament Epistles
   - 1 Corinthians
 degrees:
-  - Ph.D. 2016(January Conferral), Dallas Theological Seminary, 哲學博士
-  - Th.M. 2009, Dallas Theological Seminary, 神學碩士
+  - Ph.D. 2016(January Conferral), Dallas Theological Seminary
+  - Th.M. 2009, Dallas Theological Seminary
 moreDegrees:
-  - M.S. 1996, Stanford University, 電機碩士
-  - B.S. 1992, University of California, Berkeley, 理學士（主修電機電腦）
+  - M.S. 1996, Stanford University
+  - B.S. 1992, University of California, Berkeley
 former:
   - English pastor at Home of Christ Church in Menlo Park
 ---
