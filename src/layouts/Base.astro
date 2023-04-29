@@ -7,9 +7,10 @@ import type { Language } from "@libs/language";
 export interface Props {
   title: string;
   language: Language;
+  image?: string;
 }
 
-const { title, language } = Astro.props;
+const { title, language, image } = Astro.props;
 
 import "@assets/base.css";
 ---
@@ -19,8 +20,7 @@ import "@assets/base.css";
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
-    <title>{title}</title>
-    <SEO />
+    <SEO title={title} image={image} />
   </head>
   <body class="overflow-y-scroll">
     <Header language={language} />
