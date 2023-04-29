@@ -1,6 +1,8 @@
 ---
 title: Statement of Faith
 order: 101
+coverImage: "/images/covers/about/statement-of-faith.cover.jpg"
+thumbnail: "/images/covers/about/statement-of-faith.thumbnail.jpg"
 ---
 
 <div class="text-maxpurple">
