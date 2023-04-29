@@ -1,6 +1,7 @@
 ---
 import Footer from "@components/footer/Footer.astro";
 import Header from "@components/header/Header.astro";
+import SEO from "@components/common/SEO.astro";
 import type { Language } from "@libs/language";
 
 export interface Props {
@@ -19,6 +20,7 @@ import "@assets/base.css";
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <title>{title}</title>
+    <SEO />
   </head>
   <body class="overflow-y-scroll">
     <Header language={language} />
