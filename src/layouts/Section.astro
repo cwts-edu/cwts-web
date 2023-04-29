@@ -25,7 +25,11 @@ const coverImageUrl = `url('${coverImage}')`;
   }
 </style>
 
-<Base title={`${title} - ${site.shortTitle(language)}`} language={language}>
+<Base
+  title={`${title} - ${site.shortTitle(language)}`}
+  language={language}
+  image={coverImage}
+>
   <Breadcrumbs slug={slug} />
   <article class:list={["prose max-w-none", ...proseClassList]}>
     <div class:list={["title-cover", "bg-cover bg-center", "not-prose"]}>
