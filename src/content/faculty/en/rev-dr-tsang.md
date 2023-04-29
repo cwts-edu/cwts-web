@@ -1,31 +1,40 @@
 ---
 photo: /images/faculty/rev-dr-tsang.jpg
-name: 曾祥新博士/牧師
+name: Dr. Jacob Cheung-Sun Tsang
 category: senior-adjunct
 order: 202
 courses:
-  - 舊約聖經
+  - Old Testament
 degrees:
-  - Ph.D. 1989, University of Sheffield 哲學博士
-  - Th.M. 1982, Princeton Theological Seminary 神學碩士
-  - M.Div. 1976, Fuller Theological Seminary 道學碩士
+  - Ph.D., University of Sheffield (UK), 1989
+  - Th.M., Princeton Theological Seminary , 1982
+  - M.Div., Fuller Theological Seminary, 1976
 former:
-  - 基督工人神學院學生事務主任兼實習部主任, 副教授
-  - 英國海外華僑佈道會聖經學院講師
-  - 英國曼徹斯特華人基督教會主任牧師
-  - 香港神學院講師兼教務主任
-  - 播道神學院兼任講師
-  - 伯特利神學院兼任講師
-  - 香港伯特利教會牧師及總幹事
+  - Dean of Students and Director of Field Education (CWTS)
+  - Associate Professor (CWTS)
+  - Lecturer, COCM Bible College (UK)
+  - Senior Pastor, Manchester Chinese Christian Church (UK)
+  - Academic Dean & Lecturer , Bible Seminary of Hong Kong
+  - Lecturer, Evangel Theological College (Hong Kong)
+  - Pastor in charge, Hong Kong Bethel Church (Hong Kong)
+  - Lecturer, Bethel Bible Seminary (Hong Kong)
+  - Director of Religious Education, Bethel High School (Hong Kong)
+  - Evangelist, Hong Kong Bethel Church
 ---
 
-曾祥新牧師出生於中國廣東興寧, 成長於香港, 肄業於香港及英美, 蒙恩及蒙召於香港伯特利教會.蒙神恩典, 曾牧師仍操客粵國三語, 喜聖經研究及中國經史子集等. 曾牧師夫婦育有三子女, 全家至今仍寄居於海外. 現在除神學院教學之外, 曾牧師亦在不同教會講道, 撰寫期刊專文, 參與培訓, 協助聖經翻譯等事工, 企盼神恩早日沛臨神州大地.
+Dr. Jacob Cheung was born in Xingning (Guangdong, China), grew up in Hong Kong, and studied in Hong Kong, United Kingdom and USA. He was converted at Hong Kong Bethel Church where he also received God’s call to full-time ministry. By God’s grace, he can speak three Chinese dialects: Cantonese, Mandarin and Hakka. His hobbies include singing as well as studying Chinese history and literature in addition to the Bible, often enraptured in the world of the ancients. Rev. Tsang married in 1980 and has three children as a result. Currently, his family members all live overseas outside China. Besides teaching in CWTS, he also preaches in different churches, publishes papers in journal, is involved in leadership training, and assists editorial work for the Old Testament section of the Tien Dao Bible Commentary Series. May God’s grace richly abound in China!
 
-- **學歷:**
-  - Ph.D. 1989, University of Sheffield 哲學博士
-  - Th.M. 1982, Princeton Theological Seminary 神學碩士
-  - M.Div. 1976, Fuller Theological Seminary 道學碩士
-- **著述:**
-  - 《天道聖經註釋:士師記》 (香港﹕天道, 1996）
-  - 《天道聖經註釋:民數記》 (香港﹕天道, 2006）
-  - 《舊約背景快閱通》 (香港﹕天道, 2021)
+- **Education:**
+  - Ph.D., University of Sheffield (UK), 1989
+  - Th.M., Princeton Theological Seminary , 1982
+  - M.Div., Fuller Theological Seminary, 1976
+- **Publications in Chinese:**
+  - A. Monographs
+    - Numbers, Tien Dao Bible Commentary. Hong Kong: Tien Dao Publishing House, 2006.
+    - Judges, Tien Dao Bible Commentary. Hong Kong: Tien Dao Publishing House, 1998.
+  - B. Articles
+    - “Reflections on the Chinese New Year,” Evangel Literature, Issue 229, Jan-Feb 2014.
+    - “Seeking Stewards,” CWTS Newsletter, April, 2012.
+    - “The Message of Matthew’s Gospel to the Chinese,” Evangel Literature, Issue 216, Nov-Dec 2011 and issue 217, Jan-Feb 2012.
+    - “The Door of Blessings,” Evangel Literature, Issue 206, Mar-Apr 2010.
+    - “Commitments of the Christian Worker,” CWTS Newsletter, January 2010.

@@ -1,45 +1,64 @@
 ---
 photo: /images/faculty/rev-ip.jpg
-name: 葉裕波牧師
+name: Rev. James Ip
 category: faculty
 order: 102
 positions:
-  - 基督工人神學院副院長
-  - 副教授
+  - Vice President in CWTS
+  - Associate Professor in Old Testament
 courses:
-  - 希伯來文
-  - 舊約經卷
-  - 講道學
+  - Hebrew
+  - Old Testament
+  - Homiletics
 degrees:
-  - 1991-1995 Brandeis University 博士課程修讀 （主修古代近東研究）
-  - M.A. 1986, Brandeis University 文學碩士（主修古代近東研究）
+  - Ph.D. Studies, 1991-1995, Brandeis University (majoring in Ancient Near East)
+  - M.A. 1986, Brandeis University (majoring in Ancient Near East)
 moreDegrees:
   - Th.M. 1983, Princeton Theological Seminary 神學碩士
   - M. Div. 1982, Fuller Theological Seminary 道學碩士
 former:
-  - 曉士頓華人基督教會牧師
-  - 維真尼亞州華人浸信會牧師
-  - 新英倫華人基督教會助理牧師
-  - 北美華人福音促進會聯絡人
-  - 香港平安福音堂傳道
+  - Pastor in Chinese Christian Church, Houston, Texas
+  - Pastor in First Chinese Baptist Church, Virginia
+  - Assistant Pastor in Chinese Christian Church of New England
+  - Coordinator in North American Congress of Chinese Evangelicals
+  - Pastor in Peace Evangelical Center, Hong Kong
 ---
 
-葉裕波牧師在神學院除了忙於教學及行政工作以外，經常應邀於各教會擔任主日崇拜及退修會講員，分享基督教信仰、靈命的成長與生活化的聖經應用，並在各基督教書刊中撰寫文章。
+Besides being preoccupied with teaching and administrative work in CWTS, Rev. Ip is also regularly invited by many churches to preach in Sunday services and retreats. During such times, he shares on the Christian faith, spiritual growth and life applications from the Bible. He has also published many articles in Christian books and magazines.
 
-葉師母是一位社康護士並在安寧服務(Hospice) 中從事心靈關懷，藉著探訪給予病人關心及支持。他們的兩個兒子都已長大獨立和住在外州。葉牧師的業餘嗜好是閱讀，旅遊，與朋友分享生活經驗和人生的領會。
+Rev. Ip’s wife is a community nurse within Hospice service by providing emotional care and support to patients through home visitations. The Ip’s have two grown up sons, living independently in other states. Rev. Ip’s hobbies are reading, traveling, as well as sharing his experiences and life lessons with friends.
 
-葉牧師過去在語言方面曾有不少的學習經驗，為了研讀舊約，曾經學習的語言包括：德文、法文、希伯來文、現代希伯來文、希腊文、亞蘭文、亞甲文、烏加列文、亞拉伯文。這些語文的學習，豐富了他對古今、中外、及世界各地文化的傳统和表達方式的認識，這在他解釋聖經和應用方法上，都產生了相應的果效。
+In the past, Rev. Ip has a lot of experience learning different languages. In order to study the Old Testament thoroughly, he learned languages such as German, French, Hebrew, Modern Hebrew, Greek, Aramaic, Akkadian, Ugaritic and Arabic. Through his study of different languages, he has accumulated a vast knowledge of traditions and expressions of cultures past and present all over the world. This has correspondingly borne fruit in his exegesis and application of Scripture.
 
-- **學歷:**
-  - 1991-1995 Brandeis University 博士課程修讀 （主修古代近東研究）
-  - M.A. 1986, Brandeis University 文學碩士（主修古代近東研究）
-  - Th.M. 1983, Princeton Theological Seminary 神學碩士
-  - M. Div. 1982, Fuller Theological Seminary 道學碩士
-- **曾任:**
-  - 曉士頓華人基督教會牧師
-  - 維真尼亞州華人浸信會牧師
-  - 新英倫華人基督教會助理牧師
-  - 北美華人福音促進會聯絡人
-  - 香港平安福音堂傳道
-- **著述:**
-  - 《有聲聖經綜覽》（合著）美國福音證主協會，1990。
+- **Education:**
+  - Ph.D. Studies, 1991-1995, Brandeis University (majoring in Ancient Near East)
+  - M.A. 1986, Brandeis University (majoring in Ancient Near East)
+  - Th.M. 1983, Princeton Theological Seminary
+  - M. Div. 1982, Fuller Theological Seminary
+- **Publications in Chinese:**
+  - Translations from English
+    - New Bible Commentary (21st Century Chinese Edition) (contributing translator). Edited by Wai-Wing Chan and Job Hu. Hong Kong: Christian Communications Ltd., 1999.
+    - Beyond Futility: Message of Hope from the Book of Ecclesiastes (contributing translator). Chinese ed., Monterey Park, CA: Living Spring Publications, 1982.
+  - Articles in Monographs
+    - “Prophetic Books, Messiah and the Contemporary Christian.” In The Glorious Christ and the Contemporary Christian, pp.31-53. Edited by Lawrence Chan et al. Concord, CA: Christian Witness Theological Seminary, 2003.
+    - “Understanding the Book of Exodus,” “Understanding the Book of Job.” In A Survey of the Bible with Sound (Study Guide), I: 9-16, II: 25-31 (with cassette). Edited by Wai-Wing Chan. Hong Kong: Christian Communications Limited, 1991.
+  - Articles in Periodicals
+    - 19 short devotional essays in Proclaim, July/August, 1999; March/April, 2003; May/June, 2003.
+    - “Psalms that Embody Life,” Proclaim, May/June, 2003
+    - “My Observation of Death,” Chinese Today, July, 2009
+    - “The Unity and Co-operation of Churches,” Chinese Churches Today, April, 2009
+    - “Origin of the Universe (1): The Wonderful Creator,” Evangel Literature (210), Nov/Dec, 2010
+    - “Origin of the Universe (2): The Wonderful Creation,” Evangel Literature (211), Jan/Feb, 2011
+    - “Origin of the Universe (3): The Interpretation of Creation,” Evangel Literature (213), May/June, 2011
+    - “Man as the Pinnacle of Creation (1),” Evangel Literature (214), July/Aug, 2011
+    - “Man as the Pinnacle of Creation (2),” Evangel Literature (215), Sept/Oct, 2011
+    - “The Glorious Christ: Hope of the Human Race,” CWTS Newsletter, Jan. 2013
+    - “Does the Chinese Church of N. America Need Theological Education?” CWTS Newsletter, April, 2011
+    - “Immanuel, God With Us– Peace in a World of Turmoil,” CWTS Newsletter, Jan. 2010
+    - “New Covenant, New Heart, New Spirit, and Spiritual Renewal,” CWTS Newsletter, April, 2009
+    - “On Being a Spiritual Man,” CWTS Newsletter, Jan. 2008
+    - “30 Years of Ministry by Grace,” CWTS Newsletter, Jan, 2006
+    - “What is a Perfect Life?” CWTS Newsletter, Oct. 2001
+    - “What Good Can Come from Theological Seminaries?” CWTS Newsletter, April 2000
+    - “Encounter with the HOLY,” CWTS Newsletter, Oct. 1999
+    - “The Calling of Abraham,” CWTS Newsletter, Jan. 1999

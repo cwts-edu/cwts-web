@@ -1,14 +1,15 @@
 ---
 photo: /images/faculty/dr-lu.jpg
-name: 呂沈仁娣博士
+name: Dr. Betty Lu
 category: senior-adjunct
 order: 203
 courses:
-  - 基督教教育
+  - Christian Education
 degrees:
-  - Talbot Theological Seminary, Biola University, E.D.D. 教育博士 2013
-  - Wheaton College, M.A. 教育事工碩士 1990
+  - Doctor of Christian Education, Talbot School of Theology, Biola University 2013
+  - M.A. (Educational Ministries), Wheaton College 1990
 ---
 
-- Talbot Theological Seminary, Biola University, E.D.D. 教育博士 2013
-- Wheaton College, M.A. 教育事工碩士 1990
+- **Education:**
+  - Doctor of Christian Education, Talbot School of Theology, Biola University 2013
+  - M.A. (Educational Ministries), Wheaton College 1990

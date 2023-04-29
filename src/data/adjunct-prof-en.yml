@@ -1,112 +1,113 @@
-- name: 陳耀鵬牧師/博士
+- name: Rev. Dr. David Chan
   category: adjunct
   courses:
-    - 實踐神學
+    - Practical Theology
   degrees:
     - D.Min. Trinity Evangelical Divinity School
     - M.A. Trinity Evangelical Divinity School
 
-- name: 池耀興牧師/博士
+- name: Rev. Dr. Alex Chi
   category: adjunct
   courses:
-    - 護教學
-    - 華人文化
+    - Apologetics
+    - Chinese Cultures
   degrees:
-    - Ph.D. Beijing University, 2009 (中國哲學)
-    - M.Th. Westminster Theological Seminary, 1997 (護教學)
-    - M.A.R Westminster Theological Seminary, 1991 (神學)
-    - MBS Singapore Bible College, 1989（聖經研究）
+    - Ph.D. Beijing University, 2009
+    - M.Th. Westminster Theological Seminary, 1997
+    - M.A.R Westminster Theological Seminary, 1991
+    - MBS Singapore Bible College, 1989
 
-- name: 簡英材牧師/博士
+- name: Rev. Dr. Martin Chien
   category: adjunct
   courses:
-    - 敬拜學
-    - 領袖學
+    - Worship
+    - Leadership
   degrees:
     - D.M.A., Southwestern Baptist Theological Seminary
     - M.C.M. Dixon School of Music, Golden Gate Baptist Theological Seminary
     - B.A. in English Literature, Tamkang University
 
-- name: 朱昌錂牧師/博士
+- name: Rev. Dr. Calvin C. Chu
   category: adjunct
   courses:
-    - 宣教學
+    - Missiology
   degrees:
     - D.Miss. Fuller Theological Seminary
     - M.A. Fuller Theological Seminary
 
-- name: 熊聖華牧師/博士
+- name: Rev. Dr. Sherman Hsiung
   category: adjunct
   courses:
-    - 輔導學
+    - Counseling
   degrees:
     - Ph.D. Arizona State University
     - M.Div. Phoenix Seminary
     - M.S., Northeast Louisiana University
 
-- name: 黃嘉生牧師/博士
+- name: Rev. Dr. James Hwang
   category: adjunct
   courses:
-    - 實踐神學
+    - Practical Theology
   degrees:
     - D.Min Dallas Theological Seminary
     - M.Div.eq, MABS Dallas Theological Seminary
 
-- name: 林祥源牧師/博士
+- name: Rev. Dr. Albert Lam
   category: adjunct
   courses:
-    - 實踐神學
+    - Practical Theology
   degrees:
     - D.Min. Westminster Theological Seminary
     - M.Div. Grand Rapids Baptist Seminary
 
-- name: 林永健牧師/博士
+- name: Rev. Dr. Brian Lam
   category: adjunct
   courses:
-    - 實踐神學
+    - Practical Theology
   degrees:
     - D.Min. Dallas Theological Seminary
     - S.T.M. Dallas Theological Seminary
 
-- name: 林潔儀博士
+- name: Dr. Sarah Lam
   category: adjunct
   courses:
-    - 輔導學
+    - Education
+    - Counseling
   degrees:
     - Doctorate in Educational Leadership, California State University
     - M.Sc. in Counseling, California State University.
 
-- name: 李亞丁牧師/博士
+- name: Rev. Dr. Yading Li
   category: adjunct
   courses:
-    - 教會歷史
+    - Church History
   degrees:
     - Ph.D. Fuller Theological Seminary (2004)
     - M.T.S. Garrett Evangelical Theological Seminary
     - M.A. Intercultural Studies, Fuller Theological Seminary
 
-- name: 蕭靜馥博士
+- name: Dr. Jennifer Lowe
   category: adjunct
   courses:
-    - 基督教教育
+    - Christian Education
   degrees:
     - Ph.D. Talbot School of Theology, Biola University (Educational Studies), 2009
     - M.Div. Bethel Seminary, San Diego (Theological Studies &amp; Marital, Family and Children Counseling), 2000
 
-- name: 陳道明牧師/博士
+- name: Rev. Dr. Daniel Tan
   category: adjunct
   courses:
-    - 教牧神學
+    - Pastoral Theology
   degrees:
     - D. Min., Chinese for Christ Theological Seminary (1988)
     - M. Div. Chinese for Christ Theological Seminary (1986)
     - M.A. California Graduate School of Theology (Extension) (1985)
     - B.Th. Singapore Bible College, 1976
 
-- name: 曾浩斌博士
+- name: Dr. Herbert Tsang
   category: adjunct
   courses:
-    - 崇拜學
+    - Worship
   degrees:
     - D.W.S., Doctor of Worship Studies, The Robert E. Webber Institute for Worship (2011)
     - Ph.D., Computing Science, Simon Fraser University (2008)
@@ -115,19 +116,19 @@
     - Dip.Theo. Alliance Bible Seminary, Hong Kong (2007)
     - Dip.RSCM. Diploma in Sacred Music, the Royal School of Church Music, UK (2007)
 
-- name: 溫以諾牧師/博士
+- name: Rev. Dr. Enoch Wan
   category: adjunct
   courses:
-    - 宣教學
+    - Missiology
   degrees:
     - Ph.D. Anthropology State U. of N.Y. M.A.,
     - MTS Counselling &amp; NT Gordon-Conwell T.S.(Mass)
     - B.A. Social Sciences Nyack College (N.Y.)
 
-- name: 楊新欣女士
+- name: Ms. Sandra Young
   category: adjunct
   courses:
-    - 音樂
+    - Music
   degrees:
     - M.Ed., Hong Kong Baptist University (2004)
     - B.A. (Honors) in Music, Hong Kong Baptist University (1994)

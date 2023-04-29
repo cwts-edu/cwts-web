@@ -36,12 +36,12 @@ export default function FacultyRow({ faculty, messages }: Props) {
             <div className="py-0.5 text-xs">
               {person.positions && (
                 <div className="my-1">
-                  {messages.position_prefix}
+                  <b>{messages.position_prefix}</b>
                   {person.positions.join(messages.position_separator)}
                 </div>
               )}
               <div className="my-1">
-                {messages.course_prefix}
+                <b>{messages.course_prefix}</b>
                 {person.courses.join(messages.course_separator)}
               </div>
             </div>
