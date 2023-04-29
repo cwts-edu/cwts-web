@@ -1,6 +1,8 @@
 ---
 title: Our Future Goals
 order: 104
+coverImage: "/images/covers/about/future.cover.jpg"
+thumbnail: "/images/covers/about/future.thumbnail.jpg"
 ---
 
 We are working diligently towards the following goals in the future:
