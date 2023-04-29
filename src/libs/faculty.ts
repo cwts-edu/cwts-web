@@ -1,4 +1,5 @@
 import adjunctFacultyZh from "@data/adjunct-prof-zh.yml";
+import adjunctFacultyEn from "@data/adjunct-prof-en.yml";
 import { getCollection } from "astro:content";
 import type { CollectionEntry } from "astro:content";
 import { getLanguageBySlug, Language } from "./language";
@@ -53,7 +54,7 @@ const facultyMetadata: Record<Language, Record<Category, FacultyMetadata[]>> = {
     "senior-adjunct": getMetadata(
       filterPagesByLanguageCategory(facultyPages, "en", "senior-adjunct")
     ),
-    adjunct: adjunctFacultyZh as FacultyMetadata[],
+    adjunct: adjunctFacultyEn as FacultyMetadata[],
   },
 };
 

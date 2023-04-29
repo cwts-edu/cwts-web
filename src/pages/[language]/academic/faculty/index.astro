@@ -7,7 +7,7 @@ import site from "@libs/site";
 import { getEntryBySlug } from "astro:content";
 
 export function getStaticPaths() {
-  return ["zh"].map((language) => ({
+  return ["zh", "en"].map((language) => ({
     params: {
       language,
     },
