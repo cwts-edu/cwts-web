@@ -8,9 +8,11 @@ const { title, image } = Astro.props;
 ---
 
 <title>{title}</title>
+
 <meta property="og:type" content="website" />
 <meta property="og:title" content={title} />
 {image && <meta property="og:image" content={image} />}
+
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content={title} />
 {image && <meta name="twitter:image" content={image} />}
@@ -23,3 +25,5 @@ const { title, image } = Astro.props;
 <link rel="shortcut icon" href="/favicon.ico" />
 <meta name="msapplication-TileColor" content="#ffc40d" />
 <meta name="msapplication-config" content="/browserconfig.xml" />
+
+<link rel="sitemap" href="/sitemap-index.xml" />
