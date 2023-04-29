@@ -1,17 +1,16 @@
 ---
 photo: /images/faculty/rev-dr-tsai.jpg
-name: 蔡明謀博士/牧師
+name: Rev. Dr. Luke Tsai
 category: faculty
 order: 101
 positions:
-  - 基督工人神學院院長
-  - 新約副教授
+  - President in CWTS
+  - Associate Professor in New Testament
 courses:
-  - 新約希臘文文法與釋經
-  - 新約背景
-  - 新約經卷
-  - 釋經學
-  - 治學法
+  - New Testament Greek
+  - Gospels
+  - New Testament Epistles
+  - 1 Corinthians
 degrees:
   - Ph.D. 2016(January Conferral), Dallas Theological Seminary, 哲學博士
   - Th.M. 2009, Dallas Theological Seminary, 神學碩士
@@ -19,24 +18,20 @@ moreDegrees:
   - M.S. 1996, Stanford University, 電機碩士
   - B.S. 1992, University of California, Berkeley, 理學士（主修電機電腦）
 former:
-  - 基督之家第一家英文部牧師﹑負責人
+  - English pastor at Home of Christ Church in Menlo Park
 ---
 
-蔡老師出生於台灣，年幼之時便随父母全家移民來美。在美完成初中、高中教育。先後受教於伯克萊大學和斯坦福大學，取得理學士和碩士學位﹐主修電機。畢業後從事高科技工作，可是心中一直沒有忘記年少之時的感動，全時間服事神的心志並無消失。當神的時間來到，在全家及教會的祝福下，開始了全時間的神學教育裝備。在逹拉斯神學院取得神學碩士及哲學博士學位。蔡老師與師母 Jackie 育有二女，餘暇之時愛好拉小提琴，打兵兵球、籃球，和孩子們一起玩家庭遊戲，或自烹美食與家人分享。
+Before entering full-time ministry, Dr. Luke Tsai worked for fifteen years as an engineer in the Silicon Valley, designing microprocessors at Advanced Micro Devices. He was born in Taiwan and immigrated to the U.S. when he was thirteen. He completed his B.S. degree in Electrical Engineering and Computer Science at U.C. Berkeley and M.S. in Electrical Engineering at Stanford University.
 
-- **學歷:**
-  - Ph.D. 2016(January Conferral), Dallas Theological Seminary, 哲學博士
-  - Th.M. 2009, Dallas Theological Seminary, 神學碩士
-  - M.S. 1996, Stanford University, 電機碩士
-  - B.S. 1992, University of California, Berkeley, 理學士（主修電機電腦）
-- **著述:**
-  - 博士論文:
+Even though Dr. Tsai enjoyed a successful engineering career, his true passion has always been to serve the Lord and teach God’s word. He devoted his time outside of work to the church, serving in various capacities, particularly in youth group and Sunday school. After receiving a call to full-time ministry in 2006, he promptly moved to Dallas, TX and began receiving his training at Dallas Theological Seminary, where he earned both the Master of Theology degree and Doctor of Philosophy. In 2013, Dr. Tsai and his wife, Jackie, returned to the Bay Area to serve at their home church, the Home of Christ Church in Menlo Park. Dr. Tsai joined CWTS in 2015 as a faculty in New Testament.
+
+Dr. Tsai and his wife Jackie have two daughters, Dorothy and Susannah. In his spare time, he enjoys playing the violin, table tennis, and basketball.
+
+- **Education:**
+  - Ph.D. 2016(January Conferral), Dallas Theological Seminary
+  - Th.M. 2009, Dallas Theological Seminary
+  - M.S. 1996, Stanford University
+  - B.S. 1992, University of California, Berkeley
+- **Publications:**
+  - PhD Dissertation:
     - Brothers in Dispute: A Socio-Economic and Legal Analysis of the Litigants in the Church of Corinth.
-  - 文章:
-    - 「神學碩士與原文釋經」。林為華譯。於《擴張帳幕﹕當代的使命與挑戰》(基督工人神學院四十五週年紀念特刊)。51-55。San Jose, CA：基督工人神學院, 20s18。
-  - 書評:
-    - Opening Paul’s Letters: A Reader’s Guide to Genre and Interpretation by Patrick Gray. Bibliotheca sacra. Vol. 171, No. 683. (2014): 380-82(Co-authored with Joseph D. Fantin).
-    - Studying Paul’s Letters: Contemporary Perspectives and Methods by Joseph A. Marchal. Bibliotheca sacra. Vol. 171, No. 683. (2014): 379-80(Co-authored with Joseph D. Fantin).
-  - 其它:
-    - IBR Emerging Scholar (NT) 2014:
-    - “It’s Affordable: The Cost of Civil Litigation in First-Century Roman Corinth”

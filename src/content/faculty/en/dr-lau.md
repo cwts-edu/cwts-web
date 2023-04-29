@@ -1,46 +1,50 @@
 ---
 photo: /images/faculty/dr-lau.jpg
-name: 張劉文昭博士
+name: Dr. Manchiu Lau Cheung
 category: senior-adjunct
 order: 201
 courses:
-  - 基督教教育
+  - Christian Education
 degrees:
-  - 1999, 亞洲浸信會神學研究院神學博士（成人教育）
-  - 1992, 香港中國神學研究院道學碩士
-  - 1975, 香港大學教育文憑
+  - Th.D., Asia Baptist Graduate Theological Seminary (Adult Christian Education), 1999
+  - M.Div., China Graduate School of Theology, Hong Kong, 1992
+  - Dip.Ed., University of Hong Kong, 1975
+  - Dip.Th., Singapore Discipleship Training Centre, 1974
 moreDegrees:
-  - 1969, 香港大學理學士
+  - B.Sc., University of Hong Kong, 1969
 former:
-  - 基督工人神學院人事部主任
-  - 基督工人神學院註冊主任及實習部主任
-  - 香港神學院講師、院政主任及拓展主任
-  - 中學校長
-  - 中學教師、宗教主任
+  - Director of Human Resources (CWTS)
+  - Associate Professor (CWTS)
+  - Registrar & Director of Field Education, Christian Witness Theological Seminary
+  - Director of Administration & Director of Development, Bible Seminary of Hong Kong
+  - High School Principal
+  - High School Teacher and Religious Education Director
 ---
 
-張劉文昭博士(下稱劉老師)生長於香港，在中學時蒙恩信主，並積極參與教會事奉。大學畢業後，任香港基督徒學生福音團契幹事，推動中學生福音工作。於大學時結識學兄張偉權，於 1972 年結婚，婚後偉權到新加坡大學任教，而劉老師到新加坡門徒訓練中心就讀，獲神學文憑。後張偉權獲香港中文大學生物系教席，回香港後，劉老師在中學任教十多年，除教學外，亦努力於學生的福音工作，帶領學生查經班及團契。繼而升任中學校長。
-後劉老師感到神的呼召，辭退校長工作，全時間念神學，得道學碩士學位。繼而到香港神學院任教，之後並進修博士學位，主修基督教成人教育。
-1999 年與夫婿移居美國加州，於基督工人神學院任教至今，主要教授基督教教育科目，亦教授實用科目：例如佈道學、研經法、靈命成長等。曾擔任註冊主任、實習主任、人事部主任，亦協助學院財政管理及拓展工作。
+Dr. Manchiu Cheung (hereafter Dr. Lau) grew up in Hong Kong. She accepted Christ in high school and served actively in church. After graduation from college, she became a staff member of the Fellowship of Evangelical Students (Hong Kong) to promote evangelism among high school students. In 1972 she married Dr. Wilkin Cheung whom she got to know in college. After their wedding, Wilkin taught at Singapore University and Dr. Lau studied at Discipleship Training Centre (Singapore) where she earned a diploma in theology. Later Wilkin accepted an offer from the Chinese University of Hong Kong where he eventually became an Associate Professor in Biology. After their return to Hong Kong, Dr. Lau taught high school for more than ten years and participated actively in student evangelism, leading Bible studies and fellowships. She later became the principal of a high school.
 
-劉老師於三谷華人聖經教會聚會，多年來在中文部教授成人主日學。丈夫偉權則在英文部教授成人主日學。夫婿張偉權除在大學忠心教學研究外，亦有志於探究科學與信仰的關係，並對劉老師的事奉鼎力支持，可惜於 2013 年 3 月因癌症息勞歸主。劉老師在懷念夫君之餘，仍繼續努力事奉主。
+Sensing the call from God, .she resigned from the school and became a full time seminarian, eventually earning her Master in Divinity. She then became a teacher at the Bible Seminary of Hong Kong. Later she pursued a doctorate degree, majoring in Adult Christian Education.
 
-- **學歷:**
-  - 1999, 亞洲浸信會神學研究院神學博士（成人教育）
-  - 1992, 香港中國神學研究院道學碩士
-  - 1975, 香港大學教育文憑
-  - 1969, 香港大學理學士
-- **著述:**
-  - A. 書籍:
-    - 《基督教全人教育面面觀—基督教教育培訓手冊》2007
-    - A Study of the Relationship between Adults’ Self-Directed Learning Readiness and Selected Variables in Sunday Schools of Hong Kong Chinese Baptist Churches, ERIC, 2001
-    - 《香港浸信會神學院遙距課程—以賽亞書研讀指引》2000
-  - B.文章:
-    - 「從人性發展到分齡培育」論文發表於北美華人基督教教育會議，2018 年 6 月。
-    - 「門徒訓練與生命成長」，論文發表於北美華人基督教教育會議，2016 年 2 月。
-    - 「北美華人基督教教育現今面對的困難」，論文發表於由加拿大華人神學教育協會主辦的華人基督教教育事工〔北美〕研討會議，2014 年 8 月份。
-    - 「世俗化對基督教教育的挑戰」，基督工人神學院院訊，2011 年 3 月份。
-    - 「如何提升教牧的教導素質？」《教牧分享》，世界華福中心，2008 年 9 月份。
-    - 「善於問和答的耶穌與今日聖經教師」，《榮耀的基督與當代信徒》，基督工人神學院，2003。
-    - 「書評：《老當益壯》」，《傳》，中國信徒佈道會，2002。
-    - 「教會中的成人教學法」，基督工人神學院院訊，2002 年 3 月份。
+In 1999, Dr. Lau and her husband Wilkin immigrated to California. Since then, Dr. Lau has served as a professor in CWTS, teaching courses mainly in Christian Education but also in Evangelism, Bible Study, Spiritual Growth, etc. Dr. Lau was formerly the Registrar and Director of Field Education in CWTS. Currently she serves as the Director of Human Resources, oversees the Finance Department, and is also involved in Advancement in CWTS.
+
+For a number of years, Dr. Lau has been attending Tri-Valley Chinese Bible Church and teaches Adult Sunday School for the Chinese congregation. For his part, Wilkin was a long time teacher of adults in the English Sunday School. Besides being dedicated to teaching and research in college settings, he was also committed to the integration of science and the Christian faith, and he fully supported Dr. Lau’s ministry. Unfortunately he passed away in March 2013 as a result of cancer. Since then, while missing her husband, Dr. Lau continues to serve the Lord.
+
+- **Education:**
+  - Th.D., Asia Baptist Graduate Theological Seminary (Adult Christian Education), 1999
+  - M.Div., China Graduate School of Theology, Hong Kong, 1992
+  - Dip.Ed., University of Hong Kong, 1975
+  - Dip.Th., Singapore Discipleship Training Centre, 1974
+  - B.Sc., University of Hong Kong, 1969
+- **Selected Publications (in Chinese):**
+  - A. Books:
+    - Holistic Christian Education — Christian Education Training Handbook 2007
+    - A Study of the Relationship Between Adults’ Self-Directed Learning Readiness and Selected Variables in Sunday Schools of Hong Kong Chinese Baptist Churches, ERIC 2001
+    - Curriculum materials on “The Study of Isaiah”, Distance Education Program, Hong Kong Baptist Theological Seminary 2000
+  - B. Articles:
+    - 「基督教教育現況與面對的困難」”The Present Situation of Christian Education and the Problems Encountered.” Paper presented in the Chinese Christian Education Conference held by the Association of Canadian Chinese Theological Education, August 2014
+    - 「世俗化對基督教教育的挑戰」 “The Challenges of Secularism to Christian Education,” CWTS Newsletter, April 2011.
+    - 「如何提升教牧的教導素質?」”How to Elevate the Teaching Quality of Pastors?”《教牧分享 Pastoral Sharing》,世界華福中心 Chinese Co-ordination Centre of World Evangelism, Sep. 2008.
+    - 「善於問和答的耶穌與今日聖經教師」 “Jesus’ Use of Questions and Answers and How We can Learn from Him,” 《榮耀的基督與當代信徒 The Glorious Christ and the Contemporary Christian》,Christian Witness Theological Seminary, 2003.
+    - 「書評 Book Review:《老當益壯 Aging with Vitality: A Path for Growth》」,《傳 Proclaim》,中國信徒佈道會 Chinese Christian Mission,Sep. 2002.
+    - 「教會中的成人教學法 “The Methods of Teaching Adults in Churches”」, CWTS Newsletter, April 2002.
+    - 「基督教宗教教育的拓展 “The Development of Christian Religious Education in Churches”」, CWTS Newsletter, January 2000

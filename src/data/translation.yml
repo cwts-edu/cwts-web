@@ -47,13 +47,13 @@ adjunct_faculty:
   en: Adjunct Faculty
   zh: 客座教授
 position_prefix:
-  en:
+  en: "Position: "
   zh: 現任：
 position_separator:
   en: ", "
   zh: ", "
 course_prefix:
-  en:
+  en: "Teaching: "
   zh: 主授：
 course_separator:
   en: ", "

@@ -1,37 +1,36 @@
 ---
 photo: /images/faculty/rev-dr-lo.jpg
-name: 羅一強博士/牧師
+name: Rev. Dr. Andrew Lo
 category: faculty
 order: 106
 positions:
-  - 基督工人神學院學生事務主任
-  - 實踐神學助理教授
+  - Dean of Student Affairs
+  - Assistant Professor of Practical Theology
 courses:
-  - 教牧神學
-  - 家庭事工
-  - 門徒建造
-  - 講道實習
+  - Pastoral Theology
+  - Introduction to Christian Religious Education
+  - Family Ministry
+  - Discipleship
 degrees:
-  - D.Min., Christian Witness Theological Seminary 教牧學博士
-  - Th.M., Logos Evangelical Seminary 神學碩士
+  - D.Min., Christian Witness Theological Seminary
+  - Th.M., Logos Evangelical Seminary
 moreDegrees:
-  - M.Div., Logos Evangelical Seminary 道學碩士
-  - M.S., University of Southern California (USC) 環境工程碩士
+  - M.Div., Logos Evangelical Seminary
+  - M.S., University of Southern California (USC)
 former:
-  - 德州休士頓福遍中國教會 國語堂帶領牧師
-  - 德州休士頓福遍中國教會 國語堂牧師
-  - 普世宣教神學院 客座教師
+  - Lead Pastor, Fort Bend Community Church, Houston, Texas
+  - Pastor Fort Bend Community Church, Houston, Texas
+  - Visiting teacher, Global Mission Seminary
 ---
 
-羅一強牧師生長於台灣，大學畢業後信主。1992 年來美讀書，主修環境工程。畢業後在休士頓工作 10 年；2004 年回應神的呼召，在加州正道神學院接受裝備，分別獲得道學碩士(M.Div.)、與神學碩士(Th.M.，主修舊約研究)；並在基督工人神學院獲得教牧學博士(D.Min)。羅牧師在休士頓福遍中國教會牧會 12 年，並在各地講道與教學。2021 年因對培育神國工人的感動與負擔，應邀回母校基督工人神學院教授實踐神學。 羅牧師對家庭事工、門徒培育、釋經研究、敬拜讚美..等領域特別有負擔。羅牧師與師母羅魏春美育有兩個孩子，一男一女(Alan, Karen)，夫妻二人有美好配搭服事的默契。
+Born in Taiwan and converted after graduating from college, Pastor Andrew Lo came to the United States in 1992 to study Environmental Engineering. After graduated, he worked in Houston for 10 years. In 2004, in response to God’s call, he received his Master of Divinity (M.Div.) and Master of Theology (Th.M.) degrees from Logos Evangelical Seminary, majoring in Old Testament Studies. In 2021, because of the burden of building up younger ministers, he joined the faculty of Christian Witness Theological Seminary (CWTS). He is also currently a candidate of Doctor of Ministry (D.Min) at CWTS. Pastor Lo is committed to family ministry, discipleship, hermeneutics, biblical studies, worship and praise, and other areas. Pastor Lo and his wife, Jessie Lo, have two children, a boy and a girl (Alan and Karen), and they have a wonderful partnership for ministry.
 
-羅牧師平日喜歡打球、看球、彈吉他、聽音樂、親近大自然、珍惜與家人一起分享的時間。
+Pastor Lo enjoys playing and watching basketball, baseball, foosball, playing guitar, listening to music, going to nature and parks, and cherishing time with his family.
 
-- **學歷:**
-  - D.Min., Christian Witness Theological Seminary 教牧學博士
-  - Th.M., Logos Evangelical Seminary 神學碩士
-  - M.Div., Logos Evangelical Seminary 道學碩士
-  - M.S., University of Southern California (USC) 環境工程碩士
-- **著述:**
-  - Step by Step, Truth and Clarity Toward an Old Testament Exegesis (舊約釋經初期工作 – 經文核心概念之形成與方法論之確認) (Th.M. 論文)
-  - Developing a Family-Oriented Discipleship Theory and Strategy for the Ethnic Chinese Churches in North America (北美華人教會在家庭實踐門徒訓練的理論與策略) (D.Min. 論文)
+- **Education:**
+  - D.Min., Christian Witness Theological Seminary
+  - Th.M., Logos Evangelical Seminary
+  - M.Div., Logos Evangelical Seminary
+  - M.S., University of Southern California (USC)
+- **Publications:**
+  - Step by Step, Truth and Clarity Toward an Old Testament Exegesis (Th.M. Thesis)

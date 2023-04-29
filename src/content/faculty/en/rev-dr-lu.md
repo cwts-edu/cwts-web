@@ -1,38 +1,43 @@
 ---
 photo: /images/faculty/rev-dr-lu.jpg
-name: 呂紹昌博士/牧師
+name: Rev. Dr. Jeffrey Lu
 category: faculty
 order: 100
 positions:
-  - 基督工人神學院榮譽院長
-  - 副教授
+  - Emeritus President in CWTS
+  - Associate Professor
 courses:
-  - 舊約聖經與神學
-  - 靈命塑造
+  - Old Testament, Theology
+  - Spiritual Formation
 degrees:
-  - Ph.D. 1999, Trinity International University 舊約神學哲學博士
-  - M.Div. 1992, Trinity Evangelical Divinity School 道學碩士
+  - Ph.D. 1999, Trinity International University
+  - M.Div. 1992, Trinity Evangelical Divinity School
 former:
-  - 正道福音神學院代理院長
-  - 正道福音神學院教務長暨副教授
-  - 亞特蘭大華人基督教會主任牧師
+  - Acting President in Logos Evangelical Seminary
+  - Associate Professor and Dean of Academic Affairs in Logos Evangelical Seminary
+  - Senior Pastor in Atlanta Chinese Christian Church
 ---
 
-呂紹昌牧師原在大學任教。一九八八年，兒子蒙主寵召返天家，他清楚蒙召全職事奉，遂入芝加哥三一神學院受裝備，獲道學碩士與哲學博士，主修舊約，並研究釋經、神學、比較閃族語等。他對聖經與神學、建立教會、培育領袖、神學教育等，多有負擔。呂牧師深知文字事工的重要，除了學術著作，如《以賽亞書註釋》等，也固定在《傳揚》雜誌上撰寫信仰與時事專欄。
+Rev. Lu was formerly a college professor. In 1988, he received God’s clear call to full-time ministry after his son passed away. Thus he enrolled in Trinity Evangelical Divinity School in Chicago where he eventually obtained his Master in Divinity and Doctor of Philosophy. Rev. Lu majored in Old Testament, but he also studied Exegesis, Theology, and Semitic Languages. He has a burden for expounding the Bible and theology, church edification, leadership training, as well as theological education. Rev. Lu knows the importance of publishing in ministry. Besides publishing academic works such as his commentary on Isaiah, he regularly contributes to a column on Faith and Current Affairs in Magazine of the Evangelical Formosan Church.
 
-呂牧師曾任亞特蘭大教會主任牧師，對教會中牧養、禱告、靈命、崇拜、教育、與宣教等事工，都頗關注。他的興趣頗多方面，尤其喜歡吟唱希伯來文詩歌。喜愛園藝，但常是想的多講的多，做的少。師母沈仁娣主修基督教教育與家庭事工，獲南加州 Talbot 神學院博士。女兒女婿與外孫居住於波士頓。
+Rev. Lu was previously Senior Pastor in Atlanta Chinese Christian Church where he paid attention to the nurturance of believers, prayer, spiritual growth, worship, education and missions. Chief among his many hobbies is singing songs in Hebrew. He is also very fond of gardening, but acts less than what he plans and says. Rev. Lu’s wife Betty received her Doctor of Christian Education from Talbot School of Theology in southern California. She majors in Christian Education and Family Ministry. Their daughter, son-in-law and grandchild live in Boston, MA.
 
-- **學歷：**
+- **Education:**
   - Ph.D. 1999, Trinity International University 舊約神學哲學博士
   - M.Div. 1992, Trinity Evangelical Divinity School 道學碩士
-- **著述：**
-  - 《以賽亞書註釋卷一 1-12 章》（香港﹕天道, 2014）
-  - 《說地談天：論時事想天國》台福傳播中心/道聲出版社, 2013 年八月
-- **學術文章：**
-  - 「道解兩約」，《生生之道》（天道，2009）
-  - 「撒母耳記中之聖靈」，《聖靈古今論》（華神，1997），71-99 頁。
-  - 6 entries in New International Dictionary of Old Testament Theology and Exegesis (Zondervan, 1997)
-- **編輯：**
-  - 《生生之道》（天道，2009）
-- **其他文章：**
-  - 見《臺灣正道福音神學院通訊》、《傳揚雜誌》、《美國台福神學院院訊》、《南美神學院通訊》、《教牧分享》、《使者雜誌》等。
+- **Publications:**
+  - In Monographs
+    - 2014 Commentary on Isaiah Vol. I, 1-12 (Hong Kong: Tien Dao Publishing Co.).
+    - 2013 Earthly Talk, Heavenly Walk: On Current Issues in Transcendent Perspective (El Monte, Calif.: Evangelical Formosan Church Communication Center, 2013).
+    - 2009 “Logos Across Two Testaments: Interpreting Old Testament Messianic Prophecy,” in Ekron Chen, Jeffrey Lu & Chloe Sun, eds., Logos for Life: Essays Commemorating Logos Evangelical Seminary’s 20th Anniversary (Hong Kong: Tien Dao, 2009), pp. 99-135.
+    - 2001 Revision on translation of Chinese New Version (Hong Kong: Tien Dao Publishing)
+    - 2000 Introductory sections in the Chinese New Version (Hong Kong: Tien Dao Publishing Co.).
+    - 1998 “The Holy Spirit in the Book of Samuel,” in The Holy Spirit Then and Now, Festschrift Hudson Taylor, IV (Taipei: China Evangelical Seminary Press, 1999), pp. 71-99.
+    - 1997 6 entries in New International Dictionary of Old Testament Theology and Exegesis (Grand Rapids, Michigan: Zondervan, 1997).
+  - Articles published in Periodical or Journal
+    - 2006 「無關福音的『猶大福音』 “The Non-gospel Gospel of Judas”」《正道神學院通訊》June 2006. (El Monte, CA: Logos Newsletter)
+    - 1996 「馬其頓的知識份子 “The Macedonian Intellectuals”」《遠東證主通訊》(Chicago, Ill.: FECC Newsletter)
+    - 1996 「守望者亞特蘭大教牧會議 “The Watchmen—Atlanta Pastors’Conference」《基督教論壇報》3 月 (Taipei: Christian Tribune)
+    - 1994 「隱藏的美旨 “The Hidden Good Will」《使者》1994 年 3/4 月 (Paradise, PA: Ambassador Magazine)
+  - Column articles
+    - 《傳揚》(信仰時事每月專欄) Monthly column in Magazine of the Evangelical Formosan Church, since November, 2011. See <http://magazine.efccc.org>
