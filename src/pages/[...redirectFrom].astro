@@ -1,0 +1,34 @@
+---
+import Redirect from "@layouts/Redirect.astro";
+import getRedirects from "@libs/redirects";
+
+export async function getStaticPaths() {
+  function relativePath(absPath: string): string {
+    if (absPath.startsWith("/")) {
+      return absPath.substring(1);
+    }
+    return absPath;
+  }
+
+  return (await getRedirects()).map(({ from, to }) => {
+    return {
+      params: {
+        redirectFrom: relativePath(from),
+      },
+      props: {
+        from,
+        to,
+      },
+    };
+  });
+}
+
+export interface Props {
+  from: string;
+  to: string;
+}
+
+const { from, to } = Astro.props;
+---
+
+<Redirect target={to} />
