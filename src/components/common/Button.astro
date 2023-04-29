@@ -10,7 +10,7 @@ export interface Props {
 const { url, text, classNames = [] } = Astro.props;
 ---
 
-<a role="button" href={url} class:list={["btn", ...classNames]}>
+<a role="button" href={url} class:list={["btn", "font-ui", ...classNames]}>
   {text}
   <Icon name="angle-right" />
 </a>

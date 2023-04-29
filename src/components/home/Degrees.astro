@@ -31,7 +31,12 @@ const layoutSwitchClass =
     <div
       class:list={["flex flex-col", layoutSwitchClass.topLevelClass, "gap-6"]}
     >
-      <div class:list={["grow-0 shrink-0", layoutSwitchClass.titleColClass]}>
+      <div
+        class:list={[
+          "grow-0 shrink-0 font-ui",
+          layoutSwitchClass.titleColClass,
+        ]}
+      >
         <div class="widget-title">{T("programs_degrees", language)}</div>
         <p class="text-4xl leading-snug font-semibold pt-6">
           {T("degree_slogan", language)}
