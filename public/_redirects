@@ -22,8 +22,8 @@
 /prospective-students/recruit       /zh/about/feature/              301!
 /prospective-students/program-degree/overview   /zh/academic/degrees-programs/    301!
 /study-mode/online-program          /zh/academic/online-program/    301!
-/prospective-students/scholarship/  /zh/admissions/tuition-scholarship/   301!
-/prospective-students/application/procedure/    /zh/admissions/application-procedure/    301!
+/prospective-students/scholarship  /zh/admissions/tuition-scholarship/   301!
+/prospective-students/application/procedure    /zh/admissions/application-procedure/    301!
 /students-resources/academic-calendar    /zh/student-life/calendar/    301!
 /students-resources/course-resources/course-schedule    /zh/academic/course-schedule/    301!
 /students-resources/registration/course-registration-notice    /zh/academic/registration-notice/    301!
@@ -37,4 +37,18 @@
 /babc/babc-mission                  /zh/news-events/bay-area-bible-convention/mission/    301!
 /babc/babc-2022                     /zh/news-events/bay-area-bible-convention/past-events/    301!
 /babc/babc-past                     /zh/news-events/bay-area-bible-convention/past-events/    301!
-/support/offering/                  /zh/donation/                   301!
+/cwts_forum                         /zh/news-events/forum/          301!
+/latest-activities/wed_assembly     /zh/student-life/assembly/      301!
+/support/offering                   /zh/donation/                   301!
+
+/about/statement-of-faith-2           /en/about/statement-of-faith/   301!
+/about/vision-and-mission-statement   /en/about/vision-and-mission/   301!
+/about/features                       /en/about/feature/              301!
+/about/our-future-goals               /en/about/future/               301!
+/about/effectiveness-statement        /en/about/effectiveness-statement/    301!
+/about/accreditation                  /en/about/accreditation/        301!
+/academic-information/programs-of-study    /en/academic/degrees-programs/    301!
+/support-cwts                         /en/donation/                   301!
+/support-cwts/support                 /en/donation/                   301!
+/personel/faculty-members             /en/academic/faculty/           301!
+/personel/faculty-members/board-member    /en/about/board/            301!
