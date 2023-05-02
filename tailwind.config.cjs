@@ -118,6 +118,9 @@ module.exports = {
             iframe: {
               maxWidth: "100%",
             },
+            a: {
+              wordBreak: "break-word",
+            },
           },
         },
         tabs: {
