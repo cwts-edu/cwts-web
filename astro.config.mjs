@@ -2,7 +2,7 @@ import { defineConfig } from "astro/config";
 import image from "@astrojs/image";
 import tailwind from "@astrojs/tailwind";
 import yaml from "@rollup/plugin-yaml";
-import compress from "astro-compress";
+// import compress from "astro-compress";
 import react from "@astrojs/react";
 import postcss_import from "postcss-import";
 import tailwindcss_nesting from "tailwindcss/nesting";
@@ -36,7 +36,7 @@ export default defineConfig({
         },
       },
     }),
-    compress(),
+    // compress(),
   ],
   vite: {
     plugins: [yaml()],
