@@ -1,1 +1,1 @@
-Sitemap: http://www.cwts.edu/sitemap-index.xml
+Sitemap: https://www.cwts.edu/sitemap-index.xml
