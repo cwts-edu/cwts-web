@@ -34,9 +34,6 @@ const news = await Promise.all(
 <Widget
   title={T("latest_news", language)}
   classNames={["bg-darkviolet text-white"]}
-  moreText={T("more_news", language)}
-  moreLink="#"
-  moreClass={["btn-darkviolet"]}
 >
   <Carousel items={carouselProps.items} client:idle />
 
