@@ -2,14 +2,14 @@
   --swiper-navigation-color: white !important;
   --swiper-theme-color: white !important;
   --swiper-pagination-bullet-inactive-color: #aaa;
-  --swiper-navigation-size: 24px;
+  --swiper-navigation-size: 32px;
   --swiper-pagination-space: 36px;
   --swiper-navigation-sides-offset: 12px;
 }
 @media (min-width: 768px) {
   :root {
     --swiper-navigation-size: 64px;
-    --swiper-navigation-sides-offset: 20px;
+    --swiper-navigation-sides-offset: 24px;
   }
 }
 
