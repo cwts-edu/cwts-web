@@ -197,16 +197,21 @@ const menuWithoutChildren = menu.filter((menuItem) => !menuItem.children);
           // flexbox row
           "flex justify-between items-center",
         ]}
+        action={`/${language}/search`}
+        method="get"
       >
         <div class="grow">
           <input
             class="w-full border-0 py-1"
             type="text"
             placeholder={T("search", language)}
+            name="q"
           />
         </div>
         <div>
-          <Icon name="search-sharp" class="text-darkviolet h-7" />
+          <button type="submit" class="align-middle">
+            <Icon name="search-sharp" class="text-darkviolet h-7" />
+          </button>
         </div>
       </form>
       <div class:list={["flex flex-col items-start py-4 gap-6 text-lg"]}>
