@@ -1,4 +1,5 @@
 ---
+import Container from "@components/common/Container.astro";
 import Base from "@layouts/Base.astro";
 import { T, Language } from "@libs/language";
 
@@ -14,9 +15,11 @@ const language = Astro.params.language as Language;
 ---
 
 <Base title={T("search", language)} language={language}>
-  <script
-    async
-    src=`https://cse.google.com/cse.js?cx=47728d3b7262a4617&hl=${language}`
-  ></script>
-  <div class="gcse-search"></div>
+  <Container>
+    <script
+      async
+      src=`https://cse.google.com/cse.js?cx=47728d3b7262a4617&hl=${language}`
+    ></script>
+    <div class="gcse-search"></div>
+  </Container>
 </Base>
