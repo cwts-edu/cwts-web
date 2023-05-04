@@ -92,7 +92,7 @@ const { language } = Astro.props;
       ]}
     >
       <LanguagePicker />
-      <form class="flex gap-1">
+      <form class="flex gap-1" action={`/${language}/search`} method="get">
         <input
           class:list={[
             // rounded button
@@ -101,6 +101,7 @@ const { language } = Astro.props;
             "w-32",
           ]}
           type="text"
+          name="q"
         />
         <button type="submit">
           <Icon
