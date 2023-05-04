@@ -14,6 +14,12 @@ export function getStaticPaths() {
 const language = Astro.params.language as Language;
 ---
 
+<style is:global>
+  .gcsc-find-more-on-google svg {
+    display: inline;
+  }
+</style>
+
 <Base title={T("search", language)} language={language}>
   <Container>
     <script
