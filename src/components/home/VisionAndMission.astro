@@ -13,7 +13,9 @@ const { language } = Astro.props;
   class="bg-[url('/images/bg-vision-and-mission.jpg')] bg-cover bg-no-repeat bg-center"
 >
   <Container classList={["text-white lg:py-12 py-6"]}>
-    <div class="flex flex-col gap-8 lg:gap-12 md:max-w-[36rem]">
+    <div
+      class="flex flex-col gap-8 lg:gap-12 md:max-w-[36rem] xl:max-w-[48rem]"
+    >
       <div>
         <div class="widget-title">{T("mission", language)}</div>
         <div class="pt-3 text-xl">{T("mission_statement", language)}</div>
