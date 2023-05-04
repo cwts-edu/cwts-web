@@ -28,13 +28,13 @@ const messages: Messages = {
   moreLink={`/${language}/academic/faculty`}
   moreText={T("more", language)}
 >
-  <div class="mb-5 text-xl">
+  <div class="mb-5 mt-2 text-xl">
     <span class="py-1 border-white border-b">
       {T("faculty", language)}
     </span>
   </div>
   <FacultyRow faculty={faculty} messages={messages} client:idle />
-  <div class="mb-5 text-xl">
+  <div class="mb-5 mt-2 text-xl">
     <span class="py-1 border-white border-b">
       {T("senior_adjunct_faculty", language)}
     </span>

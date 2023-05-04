@@ -1,5 +1,5 @@
 import { Swiper, SwiperSlide } from "swiper/react";
-import { FreeMode } from "swiper";
+import { FreeMode, Scrollbar } from "swiper";
 import "swiper/css";
 import "swiper/css/free-mode";
 import "./faculty-row.css";
@@ -24,7 +24,8 @@ export default function FacultyRow({ faculty, messages }: Props) {
       slidesPerView={"auto"}
       freeMode={true}
       spaceBetween={24}
-      modules={[FreeMode]}
+      scrollbar={{ draggable: true }}
+      modules={[FreeMode, Scrollbar]}
     >
       {faculty.map((person, index) => (
         <SwiperSlide key={index}>
