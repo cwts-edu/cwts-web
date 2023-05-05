@@ -24,6 +24,7 @@
     "astro": "^2.0.4",
     "astro-compress": "^1.1.28",
     "astro-icon": "^0.8.0",
+    "github-slugger": "^2.0.0",
     "install": "^0.13.0",
     "netlify-redirect-parser": "^14.1.2",
     "node-html-parser": "^6.1.5",

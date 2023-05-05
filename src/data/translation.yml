@@ -61,6 +61,9 @@ course_separator:
 former_prefix:
   en: "Former Ministries: "
   zh: 曾任：
+education_prefix:
+  en: "Education: "
+  zh: 學歷：
 vision:
   en: Vision
   zh: 異象宣告

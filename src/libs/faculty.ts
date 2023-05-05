@@ -3,6 +3,7 @@ import adjunctFacultyEn from "@data/adjunct-prof-en.yml";
 import { getCollection } from "astro:content";
 import type { CollectionEntry } from "astro:content";
 import { getLanguageBySlug, Language } from "./language";
+import { slug as slugify } from "github-slugger";
 
 type Category = "faculty" | "senior-adjunct" | "adjunct";
 export type FacultyMetadata = CollectionEntry<"faculty">["data"] & {
@@ -37,6 +38,17 @@ function getMetadata(pages: CollectionEntry<"faculty">[]): FacultyMetadata[] {
     .sort((a, b) => a.order - b.order);
 }
 
+function setAdjunctUrl(
+  faculty: FacultyMetadata[],
+  language: Language
+): FacultyMetadata[] {
+  const url = `/${language}/academic/faculty/adjunct-professors`;
+  return faculty.map((person) => ({
+    ...person,
+    url: `${url}#${slugify(person.name)}`,
+  }));
+}
+
 const facultyMetadata: Record<Language, Record<Category, FacultyMetadata[]>> = {
   zh: {
     faculty: getMetadata(
@@ -45,7 +57,7 @@ const facultyMetadata: Record<Language, Record<Category, FacultyMetadata[]>> = {
     "senior-adjunct": getMetadata(
       filterPagesByLanguageCategory(facultyPages, "zh", "senior-adjunct")
     ),
-    adjunct: adjunctFacultyZh as FacultyMetadata[],
+    adjunct: setAdjunctUrl(adjunctFacultyZh as FacultyMetadata[], "zh"),
   },
   en: {
     faculty: getMetadata(
@@ -54,7 +66,7 @@ const facultyMetadata: Record<Language, Record<Category, FacultyMetadata[]>> = {
     "senior-adjunct": getMetadata(
       filterPagesByLanguageCategory(facultyPages, "en", "senior-adjunct")
     ),
-    adjunct: adjunctFacultyEn as FacultyMetadata[],
+    adjunct: setAdjunctUrl(adjunctFacultyEn as FacultyMetadata[], "en"),
   },
 };
 

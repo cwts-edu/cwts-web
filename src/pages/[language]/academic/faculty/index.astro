@@ -27,7 +27,7 @@ const categoryMessages: Record<FacultyMetadata["category"], string> = {
 };
 ---
 
-<Section slug={slug} title={title} coverImage={coverImage}>
+<Section slug={slug} title={title} coverImage={coverImage} showChildren={false}>
   <div class="not-prose flex flex-col">
     {
       faculty.map((person) => (
