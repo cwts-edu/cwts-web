@@ -1,4 +1,5 @@
 ---
+import Redirect from "@layouts/Redirect.astro";
 import SectionNoCover from "@layouts/SectionNoCover.astro";
 import {
   DegreesProgramsMetadata,
@@ -47,19 +48,27 @@ const Content = (await page.render()).Content;
 const { language } = metadata;
 ---
 
-<SectionNoCover
-  language={language}
-  title={metadata.title}
-  slug={`${metadata.language}/academic/degrees-programs/${metadata.slug}`}
->
-  <div
-    class="text-darkblue text-xl font-semibold border-b-2 border-maxpurple my-1"
-  >
-    {T("(", language)}{metadata.length}{T(",", language)}{metadata.credits}{
-      T(" ", language)
-    }{T("credits", language)}{T(")", language)}
-  </div>
-  <div class="prose">
-    <Content />
-  </div>
-</SectionNoCover>
+{
+  page.data.redirect ? (
+    <Redirect target={page.data.redirect} />
+  ) : (
+    <SectionNoCover
+      language={language}
+      title={metadata.title}
+      slug={`${metadata.language}/academic/degrees-programs/${metadata.slug}`}
+    >
+      <div class="text-darkblue text-xl font-semibold border-b-2 border-maxpurple my-1">
+        {T("(", language)}
+        {metadata.length}
+        {T(",", language)}
+        {metadata.credits}
+        {T(" ", language)}
+        {T("credits", language)}
+        {T(")", language)}
+      </div>
+      <div class="prose">
+        <Content />
+      </div>
+    </SectionNoCover>
+  )
+}
