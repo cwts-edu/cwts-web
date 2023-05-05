@@ -1,0 +1,54 @@
+---
+import OptionalLink from "@components/common/OptionalLink.astro";
+import Section from "@layouts/Section.astro";
+import { FacultyMetadata, getFacultyMetadata } from "@libs/faculty";
+import { Language, T } from "@libs/language";
+import site from "@libs/site";
+import { getEntryBySlug } from "astro:content";
+import { slug as slugify } from "github-slugger";
+
+export function getStaticPaths() {
+  return ["zh", "en"].map((language) => ({
+    params: {
+      language,
+    },
+  }));
+}
+
+const language = Astro.params.language as Language;
+const slug = `${language}/academic/faculty/adjunct-professors`;
+const page = await getEntryBySlug("pages", slug);
+if (!page) return;
+const { title, coverImage = site.defaultCover } = page.data;
+const faculty = getFacultyMetadata(language, ["adjunct"]);
+---
+
+<Section slug={slug} title={title} coverImage={coverImage}>
+  <div class="not-prose flex flex-col">
+    {
+      faculty.map((person) => (
+        <div class="py-4 first:border-t-0 border-t border-maxpurple flex flex-col gap-5">
+          <h2 class="text-2xl font-semibold text-darkviolet">
+            <a id={slugify(person.name)}>{person.name}</a>
+          </h2>
+          <div>
+            <p>
+              <b>{T("course_prefix", language)}</b>
+            </p>
+            <p>{person.courses.join(T("course_separator", language))}</p>
+          </div>
+          <div>
+            <p>
+              <b>{T("education_prefix", language)}</b>
+            </p>
+            <div>
+              {person.degrees.map((degree) => (
+                <div>{degree}</div>
+              ))}
+            </div>
+          </div>
+        </div>
+      ))
+    }
+  </div>
+</Section>
