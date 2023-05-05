@@ -54,6 +54,7 @@ const degreesPrograms = defineCollection({
     length: z.optional(z.string()),
     credits: z.number(),
     category: z.enum(["doctor", "master", "diploma", "certificate"]),
+    redirect: z.optional(z.string()),
   }),
 });
 
