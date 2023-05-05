@@ -1,9 +1,16 @@
+# Netlify _redirects file format: https://docs.netlify.com/routing/redirects/
+# 301! at the end is important because an HTML redirect page is generated for other platforms to handle redirects. It makes the HTTP redirect to take priority in netlify.
+
+# Links in QR code format
 /babc                /zh/news-events/bay-area-bible-convention/  301!
 /babc/babc-2023      /zh/news-events/bay-area-bible-convention/  301!
 /babc/babc-current   /zh/news-events/bay-area-bible-convention/  301!
+/ministryinst-cert/ministry-institute-reg   /zh/ministry-institute/courses/   301!
 
+# Alias for zh homepage
 /zh                  /                                           301!
 
+# Migrating old site URLs to the new site
 /intro-of-cwts                      /zh/about                       301!
 /intro-of-cwts/statement-of-faith   /zh/about/statement-of-faith/   301!
 /intro-of-cwts/feature              /zh/about/feature/              301!
