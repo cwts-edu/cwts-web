@@ -5,7 +5,10 @@ import getRedirects from "@libs/redirects";
 export async function getStaticPaths() {
   function relativePath(absPath: string): string {
     if (absPath.startsWith("/")) {
-      return absPath.substring(1);
+      absPath = absPath.substring(1);
+    }
+    if (absPath.endsWith("/")) {
+      absPath = absPath.substring(0, absPath.length - 1);
     }
     return absPath;
   }
