@@ -5,9 +5,13 @@ export interface Props {
 }
 
 const { title, image } = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 ---
 
 <title>{title}</title>
+
+<link rel="canonical" href={canonicalURL} />
 
 <meta property="og:type" content="website" />
 <meta property="og:title" content={title} />
