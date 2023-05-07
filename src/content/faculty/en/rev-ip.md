@@ -1,11 +1,8 @@
 ---
 photo: /images/faculty/rev-ip.jpg
 name: Rev. James Ip
-category: faculty
-order: 102
-positions:
-  - Vice President in CWTS
-  - Associate Professor in Old Testament
+category: senior-adjunct
+order: 204
 courses:
   - Hebrew
   - Old Testament
@@ -17,6 +14,7 @@ moreDegrees:
   - Th.M. 1983, Princeton Theological Seminary 神學碩士
   - M. Div. 1982, Fuller Theological Seminary 道學碩士
 former:
+  - Vice President, Associate Professor in Old Testament in CWTS (1995-2022)
   - Pastor in Chinese Christian Church, Houston, Texas
   - Pastor in First Chinese Baptist Church, Virginia
   - Assistant Pastor in Chinese Christian Church of New England
