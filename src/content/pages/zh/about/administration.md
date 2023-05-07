@@ -26,4 +26,4 @@ thumbnail: "/images/covers/about/administration.thumbnail.jpg"
 | 註冊主管 資深行政助理           | 陳李伊          | 101   |
 | 培育中心助理主任                | 邊瑤            | 115   |
 | 總務部                          | 李湧            | 108   |
-| 資訊部                          | 孫守聖          | 104   |
+| 資訊部                          | 林文興          | 104   |
