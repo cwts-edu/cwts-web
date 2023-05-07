@@ -1,11 +1,8 @@
 ---
 photo: /images/faculty/rev-ip.jpg
 name: 葉裕波牧師
-category: faculty
-order: 102
-positions:
-  - 基督工人神學院副院長
-  - 副教授
+category: senior-adjunct
+order: 204
 courses:
   - 希伯來文
   - 舊約經卷
@@ -17,6 +14,7 @@ moreDegrees:
   - Th.M. 1983, Princeton Theological Seminary 神學碩士
   - M. Div. 1982, Fuller Theological Seminary 道學碩士
 former:
+  - 基督工人神學院副院長, 副教授 (1995-2022)
   - 曉士頓華人基督教會牧師
   - 維真尼亞州華人浸信會牧師
   - 新英倫華人基督教會助理牧師
