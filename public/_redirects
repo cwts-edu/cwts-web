@@ -16,6 +16,8 @@
 /zh/academic/degrees-programs/certificate-of-children-ministry     /zh/ministry-institute/catalog    301!
 /zh/academic/degrees-programs/certificate-of-evangelism-ministry   /zh/ministry-institute/catalog    301!
 
+# Other alias
+/zh/admissions/application-procedure/ministry-institute/    /zh/ministry-institute/about/    301!
 
 # Migrating old site URLs to the new site
 /intro-of-cwts                      /zh/about                       301!
