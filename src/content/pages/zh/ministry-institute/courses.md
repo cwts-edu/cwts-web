@@ -15,7 +15,7 @@ thumbnail: "/images/covers/ministry-institute/courses.thumbnail.jpg"
 
 吳羅瑜博士，香港大學理學士，美國三一神學院文學碩士，印第安那大學文學碩士，英國阿伯丁大學哲學博士。曾任中國神學研究院講師、總編輯，美國惠敦大學訪問助理教授，2003 至 2016 年，任職於基督工人神學院，主授新約及基督教倫理科目。退休後，現任資深客座教授。倫理方面，編有《是非黑白》、《福音信仰與社會倫理》(香港：中國神學研究院，1990, 1993)；《牽涉倫理的宣言選輯》、《有關倫理的近年好文選輯》(供「基神」學生傳閲，2018, 2021)。
 
-時間：6/1, 6/8, 6/15, 6/22 (週四晚) 7-10pm\
+時間：6/1, 6/8, 6/15, 6/22 (週四晚) 7-10 pm\
 地點：ZOOM 課堂\
 教授：吳羅瑜 博士
 
@@ -25,7 +25,7 @@ thumbnail: "/images/covers/ministry-institute/courses.thumbnail.jpg"
 
 ## 釋經學入門（課程編碼: BE01, 3 學分，ZOOM 授課）
 
-時間：7/15, 7/29, 8/5, 8/12 (週六) 9-11:30am\
+時間：7/15, 7/29, 8/5, 8/12 (週六) 9-11:30 am\
 教授：蔡明謀 博士
 
 [點擊報名](https://form.jotform.com/231025956231147)
@@ -34,7 +34,7 @@ thumbnail: "/images/covers/ministry-institute/courses.thumbnail.jpg"
 
 ## 新約中的重要神學主題（課程編碼: BN01, 3 學分, ZOOM 授課）
 
-時間：9/13-10/18，逢週三晚 7-10pm\
+時間：9/13-10/18，逢週三晚 7-10 pm\
 教授：賴可中 博士
 
 [點擊報名](https://form.jotform.com/231025499736159)
@@ -43,7 +43,7 @@ thumbnail: "/images/covers/ministry-institute/courses.thumbnail.jpg"
 
 ## 宣教歷史與趨勢（課程編碼: MG01, 3 學分, ZOOM 授課)
 
-時間：10/12-11/16，逢週四 7-10PM\
+時間：10/12-11/16，逢週四 7-10 PM\
 教授：丘人傑 傳道
 
 [點擊報名](https://form.jotform.com/231025444747151)
@@ -52,7 +52,7 @@ thumbnail: "/images/covers/ministry-institute/courses.thumbnail.jpg"
 
 ## Becoming a Skillful Teacher: Teaching and Learning Strategies for Children in a Changing World (課程編碼: FT02, 3 學分, 英文教學，ZOOM 授課）
 
-時間：11/30, 12/7, 12/14, 12/21, 1/4, 1/11 (週四) 7-10pm\
+時間：11/30, 12/7, 12/14, 12/21, 1/4, 1/11 (週四) 7-10 pm\
 教授：劉浩宇 博士
 
 [點擊報名](https://form.jotform.com/231025627572150)
