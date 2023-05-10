@@ -38,5 +38,4 @@ former:
     - Opening Paul’s Letters: A Reader’s Guide to Genre and Interpretation by Patrick Gray. Bibliotheca sacra. Vol. 171, No. 683. (2014): 380-82(Co-authored with Joseph D. Fantin).
     - Studying Paul’s Letters: Contemporary Perspectives and Methods by Joseph A. Marchal. Bibliotheca sacra. Vol. 171, No. 683. (2014): 379-80(Co-authored with Joseph D. Fantin).
   - 其它:
-    - IBR Emerging Scholar (NT) 2014:
-    - “It’s Affordable: The Cost of Civil Litigation in First-Century Roman Corinth”
+    - IBR Emerging Scholar (NT) 2014: “It’s Affordable: The Cost of Civil Litigation in First-Century Roman Corinth”.

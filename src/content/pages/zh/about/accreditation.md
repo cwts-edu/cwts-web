@@ -15,7 +15,7 @@ thumbnail: "/images/covers/about/accreditation.thumbnail.jpg"
 
 美國加州私立大專教育機關 (BPPE) 認可
 
-美國聯邦政府移民局授權可發 I-20 給以下的學位的國外學生
+美國聯邦政府移民局授權可發 I-20 給以下的學位的國外學生：
 
 - Doctor of Ministry (DMin) 教牧博士
 - Master of Theology (ThM) 神學碩士
