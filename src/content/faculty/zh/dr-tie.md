@@ -20,7 +20,7 @@ former:
   - 澳洲墨爾本神學院中文部實習負責人（2012-2016）
 ---
 
-池峈鋒老師生長於馬來西亞，十三歲時接受基督為救主和生命的主。 八年後，他回應神的呼籲，立志於傳道事奉。池老師曾在美國深造 14 年。他在美國、馬来西亞和澳洲常用英語和華語牧會、教學和講道。 從 2012 至 2016，他是墨爾本神學院中文部神學講師。他的研究和教導興趣包括： 系统和聖經神學 、信徒皆祭司的教義、神學和屬靈生命、神學性的講道法。池老師和師母劉必娟育有三個孩子（Anastasia, Timothy, Annabelle）。
+池峈鋒老師生長於馬來西亞，十三歲時接受基督為救主和生命的主。八年後，他回應神的呼籲，立志於傳道事奉。池老師曾在美國深造 14 年。他在美國、馬来西亞和澳洲常用英語和華語牧會、教學和講道。 從 2012 至 2016，他是墨爾本神學院中文部神學講師。他的研究和教導興趣包括： 系统和聖經神學、信徒皆祭司的教義、神學和屬靈生命、神學性的講道法。池老師和師母劉必娟育有三個孩子（Anastasia, Timothy, Annabelle）。
 
 - **學歷:**
   - Ph.D., Southwestern Baptist Theological Seminary (Systematic Theology), 2010. 哲學博士（主修系統神學）
@@ -29,8 +29,8 @@ former:
   - B.S., University of Central Arkansas (Psychology), 1997. 學士（主修心理學）
 - **著述:**
   - A. 書籍:
-    - Spirit Wind: The Doctrine of the Holy Spirit in Global Theology—A Chinese Perspective. Edited by Peter L. H. Tie and Justin T. T. Tan. Eugene, OR: Pickwick, 2020.
-    - Restore Unity, Recover Identity, and Refine Orthopraxy: The Believers’ Priesthood in the Ecclesiology of James Leo Garrett, Jr. Eugene, OR: Wipf & Stock, 2012.
+    - Spirit Wind: The Doctrine of the Holy Spirit in Global Theology—A Chinese Perspective. Edited by Peter L. H. Tie and Justin T. T. Tan. Eugene, OR: Pickwick, 2020
+    - Restore Unity, Recover Identity, and Refine Orthopraxy: The Believers’ Priesthood in the Ecclesiology of James Leo Garrett, Jr. Eugene, OR: Wipf & Stock, 2012
   - B. 文章:
     - “Spirit, Scripture, Saints, and Seminary: Toward a Reappropriation of ‘Spirit Illumination’ in ‘Scripture Interpretation’ for Seminarians.” In Spirit Wind: The Doctrine of the Holy Spirit in Global Theology: A Chinese Perspective Edited by Peter L. H. Tie and Justin T. T. Tan Eugene, OR: Pickwick, 2020.
     - “為今日華人教會重尋與實踐唯獨聖經.” In《義配恩源蕩蕩流: 宗教改革五百周年文集 Living Streams: Martin Luther’s Theological and Spiritual Legacy–Essays in Commemoration of 500 years of Reformation》，167-184。香港：牧職神學院出版社， 2017.

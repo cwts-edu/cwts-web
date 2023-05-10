@@ -29,9 +29,9 @@ former:
   - 《以賽亞書註釋卷一 1-12 章》（香港﹕天道, 2014）
   - 《說地談天：論時事想天國》台福傳播中心/道聲出版社, 2013 年八月
 - **學術文章：**
-  - 「道解兩約」，《生生之道》（天道，2009）
+  - 「道解兩約」，《生生之道》（天道，2009）。
   - 「撒母耳記中之聖靈」，《聖靈古今論》（華神，1997），71-99 頁。
-  - 6 entries in New International Dictionary of Old Testament Theology and Exegesis (Zondervan, 1997)
+  - 6 entries in New International Dictionary of Old Testament Theology and Exegesis (Zondervan, 1997)。
 - **編輯：**
   - 《生生之道》（天道，2009）
 - **其他文章：**
