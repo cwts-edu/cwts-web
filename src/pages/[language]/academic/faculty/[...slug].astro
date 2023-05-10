@@ -35,6 +35,7 @@ const Content = (await page.render()).Content;
   title={page.data.name}
   slug={slug}
   titleClass={["max-md:text-center"]}
+  mainImage={page.data.photo}
 >
   {
     page.data.positions && (
