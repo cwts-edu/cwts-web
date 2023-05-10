@@ -15,7 +15,6 @@ thumbnail: "/images/covers/student-life/calendar.thumbnail.jpg"
 | -------------------------------------- | ---------------------------------------- |
 | >                                      | **SUMMER SESSIONS 2023**                 |
 | Summer Online Courses                  | June 5 - July 28                         |
-| >                                      | **-**                                    |
 | >                                      | **FALL SEMESTER 2023**                   |
 | New Student Orientation                | Monday, August 14                        |
 | Tuition Fees Due                       | Monday , August 14                       |
@@ -33,7 +32,6 @@ thumbnail: "/images/covers/student-life/calendar.thumbnail.jpg"
 | Last day of Class                      | Monday, December 4                       |
 | Final Exam                             | Tuesday - Monday, December 5-11          |
 | Christmas Celebration                  | Monday, December 11                      |
-| >                                      | **-**                                    |
 | >                                      | **SPRING SEMESTER 2024**                 |
 | Tuition Fees Due                       | Monday, January 15                       |
 | New Student Orientation                | Monday, January 15                       |
