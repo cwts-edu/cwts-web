@@ -29,6 +29,11 @@ const { title, coverImage = site.defaultCover } = page.data;
 const { Content } = await page.render();
 ---
 
-<Section title={title} slug={page.slug} coverImage={coverImage}>
+<Section
+  title={title}
+  slug={page.slug}
+  coverImage={coverImage}
+  mainImage={page.data.thumbnail}
+>
   <Content />
 </Section>

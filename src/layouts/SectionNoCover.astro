@@ -10,12 +10,17 @@ export interface Props {
   title: string;
   titleClass?: string[];
   slug: string;
+  mainImage?: string;
 }
 
-const { language, title, titleClass = [], slug } = Astro.props;
+const { language, title, titleClass = [], slug, mainImage } = Astro.props;
 ---
 
-<Base language={language} title={`${title} - ${site.shortTitle(language)}`}>
+<Base
+  language={language}
+  title={`${title} - ${site.shortTitle(language)}`}
+  image={mainImage}
+>
   <Breadcrumbs slug={slug} />
   <Container classList={["pb-6 bg-beige"]}>
     <h1 class:list={["pt-6 text-3xl font-bold text-darkviolet", ...titleClass]}>

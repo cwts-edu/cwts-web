@@ -10,6 +10,7 @@ export interface Props {
   title: string;
   slug: string;
   coverImage: string;
+  mainImage?: string;
   proseClassList?: string[];
   showChildren?: boolean;
 }
@@ -18,6 +19,7 @@ const {
   title,
   slug,
   coverImage,
+  mainImage,
   proseClassList = [],
   showChildren = true,
 } = Astro.props;
@@ -35,7 +37,7 @@ const coverImageUrl = `url('${coverImage}')`;
 <Base
   title={`${title} - ${site.shortTitle(language)}`}
   language={language}
-  image={coverImage}
+  image={mainImage}
 >
   <Breadcrumbs slug={slug} />
   <article class:list={["prose max-w-none", ...proseClassList]}>
