@@ -12,16 +12,16 @@ thumbnail: "/images/covers/degrees-programs/master.thumbnail.jpg"
 ## 什麼是神學碩士學位？
 
 - 神學碩士是道學碩士學位之上的第二學位，提供比後者更進深的神學訓練。在基神，神學碩士需要兩年的全時間修讀，內容包括課程學習和論文撰寫（請見上表）。
-- 有關入學要求與申請表格，[請見此](/zh/admissions/application-procedure)
+- 有關入學要求與申請表格，[請見此](/zh/admissions/application-procedure)。
 - 有關註冊費用與學費事宜以及申請獎助學金相關訊息，[請見此](/zh/admissions/tuition-scholarship)。
 - 若有任何的問題，請致郵 [admissions@cwts.edu](mailto:admissions@cwts.edu)。
 
 ## 為何我要申讀基神的神學碩士學位？
 
-- 為投身華人神學教育作好準備
-- 充實和深化您的教導、講道和文字事奉
-- 透過對神學和聖經領域中特定課題的研習，您將獲得深度的神學訓練
-- 為您未來攻讀博士學位作好預備
+- 為投身華人神學教育作好準備；
+- 充實和深化您的教導、講道和文字事奉；
+- 透過對神學和聖經領域中特定課題的研習，您將獲得深度的神學訓練；
+- 為您未來攻讀博士學位作好預備。
 
 ## 基神神學碩士課程的特色
 

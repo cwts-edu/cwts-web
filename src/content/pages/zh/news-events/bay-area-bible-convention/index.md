@@ -11,11 +11,11 @@ thumbnail: "/images/covers/news-events/bay-area-bible-convention.thumbnail.jpg"
 
 ## 第九屆灣區華人基督徒教育大會
 
-2023 年 5 月 20 日 星期六 9am-4pm
+2023 年 5 月 20 日 星期六 9am - 4pm
 
 地點：山景城基督徒會堂
 
-報名費$20/人，集體報名(10 人及以上）$15/人
+報名費 $20/人，集體報名(10 人及以上）$15/人
 
 zelle 付費收款人: fee@cwts.edu, 請註明 BABC 及您的姓名
 
@@ -27,7 +27,7 @@ zelle 付費收款人: fee@cwts.edu, 請註明 BABC 及您的姓名
 
 ### 第九屆灣區華人基督徒教育大會日程安排
 
-09:00am
+09:00 am
 
 > 開幕 歡迎
 
