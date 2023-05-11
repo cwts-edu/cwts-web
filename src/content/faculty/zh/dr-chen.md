@@ -37,10 +37,10 @@ former:
 - **著述:**
   - A. 書籍:
     - 【即將出版】
-      - Wonders from Your Law: Nexus Passages and the Promise of an Exegetical Old Testament Theology (Downers Grove, IL: InterVarsity, forthcoming). Estimated length: 110,000 words.
+      - Wonders from Your Law: Nexus Passages and the Promise of an Exegetical Old Testament Theology (Downers Grove, IL: InterVarsity, forthcoming). Estimated length: 110,000 words
     - 【已出版】
       - The Messianic Vision of the Pentateuch (Downers Grove, IL: InterVarsity, 2019)
-      - Eschatological Sanctuary in Exodus 15:17 and Related Texts, Studies in Biblical Literature, ed. Hemchand Gossai (New York: Peter Lang, 2013), 174pp.
+      - Eschatological Sanctuary in Exodus 15:17 and Related Texts, Studies in Biblical Literature, ed. Hemchand Gossai (New York: Peter Lang, 2013), 174pp
   - B. 文章:
     - 【新發表】
       - “Psalm 110: A Nexus for Old Testament Theology,” Criswell Theological Review 17.2 (Spring 2020): 49-65.

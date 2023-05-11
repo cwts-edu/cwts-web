@@ -13,4 +13,4 @@ thumbnail: "/images/covers/academic/library.thumbnail.jpg"
 
 獲得小單間的學生可以將圖書館的書籍存儲在小單間的櫃子中，但學生必須將所有使用的書籍先從圖書館系統借出，才可保留為己用。
 
-如要申請研究小單間，請填寫[此表格](https://forms.gle/tU12WooWwLYN3iCu9)
+如要申請研究小單間，請填寫[此表格](https://forms.gle/tU12WooWwLYN3iCu9)。
