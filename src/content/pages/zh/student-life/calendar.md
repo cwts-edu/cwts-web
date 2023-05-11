@@ -9,6 +9,9 @@ thumbnail: "/images/covers/student-life/calendar.thumbnail.jpg"
     table thead {
         display: none;
     }
+    td[colspan] {
+        padding-top: 1.5rem;
+    }
 </style>
 
 |                                        |                                          |
