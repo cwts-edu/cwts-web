@@ -13,7 +13,9 @@ thumbnail: "/images/covers/news-events/bay-area-bible-convention.thumbnail.jpg"
 
 2023 年 5 月 20 日 星期六 9am - 4pm
 
-地點：山景城基督徒會堂
+地點：山景城基督徒會堂\
+[920 Sierra Vista Ave.\
+Mountain View, CA, 94043](https://goo.gl/maps/s2Z9Eo7FehDCVLos7)
 
 報名費 $20/人，集體報名(10 人及以上）$15/人
 
