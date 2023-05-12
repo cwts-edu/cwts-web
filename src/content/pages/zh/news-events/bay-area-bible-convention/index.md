@@ -15,6 +15,8 @@ thumbnail: "/images/covers/news-events/bay-area-bible-convention.thumbnail.jpg"
 
 地點：山景城基督徒會堂
 
+920 Sierra Vista Ave. Mountain View, CA, 94043
+
 報名費 $20/人，集體報名(10 人及以上）$15/人
 
 zelle 付費收款人: fee@cwts.edu, 請註明 BABC 及您的姓名
