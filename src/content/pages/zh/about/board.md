@@ -13,7 +13,7 @@ thumbnail: "/images/covers/about/board.thumbnail.jpg"
 - 陳鎮和 弟兄
 - 李光陵 牧師/博士
 - 陳海峰 博士
-- 蔡明謀 牧師/博士
-- 宋曹琍璇 姐妹 \*
+- 蔡明謀 牧師/博士 \*
+- 宋曹琍璇 姐妹
 
 \* 執行委員會成員
