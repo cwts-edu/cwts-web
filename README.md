@@ -155,4 +155,3 @@ Both menu items can have children menu. The UI component, namely `src/components
 ## Known issue
 
 - Added svgo 2.8.0 dependency manually due to [a bug in astro-icon](https://github.com/natemoo-re/astro-icon/issues/72#issuecomment-1369597045)
-- Added @astrojs/sitemap 1.2.2 dependency due to withastro/astro#7015
