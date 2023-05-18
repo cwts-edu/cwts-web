@@ -21,7 +21,7 @@ Mountain View, CA, 94043](https://goo.gl/maps/s2Z9Eo7FehDCVLos7)
 
 zelle 付費收款人: fee@cwts.edu, 請註明 BABC 及您的姓名
 
-[**點擊報名**](https://www.jotform.com/build/230675779577173)
+網上報名已截止。如果您有任何疑問，請發送郵件至 advancement@cwts.edu
 
 [**\*點擊瀏覽講員介紹工作坊介紹**](/docs/babc/點擊瀏覽講員介紹工作坊介紹.pdf)
 
