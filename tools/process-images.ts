@@ -82,8 +82,44 @@ async function convertCovers(srcDir: string, destDir: string) {
   }
 }
 
+async function convertImages(
+  srcDir: string,
+  destDir: string,
+  w: number,
+  h: number
+) {
+  const basedir = path.resolve(srcDir);
+  for await (const f of walkImageFiles(basedir)) {
+    const relpath = path.relative(basedir, f);
+    const parsedPath = path.parse(relpath);
+    const targetDir = path.resolve(destDir, parsedPath.dir);
+    await fs.promises.mkdir(targetDir, { recursive: true });
+    await sharp(f)
+      .resize({
+        width: w,
+        height: h,
+        fit: sharp.fit.cover,
+        position: sharp.gravity.center,
+      })
+      .jpeg({ quality: 90 })
+      .toFile(
+        path.resolve(
+          destDir,
+          path.format({
+            ...parsedPath,
+            base: "",
+            ext: ".jpg",
+            name: parsedPath.name,
+          })
+        ),
+        logSharpOutput(f)
+      );
+  }
+}
+
 async function main() {
   await convertCovers("assets-original/covers", "public/images/covers");
+  await convertImages("assets-original/news", "public/images/news", 400, 220);
 }
 
 await main();
