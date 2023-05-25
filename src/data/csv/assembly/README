@@ -1,3 +1,9 @@
 Original source:
 
 https://docs.google.com/spreadsheets/d/1pMvDonk-NKsC9Ajvf651PXT50o9Z5prlQhMGcMXkLow/edit
+
+To update the CSV files in this directory, update the spreadsheet first and download the sheet as CSV file to overwrite the files in this directory. Please do not edit the CSV directly. Keep the spreadsheet in sync with the CSV file please. That will make future editing easier.
+
+The CSV files are rendered in HTML tables literally. But a column name can add a type as `column_name.type`. The columns with the same name will be merged together into one column. The type of the column determines the template to render the table cell. Currently 2 kinds of types are supported: `video` and `audio`. In both cases, cell contents are interpreted as URLs. The cell is rendered as a link with a video or audio icon.
+
+For example, put texts to `視頻/錄音` column and put vimeo video link to `視頻/錄音.video` column. So some rows have texts in the `視頻/錄音` column but others have links to the videos.

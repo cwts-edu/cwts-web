@@ -67,6 +67,7 @@ const columns = getMappedColumns(data.columns);
             <td>
               {column.types.map((type) => {
                 const cell = row[getColumnName(column.name, type)] || "";
+                // templates for different column types
                 switch (type) {
                   case "video":
                     return !!cell ? (
