@@ -1,0 +1,105 @@
+---
+import { string } from "astro/zod";
+import type { DSVRowArray } from "d3-dsv";
+
+export interface Props {
+  csv: Promise<DSVRowArray<string>>;
+}
+
+const { csv } = Astro.props;
+
+const data = await csv;
+
+interface MappedColumn {
+  order: number;
+  name: string;
+  types: string[];
+}
+
+function parseColumnNameType(str: string): [string, string] {
+  const lastDotIndex = str.lastIndexOf(".");
+  if (lastDotIndex !== -1) {
+    const firstPart = str.substring(0, lastDotIndex);
+    const secondPart = str.substring(lastDotIndex + 1);
+    return [firstPart, secondPart];
+  }
+  // If no dot is found, return the entire string as the first part and an empty string as the second part
+  return [str, ""];
+}
+
+function getColumnName(column: string, type: string): string {
+  if (type == "") {
+    return column;
+  } else {
+    return `${column}.${type}`;
+  }
+}
+
+function getMappedColumns(columns: string[]) {
+  const mappedColumn: Record<string, MappedColumn> = {};
+  for (const [index, columnNameType] of columns.entries()) {
+    const [column, type] = parseColumnNameType(columnNameType);
+    if (column in mappedColumn) {
+      mappedColumn[column].types.push(type);
+    } else {
+      mappedColumn[column] = {
+        order: index,
+        name: column,
+        types: [type],
+      };
+    }
+  }
+  return Object.values(mappedColumn).sort((a, b) => a.order - b.order);
+}
+
+const columns = getMappedColumns(data.columns);
+---
+
+<table>
+  <thead>
+    {columns.map((column) => <th>{column.name}</th>)}
+  </thead>
+  <tbody>
+    {
+      data.map((row) => (
+        <tr>
+          {columns.map((column) => (
+            <td>
+              {column.types.map((type) => {
+                const cell = row[getColumnName(column.name, type)] || "";
+                switch (type) {
+                  case "video":
+                    return !!cell ? (
+                      <a href={cell}>
+                        <img
+                          class="inline"
+                          src="/images/icons/video.svg"
+                          alt="video"
+                        />
+                      </a>
+                    ) : (
+                      ""
+                    );
+                  case "audio":
+                    return !!cell ? (
+                      <a href={cell}>
+                        <img
+                          class="inline"
+                          src="/images/icons/speaker.svg"
+                          alt="audio"
+                        />
+                      </a>
+                    ) : (
+                      ""
+                    );
+                  default:
+                    return cell;
+                }
+              })}
+            </td>
+          ))}
+        </tr>
+      ))
+    }
+  </tbody>
+</table>

@@ -12,7 +12,6 @@ import {
   extendedTableHandlers,
 } from "remark-extended-table";
 import sitemap from "@astrojs/sitemap";
-import dsv from "@rollup/plugin-dsv";
 
 // https://astro.build/config
 export default defineConfig({
@@ -40,7 +39,7 @@ export default defineConfig({
     // compress(),
   ],
   vite: {
-    plugins: [yaml(), dsv()],
+    plugins: [yaml()],
     css: {
       postcss: {
         plugins: [postcss_import, tailwindcss_nesting],
