@@ -22,10 +22,14 @@ const { language, title, titleClass = [], slug, mainImage } = Astro.props;
   image={mainImage}
 >
   <Breadcrumbs slug={slug} />
-  <Container classList={["pb-6 bg-beige"]}>
-    <h1 class:list={["pt-6 text-3xl font-bold text-darkviolet", ...titleClass]}>
-      {title}
-    </h1>
-    <slot />
-  </Container>
+  <div class="bg-beige">
+    <Container classList={["pb-6"]}>
+      <h1
+        class:list={["pt-6 text-3xl font-bold text-darkviolet", ...titleClass]}
+      >
+        {title}
+      </h1>
+      <slot />
+    </Container>
+  </div>
 </Base>

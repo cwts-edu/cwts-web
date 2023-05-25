@@ -40,7 +40,7 @@ const coverImageUrl = `url('${coverImage}')`;
   image={mainImage}
 >
   <Breadcrumbs slug={slug} />
-  <article class:list={["prose max-w-none", ...proseClassList]}>
+  <article class:list={["prose max-w-none bg-beige", ...proseClassList]}>
     <div class:list={["title-cover", "bg-cover bg-center", "not-prose"]}>
       <Container classList={["h-72"]}>
         <div class:list={["flex items-end", "w-full h-full py-6"]}>
@@ -50,7 +50,7 @@ const coverImageUrl = `url('${coverImage}')`;
         </div>
       </Container>
     </div>
-    <Container classList={["pt-3 pb-6 bg-beige"]}>
+    <Container classList={["pt-3 pb-6"]}>
       <slot />
       {showChildren && <ChildrenListing slug={slug} />}
     </Container>
