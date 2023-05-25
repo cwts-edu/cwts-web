@@ -120,6 +120,12 @@ async function convertImages(
 async function main() {
   await convertCovers("assets-original/covers", "public/images/covers");
   await convertImages("assets-original/news", "public/images/news", 400, 220);
+  await convertImages(
+    "assets-original/carousel",
+    "public/images/carousel",
+    2560,
+    1067
+  );
 }
 
 await main();
