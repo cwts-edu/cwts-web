@@ -1,0 +1,59 @@
+---
+const numIssuePerYear = 4;
+
+const newsletters = import.meta.glob("/public/docs/newsletter/*.pdf");
+const years = Array.from(
+  new Set(
+    Object.keys(newsletters)
+      .map((f) => {
+        const match = /(\d{4})[A-Za-z]/.exec(f);
+        if (match !== null) {
+          return parseInt(match[1], 10);
+        }
+      })
+      .filter((y): y is number => y !== undefined)
+  )
+).sort();
+
+function getTitle(year: number, issue: number) {
+  const months = ["一月", "四月", "七月", "十月"];
+  return `${year}${months[issue]}`;
+}
+
+function getFileName(year: number, issue: number) {
+  const issueLetter = ["A", "B", "C", "D"];
+  return `/public/docs/newsletter/newsletter-${year}${issueLetter[issue]}.pdf`;
+}
+
+function getUrl(year: number, issue: number) {
+  const issueLetter = ["A", "B", "C", "D"];
+  return `/docs/newsletter/newsletter-${year}${issueLetter[issue]}.pdf`;
+}
+
+function getCoverUrl(year: number, issue: number) {
+  return `${getUrl(year, issue)}.cover.png`;
+}
+---
+
+{
+  years.reverse().map((year) => (
+    <>
+      <h2>{year}</h2>
+      <div class="not-prose flex gap-6 flex-wrap">
+        {Array.from({ length: numIssuePerYear }, (_, i) => i).map(
+          (issue) =>
+            newsletters.hasOwnProperty(getFileName(year, issue)) && (
+              <div>
+                <a href={getUrl(year, issue)} target="_blank">
+                  <div>{getTitle(year, issue)}</div>
+                  <div>
+                    <img class="h-64" src={getCoverUrl(year, issue)} />
+                  </div>
+                </a>
+              </div>
+            )
+        )}
+      </div>
+    </>
+  ))
+}

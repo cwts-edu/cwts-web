@@ -9,7 +9,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "process-images": "ts-node --esm tools/process-images.ts"
+    "process-images": "ts-node --esm tools/process-images.ts",
+    "process-pdfs": "ts-node --esm tools/process-pdfs.ts"
   },
   "dependencies": {
     "@astrojs/image": "^0.13.1",
@@ -30,6 +31,7 @@
     "netlify-redirect-parser": "^14.1.2",
     "node-html-parser": "^6.1.5",
     "npm": "^9.6.0",
+    "pdf-img-convert": "^1.2.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "remark-extended-table": "^1.0.1",
