@@ -50,6 +50,7 @@ export default defineConfig({
     remarkPlugins: [remarkExtendedTable],
     remarkRehype: {
       handlers: Object.assign({}, extendedTableHandlers),
+      footnoteLabelTagName: "h3",
     },
   },
 });

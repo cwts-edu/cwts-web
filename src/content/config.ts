@@ -6,6 +6,7 @@ const pages = defineCollection({
     order: z.number(),
     coverImage: z.optional(z.string()),
     thumbnail: z.optional(z.string()),
+    showChildren: z.optional(z.boolean()),
   }),
 });
 
