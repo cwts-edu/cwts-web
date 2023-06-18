@@ -1,0 +1,29 @@
+---
+import JobPostingList from "@components/section/JobPostingList.astro";
+import SectionNoCover from "@layouts/SectionNoCover.astro";
+import type { Language } from "@libs/language";
+import { getEntryBySlug } from "astro:content";
+
+export function getStaticPaths() {
+  return ["zh"].map((language) => ({
+    params: {
+      language,
+    },
+  }));
+}
+
+const language = Astro.params.language as Language;
+const slug = `${language}/student-life/job-posting`;
+const page = await getEntryBySlug("pages", slug);
+if (page == null) {
+  return;
+}
+const { Content } = await page.render();
+---
+
+<SectionNoCover language={language} title={page.data.title} slug={slug}>
+  <div class="prose my-4">
+    <Content />
+    <JobPostingList />
+  </div>
+</SectionNoCover>

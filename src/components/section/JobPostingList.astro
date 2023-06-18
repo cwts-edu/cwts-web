@@ -1,0 +1,32 @@
+---
+import { Icon } from "astro-icon";
+import { CollectionEntry, getCollection } from "astro:content";
+
+const jobs = (await getCollection("jobs")).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+
+function getJobLink(job: CollectionEntry<"jobs">) {
+  return job.data.file || `/zh/student-life/job-posting/${job.slug}`;
+}
+---
+
+<div class="not-prose flex flex-col gap-4 text-black">
+  {
+    jobs.map((job) => (
+      <a
+        class="bg-white flex flex-row gap-4 px-4 py-3"
+        href={getJobLink(job)}
+        target="_blank"
+      >
+        <div class="grow flex flex-col md:flex-row items-baseline">
+          <div class="text-2xl font-light grow">{job.data.title}</div>
+          <div class="text-lg font-medium grow-0">{job.data.location}</div>
+        </div>
+        <div class="grow-0 shrink self-center">
+          <Icon class="inline-block w-4 h-4" name="angle-right" />
+        </div>
+      </a>
+    ))
+  }
+</div>

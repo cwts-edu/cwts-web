@@ -59,10 +59,20 @@ const degreesPrograms = defineCollection({
   }),
 });
 
+const jobs = defineCollection({
+  schema: z.object({
+    title: z.string(),
+    location: z.string(),
+    date: z.date(),
+    file: z.optional(z.string()),
+  }),
+});
+
 export const collections = {
   pages,
   news,
   faculty,
+  jobs,
   "degrees-widget": degreesWidget,
   "study-mode-widget": studyModeWidget,
   "degrees-programs": degreesPrograms,
