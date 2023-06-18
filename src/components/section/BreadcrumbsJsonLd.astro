@@ -19,7 +19,7 @@ const jsonLd = {
     "@type": "ListItem",
     position: index + 1,
     name: breadcrumb.title,
-    item: breadcrumb.link,
+    item: new URL(breadcrumb.link, Astro.site).href,
   })),
 };
 ---
