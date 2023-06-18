@@ -21,6 +21,7 @@ import "@assets/base.css";
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <SEO title={title} image={image} />
+    <slot name="head" />
   </head>
   <body class="overflow-y-scroll">
     <Header language={language} />

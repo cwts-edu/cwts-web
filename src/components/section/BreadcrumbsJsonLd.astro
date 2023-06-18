@@ -1,0 +1,28 @@
+---
+import { getBreadcrumbList } from "@libs/breadcrumbs";
+
+export interface Props {
+  slug: string;
+}
+
+const { slug } = Astro.props;
+
+const links = await getBreadcrumbList(slug, true);
+
+if (links.length == 0) return undefined;
+
+// Convert the breadcrumb list to JSON-LD format
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: links.map((breadcrumb, index) => ({
+    "@type": "ListItem",
+    position: index + 1,
+    name: breadcrumb.title,
+    item: breadcrumb.link,
+  })),
+};
+---
+
+<script type="application/ld+json" is:inline set:html={JSON.stringify(jsonLd)}
+></script>

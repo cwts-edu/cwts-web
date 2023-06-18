@@ -5,6 +5,7 @@ import Container from "@components/common/Container.astro";
 import site from "@libs/site";
 import { getLanguageBySlug } from "@libs/language";
 import ChildrenListing from "@components/section/ChildrenListing.astro";
+import BreadcrumbsJsonLd from "@components/section/BreadcrumbsJsonLd.astro";
 
 export interface Props {
   title: string;
@@ -39,6 +40,9 @@ const coverImageUrl = `url('${coverImage}')`;
   language={language}
   image={mainImage}
 >
+  <Fragment slot="head">
+    <BreadcrumbsJsonLd slug={slug} />
+  </Fragment>
   <Breadcrumbs slug={slug} />
   <article class:list={["prose max-w-none bg-beige", ...proseClassList]}>
     <div class:list={["title-cover", "bg-cover bg-center", "not-prose"]}>
