@@ -2,9 +2,15 @@
 import { Icon } from "astro-icon";
 import { CollectionEntry, getCollection } from "astro:content";
 
-const jobs = (await getCollection("jobs")).sort(
-  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
-);
+const jobs = (await getCollection("jobs")).sort((a, b) => {
+  if (a.data.date > b.data.date) {
+    return -1;
+  }
+  if (a.data.date < b.data.date) {
+    return 1;
+  }
+  return b.slug.localeCompare(a.slug);
+});
 
 function getJobLink(job: CollectionEntry<"jobs">) {
   return job.data.file || `/zh/student-life/job-posting/${job.slug}`;
