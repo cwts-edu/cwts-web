@@ -1,15 +1,14 @@
 ---
-title: 博士學位課程
+title: Doctor Degree
 ---
 
-# 教牧博士（三至六年，40 個學分）
+# Doctor of Ministry (4-6 years, 40 credits hours)
 
-本課程提供教會及機構同工進修機會，使學生透過資深教師的教導及學生之間的交流，屬靈生命得以進深，領導能力得以增長，牧養教導得以加強，治會理念得以更新，並對所從事的事工，在理論與實踐上經過探討與反省後，可以更有效地服事教會。
+The D.Min. program is designed to provide pastors holding an M.Div. (or its equivalent) an opportunity for further training through the guidance of experienced teachers and the mutual sharing of students, such that they may be spiritually vitalized and enabled to reflect on a deeper level the theory and practice of their pastoral ministry or other ministries, to appreciate and integrate the two better with fresh insight, and thus serve churches more effectively.
 
-# 課程內容
+The program consists of 3 components, including required courses, elective courses and thesis-project.
 
-課程分為三部分：必修 8 學分、選修 24 學分、博士論文 8 學分，總共 40 學分。
-
-1. 必修科(兩門，8 學分)：當代教牧神學、教牧博士論文研寫。
-2. 選修課(六門，24 學分)：有四類核心科目：牧養與輔導、領導與治理、講道與教導、宣教與佈道；學生從其中任選六門課。
-3. 畢業論文/企劃(8 學分)：形式可為教牧研究、訓練手冊、研讀指南、事工計劃。
+- Required Courses：Contours of Contemporary Ministry in Chinese Churches and Research Methodology for D.Min., (8 credits)
+- Major Courses：4 courses from the chosen majors. (16 credits)
+- Elective courses: students can either choose 2 courses from other majors, or the following courses in Evangelism and Missions, or one or two special topics for guided study. (8 credits)
+- The thesis / project must be directly related to the major of study, involve the integration of theory and praxis, demonstrate creativity and make a concrete contribution. It can take the form of an academic dissertation, a training manual, a study guide, or a ministry project. (8 credits)

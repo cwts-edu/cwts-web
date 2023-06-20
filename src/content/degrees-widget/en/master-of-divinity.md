@@ -1,8 +1,8 @@
 ---
-title: 道學碩士
-shortTitle: 道學
+title: Master of Divinity
+shortTitle: MDiv
 ---
 
-# 道學碩士（三年，90 學分）
+# Master of Divinity (3 years, 90 credit hours)
 
-本課程是為預備全職事奉者提供基本和全面的訓練。內容包括聖經研究、神學研究、事奉技巧及操練。除課堂學習外，學生須接受學院安排的屬靈操練，及參與實習工作四學期。
+The objective of this program is to provide fundamental and comprehensive training for those preparing for full-time Christian ministry. Courses cover Biblical studies, Biblical languages, theological studies, and practical and ministerial skills. Students are required to participate in the spiritual exercises provided by the seminary, and to fulfill a 2-year field education requirement before graduation.

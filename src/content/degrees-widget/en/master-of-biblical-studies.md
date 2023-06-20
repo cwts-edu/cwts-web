@@ -1,8 +1,8 @@
 ---
-title: 聖經研究碩士
-shortTitle: 聖經研究
+title: Master of Biblical Studies
+shortTitle: Biblical Studies
 ---
 
-# 聖經研究碩士（二年，60 學分）
+# Master of Biblical Studies (2 years, 60 credit hours)
 
-本課程旨在裝備學員日在教會教導神學和聖經，並日後可以在聖經方面作進深研究。
+The objective of this program is to provide fundamental training for those preparing for a ministry in teaching or further study. Courses cover Biblical studies, theological studies, and teaching skills. Students are required to write a thesis, and to fulfill a guided research or teaching practicum.

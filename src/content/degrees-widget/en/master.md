@@ -1,3 +1,3 @@
 ---
-title: 碩士學位課程
+title: Master Degrees
 ---

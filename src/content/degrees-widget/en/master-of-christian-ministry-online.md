@@ -1,6 +1,6 @@
 ---
-title: 基督教聖工碩士(網路課程)
-shortTitle: 網路
+title: Master of Christian Ministry Online
+shortTitle: MCM Online
 ---
 
 # 基督教聖工碩士網路課程（三年，60 學分）

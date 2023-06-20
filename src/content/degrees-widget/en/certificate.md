@@ -1,10 +1,19 @@
 ---
-title: 培育中心證書課程
+title: Certificates
 ---
 
-培育中心目前開設四個方向的證書課程：基督工人證書、兒童事工證書、家庭事工證書、宣教事工證書。
-我們鼓勵您按照神的呼召，結合自己的恩賜和服事需要，選擇相應的課程方向，您可以隨時註冊加入，每個證書的課程皆會循環進行，循環週期約為 18 個月。
+## Certificate of Children Ministry
 
-基督工人神學院的證書培訓項目始於 20 世紀 90 年代，1997 年開始，學院為滿足教會眾多信徒渴慕的心，開設了神學教育延伸課程（Theological Education Extension Program, 簡稱 TEE），課程分為粵語和國語兩種，共計 12 門課程，TEE 項目不僅在北加州灣區為本地教會信徒提供裝備，也在紐約、波士頓、弗吉尼亞等地設立分校園，二十年間，與教會一同培育了大量的優秀信徒領袖。
+Based on the biblical principles and the current knowledge about the children ( 0-12 years old) development to train the coworkers for the children ministry at the churches, or just to help the parents and grandparents to understand better how to grow with their children and grandchildren.
 
-2018 年起，學院設立基督工人神學院培育中心（Ministry Institute, 簡稱 MI），提供更為系統深化的證書課程，並分設基督工人、兒童事工、家庭事工和宣教事工四類證書課程，旨在更好地滿足世代和教會的需求，以聖經真理及事奉動力裝備願意信徒領袖，成為合神心意的聖工人才。
+## Certificate of Family Ministry; Certificate of Family Ministry Teacher
+
+To train the coworkers for the family ministry at the churches based on the current knowledge about the family issues such as parenting, culture difference between OBC (Oversea Born Chinese) and ABC( American Born Chinese), how to grow with teenager, work and faith, marriage and family, single family, mentor, how to support the ill family members, Christian counseling.
+
+## Certificate of Evangelism Ministry; Certificate of Evangelism Ministry Teacher
+
+Base on the special knowledge and skill about evangelism to prepare the the brothers and sisters for evangelism ministry, especially for short-term and mid-term missions.
+
+## Certificate in Servant Leadership; Certificate of Sunday School Teacher; Certificate of Small Group Leader
+
+Provide adequate training to potential church small group leaders, Sunday school teachers, and church fellowship leaders/deacons/elders.

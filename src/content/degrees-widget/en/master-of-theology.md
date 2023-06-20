@@ -1,16 +1,15 @@
 ---
-title: 神學碩士
-shortTitle: 神學
+title: Master of Theology
+shortTitle: ThM
 ---
 
-# 神學碩士（二年，30 學分）
+# Master of Theology (2 years, 30 credit hours)
 
-本課程為有負擔於教導事奉、渴望在聖經和神學上更進一步的學生，或有意繼續攻讀博士學位的學生提供進深的訓練。課程內容涵蓋聖經研究、神學研究以及教學與講道能力等各個方面，學生可以從舊約、新約以及系統神學三個方向中擇一修讀。
+This program provides advanced training for those desiring greater mastery of the Bible and theology in preparation for ministry in teaching or further study at the doctoral level. Courses cover biblical studies, theological studies, and teaching and preaching skills. Students can choose one of the three concentrations: Old Testament, New Testament, and Systematic Theology.
 
-# 為何我要申讀基神的神學碩士學位？
+# Why ThM at CWTS?
 
-- 神學碩士是道學碩士學位之上的第二學位，提供比後者更進深的神學訓練。
-- 為投身華人神學教育作好準備
-- 充實和深化您的教導、講道和文字事奉
-- 透過對神學和聖經領域中特定課題的研習，您將獲得深度的神學訓練
-- 為您未來攻讀博士學位作好預備
+- To prepare yourself for ministry in Chinese theological education
+- To enrich your ministry of teaching, preaching, and/or writing
+- To deepen your theological training through studying advanced topics in theology and biblical studies
+- To prepare for Ph.D. studies

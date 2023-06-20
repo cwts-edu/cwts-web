@@ -1,8 +1,8 @@
 ---
-title: 基督教聖工碩士
-shortTitle: 基督教聖工
+title: Master of Christian Ministry
+shortTitle: Christian Ministry
 ---
 
-# 基督教聖工碩士（二年，60 學分）
+# Master of Christian Ministry (2 years, 60 credit hours)
 
-本課程是為預備全職或帶職事奉者提供基本的訓練。課程內容著重實踐及聖經科目﹐並分為四項主修﹕教牧事工﹑家庭事工﹑兒童事工﹑宣教事工。學生須接受學院安排的屬靈操練，並參與實習工作二學期。
+The objective of this program is to provide fundamental training for those preparing for full-time or part-time ministry. It is not as comprehensive as the M.Div. program, but focuses on practical and Biblical courses. Students are required to participate in the spiritual exercises provided by the seminary, and to fulfill a one-year field education requirement before graduation.
