@@ -6,4 +6,5 @@
   children:
     - page: en/academic/degrees-programs
       includeChildren: true
+    - page: en/academic/catalog
     - page: en/academic/faculty
