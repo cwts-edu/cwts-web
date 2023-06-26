@@ -25,7 +25,6 @@ thumbnail: "/images/covers/degrees-programs/diploma-of-christian-studies.thumbna
 | 選修科目   | 2        |                                                                                                                      | 2     |
 | 總學分     | 30       |                                                                                                                      | 30    |
 
-\* 音樂（0.5 學分）為必修課，但不計入總學分内，通過考試可免修。
 
 | 秋季           | 學分 | 春季               | 學分 |
 | -------------- | ---- | ------------------ | ---- |
