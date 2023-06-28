@@ -21,4 +21,4 @@ pnpm-debug.log*
 .DS_Store
 
 # Do not checkin original assets because they are usually quite large
-# assets-original/
+assets-original/
