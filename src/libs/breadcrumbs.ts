@@ -4,11 +4,15 @@ import { getLanguageBySlug } from "./language";
 interface Breadcrumb {
   title: string;
   link: string;
+  isSelf: boolean;
 }
 
 const facultyPrefix = "academic/faculty/";
 
-async function getBreadcrumbBySlug(s: string): Promise<Breadcrumb | undefined> {
+async function getBreadcrumbBySlug(
+  s: string,
+  isSelf: boolean
+): Promise<Breadcrumb | undefined> {
   try {
     const { language, slug } = getLanguageBySlug(s);
     if (slug.startsWith(facultyPrefix)) {
@@ -18,6 +22,7 @@ async function getBreadcrumbBySlug(s: string): Promise<Breadcrumb | undefined> {
         page && {
           title: page.data.name,
           link: "/" + s,
+          isSelf,
         }
       );
     }
@@ -27,6 +32,7 @@ async function getBreadcrumbBySlug(s: string): Promise<Breadcrumb | undefined> {
       page && {
         title: page.data.title,
         link: "/" + s,
+        isSelf,
       }
     );
   } catch {
@@ -41,11 +47,11 @@ export async function getBreadcrumbList(
   const parts = slug.split("/");
   const links = await Promise.all(
     parts.map((_, index) =>
-      getBreadcrumbBySlug(parts.slice(0, index).join("/"))
+      getBreadcrumbBySlug(parts.slice(0, index).join("/"), false)
     )
   );
   if (includeCurrent) {
-    links.push(await getBreadcrumbBySlug(slug));
+    links.push(await getBreadcrumbBySlug(slug, true));
   }
   const result: Breadcrumb[] = [];
   links.forEach((link) => {

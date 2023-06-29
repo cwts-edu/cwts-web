@@ -19,7 +19,9 @@ const jsonLd = {
     "@type": "ListItem",
     position: index + 1,
     name: breadcrumb.title,
-    item: new URL(breadcrumb.link, Astro.site).href,
+    ...(!breadcrumb.isSelf && {
+      item: new URL(breadcrumb.link, Astro.site).href,
+    }),
   })),
 };
 ---
