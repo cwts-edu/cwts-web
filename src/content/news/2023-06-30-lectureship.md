@@ -1,6 +1,6 @@
 ---
 title: 2023 “陳道明牧師”神學講堂
-date: 2023-09-16
+date: 2023-06-30
 thumbnail: /images/news/lectureship-400x220.jpg
 url: /zh/news-events/tan-lectureship/
 ---
