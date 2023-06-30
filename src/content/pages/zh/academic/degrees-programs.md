@@ -5,4 +5,4 @@ coverImage: "/images/covers/academic/degrees-programs.cover.jpg"
 thumbnail: "/images/covers/academic/degrees-programs.thumbnail.jpg"
 ---
 
-选择下面的选项将自动更新学位列表
+選擇下面的選項將自動更新學位列表

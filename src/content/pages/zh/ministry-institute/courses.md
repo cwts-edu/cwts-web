@@ -53,7 +53,7 @@ thumbnail: "/images/covers/ministry-institute/courses.thumbnail.jpg"
 ## 宣教歷史與趨勢（課程編碼: MG01, 3 學分，ZOOM 授課)
 
 時間：10/12-11/16，逢週四 7-10 PM\
-教授：丘人傑 傳道
+教授：遊偉業博士、蔡家存博士
 
 [點擊報名](https://form.jotform.com/231025444747151)
 </br>

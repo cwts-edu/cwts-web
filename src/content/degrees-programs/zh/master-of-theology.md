@@ -1,5 +1,5 @@
 ---
-title: 神学硕士学位
+title: 神學碩士學位
 length: 2年
 credits: 30
 order: 200

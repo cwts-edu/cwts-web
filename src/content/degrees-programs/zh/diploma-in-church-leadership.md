@@ -1,6 +1,6 @@
 ---
 title: 教會領袖文憑
-length: 1年半
+length: 1年
 credits: 30
 order: 301
 category: diploma
@@ -22,8 +22,6 @@ thumbnail: "/images/covers/degrees-programs/diploma-in-church-leadership.thumbna
 | ^          | ^        | 宣教學概論/宣教面面觀/門徒建造/家庭事工/崇拜學                                                                       | 4     |
 | 選修科目   | 2        |                                                                                                                      | 2     |
 | 總學分     | 30       |                                                                                                                      | 30    |
-
-\* 音樂（0.5 學分）為必修課，但不計入總學分内，通過考試可免修。
 
 第一年
 

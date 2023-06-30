@@ -1,5 +1,5 @@
 ---
-title: 道學碩士学位
+title: 道學碩士學位
 length: 3年
 credits: 90
 order: 201
@@ -40,6 +40,8 @@ thumbnail: "/images/covers/degrees-programs/master.thumbnail.jpg"
 | ^                             | ^        | 實習                                                                                                               | 4     |
 | 選修科目                      | 5        |                                                                                                                    | 5     |
 | 總學分                        | 90       |                                                                                                                    | 90    |
+
+*音樂（0.5 學分）為全時間修讀同學必修課，但不計入總學分内，通過考試可免修。
 
 第一年
 
