@@ -16,6 +16,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 <meta property="og:type" content="website" />
 <meta property="og:title" content={title} />
 {image && <meta property="og:image" content={image} />}
+<meta property="og:site_name" content="基督工人神學院 Christian Witness Theological Seminary" />
 
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content={title} />
@@ -30,6 +31,16 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5" />
 <meta name="msapplication-TileColor" content="#ffc40d" />
 <meta name="msapplication-config" content="/browserconfig.xml" />
+
+<script type="application/ld+json" is:inline>
+  {
+    "@context" : "https://schema.org",
+    "@type" : "WebSite",
+    "name" : "基督工人神學院 Christian Witness Theological Seminary",
+    "alternateName" : "CWTS",
+    "url" : "https://www.cwts.edu/",
+  }
+</script>
 
 <link rel="sitemap" href="/sitemap-index.xml" />
 
