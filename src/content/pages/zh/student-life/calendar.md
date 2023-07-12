@@ -21,7 +21,7 @@ thumbnail: "/images/covers/student-life/calendar.thumbnail.jpg"
 | >                                      | **FALL SEMESTER 2023**                   |
 | New Student Orientation                | Monday, August 14                        |
 | Tuition Fees Due                       | Monday , August 14                       |
-| Fall Intensive course                  | Tuesday - Friday, August 15-18           |
+| Fall Intensive course                  | Monday- Friday, August 14-18             |
 | Seminary Retreat                       | Saturday, August 19                      |
 | Beginning of Regular Classes           | Monday, August 21                        |
 | Labor Day (no classes)                 | Monday, September 4                      |
