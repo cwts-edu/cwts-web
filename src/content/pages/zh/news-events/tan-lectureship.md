@@ -16,36 +16,41 @@ thumbnail: "/images/covers/news-events/tan-lectureship.thumbnail.jpg"
 
 ![Lectureship Banner](/images/lectureship/lectureship-banner.jpg)
 
-## 2023 “陳道明牧師”神學講堂
+## 2023年度 “陳道明牧師”神學講堂
+## 2023 Daniel M. Tan Lectureship
 
-## [我要報名](https://form.jotform.com/231735818149160)
+<strong> 2堂主題信息4個工作坊 </strong>
 
-時間: 2023 年 9 月 16 日 星期六 9am - 3pm
+## [<strong> 我要報名 </strong>](https://form.jotform.com/231735818149160)
 
+時間: 9/16 Saturday 9:00 am - 3:00 pm\
 地點：基神本部\
 [1975 Concourse Dr.\
 San Jose, CA 95131](https://goo.gl/maps/Gi57SXut58CT5Ui38)
 
-主題講員: Dr. George Guthrie
-
-主題信息: Enduring in Ministry 在事奉中持久堅忍
-
-講座1:
-
-講座2:
+<strong> 主題講員: Dr. George Guthrie </strong> \
+<strong> 主題信息: Enduring in Ministry 在事奉中持久堅忍 （兩堂講座）</strong>
 
 </div>
-講員簡介:
+<strong> 講員簡介: </strong>
 
 Dr. George Guthrie 現擔任Regent College新約教授，是一位備受尊敬和喜愛的講師。他曾先後獲得文學學士（Union大學），道學碩士（西南浸信會神學院），神學碩士（Trinity福音神學院），哲學博士（西南浸信會神學院）。在北美以及東亞、英國、德國、南非和以色列等地教授過課程。在2018年加入裡根學院之前，Dr.Guthrie 在 Union University in Jackson 任教28年。作為《希伯來書》的權威專家，Dr. Guthrie 研究成果被出版為《希伯來書的結構：一種文本語言學分析》（Leiden/New York: E.J. Brill, 1994）。他還出版了《希伯來書》（Zondervan, 1998; 2002, 2007）、《雅各書》（Zondervan, 2006）和《哥林多後書》（Baker, 2015）的註釋，以及眾多文章、書籍章節和書評。也曾在ESV、CSV、NLT和HCSB等譯本的翻譯工作中擔任顧問。Dr. Guthrie 熱心於裝備教會領袖和信徒們，如何更有效地閱讀聖經和活出真理。為此，他出版了一系列旨在幫助教會更好地理解和應用聖經的著作，包括《讀者指南聖經》（LifeWay, 2011）、《閱讀上帝的故事：一本按時間順序的每日聖經》（Broadman & Holman, 2011）、《活出聖經：你的理解和生活上帝的話語指南》（Broadman & Holman, 2011）和《CSB按天順序讀經聖經》（Holman, 2018）。Dr. Guthrie夫婦現居住在不列顛哥倫比亞省， 並忠心的以教導和愛心接待肢體來事奉Regent College。他們喜好園藝和釣魚。他們有兩個已經成年的孩子住在田納西州。
 
-工作坊一： 蔡明謀 牧師/ 博士（基督工人神學院 院長/新約副教授）
+<strong> 工作坊一 ：蔡明謀 牧師/ 博士（基督工人神學院 院長/新約副教授）</strong> \
+保羅書信中的信心與堅毅：在教導中取得平衡 \
+“Faith and Perseverance in Paul: Achieving Balance in Our Teaching” 
 
-工作坊二： 賴可中 牧師/博士（基督工人神學院 副院長/新約副教授）
+<strong> 工作坊二： 賴可中 牧師/博士（基督工人神學院 副院長/新約副教授）</strong> \
+事奉疲倦與重新得力 \
+“Ministry Fatigue and Renewing Strength” 
 
-工作坊三： 陳聲漢博士（基督工人神學院神學碩士科主任，舊約教授）
+<strong> 工作坊三： 陳聲漢博士（基督工人神學院神學碩士科主任，舊約教授）</strong> \
+知識是叫人自高自大 (林前 8:1)? 《屬靈人》、《水牛神學》和'野豬’之間關於知識與理性的對話 \
+“Knowledge Puffs Up (1 Cor 8:1)? A Conversation between _A Spiritual Man_, _Water Buffalo Theology_, and a ‘Wild Boar’ on Knowledge and the Mind”
 
-工作坊四： 劉浩宇博士（基督工人神學院 實踐神學副教授）
+<strong> 工作坊四： 劉浩宇博士（基督工人神學院 實踐神學副教授）</strong> \
+懺，憶，休：跑得更遠的節奏 \
+“Repent, Remember, & Rest: Rhythms for Running the Distance”
 
 ### 當天的具體時間安排:
 
