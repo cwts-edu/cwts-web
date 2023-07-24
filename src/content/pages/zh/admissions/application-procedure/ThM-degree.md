@@ -18,18 +18,18 @@ thumbnail: "/images/covers/degrees-programs/master.thumbnail.jpg"
 
 一、申請入學時，須繳交下列證件：
 
-1.  入學申請表（請按此鏈接下載入學申請表，如有困難可以向本院電郵索取）
-2.  報名費 $50 元（概不退還）
+1.  入學申請表格 (請按此鏈接下載入學申請表，如有困難可以向本院電郵索取)
+2.  報名費 $50 元 (概不退還)
 3.  學位證書 (影印本即可)
 4.  成績單（由學校直接寄來本院）
 5.  推薦書兩份 (由推薦人直接電郵 admissions@cwts.edu 或者郵寄來本院)
 6.  近期護照標準照兩張
-7.  財務資料表及財力證明\*（包括收入、存款、房產、有價證券等能證明你有能力支付所有在留美期間的學費和生活費的文件，這些文件在簽證時同樣也需要提交給簽證官）
-8.  健康資料表\*(由醫生填寫)
-9.  申請人問卷\*
+7.  財務資料表格及財力證明\*（包括收入、存款、房產、有價證券等能證明你有能力支付所有在留美期間的學費和生活費的文件，這些文件在簽證時同樣也需要提交給簽證官）
+8.  健康資料表格\* (要求由醫生為國際申請人填寫)
+9.  申請人問卷\* (由招生部直接提供給申請人)
 10. 近期托福或雅思成績單\*\*
-11. 護照掃描件（有照片那一頁）\*
-12. 一篇顯示具有有研究能力(最好有多處引用英文資料)的中文(約八千字)或英文(六千字)文章
+11. 護照照片頁掃描件 \*
+12. 一篇顯示具有研究能力的文章: 可用中文完成, 字數要求約八千字或英文完成, 字數要求六千字。最好有多處引用英文資料。
 
 \*只適用於國際申請人
 
@@ -62,7 +62,6 @@ thumbnail: "/images/covers/degrees-programs/master.thumbnail.jpg"
 註：「國際申請人」為非美國公民或永久居民， 「美國本地申請人」為美國公民或永久居民。
 
 - [按此下載神學碩士申請表格](/docs/admissions/Application-Form-ThM_111422.pdf)
-- [按此下載健康資料表](/docs/admissions/Health-History-Form-revised.pdf)
 - [按此下載推薦書表格](/docs/admissions/Recommendation-Form2020Fall-revised.pdf)
-- [按此下載國際申請人須知](/docs/admissions/foreignAppPolicy.pdf)
-- [按此下載財務表](/docs/admissions/FinancialInfo_THM-updated10202021.pdf)
+- [按此下載財務表格](/docs/admissions/Financial-Information-ThM-updated-07242023.pdf)
+- [按此下載健康資料表格](/docs/admissions/Health-History-Form-revised.pdf)

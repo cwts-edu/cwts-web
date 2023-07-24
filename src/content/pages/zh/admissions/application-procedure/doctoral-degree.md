@@ -15,14 +15,20 @@ thumbnail: "/images/covers/degrees-programs/doctor.thumbnail.jpg"
 
 ## 申請手續
 
-1. 填寫申請表，繳交報名費 $50（不退還）。
+1. 填寫申請表格，繳交報名費 $50 (不退還)。
 2. 碩士學位成績單，須由頒發碩士學位的神學院直接寄來本院。
 3. 學校畢業/學位證書副本。
 4. 近期托福成績單(若有)。
-5. 推薦信二份（學業推薦信一份由修讀碩士學位時的師長填寫；事奉推薦信一份由教會的牧長填寫。推薦信必須由推薦人直接電郵 admissions@cwts.edu 或者郵寄來本院）。
+5. 推薦信二份 (學業推薦信一份由修讀碩士學位時的師長填寫；事奉推薦信一份由教會的牧長填寫。推薦信必須由推薦人直接電郵 admissions@cwts.edu 或者郵寄來本院)。
 6. 親自以中文及英文撰寫見證/反省文章一篇(單行，12 點字，中英文各 2 頁)，說明得救、蒙召、事奉經歷，及進修目的，並簽名以表明乃親自撰寫，未得他人協助。
 7. 近期護照標準照兩張 (或自貼於申請表首頁)。
-8. 特殊情況的申請請見教牧博士科手冊【特殊申請手續】部分。
+8. 財務資料表格及財力證明\* (包括收入、存款、房產、有價證券等能證明你有能力支付所有在留美期間的學費和生活費的文件，這些文件在簽證時同樣也需要提交給簽證官，報讀網路學位的國際申請人不需要提交此文件)
+9. 健康資料表格\* (要求由醫生為國際申請人填寫，但報讀網路學位的國際申請人除外)
+10. 申請人問卷\* (由招生部直接提供給申請人)
+11. 護照照片頁掃描件 (報讀網路學位的國際申請人不需要提交)
+12. 特殊情況的申請請見教牧博士科手冊【特殊申請手續】部分。
+
+\*只適用於國際申請人
 
 ## 申請截止日期
 
@@ -33,8 +39,7 @@ thumbnail: "/images/covers/degrees-programs/doctor.thumbnail.jpg"
 註：「國際申請人」為非美國公民或永久居民， 「美國本地申請人」為美國公民或永久居民。
 
 - [按此下載博士申請表格](/docs/admissions/Application-Form-DMin_111422.pdf)
-- [按此下載就學財務資訊](/docs/admissions/Financial_Information_for_Study-DMin-fillable.pdf)
-- [按此下載獎助學金申請表](/docs/admissions/DMin助學金申請表-簡_tbf.pdf)
-- [按此下載 I-20 申請表](/docs/admissions/I-20-Application-Form-DMin-fillable.pdf)
-- [按此下載教牧博士科手冊](/docs/admissions/DMin-Handbook-2020-2021-Chinese.pdf)
 - [按此下載推薦書表格](/docs/admissions/Recommendation-Form2020Fall-revised.pdf)
+- [按此下載財務表格](/docs/admissions/Financial-Information-DMin-updated-07242023.pdf)
+- [按此下載健康資料表格](/docs/admissions/Health-History-Form-revised.pdf)
+- [按此下載教牧博士科手冊](/docs/admissions/DMin-Handbook-2020-2021-Chinese.pdf)
