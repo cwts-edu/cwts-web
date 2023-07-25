@@ -41,7 +41,7 @@ thumbnail: "/images/covers/ministry-institute/courses.thumbnail.jpg"
 </br>
 </br>
 
-## 宣教歷史與趨勢 (課程編碼: MG01, 3 學分，ZOOM 授課)
+## 宣教歷史與趨勢（課程編碼: MG01, 3 學分，ZOOM 授課）
 
 ### 課程簡介：
 
