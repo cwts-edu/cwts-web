@@ -17,4 +17,4 @@ thumbnail: "/images/covers/admissions/international.thumbnail.jpg"
 1. 學生在就讀期間，參加任何政治活動都須小心謹慎；若有任何疑問，宜徵詢學院的意見與建議，以保護日後入學學生的權益。
 1. 學生若有經濟支持者，而支持條件是畢業後返回原居地事奉，則必須信守承諾，在完成學業後返回原居地事奉，本院將不允准畢業後的實習。
 
-[**申請入學**](https://www.cwts.edu/zh/admissions/application-procedure/)
+[**申請入學**](/zh/admissions/application-procedure/)
