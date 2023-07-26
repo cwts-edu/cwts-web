@@ -46,6 +46,7 @@
     "flowbite": "^1.6.4",
     "svgo": "~2.8.0",
     "tailwind-scrollbar-hide": "^1.1.7",
-    "ts-node": "^10.9.1"
+    "ts-node": "^10.9.1",
+    "tsx": "^3.12.7"
   }
 }
