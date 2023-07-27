@@ -34,10 +34,10 @@ Besides teaching in seminary, Rev. Lai also preaches in different churches, part
   - M.S.E.E. 1982, University of California, Los Angeles
 - **Publications:**
   - A. Monographs
-    - First Peter: Undergoing Suffering, Entering Glory. Hong Kong: Ming Dao Press, 2010 (in Chinese).
-    - The Holy Spirit in 1 Peter: A Study of Petrine Pneumatology in Light of the Isaianic New Exodus, 2009 (unpublished Ph.D. Dissertation) (in English).
+    - _First Peter: Undergoing Suffering, Entering Glory._ Hong Kong: Ming Dao Press, 2010 (in Chinese).
+    - _The Holy Spirit in 1 Peter: A Study of Petrine Pneumatology in Light of the Isaianic New Exodus,_ 2009 (unpublished Ph.D. Dissertation) (in English).
   - B. Articles (in Chinese)
-    - “Contemplating the Divine and Human Nature of Christ from His Incarnation,” CWTS Newsletter, January, 2014.
-    - “Called Out from the Silicon Valley,” Proclaim, Mar-Apr., Petaluma: Chinese Christian Mission, 2013.
-    - “Did Jesus Have a ‘Wife’?‟ CWTS Newsletter, October 2012.
-    - “Re-igniting Hope,” CWTS Newsletter, April 2012.
+    - “Contemplating the Divine and Human Nature of Christ from His Incarnation,” _CWTS Newsletter,_ January, 2014.
+    - “Called Out from the Silicon Valley,” _Proclaim,_ Mar-Apr., Petaluma: Chinese Christian Mission, 2013.
+    - “Did Jesus Have a ‘Wife’?‟ _CWTS Newsletter,_ October 2012.
+    - “Re-igniting Hope,” _CWTS Newsletter,_ April 2012.

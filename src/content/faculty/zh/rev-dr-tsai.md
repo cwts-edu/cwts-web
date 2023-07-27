@@ -31,11 +31,11 @@ former:
   - B.S. 1992, University of California, Berkeley, 理學士（主修電機電腦）
 - **著述:**
   - 博士論文:
-    - Brothers in Dispute: A Socio-Economic and Legal Analysis of the Litigants in the Church of Corinth.
+    - _Brothers in Dispute: A Socio-Economic and Legal Analysis of the Litigants in the Church of Corinth._
   - 文章:
     - 「神學碩士與原文釋經」。林為華譯。於《擴張帳幕﹕當代的使命與挑戰》(基督工人神學院四十五週年紀念特刊)。51-55。San Jose, CA：基督工人神學院, 20s18。
   - 書評:
-    - Opening Paul’s Letters: A Reader’s Guide to Genre and Interpretation by Patrick Gray. Bibliotheca sacra. Vol. 171, No. 683. (2014): 380-82(Co-authored with Joseph D. Fantin).
-    - Studying Paul’s Letters: Contemporary Perspectives and Methods by Joseph A. Marchal. Bibliotheca sacra. Vol. 171, No. 683. (2014): 379-80(Co-authored with Joseph D. Fantin).
+    - Opening Paul’s Letters: A Reader’s Guide to Genre and Interpretation by Patrick Gray. _Bibliotheca sacra._ Vol. 171, No. 683. (2014): 380-82(Co-authored with Joseph D. Fantin).
+    - Studying Paul’s Letters: Contemporary Perspectives and Methods by Joseph A. Marchal. _Bibliotheca sacra._ Vol. 171, No. 683. (2014): 379-80(Co-authored with Joseph D. Fantin).
   - 其它:
     - IBR Emerging Scholar (NT) 2014: “It’s Affordable: The Cost of Civil Litigation in First-Century Roman Corinth”.

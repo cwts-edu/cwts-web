@@ -27,13 +27,13 @@ Rev. Lu was previously Senior Pastor in Atlanta Chinese Christian Church where h
   - M.Div. 1992, Trinity Evangelical Divinity School 道學碩士
 - **Publications:**
   - In Monographs
-    - 2014 Commentary on Isaiah Vol. I, 1-12 (Hong Kong: Tien Dao Publishing Co.).
-    - 2013 Earthly Talk, Heavenly Walk: On Current Issues in Transcendent Perspective (El Monte, Calif.: Evangelical Formosan Church Communication Center, 2013).
-    - 2009 “Logos Across Two Testaments: Interpreting Old Testament Messianic Prophecy,” in Ekron Chen, Jeffrey Lu & Chloe Sun, eds., Logos for Life: Essays Commemorating Logos Evangelical Seminary’s 20th Anniversary (Hong Kong: Tien Dao, 2009), pp. 99-135.
+    - 2014 _Commentary on Isaiah_ Vol. I, 1-12 (Hong Kong: Tien Dao Publishing Co.).
+    - 2013 _Earthly Talk, Heavenly Walk: On Current Issues in Transcendent Perspective_ (El Monte, Calif.: Evangelical Formosan Church Communication Center, 2013).
+    - 2009 “Logos Across Two Testaments: Interpreting Old Testament Messianic Prophecy,” in Ekron Chen, Jeffrey Lu & Chloe Sun, eds., _Logos for Life: Essays Commemorating Logos Evangelical Seminary’s 20th Anniversary_ (Hong Kong: Tien Dao, 2009), pp. 99-135.
     - 2001 Revision on translation of Chinese New Version (Hong Kong: Tien Dao Publishing)
     - 2000 Introductory sections in the Chinese New Version (Hong Kong: Tien Dao Publishing Co.).
-    - 1998 “The Holy Spirit in the Book of Samuel,” in The Holy Spirit Then and Now, Festschrift Hudson Taylor, IV (Taipei: China Evangelical Seminary Press, 1999), pp. 71-99.
-    - 1997 6 entries in New International Dictionary of Old Testament Theology and Exegesis (Grand Rapids, Michigan: Zondervan, 1997).
+    - 1998 “The Holy Spirit in the Book of Samuel,” in _The Holy Spirit Then and Now,_ Festschrift Hudson Taylor, IV (Taipei: China Evangelical Seminary Press, 1999), pp. 71-99.
+    - 1997 6 entries in _New International Dictionary of Old Testament Theology and Exegesis_ (Grand Rapids, Michigan: Zondervan, 1997).
   - Articles published in Periodical or Journal
     - 2006 「無關福音的『猶大福音』 “The Non-gospel Gospel of Judas”」《正道神學院通訊》June 2006. (El Monte, CA: Logos Newsletter)
     - 1996 「馬其頓的知識份子 “The Macedonian Intellectuals”」《遠東證主通訊》(Chicago, Ill.: FECC Newsletter)

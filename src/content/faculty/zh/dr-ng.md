@@ -29,7 +29,7 @@ former:
   - M.A. 1973, Trinity Evangelical Divinity School 文學碩士（新約）
   - B. Sc. 1968, Hong Kong University 理學士 (動物學，植物學)
 - **已出版著述:**
-  - Reconstructing Christian Origins? The Feminist Theology of Elisabeth Schüssler Fiorenza — An Evaluation《重繪基督教起源？評估費奧倫莎的婦女神學》（英文）（Paternoster, 2002）.
+  - _Reconstructing Christian Origins? The Feminist Theology of Elisabeth Schüssler Fiorenza: An Evaluation_《重繪基督教起源？評估費奧倫莎的婦女神學》（英文）（Paternoster, 2002）.
   - 《義僕與君王：馬太福音注釋（上、下冊）》 （中國神學研究院，1996）
 - **部份編著:**
   - 《牽涉倫理的宣言選輯》（供學生傳閲，2018）

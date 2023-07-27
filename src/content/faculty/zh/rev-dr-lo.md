@@ -33,5 +33,5 @@ former:
   - M.Div., Logos Evangelical Seminary 道學碩士
   - M.S., University of Southern California (USC) 環境工程碩士
 - **著述:**
-  - Step by Step, Truth and Clarity Toward an Old Testament Exegesis (舊約釋經初期工作 – 經文核心概念之形成與方法論之確認) (Th.M. 論文)
-  - Developing a Family-Oriented Discipleship Theory and Strategy for the Ethnic Chinese Churches in North America (北美華人教會在家庭實踐門徒訓練的理論與策略) (D.Min. 論文)
+  - _Step by Step, Truth and Clarity Toward an Old Testament Exegesis_ (舊約釋經初期工作 – 經文核心概念之形成與方法論之確認) (Th.M. 論文)
+  - _Developing a Family-Oriented Discipleship Theory and Strategy for the Ethnic Chinese Churches in North America_ (北美華人教會在家庭實踐門徒訓練的理論與策略) (D.Min. 論文)

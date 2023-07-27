@@ -37,19 +37,19 @@ former:
 - **著述:**
   - A. 書籍:
     - 【即將出版】
-      - Wonders from Your Law: Nexus Passages and the Promise of an Exegetical Old Testament Theology (Downers Grove, IL: InterVarsity, forthcoming). Estimated length: 110,000 words
+      - _Wonders from Your Law: Nexus Passages and the Promise of an Exegetical Old Testament Theology_ (Downers Grove, IL: InterVarsity, forthcoming). Estimated length: 110,000 words
     - 【已出版】
-      - The Messianic Vision of the Pentateuch (Downers Grove, IL: InterVarsity, 2019)
-      - Eschatological Sanctuary in Exodus 15:17 and Related Texts, Studies in Biblical Literature, ed. Hemchand Gossai (New York: Peter Lang, 2013), 174pp
+      - _The Messianic Vision of the Pentateuch_ (Downers Grove, IL: InterVarsity, 2019)
+      - _Eschatological Sanctuary in Exodus 15:17 and Related Texts, Studies in Biblical Literature,_ ed. Hemchand Gossai (New York: Peter Lang, 2013), 174pp
   - B. 文章:
     - 【新發表】
-      - “Psalm 110: A Nexus for Old Testament Theology,” Criswell Theological Review 17.2 (Spring 2020): 49-65.
+      - “Psalm 110: A Nexus for Old Testament Theology,” _Criswell Theological Review_ 17.2 (Spring 2020): 49-65.
       - “Poetry, Imagination, and the Messianic Witness of the Old Testament,” for Cateclesia Institute, September 23, 2020. https://cateclesia.com/2020/09/23/poetry-imagination-and-the-messianic-witness-of-the-old-testament/
       - “Narrative, Imagination, and the Messianic Witness of the Old Testament,” for Cateclesia Institute, December 22, 2020. https://cateclesia.com/2020/12/02/narrative-imagination-and-the-messianic-witness-of-the-old-testament/
-      - “(Mis)understanding Sailhamer,” Journal for the Evangelical Study of the Old Testament 7.1 (2021): 27-59.
+      - “(Mis)understanding Sailhamer,” _Journal for the Evangelical Study of the Old Testament_ 7.1 (2021): 27-59.
     - 【已發表】
-      - “The Mosaic Covenant,” “The Nations in the Writings,” “Resurrection in the Old Testament,” in A Handbook on the Jewish Roots of the Christian Faith, eds. Craig Evans and David Mishkin (Peabody, MA: Hendrickson, 2019), 17-22, 45-49, 250-255.
-      - “Gleanings from the John H. Sailhamer Papers at Southeastern Baptist Theological Seminary,” Southeastern Theological Review 9.1 (2018): 93-112.
-      - “Wisdom is Worth a Thousand Laws: Legal Insufficiency and Exception as Intentional Compositional Strategy in the Pentateuch” in Text and Canon: Essays in Honor of John H. Sailhamer, Paul J. Kissling and Robert L. Cole, eds. (Eugene, OR: Wipf and Stock, 2017), 37-60.
+      - “The Mosaic Covenant,” “The Nations in the Writings,” “Resurrection in the Old Testament,” in _A Handbook on the Jewish Roots of the Christian Faith,_ eds. Craig Evans and David Mishkin (Peabody, MA: Hendrickson, 2019), 17-22, 45-49, 250-255.
+      - “Gleanings from the John H. Sailhamer Papers at Southeastern Baptist Theological Seminary,” _Southeastern Theological Review_ 9.1 (2018): 93-112.
+      - “Wisdom is Worth a Thousand Laws: Legal Insufficiency and Exception as Intentional Compositional Strategy in the Pentateuch” in _Text and Canon: Essays in Honor of John H. Sailhamer,_ Paul J. Kissling and Robert L. Cole, eds. (Eugene, OR: Wipf and Stock, 2017), 37-60.
   - C. 其它:
-    - Worldview Study Bible, Old Testament notes (Genesis–Malachi), ed. David S. Dockery (Nashville: Broadman and Holman, 2018). Length: approximately 195,000 words.
+    - _Worldview Study Bible,_ Old Testament notes (Genesis–Malachi), ed. David S. Dockery (Nashville: Broadman and Holman, 2018). Length: approximately 195,000 words.

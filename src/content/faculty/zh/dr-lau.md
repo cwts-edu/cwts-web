@@ -35,7 +35,7 @@ former:
 - **著述:**
   - A. 書籍:
     - 《基督教全人教育面面觀—基督教教育培訓手冊》2007
-    - A Study of the Relationship between Adults’ Self-Directed Learning Readiness and Selected Variables in Sunday Schools of Hong Kong Chinese Baptist Churches, ERIC, 2001
+    - _A Study of the Relationship between Adults’ Self-Directed Learning Readiness and Selected Variables in Sunday Schools of Hong Kong Chinese Baptist Churches,_ ERIC, 2001
     - 《香港浸信會神學院遙距課程—以賽亞書研讀指引》2000
   - B.文章:
     - 「從人性發展到分齡培育」論文發表於北美華人基督教教育會議，2018 年 6 月。
