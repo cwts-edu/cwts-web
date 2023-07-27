@@ -9,8 +9,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "process-images": "ts-node --esm tools/process-images.ts",
-    "process-pdfs": "ts-node --esm tools/process-pdfs.ts"
+    "process-images": "tsx tools/process-images.ts",
+    "process-pdfs": "tsx tools/process-pdfs.ts"
   },
   "dependencies": {
     "@astrojs/image": "^0.13.1",
@@ -46,6 +46,6 @@
     "flowbite": "^1.6.4",
     "svgo": "~2.8.0",
     "tailwind-scrollbar-hide": "^1.1.7",
-    "ts-node": "^10.9.1"
+    "tsx": "^3.12.7"
   }
 }
