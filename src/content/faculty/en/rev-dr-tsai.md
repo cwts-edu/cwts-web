@@ -34,4 +34,4 @@ Dr. Tsai and his wife Jackie have two daughters, Dorothy and Susannah. In his sp
   - B.S. 1992, University of California, Berkeley
 - **Publications:**
   - PhD Dissertation:
-    - Brothers in Dispute: A Socio-Economic and Legal Analysis of the Litigants in the Church of Corinth.
+    - _Brothers in Dispute: A Socio-Economic and Legal Analysis of the Litigants in the Church of Corinth._

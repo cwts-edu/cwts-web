@@ -33,4 +33,4 @@ Pastor Lo enjoys playing and watching basketball, baseball, foosball, playing gu
   - M.Div., Logos Evangelical Seminary
   - M.S., University of Southern California (USC)
 - **Publications:**
-  - Step by Step, Truth and Clarity Toward an Old Testament Exegesis (Th.M. Thesis)
+  - _Step by Step, Truth and Clarity Toward an Old Testament Exegesis_ (Th.M. Thesis)

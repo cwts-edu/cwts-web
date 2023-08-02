@@ -29,13 +29,13 @@ Born and raised in a Chinese family in Malaysia, Dr. Tie accepted Christ as his 
   - B.S., University of Central Arkansas (Psychology), 1997.
 - **Publications:**
   - A. Books:
-    - Spirit Wind: The Doctrine of the Holy Spirit in Global Theology—A Chinese Perspective. Edited by Peter L. H. Tie and Justin T. T. Tan. Eugene, OR: Pickwick, 2020.
-    - Restore Unity, Recover Identity, and Refine Orthopraxy: The Believers’ Priesthood in the Ecclesiology of James Leo Garrett, Jr. Eugene, OR: Wipf & Stock, 2012.
+    - _Spirit Wind: The Doctrine of the Holy Spirit in Global Theology: A Chinese Perspective._ Edited by Peter L. H. Tie and Justin T. T. Tan. Eugene, OR: Pickwick, 2020.
+    - _Restore Unity, Recover Identity, and Refine Orthopraxy: The Believers’ Priesthood in the Ecclesiology of James Leo Garrett, Jr._ Eugene, OR: Wipf & Stock, 2012.
   - B. Articles:
-    - “Munus Triplex of the Trinity: A Proposal Based on the Doctrines of the Trinity and the Priesthood in the Thought of James Leo Garrett Jr.” Southwestern Journal of Theology 2022 (Fall).
-    - “Spirit, Scripture, Saints, and Seminary: Toward a Reappropriation of ‘Spirit Illumination’ in ‘Scripture Interpretation’ for Seminarians.” In Spirit Wind: The Doctrine of the Holy Spirit in Global Theology: A Chinese Perspective. Edited by Peter L. H. Tie and Justin T. T. Tan. Eugene, OR: Pickwick, 2020.
-    - [“Jonathan Edwards’ ‘Eastern’ Trinitarianism?” In Piety by Virtue. Theology and Spiritual Formation 19. Melbourne, VIC: MST Press, 2014, 31-59.](http://issuu.com/mstchinese/docs/mstcj_19)
-    - [“We Believe, Therefore We Live: A Christopraxis.” In Christ, Life and Theology. Theology and Spiritual Formation 17. Melbourne, AUS: MST Press, 2012, 10-19.](http://issuu.com/mstchinese/docs/mstcj_17)
+    - “Munus Triplex of the Trinity: A Proposal Based on the Doctrines of the Trinity and the Priesthood in the Thought of James Leo Garrett Jr.” _Southwestern Journal of Theology._ 2022 (Fall).
+    - “Spirit, Scripture, Saints, and Seminary: Toward a Reappropriation of ‘Spirit Illumination’ in ‘Scripture Interpretation’ for Seminarians.” In _Spirit Wind: The Doctrine of the Holy Spirit in Global Theology: A Chinese Perspective._ Edited by Peter L. H. Tie and Justin T. T. Tan. Eugene, OR: Pickwick, 2020.
+    - [“Jonathan Edwards’ ‘Eastern’ Trinitarianism?” In _Piety by Virtue._ Theology and Spiritual Formation 19. Melbourne, VIC: MST Press, 2014, 31-59.](http://issuu.com/mstchinese/docs/mstcj_19)
+    - [“We Believe, Therefore We Live: A Christopraxis.” In _Christ, Life and Theology._ Theology and Spiritual Formation 17. Melbourne, AUS: MST Press, 2012, 10-19.](http://issuu.com/mstchinese/docs/mstcj_17)
   - C. Presentations
     - “A Theological Interpretation of ‘Spirit’ in ‘The Spirit Is Willing, but the Flesh Is Weak’ (Matt 26:41b).” Presentation at the Evangelical Theological Society Annual Meeting (Far West Region), Gateway Seminary, Ontario, California, USA, April 1, 2022.
     - “Doctrine, Discernment, and Discipleship: The Interface Between Orthodoxy and Orthopraxy in the Christian Priesthood of James Leo Garrett Jr.” For Open Session: “The Legacy and Theology of James Leo Garrett Jr. (1925-2020).” Presentation at the Evangelical Theological Society Annual Meeting, Fort Worth, Texas, USA, November 16, 2021.

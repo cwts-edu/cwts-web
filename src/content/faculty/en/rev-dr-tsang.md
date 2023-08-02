@@ -30,11 +30,11 @@ Dr. Jacob Cheung was born in Xingning (Guangdong, China), grew up in Hong Kong, 
   - M.Div., Fuller Theological Seminary, 1976
 - **Publications in Chinese:**
   - A. Monographs
-    - Numbers, Tien Dao Bible Commentary. Hong Kong: Tien Dao Publishing House, 2006.
-    - Judges, Tien Dao Bible Commentary. Hong Kong: Tien Dao Publishing House, 1998.
+    - _Numbers,_ Tien Dao Bible Commentary. Hong Kong: Tien Dao Publishing House, 2006.
+    - _Judges,_ Tien Dao Bible Commentary. Hong Kong: Tien Dao Publishing House, 1998.
   - B. Articles
-    - “Reflections on the Chinese New Year,” Evangel Literature, Issue 229, Jan-Feb 2014.
-    - “Seeking Stewards,” CWTS Newsletter, April, 2012.
-    - “The Message of Matthew’s Gospel to the Chinese,” Evangel Literature, Issue 216, Nov-Dec 2011 and issue 217, Jan-Feb 2012.
-    - “The Door of Blessings,” Evangel Literature, Issue 206, Mar-Apr 2010.
-    - “Commitments of the Christian Worker,” CWTS Newsletter, January 2010.
+    - “Reflections on the Chinese New Year,” _Evangel Literature_, Issue 229, Jan-Feb 2014.
+    - “Seeking Stewards,” _CWTS Newsletter,_ April, 2012.
+    - “The Message of Matthew’s Gospel to the Chinese,” _Evangel Literature,_ Issue 216, Nov-Dec 2011 and issue 217, Jan-Feb 2012.
+    - “The Door of Blessings,” _Evangel Literature,_ Issue 206, Mar-Apr 2010.
+    - “Commitments of the Christian Worker,” _CWTS Newsletter,_ January 2010.

@@ -28,12 +28,12 @@ former:
   - M.Div. (Missions), Southwestern Baptist Theological Seminary, 2008. 道學碩士 (宣教)
   - B.A. (Honors), Nanyang Technological University National Institute of Education, 1999. 學士 (教育)
 - **Publications:**
-  - Low, D. (2022). Review of Internationalizing the university: A spiritual approach, by Unkule, K. International Journal of Christianity and Higher Education, 26(1), 96 – 97.
+  - Low, D. (2022). Review of Internationalizing the university: A spiritual approach, by Unkule, K. _International Journal of Christianity and Higher Education,_ 26(1), 96 – 97.
   - Low, D (2021). Review of Higher education and belief systems in the Asia Pacific region: Knowledge, spirituality, religion, and structures of faith, by Alexander Jun & Christopher S. Collins (Eds.). International Journal of Christianity and Higher Education, 25(2), 242 – 243.
-  - Low, D (2018). The Dimensions that Establish and Sustain Religious Identity: A Study of Chinese Singaporeans who are Buddhists or Taoists. Eugene, OR: Wipf & Stock.
-  - Low, D. (Spring 2017). Review of Why students resist learning? A practical model for understanding and helping students, by A.O Tolman & J. Kremling (Eds.). The Wabash Center Journal on Teaching.
-  - Low, D. & Yee, A. (2014). Servants of God in His restoration of humanity: The utilization of Christian practices in multi-cultural and multi-religious higher education contexts. In N.B. Nielson & J.F. Allen (Eds.). Light and Hope: Transformational impact in Christian Higher Education. Jakarta, Indonesia: UPH Press.
-  - Low, D. & McEwen, R. (2012, Spring). Renewing Christian community identity through Communities of Practice: Considerations for Singapore churches. Common Ground Journal: Perspectives on the church in the 21st century, 9:2, 10 – 22.
+  - Low, D (2018). _The Dimensions that Establish and Sustain Religious Identity: A Study of Chinese Singaporeans who are Buddhists or Taoists._ Eugene, OR: Wipf & Stock.
+  - Low, D. (Spring 2017). Review of Why students resist learning? A practical model for understanding and helping students, by A.O Tolman & J. Kremling (Eds.). _The Wabash Center Journal on Teaching._
+  - Low, D. & Yee, A. (2014). Servants of God in His restoration of humanity: The utilization of Christian practices in multi-cultural and multi-religious higher education contexts. In N.B. Nielson & J.F. Allen (Eds.). _Light and Hope: Transformational impact in Christian Higher Education._ Jakarta, Indonesia: UPH Press.
+  - Low, D. & McEwen, R. (2012, Spring). Renewing Christian community identity through Communities of Practice: Considerations for Singapore churches. _Common Ground Journal: Perspectives on the church in the 21st century,_ 9:2, 10 – 22.
 - **Academic Presentations:**
   - Chong, C., Kang, C., Low, D. (May, 2022). Understanding Buddhism, Befriending Buddhists. Singapore Center for Global Missions Missions Webinar.
   - Low, D. (Jan, 2022). Imparting “Hope” amid the Pandemic: The Philosophical and The Practical in Buddhist contexts. SEANET Conference 2022.
