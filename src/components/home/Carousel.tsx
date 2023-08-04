@@ -5,10 +5,11 @@ import "swiper/css/autoplay";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "./carousel.css";
+import OptionalLink from "@components/common/OptionalLink";
 
 interface CarouselItem {
   image: string;
-  link: String;
+  link?: string;
 }
 
 export interface Props {
@@ -31,9 +32,9 @@ export default function Carousel(props: Props) {
     >
       {props.items.map((item, index) => (
         <SwiperSlide key={index}>
-          <a href={item.link.toString()}>
+          <OptionalLink url={item.link}>
             <img src={item.image} className={"w-full"} />
-          </a>
+          </OptionalLink>
         </SwiperSlide>
       ))}
     </Swiper>
