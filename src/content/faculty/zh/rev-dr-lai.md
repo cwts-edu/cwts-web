@@ -32,7 +32,7 @@ former:
   - M.S.E.E. 1982, University of California, Los Angeles 電機碩士
 - **著述:**
   - 《彼得前書 – 經歷苦難進入榮耀》 明道研經叢書。香港：明道出版社 2010
-  - The Holy Spirit in 1 Peter: A Study of Petrine Pneumatology in Light of the Isaianic New Exodus (彼得前書的聖靈論) （博士論文）
+  - _The Holy Spirit in 1 Peter: A Study of Petrine Pneumatology in Light of the Isaianic New Exodus_ (彼得前書的聖靈論) （博士論文）
 - **文章:**
   - 「從道成肉身思想基督的神人二性」，《基督工人神學院院訊》，2014 年 4 月。
   - 「從矽谷被召出來」，《傳》，2013 年 3-4 月。
