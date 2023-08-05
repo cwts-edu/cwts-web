@@ -1,6 +1,6 @@
 # [CWTS](https://www.cwts.edu) implemented with [Astro](https://astro.build/)
 
-Read [Wiki](wiki) for how to setup dev environment and edit the content.
+Read [Wiki](https://github.com/cwts-edu/cwts-web/wiki) for how to setup dev environment and edit the content.
 
 ## Project Structure
 
