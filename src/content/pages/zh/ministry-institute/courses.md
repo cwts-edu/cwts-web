@@ -62,6 +62,16 @@ thumbnail: "/images/covers/ministry-institute/courses.thumbnail.jpg"
 
 ## Becoming a Skillful Teacher: Teaching and Learning Strategies for Children in a Changing World (課程編碼: FT02, 3 學分, 英文教學，ZOOM 授課）
 
+### Course Description：
+
+In the face of an increasingly complicated era, the classroom needs to dramatically shift to be effective in the transmission of the Christian faith to young learners. This course seeks to equip teachers with the skills to create meaningful and engaging learning experiences in their classrooms so that the latter develop positive learning dispositions. Through exploring active teaching strategies, participants will reflect on their current teaching practice and apply these strategies in their weekly lessons. This course, conducted in English, is particularly catered for Christian Educators teaching both in and outside of the church context.
+
+### 教師簡介：
+
+Daniel Low (PhD, Intercultural Education) currently serves as Associate Professor of Practical Theology at CWTS. Prior to CWTS, he has held faculty, leadership, and training positions at William Carey International University, Raffles Christian School Jakarta-Indonesia, Concordia University Chicago (College of Education), and Ministry of Education Singapore. He was a teacher in Singapore and taught both Elementary and Middle Grades and designed a national program for Pre-School/Kindergarten.
+
+Co-teaching this course will be Ms Cyndia Leow (BA, Dip Ed) and Mr Danny Yeo (MEd, Education Psychology), educators with over 20 years of experience in training, teaching, and leadership in Singapore, Australia, and Jakarta-Indonesia. Ms Leow currently serves as Consultant for Raffles Group of Schools in Jakarta-Indonesia, having just completed her term of service as Humanities Teacher and Deputy Director of Humanities and Environmental Science in Melbourne, Australia. Mr Yeo is currently Deputy Director of Schools (Strategy) with Raffles Group of Schools in Jakarta-Indonesia and prior to this position, he served as a teacher, trainer, and Vice Principal in various public schools in Singapore.
+
 時間：11/30, 12/7, 12/14, 12/21, 1/4, 1/11 (週四) 7-10 pm\
 教授：劉浩宇 博士
 
