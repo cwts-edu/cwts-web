@@ -11,7 +11,7 @@ thumbnail: "/images/covers/ministry-institute/resources.thumbnail.jpg"
 
 - 凡在基神培育中心（MI）修讀學分的同學皆可借閱；借閱資格自修讀任何一門課程起一年內有效。
 - 每人每次可借閱 5 本圖書，時限 2 周，若期間無人訂閱，可續借 2 周。
-- 若需要開通圖書館賬戶或了解更多詳情，請聯繫 Jane Chang (jane.chang@cwts.edu)。
+- 若需要開通圖書館賬戶或了解更多詳情，請聯繫 library@cwts.edu。
 
 ## 網路課程
 
