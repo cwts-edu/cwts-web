@@ -44,7 +44,7 @@ Dr. George Guthrie 現擔任 Regent College 新約教授，是一位備受尊敬
 “Faith and Perseverance in Paul: Achieving Balance in Our Teachings”
 
 **工作坊二： 賴可中 牧師/博士（基督工人神學院 副院長/新約副教授）** \
-事奉疲倦與重新得力 \
+事奉倦怠與重新得力 \
 “Ministry Fatigue and Renewing Strength”
 
 **工作坊三： 陳聲漢博士（基督工人神學院神學碩士科主任，舊約教授）** \

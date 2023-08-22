@@ -24,7 +24,7 @@ thumbnail: "/images/covers/admissions/tuition-scholarship.thumbnail.jpg"
 
 - [注冊須知](/zh/academic/registration-notice)
 - [下載課程註冊表](/docs/admissions/Registration-Form2022-Spring.pdf)
-- 已入學的學生請從[Moodle](http://study.cwts.edu/course/index.php?categoryid=70)註冊
+- 已入學的學生請從[Populi](https://cwts.populiweb.com/)註冊
 
 ## 獎助學金
 
