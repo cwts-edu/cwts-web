@@ -1,7 +1,7 @@
 ---
 import Shortcuts from "./Shortcuts.astro";
 import Navbar from "./Navbar.astro";
-import { Icon } from "astro-icon";
+import { Icon } from "astro-icon/components";
 import MobileNavbar from "./MobileNavbar.astro";
 import LanguagePicker from "./LanguagePicker.astro";
 import logoImage from "@assets/main-logo-black.svg";
@@ -50,7 +50,7 @@ const { language } = Astro.props;
           href={site.home(language)}
           title="Rooted in Scripture, Diligent in Prayer"
         >
-          <img src={logoImage} width="300" height="68.5" />
+          <img src={logoImage.src} width="300" height="68.5" />
         </a>
       </div>
       <div

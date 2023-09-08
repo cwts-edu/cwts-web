@@ -1,6 +1,6 @@
 import type { DegreesProgramsMetadata } from "@libs/degrees_programs";
-import { ChangeEvent, useState } from "react";
-import { Category as DegreeCategory } from "@libs/degrees_programs";
+import { type ChangeEvent, useState } from "react";
+import { type Category as DegreeCategory } from "@libs/degrees_programs";
 
 interface Category {
   label: string;

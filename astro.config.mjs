@@ -1,5 +1,4 @@
 import { defineConfig } from "astro/config";
-import image from "@astrojs/image";
 import tailwind from "@astrojs/tailwind";
 import yaml from "@rollup/plugin-yaml";
 // import compress from "astro-compress";
@@ -12,14 +11,12 @@ import {
   extendedTableHandlers,
 } from "remark-extended-table";
 import sitemap from "@astrojs/sitemap";
+import icon from "astro-icon";
 
 // https://astro.build/config
 export default defineConfig({
   site: "https://www.cwts.edu/",
   integrations: [
-    image({
-      serviceEntryPoint: "@astrojs/image/sharp",
-    }),
     tailwind({
       config: {
         applyBaseStyles: false,
@@ -35,6 +32,9 @@ export default defineConfig({
           zh: "zh",
         },
       },
+    }),
+    icon({
+      iconDir: "src/icons",
     }),
     // compress(),
   ],

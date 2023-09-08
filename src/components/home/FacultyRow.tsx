@@ -1,5 +1,5 @@
 import { Swiper, SwiperSlide } from "swiper/react";
-import { FreeMode, Scrollbar } from "swiper";
+import { FreeMode, Scrollbar } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/free-mode";
 import "./faculty-row.css";

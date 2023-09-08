@@ -2,7 +2,7 @@ import adjunctFacultyZh from "@data/adjunct-prof-zh.yml";
 import adjunctFacultyEn from "@data/adjunct-prof-en.yml";
 import { getCollection } from "astro:content";
 import type { CollectionEntry } from "astro:content";
-import { getLanguageBySlug, Language } from "./language";
+import { getLanguageBySlug, type Language } from "./language";
 import { slug as slugify } from "github-slugger";
 
 type Category = "faculty" | "senior-adjunct" | "adjunct";

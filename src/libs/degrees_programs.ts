@@ -1,5 +1,5 @@
-import { CollectionEntry, getCollection } from "astro:content";
-import { getLanguageBySlug, Language } from "./language";
+import { type CollectionEntry, getCollection } from "astro:content";
+import { getLanguageBySlug, type Language } from "./language";
 
 export type DegreesProgramsMetadata =
   CollectionEntry<"degrees-programs">["data"] & {
