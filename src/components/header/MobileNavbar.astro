@@ -1,13 +1,13 @@
 ---
 import LanguagePicker from "./LanguagePicker.astro";
-import { Icon } from "astro-icon";
+import { Icon } from "astro-icon/components";
 import OptionalLink from "@components/common/OptionalLink";
 import getMenu from "@libs/menu";
 import NavbarDropdown from "./NavbarDropdown.astro";
 import type { Shortcut } from "@libs/shortcuts";
 import getShortcuts from "@libs/shortcuts";
 import logoTextEn from "@assets/logo-text-en-light-violet.svg";
-import { Language, T } from "@libs/language";
+import { type Language, T } from "@libs/language";
 import Button from "@components/common/Button.astro";
 
 export interface Props {
@@ -243,7 +243,7 @@ const menuWithoutChildren = menu.filter((menuItem) => !menuItem.children);
         }
       </div>
       <div class="pt-3 pb-12">
-        <img src={logoTextEn} height="70" />
+        <img src={logoTextEn.src} height="70" />
       </div>
     </div>
   </div>

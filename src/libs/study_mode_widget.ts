@@ -1,5 +1,5 @@
-import { getLanguageBySlug, Language } from "./language";
-import { CollectionEntry, getCollection } from "astro:content";
+import { getLanguageBySlug, type Language } from "./language";
+import { type CollectionEntry, getCollection } from "astro:content";
 import type { MarkdownInstance } from "astro";
 
 interface StudyModeWidgetDataItem {

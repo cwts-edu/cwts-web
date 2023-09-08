@@ -1,4 +1,4 @@
-import { getCollection, getEntryBySlug, CollectionEntry } from "astro:content";
+import { getCollection } from "astro:content";
 import site from "./site";
 
 export interface ListingItem {

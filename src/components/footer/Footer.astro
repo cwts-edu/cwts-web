@@ -1,6 +1,6 @@
 ---
 import footerLogo from "@assets/main-logo-white.svg";
-import { Icon } from "astro-icon";
+import { Icon } from "astro-icon/components";
 import { T } from "@libs/language";
 import type { Language } from "@libs/language";
 
@@ -22,7 +22,7 @@ const { language } = Astro.props;
   >
     <div class="flex flex-col gap-3 grow-[2]">
       <div>
-        <img src={footerLogo} width="300" height="68.5" />
+        <img src={footerLogo.src} width="300" height="68.5" />
       </div>
       <div>
         <a href="https://goo.gl/maps/jRva7GkXnB9k1G7g6" target="_blank">
