@@ -2,6 +2,7 @@
   image: /images/carousel/lectureship-banner.jpg
 - link: https://www.jotform.com/tables/232137476538159
   image: /images/carousel/anniversary-web-banner.jpg
+  newWindow: true
 - link: /zh/about/accreditation
   image: /images/carousel/ats-10-years.jpg
 - link: /zh/ministry-institute/courses
