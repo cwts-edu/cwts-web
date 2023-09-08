@@ -10,6 +10,7 @@ import OptionalLink from "@components/common/OptionalLink";
 interface CarouselItem {
   image: string;
   link?: string;
+  newWindow?: boolean;
 }
 
 export interface Props {
@@ -32,7 +33,7 @@ export default function Carousel(props: Props) {
     >
       {props.items.map((item, index) => (
         <SwiperSlide key={index}>
-          <OptionalLink url={item.link}>
+          <OptionalLink url={item.link} newWindow={item.newWindow}>
             <img src={item.image} className={"w-full"} />
           </OptionalLink>
         </SwiperSlide>
