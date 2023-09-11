@@ -25,5 +25,5 @@ thumbnail: "/images/covers/about/administration.thumbnail.jpg"
 | 資深會計                        | 莫唐華英         | 114   |
 | 註冊主管 資深行政助理           | 陳李伊           | 101   |
 | 培育中心助理主任                | 邊瑤             | 115   |
-| 總務部                          | 李湧             | 108   |
+| 總務部                          | 盧迪麟           | 104   |
 | 資訊部                          | 林文興           | 104   |
