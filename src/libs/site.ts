@@ -27,7 +27,7 @@ class Site {
   }
   defaultCover = "/images/covers/default.cover.jpg";
   defaultThumbnail = "/images/covers/default.thumbnail.jpg";
-  coverVideoId = "nRPF5QHzFxU";
+  coverVideoId = "OcJ4CWx5By4";
   coverVideoTitle(language: Language): string {
     return siteData[language].coverVideoTitle;
   }
