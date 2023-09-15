@@ -64,5 +64,5 @@ thumbnail: "/images/covers/degrees-programs/diploma-of-christian-studies.thumbna
 
 - [按此下載申請表格](/docs/admissions/Application-Form-Masters_111422.pdf)
 - [按此下載推薦書表格](/docs/admissions/Recommendation-Form2020Fall-revised.pdf)
-- [按此下載財務表格](/docs/admissions/Financial-Information-Masters-updated-07242023.pdf)
+- [按此下載財務資訊和獎學金申請表格](/docs/admissions/Scholarship-Master-updated-09122023v2.pdf)
 - [按此下載健康資料表格](/docs/admissions/Health-History-Form-revised.pdf)

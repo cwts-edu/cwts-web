@@ -40,6 +40,6 @@ thumbnail: "/images/covers/degrees-programs/doctor.thumbnail.jpg"
 
 - [按此下載博士申請表格](/docs/admissions/Application-Form-DMin_111422.pdf)
 - [按此下載推薦書表格](/docs/admissions/Recommendation-Form2020Fall-revised.pdf)
-- [按此下載財務表格](/docs/admissions/Financial-Information-DMin-updated-07242023.pdf)
+- [按此下載財務資訊和獎學金申請表格](/docs/admissions/Scholarship-DMin-updated-09122023v2.pdf)
 - [按此下載健康資料表格](/docs/admissions/Health-History-Form-revised.pdf)
 - [按此下載教牧博士科手冊](/docs/admissions/DMin-Handbook-2020-2021-Chinese.pdf)
