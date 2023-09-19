@@ -37,11 +37,6 @@ thumbnail: "/images/covers/admissions/tuition-scholarship.thumbnail.jpg"
 
 ### 獎學金 (Scholarship – Merit based)
 
-申請表格鏈結
-- [教牧博士 DMin 學生](/docs/admissions/Scholarship-DMin-updated-09122023v2.pdf)
-- [神學碩士 ThM 學生](/docs/admissions/Scholarship-ThM-updated-09122023v2.pdf)
-- [一般碩士 (MDiv, MBS, MCM) 學生](/docs/admissions/Scholarship-Master-updated-09122023v2.pdf)
-
 1. 為使更多同學能受惠，原則上學院之助學金最多可到學生本學期學費。專項助學金除外。
 2. 接獲助學金的學生必須在學業成績上保持良好水平，否則學院將會減少或取消其助學金。
 3. 接受學院外助學金的學生須向捐贈者寫信致謝，並知會學院。
@@ -58,6 +53,12 @@ thumbnail: "/images/covers/admissions/tuition-scholarship.thumbnail.jpg"
 2. 其他新生 (非國際學生新生 - 包含美國本地之新生、與網路學位等各學位的新生) 
 
     有經濟困難的此類新生，按助學金申請辦法，於入學申請時即進行申請(見三. 助學金申請辦法)。申請者須填妥申請表格，附上證明資料。本院之助學金評審委員於審批申請表格後，將結果通知申請人。
+
+
+申請表格鏈結
+- [教牧博士 DMin 學生](/docs/admissions/Scholarship-DMin-updated-09122023v2.pdf)
+- [神學碩士 ThM 學生](/docs/admissions/Scholarship-ThM-updated-09122023v2.pdf)
+- [一般碩士 (MDiv, MBS, MCM) 學生](/docs/admissions/Scholarship-Master-updated-09122023v2.pdf)
 
 #### 二.	在校生獎學金
 學院為品學兼優，學期成績(GPA)達獎學金標準的全時間各類碩士學位學生提供獎學金以茲鼓勵與支持。
