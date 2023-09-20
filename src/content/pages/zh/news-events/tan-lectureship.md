@@ -23,8 +23,6 @@ thumbnail: "/images/covers/news-events/tan-lectureship.thumbnail.jpg"
 
 **2 堂主題信息 4 個工作坊**
 
-## [**我要報名**](https://form.jotform.com/231735818149160)
-
 時間: 9/16 Saturday 9:00 am - 3:00 pm\
 地點：基神本部\
 [1975 Concourse Dr.\
