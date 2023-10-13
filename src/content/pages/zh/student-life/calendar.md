@@ -38,15 +38,15 @@ thumbnail: "/images/covers/student-life/calendar.thumbnail.jpg"
 | >                                      | **SPRING SEMESTER 2024**                 |
 | Tuition Fees Due                       | Monday, January 15                       |
 | New Student Orientation                | Monday, January 15                       |
-| Spring Intensive Course                | Tuesday - Friday, January 16–19          |
 | Beginning of Regular Classes           | Monday, January 22                       |
 | Chinese/Lunar New Year Celebration     | Friday, February 9                       |
 | President’s Day (no classes)           | Monday, February 19                      |
-| Bay Area Bible Convention (BABC)       | TBA                                      |
+| Bay Area Bible Convention (BABC)       | Saturday, February 24                    |
+| Taste of CWTS                          | Friday, March 8 (Zoom)                   |
 | Mid-term Exam / Class                  | Monday - Saturday, March 11–16           |
-| Taste of CWTS                          | March 8 (Zoom); April 3 (Wed, in-person) |
 | Good Friday Service                    | Friday, March 29                         |
 | Fall Registration                      | April 1-30                               |
+| Taste of CWTS                          | Wednesday, April 3 (in-person)           |
 | Reading Period                         | Monday - Saturday, April 15-20           |
 | Last day of Class                      | Monday, May 6                            |
 | Final Exam                             | Tuesday - Monday, May 7-13               |
