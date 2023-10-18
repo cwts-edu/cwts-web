@@ -9,72 +9,28 @@ thumbnail: "/images/covers/news-events/bay-area-bible-convention.thumbnail.jpg"
 
 ![BABC Banner](/images/babc/BABC2023-banner.png)
 
-## 第九屆灣區華人基督徒教育大會
-
-2023 年 5 月 20 日 星期六 9am - 4pm
-
-地點：山景城基督徒會堂\
-[920 Sierra Vista Ave.\
-Mountain View, CA, 94043](https://goo.gl/maps/s2Z9Eo7FehDCVLos7)
-
-報名費 $20/人，集體報名(10 人及以上）$15/人
-
-zelle 付費收款人: fee@cwts.edu, 請註明 BABC 及您的姓名
-
-網上報名已截止。如果您有任何疑問，請發送郵件至 advancement@cwts.edu
-
-[**\*點擊瀏覽講員介紹工作坊介紹**](/docs/babc/點擊瀏覽講員介紹工作坊介紹.pdf)
-
+## 【2023】第九屆灣區基督徒教育大會
 </div>
 
-### 第九屆灣區華人基督徒教育大會日程安排
+（版權聲明: 未經基神授權, 不得下載, 轉載, 摘編或任意發佈）
 
-09:00 am
+大會主題信息: 建基於磐石  見證與發光 (羅秉祥博士):
 
-> 開幕 歡迎
+| 題目       |                                 視頻                                  |
+| ---------- | :-------------------------------------------------------------------: |
+| 教會: 在世寄居的聖潔國度 | [![video](/images/icons/video.svg)](https://vimeo.com/831374610/261153aaad?share=copy) |
+| 神的子民: 在巴比倫僑居的積極參與 |[![video](/images/icons/video.svg)](https://vimeo.com/831374755/91800fd515?share=copy) |
 
-09:10 – 10:20 am
+工作坊:
 
-> 敬拜 & 主題信息（一）
->
-> 羅秉祥博士 教會: 在世寄居的聖潔國度
-
-10:20 – 10:40 am
-
-> 休息
-
-10:40 – 12:00 pm 工作坊
-
-> A1. President Frank Lee: A Christian political leader’s testimony/insight and insider analysis of current vital issues(in English)
->
-> A2. 譚克成博士: 教會如何教導與帶領信徒活出社會責任
->
-> A3. 符濟珍博士: 同性戀群體的牧養與關顧 （現場 zoom）
->
-> A4. 蔡明謀博士: 疫情對崇拜帶來的反思
->
-> A5. 鄭立新牧師: 傳承信仰 – 教會總動員（現場 zoom）
-
-11:50 – 01:00 pm 休息 午餐
-
-01:00 – 02:20 pm 工作坊
-
-> B1. 吳羅瑜教授: 從聖經看基督徒的社會責任—一些疑問與澄清
->
-> B2. 時盡書牧師: 從聖經看待墮胎與歧視（現場 zoom）
->
-> B3. 黃偉康醫師: 如何面對當前社會性別混亂/變性的衝擊
->
-> B4. 林呂寧華師母: 疫情後: 教會如何有效関懷信徒的心理健康及成長（現場 zoom）
->
-> B5. 孫慈俠牧師: 建造世代融合的教會
-
-02:30 – 03:40 pm
-
-> 敬拜 & 主題信息（二）
->
-> 羅秉祥博士 神的子民: 在巴比倫僑居的積極參與
-
-03:40 – 04:00 pm
-
-> 報告 祝福
+| 講員           | 題目                          |                                  視頻                                  |
+| -------------- | ----------------------------- | :--------------------------------------------------------------------: |
+| President Frank Lee      | A Christian political leader’s testimony/insight and insider analysis of current vital issues      | [![video](/images/icons/video.svg)](https://vimeo.com/831374179/46056edb8d?share=copy)|
+| 譚克成博士      | 教會如何教導與帶領信徒活出社會責任         |[![video](/images/icons/video.svg)](https://vimeo.com/831375632/b088a19002?share=copy)  |
+| 符濟珍博士      | 同性戀群體的牧養與關顧          | [![video](/images/icons/video.svg)](https://vimeo.com/831374393/b2922cfcae?share=copy) |
+| 蔡明謀博士      | 疫情對崇拜帶來的反思         |[![video](/images/icons/video.svg)](https://vimeo.com/831375279/1fcaf363e8?share=copy)   |
+| 鄭立新牧師      | 傳承信仰 – 教會總動員                   |  [![video](/images/icons/video.svg)](https://vimeo.com/831376417/95db922680?share=copy) |
+| 吳羅瑜教授      | 從聖經看基督徒的社會責任—一些疑問與澄清                    | [![video](/images/icons/video.svg)](https://vimeo.com/831372245/c5e7eb16e2?share=copy) |
+| 時盡書牧師      | 從聖經看待墮胎與歧視      | [![video](/images/icons/video.svg)](https://vimeo.com/831372564/cfc1c25fdb?share=copy) |
+| 林呂寧華師母    | 疫情後: 教會如何有效関懷信徒的心理健康及成長                    | [![video](/images/icons/video.svg)](https://vimeo.com/831374225/28f9b9ceff?share=copy) |
+| 孫慈俠牧師      | 建造世代融合的教會      | [![video](/images/icons/video.svg)](https://vimeo.com/831372439/57f378d099?share=copy) |
