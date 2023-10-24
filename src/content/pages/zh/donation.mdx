@@ -5,15 +5,25 @@ coverImage: "/images/covers/donation.cover.jpg"
 thumbnail: "/images/covers/donation.thumbnail.jpg"
 ---
 
+import Youtube from "@components/common/Youtube.astro";
+
+import Site from "@libs/site";
+
+<div class="w-full md:w-3/5 lg:w-2/5 m-4 max-lg:mx-auto lg:float-right">
+  <Youtube id="TZGecfDvtAs" title={Site.coverVideoTitle("zh")} />
+</div>
+
 親愛的弟兄姊妹: 感謝主，是祂自己的靈感動您打開了這個頁面， 並願意以奉獻和代禱和我們一起同工，來踐行“培養神國度工人”的使命。
 
 “上陣的得多少, 看守器具的也得多少; 應當大家平分” (撒母耳記上 30:24)。
 
 基督工人神學院全體在主裡深深感恩！
 
-<p class="text-maxpurple font-senibold">捐款項目如下: (請選擇一項寫在您的奉獻備註裡)：</p>
+<p class="text-maxpurple font-senibold">
+  捐款項目如下: (請選擇一項寫在您的奉獻備註裡)：
+</p>
 
-<p>1. 經常費用  2. 助學金  3. 建校基金  4. 基神之友  5. 对等奉献  6. 其他</p>
+<p>1. 經常費用 2. 助學金 3. 建校基金 4. 基神之友 5. 对等奉献 6. 其他</p>
 
 <div class="bg-white p-4 mt-6 mb-6 font-semibold">
 <h3 class="mt-0 border-b border-maxpurple">支票奉獻</h3>
@@ -52,7 +62,17 @@ San Jose, CA 95131
 
 請點擊下方 Online Giving 的按鍵，進入 Tithe.ly 基督教組織奉獻平臺，輸入信用卡及個人資料和奉獻項目 (Give to) 後，點擊最後下方 Give 的金額即可 (亦可勾 Remember me 記住所輸入的資料，以方便下次奉獻)
 
-<p><button class="tithely-give-btn" style="background-color: #26af5f; border: none; color: #fff; padding: 10px 30px; font-size: 17px; cursor: pointer; background-image: none; border-radius: 3px; text-shadow: none; font-weight: normal;" data-church-id="217731">Online Giving</button> <script src="https://tithe.ly/widget/v3/give.js?3"></script> <script>var tw = create_tithely_widget();</script></p>
+<p>
+  <button
+    class="tithely-give-btn"
+    style="background-color: #26af5f; border: none; color: #fff; padding: 10px 30px; font-size: 17px; cursor: pointer; background-image: none; border-radius: 3px; text-shadow: none; font-weight: normal;"
+    data-church-id="217731"
+  >
+    Online Giving
+  </button>
+  <script src="https://tithe.ly/widget/v3/give.js?3"></script>
+  <script>var tw = create_tithely_widget();</script>
+</p>
 
 </div>
 
