@@ -1,12 +1,11 @@
-- link: https://form.jotform.com/232714735452153
-  image: /images/carousel/open-house.jpg
-  newWindow: true
 - link: https://youtu.be/TZGecfDvtAs
   image: /images/carousel/anniversary-web-banner-without-date.jpg
   newWindow: true
-- link: /zh/about/accreditation
-  image: /images/carousel/ats-10-years.jpg
 - link: /zh/ministry-institute/courses
   image: /images/carousel/2023_MI2nd_banner.jpg
+- link: /zh/ministry-institute/courses
+  image: /images/carousel/2024-MI-Spring.jpg
+- link: /zh/about/accreditation
+  image: /images/carousel/ats-10-years.jpg
 - link: /zh/academic/online-program
   image: /images/carousel/MCM-online.jpg
