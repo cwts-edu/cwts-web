@@ -11,7 +11,7 @@ const siteData = {
     title: "CWTS 基督工人神學院",
     shortTitle: "基督工人神學院",
     home: "/",
-    coverVideoTitle: "基督工人神學院 50周年感恩慶典",
+    coverVideoTitle: "基督工人神學院 50週年回顧與展望",
   },
 };
 
@@ -27,7 +27,7 @@ class Site {
   }
   defaultCover = "/images/covers/default.cover.jpg";
   defaultThumbnail = "/images/covers/default.thumbnail.jpg";
-  coverVideoId = "OcJ4CWx5By4";
+  coverVideoId = "TZGecfDvtAs";
   coverVideoTitle(language: Language): string {
     return siteData[language].coverVideoTitle;
   }
