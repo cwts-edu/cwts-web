@@ -5,23 +5,6 @@ coverImage: "/images/covers/ministry-institute/courses.cover.jpg"
 thumbnail: "/images/covers/ministry-institute/courses.thumbnail.jpg"
 ---
 
-## 新約中的重要神學主題（課程編碼: BN01, 3 學分，ZOOM 授課）
-
-### 課程簡介：
-
-本課程旨在幫助信徒對新約聖經有一整全的了解，學生將從經文、時代背景和神學角度來了解新約聖經的精要部分，即每卷書的重要主題、經文解釋及神學闡述。內容涵蓋新約背景、新約的成書、福音書、使徒行傳、使徒保羅生平、旅行書信、監獄書信、教牧書信、希伯來書、普通書信和啟示錄。
-
-### 教師簡介：
-
-賴可中博士/牧師: 基督工人神學院副院長, 教牧博士科主任。主授新約神學, 新約經卷, 釋經學, 新約希臘文。賴牧師來自台灣，原從事高科技專業，後蒙召全職事奉，入神學院接受裝備，獲達拉斯神學院哲學博士，主修新約研究。在神學裝備期間，參與教會的牧養工作。因感神學教育對擴展神國的重要，自2006 起入神學院任教，致力於培育合神心意的時代工人。現除教學之外，也在各教會講道，參與培訓，撰寫專文等。
-
-時間：9/13-10/18，逢週三晚 7-10 pm\
-教授：賴可中 博士
-
-[點擊報名](https://form.jotform.com/231025499736159)
-</br>
-</br>
-
 ## 宣教歷史與趨勢（課程編碼: MG01, 3 學分，ZOOM 授課）
 
 ### 課程簡介：
@@ -41,7 +24,7 @@ thumbnail: "/images/covers/ministry-institute/courses.thumbnail.jpg"
 </br>
 </br>
 
-## Becoming a Skillful Teacher: Teaching and Learning Strategies for Children in a Changing World (課程編碼: FT02, 3 學分, 英文教學，ZOOM 授課）
+## Becoming a Skillful Teacher: Teaching and Learning Strategies for Children in a Changing World (課程編碼: FT02, 3 學分, 英文教學，ZOOM 授課)
 
 ### Course Description：
 
@@ -60,14 +43,64 @@ Co-teaching this course will be Ms Cyndia Leow (BA, Dip Ed) and Mr Danny Yeo (ME
 </br>
 </br>
 
-## 中文教會的二代英文事工 (英文授課 2 學分，ZOOM 授課)
+## 婚姻家庭神學觀（課程編碼: FT01, 3 學分，ZOOM 授課）
 
 ### 課程簡介：
 
-This course will explore the theological, cultural and practical uniqueness and challenges of the (immigrant) Chinese church in North America and provide practical tools for those ministering in the Chinese church with focus on second generation/English ministry. By the end of the course, the student will develop a biblical/theological understanding of the church and unity within the Chinese church context in North America; understand the different complexities in the Chinese church (w/ regards to second generation/English ministry) context – and how to navigate those issues; develop cultural awareness and conflict resolution skills; understand how the Gospel shapes all of the above Also, they will grow in their love for and deeper appreciation for unity within the church, and appreciate the uniqueness and diversity of the Chinese church in North America.
+放眼這個支離破碎的世界，信徒信仰與生活脫節，教會家庭牧養的缺乏，事工模式陳舊，其實都與我們缺乏正確整全的神學認知有關。本課程並非傳統意義上的神學課程，而是一個日常行走以及活出的神學操練。透過認識神創造婚姻家庭時就持有的不變旨意和奇妙作為，去活出合祂心意的生命。本課程將重整我們對婚姻家庭的認知，渴求，維持，期許，以及目標；並從神學的角度帶領大家深度認識神對婚姻家庭以及人生使命的心意，也會在此神學基礎之上，帶出人生使命目標的再思，婚姻家庭生活中的實際挑戰與癥結所在，並探討當今教會婚姻家庭牧養的困境與出路。
 
-本課程將探討（移民）華人教會在北美的神學、文化和實踐上的獨特性和挑戰，並提供實用工具，幫助那些在華人教會事奉、特別是關注第二代/英語事工的人。在課程結束時，學生將發展出對北美華人教會背景下教會和團結的聖經/神學理解；了解華人教會在第二代/英語事工方面的不同複雜性，以及如何應對這些問題；發展文化意識和衝突解決技能；了解福音如何塑造以上所有內容。此外，他們將在愛中成長，並更深刻地欣賞教會的團結，讚賞北美華人教會的獨特性和多樣性。
+### 教師簡介：
 
-時間: TBD 另行通知
+程林真兒博士（Dr. Joy Cheng）, 美國遠東廣播公司中文事工節目部主任；達拉斯神學院教牧學婚姻家庭事工博士；美國遠東家庭事工培訓中心創辦人；「真愛駐我家」播客總監制與主持，良友電台節目主持人，良牧聖經學院教務長；正道神學院客座教師；良友電台節目主持人，在多間神學院教導許多與婚姻家庭、教育子女，培育青少年等課程，同時與先生homeschool在家教育他們的三個孩子，Elijah（18已上大學）；Evangeline（14）；和Eliana（11）。
 
-[點擊報名](https://form.jotform.com/213326566245153)
+時間：2月15日-3月21日, 每逢週四, 7-10 PM\
+教授：林真兒 傳道
+
+[點擊報名](https://form.jotform.com/232775166363159)
+</br>
+</br>
+
+## 二代英文事工 Chinese Church Second Generation English Ministry（課程編碼: PE02, 2 學分，英文授課 ZOOM 授課）
+
+### Course Description：
+
+One of the greatest challenges facing Chinese churches in the Chinese Diaspora is the ability to develop healthy second+ generation ministries. This is especially difficult in the United States and Canada where the linguistic and cultural distance is so large between an evolving multi-cultural, yet Western-oriented, society and its Chinese communities. This class seeks to provide practical ways of creating healthy second+ generation English ministries within churches that are primarily Chinese-speaking. We will explore external and internal factors that create environments for healthy and unhealthy second generation English ministries.
+
+### Instructor Introduction:
+Dr. Tim Tseng (曾祥雨) is a Research Professor of the History of Christianity and Asian American Studies at Fuller Theological Seminary. He is also the Pacific Area Director of InterVarsity Christian Fellowship’s Graduate and Faculty Ministries. Between 2010 and 2018, Tim served as Pastor of English Ministries at Canaan Taiwanese Christian Church in San Jose, California. Prior to that he served on faculty at Denver Seminary, Colgate-Rochester Divinity School, and the Graduate Theological Union. He also founded and directed the Institute for the Study of Asian American Christianity (ISAAC). Tim is a pioneering American religious historian who investigates the histories of Asian American Christianity.
+He was born in Taiwan and migrated to the U.S. at the age of 2 with his parents. His father, the late Paul F.P. Tseng, was a church planter who started three Chinese congregations in the New York Metropolitan Area. Initially hoping to follow in his father’s footsteps into ministry into the Chinese American church, he was called to the field of history of Christianity after discovering the absence of Asians and Asian Americans in the standard narratives of church history. He completed his M.Div. (1987) Ph.D. in the history of Christianity (1994) at Union Theological Seminary (New York) under the tutelage of his advisor, the late James Melvin Washington. Tim has been married to Betty Shek Tseng since 1985. They have two adult sons, Nathaniel and Benjamin. Tim and Betty reside in Castro Valley, California.
+
+Time: April 4- May 9, on Thursdays, 7-9 PM, via Zoom\
+Instructor: Dr. Tim Tseng
+
+[點擊報名](https://form.jotform.com/232775461924160)
+</br>
+</br>
+
+## 屬靈成長的重要階段（課程編碼: SP02, 2 學分, ZOOM 授課）
+
+### 課程簡介：
+
+### 教授簡介:
+來自中國大陸，之前曾在高校工作多年。蒙神恩召得以認識耶穌基督，不斷經歷神信實奇妙的帶領，生命得以完全翻轉。2013年來美接受神學裝備，獲基督工人神學院道學碩士後留任學院繼續服事；因對靈命塑造及靈修輔導的特別負擔，一直致力於此，並在School of Spiritual Direction School of Sustainable Faith完成訓練，成為certified spiritual director。
+
+時間：5月16日 - 6月6日, 逢週四晚 7-10 PM\
+教授：邊瑤姊妹
+
+[點擊報名](https://form.jotform.com/233045187373154)
+</br>
+</br>
+
+## 全人發展心理學（課程編碼: PC02, 2 學分, ZOOM 授課）
+
+### 課程簡介：
+
+### 教授簡介:
+劉慈謙博士，美國加利福尼亞州持牌心理博士。劉博士於美國福樂神學院分別取得神學碩士以及臨床心理學博士學位。劉博士畢業於加州大學洛杉磯分校的電子工程系，2007年神呼召他離開電機工程職業生涯進入事奉。曾為千橡城華人基督教會傳道。過去主要教會傳道，教會家庭事工，參與廣播節目，婚姻及家庭治療，並在老人科心理治療診所工作。他目前在神學院教學，服務非營利基督教組織，青少年危机中心做精神病治療。
+
+時間：6月15日 - 7月6日, 逢週六 9AM-12 PM\
+教授：劉慈謙 博士
+
+[點擊報名](https://form.jotform.com/232775455948169)
+</br>
+</br>
