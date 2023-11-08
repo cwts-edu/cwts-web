@@ -21,6 +21,7 @@ thumbnail: "/images/covers/degrees-programs/master.thumbnail.jpg"
 | ^                             | ^        | 新約神學                                                                                                           | 2     |
 | ^                             | ^        | 舊約神學                                                                                                           | 2     |
 | ^                             | ^        | 治學法                                                                                                             | 1     |
+| ^                             | ^        | 學術研究法                                                                                                          | 1     |
 | ^                             | ^        | 福音書                                                                                                             | 3     |
 | ^                             | ^        | 新約書信                                                                                                           | 3     |
 | 神學及歷史                    | 12       |  系統神學上                                                                                                         | 3     |
