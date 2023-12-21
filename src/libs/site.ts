@@ -5,7 +5,7 @@ const siteData = {
     title: "Christian Witness Theological Seminary",
     shortTitle: "CWTS",
     home: "/en",
-    coverVideoTitle: "Christian Witness Theological Seminary 50th Anniversary",
+    coverVideoTitle: "Christian Witness Theological Seminary CWTS Merry Christmas 2023",
   },
   zh: {
     title: "CWTS 基督工人神學院",
