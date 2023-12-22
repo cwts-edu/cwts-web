@@ -1,5 +1,5 @@
 ---
-title: 教會領袖文憑
+title: 教會事工文憑
 length: 1年
 credits: 30
 order: 301
