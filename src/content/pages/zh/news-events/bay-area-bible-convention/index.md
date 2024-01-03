@@ -14,7 +14,9 @@ thumbnail: "/images/covers/news-events/bay-area-bible-convention.thumbnail.jpg"
 時間：2024 年 2 月 24 日（星期六）<br>
 地點：匯點教會 [658 Gibraltar Ct, Milpitas, CA 95035](https://maps.app.goo.gl/ScLyvn8nGkDn6i2u9)
 
-<a href="https://form.jotform.com/233124890504149" target="_blank">報名鏈接</a>
+<a class="text-3xl font-bold" href="https://form.jotform.com/233124890504149" target="_blank">報名鏈接</a>
+
+[時間表與內容](#時間表與內容) · [主題信息](#主題信息) [工作坊 A](#工作坊-a) [工作坊 B](#工作坊-b) · [講員介紹](#講員介紹)
 
 </div>
 
@@ -51,7 +53,7 @@ thumbnail: "/images/covers/news-events/bay-area-bible-convention.thumbnail.jpg"
 
 **主題講員：[鄒永恆牧師](#鄒永恆牧師)**
 
-### 工作坊 A(鄒永恆.jpg)
+### 工作坊 A
 
 #### A1: 基督徒如何面對性亂的時代
 
