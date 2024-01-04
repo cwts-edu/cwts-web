@@ -17,7 +17,7 @@ thumbnail: "/images/covers/news-events/bay-area-bible-convention.thumbnail.jpg"
 
 時間：2024 年 2 月 24 日（星期六）<br>
 地點：匯點教會 [658 Gibraltar Ct, Milpitas, CA 95035](https://maps.app.goo.gl/ScLyvn8nGkDn6i2u9) <br>
-提供 3-5 歲兒童看顧服務
+提供 3-12 歲兒童看顧服務
 
 <a class="text-3xl font-bold" href="https://form.jotform.com/233124890504149" target="_blank">報名鏈接</a>
 
