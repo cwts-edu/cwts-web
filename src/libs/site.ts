@@ -11,7 +11,7 @@ const siteData = {
     title: "CWTS 基督工人神學院",
     shortTitle: "基督工人神學院",
     home: "/",
-    coverVideoTitle: "基督工人神學院 CWTS Merry Christmas 2023",
+    coverVideoTitle: "神學生見證 - 神學學習如何提升和改變我",
   },
 };
 
@@ -27,7 +27,7 @@ class Site {
   }
   defaultCover = "/images/covers/default.cover.jpg";
   defaultThumbnail = "/images/covers/default.thumbnail.jpg";
-  coverVideoId = "LlEvCTU0UG8";
+  coverVideoId = "fkfx1alIKrI";
   coverVideoTitle(language: Language): string {
     return siteData[language].coverVideoTitle;
   }
