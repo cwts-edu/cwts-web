@@ -5,7 +5,7 @@ const siteData = {
     title: "Christian Witness Theological Seminary",
     shortTitle: "CWTS",
     home: "/en",
-    coverVideoTitle: "Christian Witness Theological Seminary CWTS Merry Christmas 2023",
+    coverVideoTitle: "A seminarian's testimony: How theological studies have uplifted and transformed me",
   },
   zh: {
     title: "CWTS 基督工人神學院",
