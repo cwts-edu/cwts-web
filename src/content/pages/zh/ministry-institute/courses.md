@@ -5,40 +5,6 @@ coverImage: "/images/covers/ministry-institute/courses.cover.jpg"
 thumbnail: "/images/covers/ministry-institute/courses.thumbnail.jpg"
 ---
 
-## 宣教歷史與趨勢（課程編碼: MG01, 3 學分，ZOOM 授課）
-時間：10/12-11/16  逢週四7-10PM\
-教授：游偉業 博士、蔡家存 博士\
-[點擊報名](https://form.jotform.com/231025444747151)
-
-### 課程簡介：
-
-從歷史、宣教神學思想和教會發展角度，反省宣教歷史的現代意義，並理解宣教事工發展之異象、沿革和策略模式，讓學員更委身參與發展宣教事工，實踐上帝的使命。內容包括使徒時代初期教會發展、希臘及拉丁教父時代及羅馬天主教的宣教、基督新教的發展及宣教模式、宣教進中國與出中國、近代普世宣教歷史與趨勢，課程將幫助學生認識現今華人教會的宣教情況，反思如何推動宣教動員的計劃，構建健康的目標，協助教會整合資源，能夠在宣教工作上成為有影響力的教會。
-
-### 教師簡介：
-
-游偉業博士：游博士在香港成長，在香港取得伯特利神學院神學士和建道神學院宣教碩士；美國西南浸信會道學碩士及教牧博士(主修宣教事工) ；香港中文大學祟基神學院神學博士(主修宣教神學與歷史)；參與事奉30多年，服事經歷包括：開荒植會/群、牧會、宣教士、研究員、差會主管、神學院及跨文化學院教務主任與院長、教授、博碩士論文導師、顧問、教練、專題講員等，繼續培養不同領域人才。
-
-蔡家存博士：美國西南浸信會神學院哲學博士（主修全球基督教研究），現任馬來西亞浸信會神學院的博士課程教務主任和宣教主任，亦是兩家國際差會在馬來西亞分會的委員。他在很年輕時就蒙恩得救和蒙召，並在大學之後开始全職事奉。他的事奉範圍除了神學教育和宣教動員，也在教會協助牧養青年人，熱忱於鼓勵建立青少年人為主而活，為主擺上。
-</br>
-</br>
-
-## Becoming a Skillful Teacher: Teaching and Learning Strategies for Children in a Changing World (課程編碼: FT02, 3 學分, 英文教學，ZOOM 授課)
-時間：11/30, 12/7, 12/14, 12/21, 1/4, 1/11 (週四) 7-10 pm\
-教授：劉浩宇 博士\
-[點擊報名](https://form.jotform.com/231025627572150)
-
-### Course Description：
-
-In the face of an increasingly complicated era, the classroom needs to dramatically shift to be effective in the transmission of the Christian faith to young learners. This course seeks to equip teachers with the skills to create meaningful and engaging learning experiences in their classrooms so that the latter develop positive learning dispositions. Through exploring active teaching strategies, participants will reflect on their current teaching practice and apply these strategies in their weekly lessons. This course, conducted in English, is particularly catered for Christian Educators teaching both in and outside of the church context.
-
-### 教師簡介：
-
-Daniel Low (PhD, Intercultural Education) currently serves as Associate Professor of Practical Theology at CWTS. Prior to CWTS, he has held faculty, leadership, and training positions at William Carey International University, Raffles Christian School Jakarta-Indonesia, Concordia University Chicago (College of Education), and Ministry of Education Singapore. He was a teacher in Singapore and taught both Elementary and Middle Grades and designed a national program for Pre-School/Kindergarten.
-
-Co-teaching this course will be Ms Cyndia Leow (BA, Dip Ed) and Mr Danny Yeo (MEd, Education Psychology), educators with over 20 years of experience in training, teaching, and leadership in Singapore, Australia, and Jakarta-Indonesia. Ms Leow currently serves as Consultant for Raffles Group of Schools in Jakarta-Indonesia, having just completed her term of service as Humanities Teacher and Deputy Director of Humanities and Environmental Science in Melbourne, Australia. Mr Yeo is currently Deputy Director of Schools (Strategy) with Raffles Group of Schools in Jakarta-Indonesia and prior to this position, he served as a teacher, trainer, and Vice Principal in various public schools in Singapore.
-</br>
-</br>
-
 ## 婚姻家庭神學觀（課程編碼: FT01, 3 學分，ZOOM 授課）
 時間：2月15日-3月21日, 每逢週四, 7-10 PM\
 教師：林真兒 傳道\
