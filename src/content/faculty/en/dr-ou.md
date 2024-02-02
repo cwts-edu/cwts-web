@@ -1,6 +1,6 @@
 ---
 photo: /images/faculty/dr-ou.png
-name: Dr. Cindy Ou (Liao)
+name: Dr. Cindy Ou Liao
 category: faculty
 order: 110
 positions:
