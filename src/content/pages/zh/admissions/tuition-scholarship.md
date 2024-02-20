@@ -56,9 +56,9 @@ thumbnail: "/images/covers/admissions/tuition-scholarship.thumbnail.jpg"
 
 
 申請表格鏈結
-- [教牧博士 DMin 學生](/docs/admissions/Scholarship-DMin-updated-09122023v2.pdf)
-- [神學碩士 ThM 學生](/docs/admissions/Scholarship-ThM-updated-09122023v2.pdf)
-- [一般碩士 (MDiv, MBS, MCM) 學生](/docs/admissions/Scholarship-Master-updated-09122023v2.pdf)
+- [教牧博士 DMin 學生](/docs/admissions/Scholarship-DMin-updated-10312023v3.pdf)
+- [神學碩士 ThM 學生](/docs/admissions/Scholarship-ThM-updated-10312023v3.pdf)
+- [一般碩士 (MDiv, MBS, MCM) 學生](/docs/admissions/Scholarship-Master-updated-10252023v3.pdf)
 
 #### 二.	在校生獎學金
 學院為品學兼優，學期成績(GPA)達獎學金標準的全時間各類碩士學位學生提供獎學金以茲鼓勵與支持。
