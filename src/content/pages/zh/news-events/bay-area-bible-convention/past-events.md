@@ -4,6 +4,33 @@ order: 601.2
 coverImage: "/images/covers/news-events/bay-area-bible-convention.cover.jpg"
 thumbnail: "/images/covers/news-events/bay-area-bible-convention.thumbnail.jpg"
 ---
+## 【2024】第十屆灣區基督徒教育大會
+
+![BABC 2024](/images/babc/BABC2024-banner.jpg)
+
+（版權聲明: 未經基神授權, 不得下載, 轉載, 摘編或任意發佈）
+
+大會主題信息: 建造家庭，祝福全地 (鄒永恆牧師):
+
+| 題目                             |                                          視頻                                          |
+| -------------------------------- | :------------------------------------------------------------------------------------: |
+| 從信仰群體的角度看家庭的角色         | [![video](/images/icons/video.svg)](https://vimeo.com/922163832/10e317d707?share=copy) |
+| 從基督教教育理念看家庭的建造 | [![video](/images/icons/video.svg)](https://vimeo.com/922166576/8ead0d5c68?share=copy) |
+
+工作坊:
+
+| 講員                | 題目                                                                                          |                                          視頻                                          |
+| ------------------- | --------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------: |
+| 劉慈謙博士 | A1: 基督徒如何面對性亂的時代 | [![video](/images/icons/video.svg)](https://vimeo.com/922168325/40b3f8dfd3?share=copy) |
+| 羅一強牧師 | A2: 教會家庭協力建立家庭門訓、信仰傳承                                                            | [![video](/images/icons/video.svg)](https://vimeo.com/922169870/65c67fd9ee?share=copy) |
+| Stephen Chen          | A3: Our Story- The Journey of Establishing and Growing the English (Younger Generation or Second Generation) Ministry                                                                        | [![video](/images/icons/video.svg)](https://vimeo.com/922170374/76d104dcae?share=copy) |
+| 陳聲漢博士          | A4: 從舊約聖經出發，與青少年(第二代)族群的屬靈建立                                                                          | [![video](/images/icons/video.svg)](https://vimeo.com/922172892/4d34f61824?share=copy) |
+| 林有洧牧師          | A5: 夫妻：骨肉至親的傑作，聖潔親密的關係                                                                         | [![video](/images/icons/video.svg)](https://vimeo.com/922172934/209766aa48?share=copy) |
+| 劉浩宇博士          | B1: 在不断變化和充满挑戰的時代重新發現和傳播信仰：對父母角色和教會責任的批判性審視                                                       | [![video](/images/icons/video.svg)](https://vimeo.com/922180115/e36a271ca3?share=copy) |
+| 蔡明謀院長          | B2: 基督徒”成功”之路                                                                          | [![video](/images/icons/video.svg)](https://vimeo.com/922180719/1f5866ef47?share=copy) |
+| 錢澄博士        | B3: 孩子的心理健康：家庭和教會必須直面的問題                                                  | [![video](/images/icons/video.svg)](https://vimeo.com/922181524/1fcffafd00?share=copy) |
+| 孫慈俠牧師        | B4: 教會家庭攜手，打造二代領袖                                                  | [![video](/images/icons/video.svg)](https://vimeo.com/922183830/578f0287bf?share=copy) |
+| 孫艾苓博士          | B5: 齊心教養：教會與家庭攜手同行建立學齡兒童的信仰生活                                                                            | [![video](/images/icons/video.svg)](https://vimeo.com/922184743/6663fee1b5?share=copy) |
 
 ## 【2023】第九屆灣區基督徒教育大會
 
@@ -56,3 +83,7 @@ thumbnail: "/images/covers/news-events/bay-area-bible-convention.thumbnail.jpg"
 | 孫慈俠牧師      | 成為社區的祝福                                        | [![video](/images/icons/video.svg)](https://vimeo.com/701856039/cb581913dc) |
 | 孔毅老師        | 建墻領袖尼希米                                        | [![video](/images/icons/video.svg)](https://vimeo.com/701852634/df48de8437) |
 | 葉裕波牧師      | 從希伯來書 11 章中看信心偉人的生命歷程                | [![video](/images/icons/video.svg)](https://vimeo.com/701852874/958677b61d) |
+
+
+
+> 
