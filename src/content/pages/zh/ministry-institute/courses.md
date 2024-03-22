@@ -48,7 +48,7 @@ He was born in Taiwan and migrated to the U.S. at the age of 2 with his parents.
 邊瑤姊妹，來自中國大陸，之前曾在高校工作多年。蒙神恩召得以認識耶穌基督，不斷經歷神信實奇妙的帶領，生命得以完全翻轉。2013年來美接受神學裝備，獲基督工人神學院道學碩士後留任學院繼續服事；因對靈命塑造及靈修輔導的特別負擔，一直致力於此，並在School of Spiritual Direction School of Sustainable Faith完成訓練，成為certified spiritual director。
 </br>
 
-# 金齡事工（課程編碼: FS01, 2 學分, ZOOM 授課）
+# 老年學（課程編碼: FS01, 2 學分, ZOOM 授課）
 時間：7月11日 - 8月1日, 逢週四 7-10 PM\
 教師：張劉文昭 博士\
 [點擊報名](https://form.jotform.com/240777192694166)
