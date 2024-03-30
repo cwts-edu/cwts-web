@@ -49,6 +49,8 @@ export default async function getDegreesWidgetData(
     contentMap[getLanguageBySlug(page.slug).slug] = page;
   });
   return await Promise.all(
-    (data as RawDataItem[]).map(async (d) => findAndConvertData(d, contentMap))
+    (data[language] as RawDataItem[]).map(async (d) =>
+      findAndConvertData(d, contentMap)
+    )
   );
 }
