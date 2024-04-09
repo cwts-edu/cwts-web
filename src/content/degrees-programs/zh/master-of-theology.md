@@ -71,3 +71,5 @@ thumbnail: "/images/covers/degrees-programs/master.thumbnail.jpg"
 | 講道實習                | 1    |                           |      |
 | 論文上                  | 3    |                           |      |
 | 合共學分                | 7    | 合共學分                  | 9    |
+
+### [前往學位申請](/zh/admissions/application-procedure/thm-degree/)
