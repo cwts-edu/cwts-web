@@ -63,7 +63,7 @@ thumbnail: "/images/covers/degrees-programs/diploma-of-christian-studies.thumbna
 
 註： 「國際申請人」為非美國公民或永久居民， 「美國本地申請人」為美國公民或永久居民。
 
-- [按此下載申請表格](/docs/admissions/Application-Form-Masters_111422.pdf)
+- [按此下載申請表格](/docs/admissions/Application-Form-Masters-040924.pdf)
 - [按此下載推薦書表格](/docs/admissions/Recommendation-Form2020Fall-revised.pdf)
 - [按此下載財務資訊和獎學金申請表格](/docs/admissions/Scholarship-Master-updated-03062024v4.pdf)
 - [按此下載健康資料表格](/docs/admissions/Health-History-Form-revised.pdf)

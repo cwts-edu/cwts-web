@@ -34,3 +34,5 @@ thumbnail: "/images/covers/degrees-programs/diploma-in-church-leadership.thumbna
 | 講道學/輔導學/基督教教育概論 | 3    | 宣教學概論/宣教面面觀/門徒建造/家庭事工/崇拜學 | 2    |
 | 講道學/輔導學/基督教教育概論 | 3    | 選修科目                                       | 2    |
 | 合共學分                     | 16   | 合共學分                                       | 14   |
+
+### [前往學位申請](/zh/admissions/application-procedure/master/)

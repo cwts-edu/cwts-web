@@ -59,3 +59,5 @@ thumbnail: "/images/covers/degrees-programs/master.thumbnail.jpg"
 | 基督教教育導論/系統神學上 | 3    | 系統神學中/下                 | 3    |
 | 選修                      | 2    | 教學實習                      | 1    |
 | 合共學分                  | 16   | 合共學分                      | 15   |
+
+### [前往學位申請](/zh/admissions/application-procedure/master/)

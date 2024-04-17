@@ -144,3 +144,5 @@ thumbnail: "/images/covers/degrees-programs/master.thumbnail.jpg"
 | S 類<br>靈命成長建造   | SS01     | 靈修與禱告                    | 2    |
 | ^                      | SS02     | 建造健康整全的自我            | 3    |
 | ^                      | SC01     | 衝突與危機處理                | 2    |
+
+### [前往學位申請](/zh/admissions/application-procedure/master/)

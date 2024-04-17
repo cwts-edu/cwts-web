@@ -81,3 +81,5 @@ thumbnail: "/images/covers/degrees-programs/master.thumbnail.jpg"
 | 講道實習下                | 1    |                               |       |
 | 實習                      | 1    |                               |       |
 | 合共學分                  | 15   | 合共學分                      | 14/15   |
+
+### [前往學位申請](/zh/admissions/application-procedure/master/)
