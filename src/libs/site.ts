@@ -5,13 +5,13 @@ const siteData = {
     title: "Christian Witness Theological Seminary",
     shortTitle: "CWTS",
     home: "/en",
-    coverVideoTitle: "A seminarian's testimony: How theological studies have uplifted and transformed me",
+    coverVideoTitle: "BABC 2024 Review",
   },
   zh: {
     title: "CWTS 基督工人神學院",
     shortTitle: "基督工人神學院",
     home: "/",
-    coverVideoTitle: "神學生見證 - 神學學習如何提升和改變我",
+    coverVideoTitle: "2024教育大會回顧",
   },
 };
 
@@ -27,7 +27,7 @@ class Site {
   }
   defaultCover = "/images/covers/default.cover.jpg";
   defaultThumbnail = "/images/covers/default.thumbnail.jpg";
-  coverVideoId = "fkfx1alIKrI";
+  coverVideoId = "FSd1ordBIm0";
   coverVideoTitle(language: Language): string {
     return siteData[language].coverVideoTitle;
   }
