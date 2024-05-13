@@ -18,6 +18,7 @@
 
 # Other alias
 /zh/admissions/application-procedure/ministry-institute/    /zh/ministry-institute/about/    301!
+/en/about/future                    /en/about/president-message/    301!
 
 # Migrating old site URLs to the new site
 /intro-of-cwts                      /zh/about                       301!
@@ -67,7 +68,7 @@
 /about/statement-of-faith-2           /en/about/statement-of-faith/   301!
 /about/vision-and-mission-statement   /en/about/vision-and-mission/   301!
 /about/features                       /en/about/feature/              301!
-/about/our-future-goals               /en/about/future/               301!
+/about/our-future-goals               /en/about/president-message/    301!
 /about/effectiveness-statement        /en/about/effectiveness-statement/    301!
 /about/accreditation                  /en/about/accreditation/        301!
 /academic-information/programs-of-study    /en/academic/degrees-programs/    301!
