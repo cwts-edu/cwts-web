@@ -1,5 +1,5 @@
 ---
-title: The Words of the President
+title: President’s Message
 order: 104
 coverImage: "/images/covers/about/future.cover.jpg"
 thumbnail: "/images/covers/about/future.thumbnail.jpg"
