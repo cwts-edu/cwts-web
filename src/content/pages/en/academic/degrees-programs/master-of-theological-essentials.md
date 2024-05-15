@@ -16,8 +16,7 @@ The learning outcomes for an MTE graduate include: (1) demonstrating a foundatio
 | ------------------- | ---------------- | ------------------------------------------------------------- | ------- |
 | General Studies     | 3                | Spiritual Formation                                           | 2       |
 |                     |                  | Research Methods                                              | 1       |
-| Biblical Studies    | 18               | Functional Greek + Functional Hebrew                          | 3       |
-|                     |                  | Hermeneutics A                                                | 1       |
+| Biblical Studies    | 18               | Hermeneutics A                                                | 1       |
 |                     |                  | Hermeneutics B                                                | 2       |
 |                     |                  | NT&OT Introduction                                            | 3       |
 |                     |                  | Pentateuch                                                    | 3       |
@@ -27,7 +26,7 @@ The learning outcomes for an MTE graduate include: (1) demonstrating a foundatio
 |                     |                  | Systematic Theology B or  C                                   | 3       |
 |                     |                  | Church History A or B                                         | 3       |
 | General Electives   | 5                | **Elective                                                    | 5       |
-| Internship          | 1                | Field Education                                               |1        |
+| Internship          | 1                | Field Education                                               | 1       |
 | Total               | 36               |                                                               |         |
 
 *Bible Electives: NT Epistles, Prophetic Literatures, any biblical languages, any biblical books\
