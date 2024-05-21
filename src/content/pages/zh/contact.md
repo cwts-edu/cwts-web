@@ -8,7 +8,6 @@ thumbnail: "/images/covers/contact.thumbnail.jpg"
 <p>
 <div class="grid grid-cols-[auto_auto_auto] gap-4">
     <div>電話總機:</div><div class="col-span-2">(408)433-2280</div>
-    <div>傳真:</div><div class="col-span-2">(408)433-9855</div>
     <div>入學處:</div><div>(408)433-2280 X101</div><div><a href="mailto:admissions@cwts.edu">admissions@cwts.edu</a></div>
     <div>教務處:</div><div>(408)433-2280 X101</div><div><a href="mailto:academic@cwts.edu">academic@cwts.edu</a></div>
     <div>拓展部/行政部:</div><div>(408)433-2280 X117</div><div><a href="mailto:advancement@cwts.edu">advancement@cwts.edu</a></div>
