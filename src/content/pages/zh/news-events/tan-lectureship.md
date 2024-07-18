@@ -28,6 +28,8 @@ thumbnail: "/images/covers/news-events/tan-lectureship.thumbnail.jpg"
 [1975 Concourse Dr.\
 San Jose, CA 95131](https://goo.gl/maps/Gi57SXut58CT5Ui38)
 
+## [點擊報名](https://form.jotform.com/241655908248162)
+
 **主題講員:  Dr. Ray Van Neste (Union University)** \
 **主題信息: The Oversight of Souls: The Heart of Pastoral Ministry 靈魂的守護：教牧事工的核心 （兩堂講座）**
 
