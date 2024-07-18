@@ -15,43 +15,48 @@ thumbnail: "/images/covers/news-events/tan-lectureship.thumbnail.jpg"
 
 <div class="text-center">
 
-![Lectureship Banner](/images/lectureship/lectureship-banner.jpg)
+![Lectureship Banner](/images/lectureship/lectureship-banner.png)
 
-## 2023 年度 “陳道明牧師”神學講堂
+## 2024 年度 “陳道明牧師”神學講堂
 
-## 2023 Daniel M. Tan Lectureship
+## 2024 Daniel M. Tan Lectureship
 
-**2 堂主題信息 4 個工作坊**
+**2 堂主題信息 5 個工作坊**
 
-時間: 9/16 Saturday 9:00 am - 3:00 pm\
+時間: 9/14 Saturday 9:00 am - 3:00 pm\
 地點：基神本部\
 [1975 Concourse Dr.\
 San Jose, CA 95131](https://goo.gl/maps/Gi57SXut58CT5Ui38)
 
-**主題講員: Dr. George Guthrie** \
-**主題信息: Enduring in Ministry 在事奉中持久堅忍 （兩堂講座）**
+## [點擊報名](https://form.jotform.com/241655908248162)
+
+**主題講員:  Dr. Ray Van Neste (Union University)** \
+**主題信息: The Oversight of Souls: The Heart of Pastoral Ministry 靈魂的守護：教牧事工的核心 （兩堂講座）**
 
 </div>
 
 ### 講員簡介:
 
-Dr. George Guthrie 現擔任 Regent College 新約教授，是一位備受尊敬和喜愛的講師。他曾先後獲得文學學士（Union 大學），道學碩士（西南浸信會神學院），神學碩士（Trinity 福音神學院），哲學博士（西南浸信會神學院）。在北美以及東亞、英國、德國、南非和以色列等地教授過課程。在 2018 年加入Regent College 學院之前，Dr.Guthrie 在 Union University in Jackson 任教 28 年。作為《希伯來書》的權威專家，Dr. Guthrie 研究成果被出版為《希伯來書的結構：一種文本語言學分析》（Leiden/New York: E.J. Brill, 1994）。他還出版了《希伯來書》（Zondervan, 1998; 2002, 2007）、《雅各書》（Zondervan, 2006）和《哥林多後書》（Baker, 2015）的註釋，以及眾多文章、書籍章節和書評。也曾在 ESV、CSV、NLT 和 HCSB 等譯本的翻譯工作中擔任顧問。Dr. Guthrie 熱心於裝備教會領袖和信徒們，如何更有效地閱讀聖經和活出真理。為此，他出版了一系列旨在幫助教會更好地理解和應用聖經的著作，包括《讀者指南聖經》（LifeWay, 2011）、《閱讀上帝的故事：一本按時間順序的每日聖經》（Broadman & Holman, 2011）、《活出聖經：你的理解和生活上帝的話語指南》（Broadman & Holman, 2011）和《CSB 按天順序讀經聖經》（Holman, 2018）。Dr. Guthrie 夫婦現居住在不列顛哥倫比亞省， 並忠心的以教導和愛心接待肢體來事奉 Regent College。他們喜好園藝和釣魚。他們有兩個已經成年的孩子住在田納西州。
+Dr.Ray Van Neste在University of Aberdeen (2002)獲得博士學位。自2001年起在Union大學任職，現擔任聖經研究學教授、神學與宣教學院主任、大學事工副主席。他在聖經研究、牧師事工和教會歷史等領域發表了書籍和學術論文。他是Cohesion and Structure in the Pastoral Epistles (T&T Clark, International ，January 2005) 的作者，並參與了許多著書的編輯，例如最新的一本：How to Be a Pastor: Wisdom from the Past for Pastors in the Present (作者：Theodore L. Cuyler，Wipf and Stock ，January 2024). \
+Dr.Ray經常在當地教會參與講道和教導的工作，並曾在田納西州、威斯康辛州和蘇格蘭的浸信會教會擔任牧師或其他職務。 Dr.Ray現任[Eagle Projects International](https://www.eagleprojects.com/) 顧問委員會委員，他主持網站[Pastoral Epistles](https://pastoralepistles.com/)，該網站收錄了這個研究小組的事工情況以及對「教牧書信」的相關研究成果。
 
-**工作坊一 ：蔡明謀 牧師/ 博士（基督工人神學院 院長/新約副教授）** \
-保羅書信中的信心與堅毅：在教導中取得平衡 \
-“Faith and Perseverance in Paul: Achieving Balance in Our Teachings”
+**工作坊一 ：賴可中 牧師/ 博士（基督工人神學院 副院長/新約副教授）** \
+信徒的成長：牧人的首要挑戰 \
+“Believers’ Growth: The Shepherd’s Primary Challenge”
 
-**工作坊二： 賴可中 牧師/博士（基督工人神學院 副院長/新約副教授）** \
-事奉倦怠與重新得力 \
-“Ministry Fatigue and Renewing Strength”
+**工作坊二： 池峈鋒博士 (基督工人神學院 教務主任/系統神學副教授)** \
+神學性的聖經講道 \
+“Theological Preaching of Scripture (TPS)”
 
-**工作坊三： 陳聲漢博士（基督工人神學院神學碩士科主任，舊約教授）** \
-知識是叫人自高自大 (林前 8:1)? 《屬靈人》、《水牛神學》和'野豬’之間關於知識與理性的對話 \
-“Knowledge Puffs Up (1 Cor 8:1)? A Conversation between _A Spiritual Man_, _Water Buffalo Theology_, and a ‘Wild Boar’ on Knowledge and the Mind”
+**工作坊三： 歐雨虹博士 (基督工人神學院 新約助理教授)** \
+從耶穌學習如何牧養情緒 \
+“Learning from Jesus how to Disciple Emotions”
 
-**工作坊四： 劉浩宇博士（基督工人神學院 實踐神學副教授）** \
-懺，憶，休：跑得更遠的節奏 \
-“Repent, Remember, & Rest: Rhythms for Running the Distance”
+**工作坊四： (English only): Rev. Joey Wang (Mercy Hill Church, Elder/Associate Pastor)** \
+"Cultural & Generational Considerations in Pastoral Ministry (English)" 
+
+**工作坊五：  陳聲漢博士 (金門神學院舊約教授)** \
+著者談: Wonders from Your Law: Nexus Passages and the Promise of an Exegetical Intertextual Old Testament Theology (InterVarsity Press, 2024)
 
 ### 當天的具體時間安排:
 
@@ -71,4 +76,4 @@ Dr. George Guthrie 現擔任 Regent College 新約教授，是一位備受尊敬
 
 3:00 pm 閉幕
 
-\* 除 Dr. Guthrie 的主題信息（附有同步翻譯）與陳聲漢博士的工作坊為英文以外，其他工作坊均為國語。
+\* 除 Dr. Ray Van Neste 的主題信息(將提供中文翻譯)與Rev. Joey Wang的工作坊為英文以外，其他工作坊均為國語。
