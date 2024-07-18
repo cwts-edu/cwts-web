@@ -76,4 +76,4 @@ Dr.Ray經常在當地教會參與講道和教導的工作，並曾在田納西�
 
 3:00 pm 閉幕
 
-\* 除 Dr. Ray Van Neste 的主題信息與Rev. Joey Wang的工作坊為英文以外，其他工作坊均為國語。
+\* 除 Dr. Ray Van Neste 的主題信息(將提供中文翻譯)與Rev. Joey Wang的工作坊為英文以外，其他工作坊均為國語。
