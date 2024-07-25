@@ -37,8 +37,8 @@ thumbnail: "/images/covers/ministry-institute/courses.thumbnail.jpg"
 </br>
 </br>
 
-## 家庭門訓（課程編碼FF01,3學分，Zoom授課）
-時間: 10/17,24,31,11/7,14,21 六個週四晚 7-8PM （PST）另加課前觀看錄影 \
+## 家庭門訓（課程編碼FF01,3學分，觀看錄影+ZOOM討論）
+時間: 10/10,17,25,11/7,14,21 六個週四晚 7-8PM （PST）另加課前觀看錄影 \
 教師: 羅一強博士\
 [點擊報名](https://form.jotform.com/241285439477164)
 
