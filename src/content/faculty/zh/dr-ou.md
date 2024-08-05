@@ -4,7 +4,7 @@ name: 歐雨虹博士
 category: faculty
 order: 110
 positions:
-  - 新約助理教授
+  - 神學碩士科主任, 新約助理教授
 courses:
   - 福音書
   - 新約
