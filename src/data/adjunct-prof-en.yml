@@ -6,16 +6,25 @@
     - D.Min. Trinity Evangelical Divinity School
     - M.A. Trinity Evangelical Divinity School
 
+- name: Dr. Kevin Chen
+  category: adjunct
+  courses:
+    - Old Testament
+  degrees:
+    - Ph.D., Golden Gate Baptist Theological Seminary
+    - M.Div., Western Seminary
+    - M.S. Stanford University
+
 - name: Rev. Dr. Alex Chi
   category: adjunct
   courses:
     - Apologetics
     - Chinese Cultures
   degrees:
-    - Ph.D. Beijing University, 2009
-    - M.Th. Westminster Theological Seminary, 1997
-    - M.A.R Westminster Theological Seminary, 1991
-    - MBS Singapore Bible College, 1989
+    - Ph.D. Beijing University
+    - M.Th. Westminster Theological Seminary
+    - M.A.R Westminster Theological Seminary
+    - MBS Singapore Bible College
 
 - name: Rev. Dr. Martin Chien
   category: adjunct
@@ -23,9 +32,8 @@
     - Worship
     - Leadership
   degrees:
-    - D.M.A., Southwestern Baptist Theological Seminary
+    - D.M.A. Southwestern Baptist Theological Seminary
     - M.C.M. Dixon School of Music, Golden Gate Baptist Theological Seminary
-    - B.A. in English Literature, Tamkang University
 
 - name: Rev. Dr. Calvin C. Chu
   category: adjunct
@@ -35,6 +43,15 @@
     - D.Miss. Fuller Theological Seminary
     - M.A. Fuller Theological Seminary
 
+- name: Rev. Dr. Chun-Ming Fong
+  category: adjunct
+  courses:
+    - Systematic Theology
+  degrees:
+    - Ph.D. Westminster Theological Seminary
+    - Th.M. Westminster Theological Seminary
+    - M.Div. Hong Kong Baptist Theological Seminary
+
 - name: Rev. Dr. Sherman Hsiung
   category: adjunct
   courses:
@@ -42,7 +59,7 @@
   degrees:
     - Ph.D. Arizona State University
     - M.Div. Phoenix Seminary
-    - M.S., Northeast Louisiana University
+    - M.S. Northeast Louisiana University
 
 - name: Rev. Dr. James Hwang
   category: adjunct
@@ -50,7 +67,7 @@
     - Practical Theology
   degrees:
     - D.Min Dallas Theological Seminary
-    - M.Div.eq, MABS Dallas Theological Seminary
+    - M.Div.eq MABS Dallas Theological Seminary
 
 - name: Rev. Dr. Albert Lam
   category: adjunct
@@ -82,53 +99,49 @@
   courses:
     - Church History
   degrees:
-    - Ph.D. Fuller Theological Seminary (2004)
+    - Ph.D. Fuller Theological Seminary
     - M.T.S. Garrett Evangelical Theological Seminary
-    - M.A. Intercultural Studies, Fuller Theological Seminary
+    - M.A. Fuller Theological Seminary
 
 - name: Dr. Jennifer Lowe
   category: adjunct
   courses:
     - Christian Education
   degrees:
-    - Ph.D. Talbot School of Theology, Biola University (Educational Studies), 2009
-    - M.Div. Bethel Seminary, San Diego (Theological Studies & Marital, Family and Children Counseling), 2000
+    - Ph.D. Talbot School of Theology, Biola University
+    - M.Div. Bethel Seminary, San Diego
 
 - name: Rev. Dr. Daniel Tan
   category: adjunct
   courses:
     - Pastoral Theology
   degrees:
-    - D. Min., Chinese for Christ Theological Seminary (1988)
-    - M. Div. Chinese for Christ Theological Seminary (1986)
-    - M.A. California Graduate School of Theology (Extension) (1985)
-    - B.Th. Singapore Bible College, 1976
+    - D. Min. Chinese for Christ Theological Seminary
+    - M. Div. Chinese for Christ Theological Seminary 
+    - M.A. California Graduate School of Theology 
 
 - name: Dr. Herbert Tsang
   category: adjunct
   courses:
     - Worship
   degrees:
-    - D.W.S., Doctor of Worship Studies, The Robert E. Webber Institute for Worship (2011)
-    - Ph.D., Computing Science, Simon Fraser University (2008)
-    - M.C.S. Alliance Bible Seminary, Hong Kong (2014)
-    - M.Mus. Master of Music, Boston University (2009)
-    - Dip.Theo. Alliance Bible Seminary, Hong Kong (2007)
-    - Dip.RSCM. Diploma in Sacred Music, the Royal School of Church Music, UK (2007)
+    - D.W.S. The Robert E. Webber Institute for Worship
+    - Ph.D. Computing Science, Simon Fraser University
+    - M.C.S. Alliance Bible Seminary, Hong Kong
+    - M.Mus. Boston University
 
 - name: Rev. Dr. Enoch Wan
   category: adjunct
   courses:
     - Missiology
   degrees:
-    - Ph.D. Anthropology State U. of N.Y. M.A.,
-    - MTS Counselling & NT Gordon-Conwell T.S.(Mass)
-    - B.A. Social Sciences Nyack College (N.Y.)
-
+    - Ph.D. State University of New York
+    - M.T.S Gordon-Conwell Theological Seminary
+ 
 - name: Ms. Sandra Young
   category: adjunct
   courses:
     - Music
   degrees:
-    - M.Ed., Hong Kong Baptist University (2004)
-    - B.A. (Honors) in Music, Hong Kong Baptist University (1994)
+    - M.Ed. Hong Kong Baptist University
+
