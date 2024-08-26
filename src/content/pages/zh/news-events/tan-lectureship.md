@@ -21,17 +21,18 @@ thumbnail: "/images/covers/news-events/tan-lectureship.thumbnail.jpg"
 
 ## 2024 Daniel M. Tan Lectureship
 
-**2 堂主題信息 5 個工作坊**
+**2 堂主題信息 5 個工作坊**\
+2 Lectures 5 Workshops
 
-時間: 9/14 Saturday 9:00 am - 3:00 pm\
-地點：基神本部\
+時間 Time: 9/14 Saturday 9:00 am - 3:00 pm\
+地點 Location: 基神本部 CWTS\
 [1975 Concourse Dr.\
 San Jose, CA 95131](https://goo.gl/maps/Gi57SXut58CT5Ui38)
 
-## [點擊報名](https://form.jotform.com/241655908248162)
+## [點擊報名 Registration](https://form.jotform.com/241655908248162)
 
-**主題講員:  Dr. Ray Van Neste (Union University)** \
-**主題信息: The Oversight of Souls: The Heart of Pastoral Ministry 靈魂的守護：教牧事工的核心 （兩堂講座）**
+**主題講員 Speaker:  Dr. Ray Van Neste (Union University)** \
+**主題信息 Theme: The Oversight of Souls: The Heart of Pastoral Ministry 靈魂的守護：教牧事工的核心 （兩堂講座 Two Lectures）**
 
 </div>
 
@@ -58,22 +59,22 @@ Dr.Ray經常在當地教會參與講道和教導的工作，並曾在田納西�
 **工作坊五：  陳聲漢博士 (金門神學院舊約教授)** \
 著者談: Wonders from Your Law: Nexus Passages and the Promise of an Exegetical Intertextual Old Testament Theology (InterVarsity Press, 2024)
 
-### 當天的具體時間安排:
+### 當天的具體時間安排 Schedule:
 
-09:00 am 開幕 歡迎
+09:00 am 開幕 歡迎 Opening/Welcome
 
-09:15 am 主題講座 1\*
+09:15 am 主題講座 1\* Lecture 1
 
-10:15 am 休息
+10:15 am 休息 Break
 
-10:30 am 工作坊\*
+10:30 am 工作坊\* Workshop
 
-11:45 am 午餐 (神學院提供午餐)
+11:45 am 午餐 (神學院提供午餐) Lunch (CWTS Provide)
 
-01:00 pm 主題講座 2\*
+01:00 pm 主題講座 2\* Lecture 2
 
-2:00 pm 講員 Q&A
+2:00 pm 講員 Q&A 
 
-3:00 pm 閉幕
+3:00 pm 閉幕 Closing
 
 \* 除 Dr. Ray Van Neste 的主題信息(將提供中文翻譯)與Rev. Joey Wang的工作坊為英文以外，其他工作坊均為國語。
