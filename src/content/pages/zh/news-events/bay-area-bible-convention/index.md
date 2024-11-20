@@ -6,7 +6,7 @@ thumbnail: "/images/covers/news-events/bay-area-bible-convention.thumbnail.jpg"
 ---
 <div class="text-center">
 
-![BABC Banner](/images/babc/BABC2025-banner.png)
+![BABC Banner](/images/babc/BABC2025-banner.jpg)
 
 
 
