@@ -6,16 +6,20 @@ thumbnail: "/images/covers/news-events/bay-area-bible-convention.thumbnail.jpg"
 ---
 <div class="text-center">
 
+<a href="https://form.jotform.com/233124890504149" target="\_blank">
+
 ![BABC Banner](/images/babc/BABC2025-banner.jpg)
 
-
+</a>
 
 
 ## 【2025】第十一屆灣區華人基督徒教育大會<br>國度轉化的使命 Mission As Kingdom Transformation
 
-時間：2025 年 3 月 15 日（星期六）<br>
-地點：CCIC Cupertino [10455 Bandley Dr STE 3, Cupertino, CA 95014](https://maps.app.goo.gl/1h2c2FHmaW3mcTx68) <br>
-講員：Dr. Craig Ott 克雷格·奧特 博士
+時間 Time：2025 年 3 月 15 日（星期六）<br>
+地點 Location：CCIC Cupertino [10455 Bandley Dr STE 3, Cupertino, CA 95014](https://maps.app.goo.gl/1h2c2FHmaW3mcTx68) <br>
+講員 Keynote Speaker：Dr. Craig Ott 克雷格·奧特 博士
+
+<a class="text-3xl font-bold" href="https://form.jotform.com/233124890504149" target="_blank">報名鏈接 Registration Link</a>
 
 [主題信息 Messages](#主題信息-Messages ) [工作坊 A Workshops A](#工作坊-a-workshops-a) [工作坊 B Workshops B](#工作坊-b-workshops-b) · [講員介紹 Speaker Info](#講員介紹-speaker-info)
 
