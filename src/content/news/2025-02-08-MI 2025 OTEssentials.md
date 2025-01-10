@@ -1,7 +1,7 @@
 ---
 title: 舊約精要
 date: 2024-11-13
-thumbnail: /images/news/MI-OT-Essence.jpg
+thumbnail: /images/news/MI-2025-OTEssentials.jpg
 url: /zh/ministry-institute/courses/#舊約精要及當代應用課程編碼-bo01-3學分-zoom-授課
 ---
 
