@@ -45,7 +45,7 @@ thumbnail: "/images/covers/ministry-institute/courses.thumbnail.jpg"
 [點擊報名](https://form.jotform.com/242687214691160)
 
 ### 課程簡介：
-
+舊約所涵蓋的資料非常廣泛，要將這些資料統合在一起實非易事。本課將透過高關聯經文（nexus passages）來探討舊約的統一性。透過這些高關聯經文，很多段落得以聯繫起來，展示出舊約文本和神學的統一性。本課使用的主要教材為陳聲漢博士的獲獎新作《你的律法奇妙：高關聯段落與舊約互涉經文釋經神學的潛能》（Wonders from Your Law: Nexus Passages and the Promise of an Exegetical Intertextual Old Testament Theology, IVP Academic, 2024），該書獲得Southwestern Journal of Theology 2024年聖經研究類大獎。關於該書的評論，可以參看 [SWJT 2024 Book of the Year](https://swbts.edu/news/swjt-names-mere-christian-hermeneutics-its-2024-book-of-the-year/) 及 [書評 文章](https://transform.westernseminary.edu/resources/books-we-enjoyed-2024)。
 ### 教師簡介:
-
+陳聲漢博士現任加州金門神學院的舊約研究教授，之前他曾在田納西州的聯合大學 (Union University) 任教九年，在基督工人神學院任教五年。他的學術興趣和主要研究領域集中在五經、互涉經文、舊約神學和舊約對基督的見證。
 </br>
