@@ -1,24 +1,22 @@
 ---
 import Redirect from "@layouts/Redirect.astro";
 import SectionNoCover from "@layouts/SectionNoCover.astro";
-import {
-  DegreesProgramsMetadata,
-  getDegreesPrograms,
-} from "@libs/degrees_programs";
+import type { DegreesProgramsMetadata } from "@libs/types";
+import { getDegreesPrograms } from "@libs/degrees_programs";
 import { getLanguageBySlug, T } from "@libs/language";
-import { getCollection, getEntryBySlug } from "astro:content";
+import { getCollection, getEntry, render } from "astro:content";
 
 export async function getStaticPaths() {
   const languages = [
     ...new Set(
       (await getCollection("degrees-programs")).map(
-        (page) => getLanguageBySlug(page.slug).language
-      )
+        (page) => getLanguageBySlug(page.id).language,
+      ),
     ),
   ];
   const pages = (
     await Promise.all(
-      languages.map(async (language) => await getDegreesPrograms(language))
+      languages.map(async (language) => await getDegreesPrograms(language)),
     )
   ).flat();
   return pages.map((page) => ({
@@ -38,13 +36,16 @@ export interface Props {
 
 const { metadata } = Astro.props;
 
-const page = await getEntryBySlug(
+const page = await getEntry(
   "degrees-programs",
-  `${metadata.language}/${metadata.slug}`
+  `${metadata.language}/${metadata.slug}`,
 );
-if (!page) return;
 
-const Content = (await page.render()).Content;
+if (!page) {
+  throw new Error("Could not find program degree: " + metadata.slug)
+};
+
+const { Content } = await render(page);
 const { language } = metadata;
 ---
 

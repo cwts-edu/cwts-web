@@ -7,13 +7,13 @@ export async function getDegreesPrograms(
 ): Promise<DegreesProgramsMetadata[]> {
   const pages = await getCollection(
     "degrees-programs",
-    ({ slug }) => getLanguageBySlug(slug).language === language
+    ({ id }) => getLanguageBySlug(id).language === language
   );
   return pages
     .sort((a, b) => a.data.order - b.data.order)
     .map((page) => {
       {
-        const { language, slug } = getLanguageBySlug(page.slug);
+        const { language, slug } = getLanguageBySlug(page.id);
         return {
           ...page.data,
           language,

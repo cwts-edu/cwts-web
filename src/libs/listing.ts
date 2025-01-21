@@ -12,18 +12,18 @@ export default async function listChildren(
 ): Promise<ListingItem[]> {
   const descendants = await getCollection(
     "pages",
-    (page) => page.slug.startsWith(slug) && page.slug !== slug
+    (page) => page.id.startsWith(slug) && page.id !== slug
   );
 
   const children = descendants
     .filter((page) => {
-      const relPath = page.slug.slice(slug.length + 1);
+      const relPath = page.id.slice(slug.length + 1);
       return !relPath.includes("/");
     })
     .sort((a, b) => a.data.order - b.data.order);
 
   return children.map((page) => ({
-    url: "/" + page.slug,
+    url: "/" + page.id,
     thumbnail: page.data.thumbnail || site.defaultThumbnail,
     title: page.data.title,
   }));

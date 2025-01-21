@@ -17,7 +17,7 @@ function isMenuDataSlug(data: MenuData): data is MenuDataPage {
   return (data as MenuDataPage).page !== undefined;
 }
 
-import { getEntryBySlug } from "astro:content";
+import { getEntry } from "astro:content";
 
 export interface MenuItem {
   name: string;
@@ -38,7 +38,7 @@ async function convertMenuDataToMenuItem(data: MenuData): Promise<MenuItem> {
     }));
   }
   if (isMenuDataSlug(data)) {
-    const page = await getEntryBySlug("pages", data.page);
+    const page = await getEntry("pages", data.page);
     if (!page) throw new Error("Menu page not found: " + data.page);
     return {
       name: page.data.title,

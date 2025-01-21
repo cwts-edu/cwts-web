@@ -20,7 +20,7 @@ function filterPagesByLanguageCategory(
 ): CollectionEntry<"faculty">[] {
   return pages.filter(
     (page) =>
-      getLanguageBySlug(page.slug).language == language &&
+      getLanguageBySlug(page.id).language == language &&
       page.data.category == category
   );
 }
@@ -28,7 +28,7 @@ function filterPagesByLanguageCategory(
 function getMetadata(pages: CollectionEntry<"faculty">[]): FacultyMetadata[] {
   return pages
     .map((page) => {
-      const { language, slug } = getLanguageBySlug(page.slug);
+      const { language, slug } = getLanguageBySlug(page.id);
       return {
         ...page.data,
         slug,

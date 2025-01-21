@@ -1,5 +1,5 @@
 import { getLanguageBySlug, type Language } from "./language";
-import { type CollectionEntry, getCollection } from "astro:content";
+import { type CollectionEntry, getCollection, render } from "astro:content";
 import type { MarkdownInstance } from "astro";
 
 interface StudyModeWidgetDataItem {
@@ -14,14 +14,14 @@ export default async function getStudyModeWidgetData(
   const pages = (
     await getCollection(
       "study-mode-widget",
-      (e) => getLanguageBySlug(e.slug).language == language
+      (e) => getLanguageBySlug(e.id).language == language
     )
   ).sort((a, b) => a.data.order - b.data.order);
   return await Promise.all(
     pages.map(async (p) => ({
-      slug: getLanguageBySlug(p.slug).slug,
+      slug: getLanguageBySlug(p.id).slug,
       page: p,
-      Content: (await p.render()).Content,
+      Content: (await render(p)).Content,
     }))
   );
 }

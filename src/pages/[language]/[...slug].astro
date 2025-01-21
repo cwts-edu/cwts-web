@@ -1,5 +1,5 @@
 ---
-import { CollectionEntry, getCollection } from "astro:content";
+import { type CollectionEntry, getCollection, render } from "astro:content";
 import Section from "@layouts/Section.astro";
 import site from "@libs/site";
 import { getLanguageBySlug } from "@libs/language";
@@ -7,7 +7,7 @@ import { getLanguageBySlug } from "@libs/language";
 export async function getStaticPaths() {
   const pages = await getCollection("pages");
   return pages.map((page) => {
-    const { language, slug } = getLanguageBySlug(page.slug);
+    const { language, slug } = getLanguageBySlug(page.id);
     return {
       params: {
         language,
@@ -26,12 +26,12 @@ export interface Props {
 
 const { page } = Astro.props;
 const { title, coverImage = site.defaultCover } = page.data;
-const { Content } = await page.render();
+const { Content } = await render(page);
 ---
 
 <Section
   title={title}
-  slug={page.slug}
+  slug={page.id}
   coverImage={coverImage}
   mainImage={page.data.thumbnail}
   showChildren={page.data.showChildren}
