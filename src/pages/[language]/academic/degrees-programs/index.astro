@@ -1,10 +1,10 @@
 ---
-import { Language, T } from "@libs/language";
-import { getEntryBySlug } from "astro:content";
+import { type Language, T } from "@libs/language";
+import { getEntry, render } from "astro:content";
 import SectionNoCover from "@layouts/SectionNoCover.astro";
 import DegreesProgramsListing from "@components/section/DegreesProgramsListing";
 import { getDegreesPrograms } from "@libs/degrees_programs";
-import { DegreesProgramsMetadata } from "@libs/types";
+import { type DegreesProgramsMetadata } from "@libs/types";
 
 export function getStaticPaths() {
   return ["zh"].map((language) => ({
@@ -23,9 +23,9 @@ function getCategories(data: DegreesProgramsMetadata[]) {
 
 const language = Astro.params.language as Language;
 const slug = `${language}/academic/degrees-programs`;
-const page = await getEntryBySlug("pages", slug);
+const page = await getEntry("pages", slug);
 if (!page) return;
-const Content = (await page.render()).Content;
+const Content = (await render(page)).Content;
 
 const data = await getDegreesPrograms(language);
 const categories = [

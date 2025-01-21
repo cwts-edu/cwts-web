@@ -9,7 +9,7 @@ const jobs = (await getCollection("jobs")).sort((a, b) => {
   if (a.data.date < b.data.date) {
     return 1;
   }
-  return b.slug.localeCompare(a.slug);
+  return b.id.localeCompare(a.id);
 });
 
 function getJobLink(job: CollectionEntry<"jobs">) {

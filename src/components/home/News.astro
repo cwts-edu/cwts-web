@@ -3,7 +3,7 @@ import Widget from "./Widget.astro";
 import Carousel, { Props as CarouselProps } from "./Carousel";
 import type { Language } from "@libs/language";
 import { T } from "@libs/language";
-import { getCollection } from "astro:content";
+import { getCollection, render } from "astro:content";
 import carouselData from "@data/carousel.yml";
 
 export interface Props {
@@ -26,7 +26,7 @@ const news = await Promise.all(
       title: page.data.title,
       thumbnail: page.data.thumbnail,
       url: page.data.url,
-      Content: (await page.render()).Content,
+      Content: (await render(page)).Content,
     }))
 );
 ---

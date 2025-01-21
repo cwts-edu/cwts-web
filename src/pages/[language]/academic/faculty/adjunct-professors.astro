@@ -3,7 +3,7 @@ import Section from "@layouts/Section.astro";
 import { FacultyMetadata, getFacultyMetadata } from "@libs/faculty";
 import { Language, T } from "@libs/language";
 import site from "@libs/site";
-import { getEntryBySlug } from "astro:content";
+import { getEntry } from "astro:content";
 import { slug as slugify } from "github-slugger";
 
 export function getStaticPaths() {
@@ -16,7 +16,7 @@ export function getStaticPaths() {
 
 const language = Astro.params.language as Language;
 const slug = `${language}/academic/faculty/adjunct-professors`;
-const page = await getEntryBySlug("pages", slug);
+const page = await getEntry("pages", slug);
 if (!page) return;
 const { title, coverImage = site.defaultCover } = page.data;
 const faculty = getFacultyMetadata(language, ["adjunct"]);
