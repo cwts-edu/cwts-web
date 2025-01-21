@@ -42,7 +42,7 @@ async function convertMenuDataToMenuItem(data: MenuData): Promise<MenuItem> {
     if (!page) throw new Error("Menu page not found: " + data.page);
     return {
       name: page.data.title,
-      url: (!data.noUrl && "/" + page.slug) || undefined,
+      url: (!data.noUrl && "/" + page.id) || undefined,
       children,
     };
   } else {
