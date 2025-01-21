@@ -1,15 +1,6 @@
 import { type CollectionEntry, getCollection } from "astro:content";
 import { getLanguageBySlug, type Language } from "./language";
-
-export type DegreesProgramsMetadata =
-  CollectionEntry<"degrees-programs">["data"] & {
-    language: Language;
-    slug: string;
-    url: string;
-    thumbnail: string;
-  };
-
-export type Category = DegreesProgramsMetadata["category"];
+import type {DegreesProgramsMetadata} from "./types";
 
 export async function getDegreesPrograms(
   language: Language

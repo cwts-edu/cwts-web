@@ -3,10 +3,8 @@ import { Language, T } from "@libs/language";
 import { getEntryBySlug } from "astro:content";
 import SectionNoCover from "@layouts/SectionNoCover.astro";
 import DegreesProgramsListing from "@components/section/DegreesProgramsListing";
-import {
-  DegreesProgramsMetadata,
-  getDegreesPrograms,
-} from "@libs/degrees_programs";
+import { getDegreesPrograms } from "@libs/degrees_programs";
+import { DegreesProgramsMetadata } from "@libs/types";
 
 export function getStaticPaths() {
   return ["zh"].map((language) => ({
@@ -19,7 +17,7 @@ export function getStaticPaths() {
 function getCategories(data: DegreesProgramsMetadata[]) {
   const categoriesWithDups = data.map((value) => value.category);
   return categoriesWithDups.filter(
-    (value, index) => categoriesWithDups.indexOf(value) == index
+    (value, index) => categoriesWithDups.indexOf(value) == index,
   );
 }
 

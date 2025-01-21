@@ -1,10 +1,9 @@
-import type { DegreesProgramsMetadata } from "@libs/degrees_programs";
+import type { DegreesProgramsMetadata, DegreesProgramsCategory } from "@libs/types";
 import { type ChangeEvent, useState } from "react";
-import { type Category as DegreeCategory } from "@libs/degrees_programs";
 
 interface Category {
   label: string;
-  value: DegreeCategory | "all";
+  value: DegreesProgramsCategory | "all";
 }
 
 export interface Props {

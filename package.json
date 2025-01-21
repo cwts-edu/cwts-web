@@ -13,14 +13,15 @@
     "process-pdfs": "tsx tools/process-pdfs.ts"
   },
   "dependencies": {
-    "@astrojs/mdx": "^1.0.2",
-    "@astrojs/react": "^3.0.1",
-    "@astrojs/sitemap": "^3.0.0",
-    "@astrojs/tailwind": "^5.0.0",
+    "@astrojs/markdown-remark": "^6.0.2",
+    "@astrojs/mdx": "^4.0.7",
+    "@astrojs/react": "^4.1.6",
+    "@astrojs/sitemap": "^3.2.1",
+    "@astrojs/tailwind": "^5.1.5",
     "@rollup/plugin-yaml": "^4.1.1",
     "@types/react": "^18.2.21",
     "@types/react-dom": "^18.2.7",
-    "astro": "^3.0.10",
+    "astro": "^5.1.8",
     "astro-compress": "^2.0.15",
     "astro-icon": "^1.0.0-next.2",
     "d3-dsv": "^3.0.1",
@@ -29,7 +30,7 @@
     "netlify-redirect-parser": "^14.2.0",
     "node-html-parser": "^6.1.6",
     "npm": "^10.0.0",
-    "pdf-img-convert": "^1.2.1",
+    "pdf-img-convert": "^2.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "remark-extended-table": "^1.1.0",
@@ -43,7 +44,7 @@
     "@types/d3-dsv": "^3.0.2",
     "flowbite": "^1.8.1",
     "svgo": "~3.0.2",
-    "tailwind-scrollbar-hide": "^1.1.7",
+    "tailwind-scrollbar-hide": "^2.0.0",
     "tsx": "^3.12.8"
   }
 }
