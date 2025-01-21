@@ -150,24 +150,7 @@ children.
 
 ### 講員介紹 Speaker Info
 
-<style>
-    .bio {
-        grid-template-columns: 150px auto;
-        grid-template-rows: auto 1fr;
-        grid-template-areas: "img title" "img .";
-    }
-    .bio > *:has(img) {
-        grid-area: img;
-    }
-    .bio > *:has(h4) {
-        grid-area: title;
-    }
-    .bio h4, .bio p {
-        margin: 0
-    }
-</style>
-
-<div class="bio flex flex-col md:grid gap-3 my-4">
+<div class="bio">
 
 #### Dr. Craig Ott
 ![Dr. Craig Ott](/images/babc/2025/Craig-Ott.jpg) 
@@ -182,7 +165,7 @@ Dr. Ott and his wife Alice live in Buffalo Grove, Illinois, and have three grown
 
 </div>
 
-<div class="bio flex flex-col md:grid gap-3 my-4">
+<div class="bio">
 
 #### Dr. Alice Ott
 ![Dr. Alice Ott](/images/babc/2025/Alice-Ott.jpg)
@@ -206,7 +189,7 @@ United States, and Tanzania, where our youngest son and his family are missionar
 
 </div>
 
-<div class="bio flex flex-col md:grid gap-3 my-4">
+<div class="bio">
 
 #### 王欽慈牧師/博士
 ![王欽慈](/images/babc/2025/John-Wang.jpg)
@@ -214,7 +197,7 @@ United States, and Tanzania, where our youngest son and his family are missionar
 生於台灣，成長於阿根廷，阿根廷大學畢業後赴美攻讀工程碩士與博士。曾在紐約、紐澤西等地擔任橋梁設計工程師14年。從美國伯特利神學院美東分校畢業後，王牧師於2002年在法拉盛第一浸信會服事，負責中文與西班牙文部牧養事工。2013年獲得三一神學院跨文化宣教學博士學位。曾經擔任多所神學院兼任教師，教授宣教課程。2018年加入華傳，從2021年起擔任華傳國際總主任至今。他與師母丁芷芬姊妹育有兩位成年子女，當前居住在美國紐約。
 </div>
 
-<div class="bio flex flex-col md:grid gap-3 my-4">
+<div class="bio">
 
 #### 池峈鋒博士
 ![池峈鋒博士](/images/babc/2025/Peter-Tie.jpg)
@@ -222,7 +205,7 @@ United States, and Tanzania, where our youngest son and his family are missionar
 基督工人神學院教務主任, 系統神學副教授，主授系統神學, 護教學， 西南浸信會神學院哲學博士（主修系統神學）。池老師生長於馬來西亞，十三歲時接受基督為救主和生命的主。八年後，他回應神的呼籲，立志於傳道事奉。池老師曾在美國深造 14 年。他在美國、馬来西亞和澳洲常用英語和華語牧會、教學和講道。 從 2012 至 2016，他是墨爾本神學院中文部神學講師。他的研究和教導興趣包括： 系统和聖經神學、信徒皆祭司的教義、神學和屬靈生命、神學性的講道法。池老師和師母劉必娟育有三個孩子（Anastasia, Timothy, Annabelle）。編著的書籍包括《濡我以靈風》, Restore Unity, Recover Identity, and Refine Orthopraxy: The Believers’ Priesthood in the Ecclesiology of James Leo Garrett, Jr. Eugene。
 </div>
 
-<div class="bio flex flex-col md:grid gap-3 my-4">
+<div class="bio">
 
 #### 劉浩宇博士
 ![劉浩宇博士](/images/babc/2025/Daniel-Low.jpg)
@@ -230,7 +213,7 @@ United States, and Tanzania, where our youngest son and his family are missionar
 基督工人神學院實踐神學副教授，主授宣教、佈道、教育。Biola大學哲学博士 (跨文化教育)，曾任William Carey International University, Vice President Academic Affairs (2020 – 2022)。劉老師出生在馬來西亞，十歲與父母移民到新加坡。 1997 年聽見主呼召，2005 年到美國受裝備 – 在西南浸信神學院與 Biola 大學完成學業。他曾在新加坡的教育部，Biola 大學，Concordia Chicago 大學，Raffles 基督國際學校 (印尼)，和 William Carey 國際大學 擔任教導，訓練，領導的職位，也在南加州，新加坡不同的教會以國語和英語協助講台的服事。他的研究包裹 – 跨文化教育，佛教道教徒的宗教身分和本土化宣教策略。劉老師與妻 Melody 育有五個孩子 (Megan, Malcolm, Meryl, Mitchell, Meredith)。
 </div>
 
-<div class="bio flex flex-col md:grid gap-3 my-4">
+<div class="bio">
 
 #### John Talbott
 ![John Talbott](/images/babc/2025/John-Talbott.jpg)
@@ -238,7 +221,7 @@ United States, and Tanzania, where our youngest son and his family are missionar
 Came to San Francisco's Mission District in 1987 with a group of college friends sensing a call to be part of God's work in the City. John worked in technology while volunteering as a shelter attendant, a youth leader and later a church elder. John and his friends soon learned that following God meant working to break through barriers both in ourselves and in our communities that separate us from each other. John currently volunteers with Faith in Action Bay Area working to build a network where faith leaders from all backgrounds can learn to partner with those closest to the pain and receive the joy of watching God at work. He also serves as the Secretary of the Cumberland Presbyterian Committee on Theology and Social Concern.
 </div>
 
-<div class="bio flex flex-col md:grid gap-3 my-4">
+<div class="bio">
 
 #### Justin Talbott
 ![Justin Talbott](/images/babc/2025/Justin-Talbott.jpg)
@@ -246,7 +229,7 @@ Came to San Francisco's Mission District in 1987 with a group of college friends
 Born and raised in San Francisco’s Mission District. Growing up in a neighborhood shaped by recent immigrants, he learned the gift of hospitality from his neighbors. As he grew older and learned about U.S. immigration laws, he found it unjust that our nation chooses to be inhospitable to the migrant and indigenous communities that taught him hospitality in the first place. Justin graduated from UC Santa Cruz in 2017 with a bachelor’s degree in Linguistics. He took the summer after college to visit Guatemala and learn Spanish as part of his goal to be more hospitable to Central American immigrants arriving in the Bay Area. He joined the Jubilee team because he wanted to advocate for the immigrant community in the Bay Area in a more substantial and sustained way. In 2020, Justin became a fully accredited DOJ Representative.
 </div>
 
-<div class="bio flex flex-col md:grid gap-3 my-4">
+<div class="bio">
 
 #### Pastor Lawrence Ko
 ![Pastor Lawrence Ko](/images/babc/2025/Lawrence-Ko.jpg)
@@ -254,7 +237,7 @@ Born and raised in San Francisco’s Mission District. Growing up in a neighborh
 Served as a pastor, corporate trainer and lecturer. He has an active ministry in writing, speaking and teaching at seminaries and institutes of higher education. He served as ED of Singapore Centre for Global Missions (2012-22) and was active with Asian networks including Asia Evangelical Alliance, Asia Lausanne and SEANET. He founded Asian Journeys Ltd in 2002, a social enterprise focused on youth leadership development, mobilising students from universities and tertiary institutions in international volunteerism in urban and environmental projects in Asia. He is author of 2 books on environmentalism entitled Can the Desert Be Green? Planting Hope in the Wilderness and From the Desert to the City: Christians in Creation Care.
 </div>
 
-<div class="bio flex flex-col md:grid gap-3 my-4">
+<div class="bio">
 
 #### 吴子平牧師/博士
 ![吴子平](/images/babc/2025/Kenneth-Goh.jpg)
@@ -262,7 +245,7 @@ Served as a pastor, corporate trainer and lecturer. He has an active ministry in
 吳子平牧師/博士是資深的教牧領袖及教育者，現任新加坡房角石教會的主任牧師， 他以堅實的信仰根基和領袖典範帶領教會提供教牧關懷，培育教會的屬靈環境，滋養信徒的靈命成長。吳博士擁有西三一大學教牧博士學位，他曾在哈該領導學院、新加坡聖經學院、馬來西亞浸信會神學院教授領導力及情感健康。他是美國房角石教會全球董事會成員，致力於促進世界各地教會之間的合作；他也擔任新加坡浸信會執委會成員，負責加強協調並解決浸信會教會之間的集體挑戰。
 </div>
 
-<div class="bio flex flex-col md:grid gap-3 my-4">
+<div class="bio">
 
 #### Mr. Nick Wu
 ![Nick Wu](/images/babc/2025/Nick-Wu.jpg)
@@ -270,7 +253,7 @@ Served as a pastor, corporate trainer and lecturer. He has an active ministry in
 Leads as the Indigitous US Director. He guides young adults and students in digital missions projects. He has a passion for telling stories for the missions world through videos. He has helped Indigitous launch their Innovation Internship, and has facilitated design sprints, workshops, content creation, and children’s books. He is currently working on his MA in Intercultural Studies at Dallas Seminary.
 </div>
 
-<div class="bio flex flex-col md:grid gap-3 my-4">
+<div class="bio">
 
 #### Ms. Melody Goh
 ![Melody Goh](/images/babc/2025/Melody-Goh.JPG)

@@ -72,3 +72,31 @@
     }
   }
 }
+
+.bio {
+  & > * {
+    @apply md:pl-44;
+  }
+
+  & > p:has(img) {
+    @apply md:w-36 md:float-left md:m-4 md:pl-0;
+  }
+
+  & > h4 {
+    @apply max-md:text-center;
+  }
+
+  &::after {
+    content: "";
+    clear: both;
+    display: table;  
+  }
+
+  & > p {
+    @apply text-base;
+  }
+
+  & img {
+    @apply max-md:max-h-60;
+  }
+}
