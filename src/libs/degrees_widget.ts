@@ -1,13 +1,7 @@
 import { type CollectionEntry, getCollection } from "astro:content";
 import { getLanguageBySlug, type Language } from "./language";
 import type { MarkdownInstance } from "astro";
-
-export interface DegreesWidgetDataItem {
-  slug: string;
-  page: CollectionEntry<"degrees-widget">;
-  Content: MarkdownInstance<{}>["Content"];
-  children?: DegreesWidgetDataItem[];
-}
+import type { DegreesProgramsMetadata } from "./types";
 
 interface RawDataItem {
   slug: string;
