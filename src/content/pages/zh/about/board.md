@@ -9,7 +9,6 @@ thumbnail: "/images/covers/about/board.thumbnail.jpg"
 - 呂紹昌 牧師/博士 （主席）\*
 - 陳鎮和 弟兄（副主席）
 - 李光陵 牧師/博士 （文書）\*
-- 趙連春 博士（財政）\*
 - 宋曹琍璇 姐妹
 - 陳海峰 博士
 - 歐陽貫宗 牧師
