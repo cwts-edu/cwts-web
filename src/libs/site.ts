@@ -5,13 +5,13 @@ const siteData = {
     title: "Christian Witness Theological Seminary",
     shortTitle: "CWTS",
     home: "/en",
-    coverVideoTitle: "Alumni interview: three generations of CWTS",
+    coverVideoTitle: "2025 BABC Promotion",
   },
   zh: {
     title: "CWTS 基督工人神學院",
     shortTitle: "基督工人神學院",
     home: "/",
-    coverVideoTitle: "校友專訪：三代基神人，一路事主心",
+    coverVideoTitle: "2025 BABC 教育大會 推廣片",
   },
 };
 
@@ -27,7 +27,7 @@ class Site {
   }
   defaultCover = "/images/covers/default.cover.jpg";
   defaultThumbnail = "/images/covers/default.thumbnail.jpg";
-  coverVideoId = "VSRVOo82_SM";
+  coverVideoId = "3XctCQ-pg4g";
   coverVideoTitle(language: Language): string {
     return siteData[language].coverVideoTitle;
   }

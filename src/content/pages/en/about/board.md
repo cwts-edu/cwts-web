@@ -9,7 +9,6 @@ thumbnail: "/images/covers/about/board.thumbnail.jpg"
 - Rev. Dr. Jeffrey Lu (Chairman) \*
 - Mr. John Chen  (Vice Chairman)
 - Rev. Dr. Job Lee (Secretary) \*
-- Dr. Link Jaw (Treasurer) \*
 - Mrs. Shirley Soong
 - Dr. Haifeng Chen
 - Rev. Patrick Auyeung
