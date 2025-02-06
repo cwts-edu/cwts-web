@@ -17,7 +17,13 @@ thumbnail: "/images/covers/news-events/bay-area-bible-convention.thumbnail.jpg"
 
 時間 Time：2025 年 3 月 15 日（星期六）<br>
 地點 Location：CCIC Cupertino [10455 Bandley Dr STE 3, Cupertino, CA 95014](https://maps.app.goo.gl/1h2c2FHmaW3mcTx68) <br>
-講員 Keynote Speaker：Dr. Craig Ott 克雷格·奧特 博士
+講員 Keynote Speaker：Dr. Craig Ott 克雷格·奧特 博士 <br>
+
+報名費$30/人 ,集體報名$20/人 (7人及以上)
+提供兒童看顧(僅限5-12歲)$10/人  
+Admission: $30, Group admission: $20 (7 or more)
+Child Care: $10 (5-12 years old only) 
+以上費用皆含午餐 (lunch included) <br>
 
 <a class="text-3xl font-bold" href="https://form.jotform.com/233124890504149" target="_blank">報名鏈接 Registration Link</a>
 
