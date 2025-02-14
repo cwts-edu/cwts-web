@@ -46,7 +46,6 @@ export default function FacultyRow({ faculty, messages }: Props) {
                 {person.courses.join(messages.course_separator)}
               </div>
             </div>
-            
           </a>
         </SwiperSlide>
       ))}
