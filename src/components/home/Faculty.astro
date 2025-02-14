@@ -1,6 +1,6 @@
 ---
 import "@libs/faculty";
-import { getFacultyMetadata } from "@libs/faculty";
+import { type FacultyMetadata, getFacultyMetadata } from "@libs/faculty";
 import { Language, T } from "@libs/language";
 import FacultyRow from "./FacultyRow";
 import Widget from "./Widget.astro";
@@ -12,7 +12,20 @@ export interface Props {
 
 const { language } = Astro.props;
 
-const faculty = getFacultyMetadata(language, ["faculty"]);
+const facultyFieldsToKeep: (keyof FacultyMetadata)[] = [
+  "url", "name", "photo", "positions", "courses"];
+
+// Keep useful fields in FacultyMetadata because the data will be embedded in the html
+function filterFields<T, K extends keyof T>(obj: T, keys: K[]): Pick<T, K> {
+  return keys.reduce((acc, key) => {
+    acc[key] = obj[key];
+    return acc;
+  }, {} as Pick<T, K>);
+}
+
+const faculty = getFacultyMetadata(language, ["faculty"]).map(
+  f => filterFields(f, facultyFieldsToKeep)
+);
 const messages: Messages = {
   course_prefix: T("course_prefix", language),
   course_separator: T("course_separator", language),
@@ -33,8 +46,4 @@ const messages: Messages = {
     </span>
   </div>
   <FacultyRow faculty={faculty} messages={messages} client:idle />
-  <div class="mb-5 mt-2 text-xl">
-    <span class="py-1 border-white border-b">
-    </span>
-  </div>
 </Widget>
