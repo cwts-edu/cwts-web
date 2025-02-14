@@ -121,6 +121,12 @@ module.exports = {
             a: {
               wordBreak: "break-word",
             },
+            'th, td': {
+              textAlign: null,
+            },
+            'th:not([align]), td:not([align])': {
+              textAlign: "start",
+            }
           },
         },
         tabs: {
