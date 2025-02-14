@@ -3,6 +3,10 @@
     @apply w-52 select-none;
   }
 
+  .swiper-wrapper {
+    @apply pb-2;
+  }
+
   .swiper-scrollbar {
     position: absolute;
     bottom: 0;
