@@ -13,7 +13,6 @@ export interface Props {
 const { language } = Astro.props;
 
 const faculty = getFacultyMetadata(language, ["faculty"]);
-const seniorAdjunct = getFacultyMetadata(language, ["senior-adjunct"]);
 const messages: Messages = {
   course_prefix: T("course_prefix", language),
   course_separator: T("course_separator", language),
@@ -36,8 +35,6 @@ const messages: Messages = {
   <FacultyRow faculty={faculty} messages={messages} client:idle />
   <div class="mb-5 mt-2 text-xl">
     <span class="py-1 border-white border-b">
-      {T("senior_adjunct_faculty", language)}
     </span>
   </div>
-  <FacultyRow faculty={seniorAdjunct} messages={messages} client:idle />
 </Widget>

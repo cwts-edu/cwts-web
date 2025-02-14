@@ -46,13 +46,7 @@ export default function FacultyRow({ faculty, messages }: Props) {
                 {person.courses.join(messages.course_separator)}
               </div>
             </div>
-            <div className="py-0.5 text-xs">
-              {person.degrees.map((degree, index) => (
-                <div className="my-1" key={index}>
-                  {degree}
-                </div>
-              ))}
-            </div>
+            
           </a>
         </SwiperSlide>
       ))}
