@@ -30,7 +30,6 @@
     "netlify-redirect-parser": "^14.2.0",
     "node-html-parser": "^6.1.6",
     "npm": "^10.0.0",
-    "pdf-img-convert": "^2.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "remark-extended-table": "^2.0.2",
