@@ -32,7 +32,7 @@ Child Care: $10 (5-12 years old only)
 
 ### 日程表 Schedule
 | 時間 Time | 內容 Events |
-|    ---    |    ---    |
+|    ---:    |    :---:    |
 | 9:00 AM | 開幕，歡迎、報告 Opening |
 | 9:10 AM | 敬拜、主題信息 (一) Message 1 |
 | 10:20 AM | 休息 Break |
