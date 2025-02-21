@@ -63,5 +63,5 @@ thumbnail: "/images/covers/degrees-programs/master.thumbnail.jpg"
 
 - [按此下載神學碩士申請表格](/docs/admissions/Application-Form-ThM_111422.pdf)
 - [按此下載推薦書表格](/docs/admissions/Recommendation-Form2020Fall-revised.pdf)
-- [按此下載財務資訊和獎學金申請表格](/docs/admissions/Scholarship-ThM-updated-03062024v4.pdf)
+- [按此下載財務資訊和獎學金申請表格](/docs/admissions/Scholarship-ThM-updated-02202025.pdf)
 - [按此下載健康資料表格](/docs/admissions/Health-History-Form-revised.pdf)
