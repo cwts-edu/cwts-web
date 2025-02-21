@@ -26,7 +26,3 @@ Read [Wiki](https://github.com/cwts-edu/cwts-web/wiki) for how to setup dev envi
 <dt>public</dt>
 <dd>Static files</dd>
 </dl>
-
-## Known issue
-
-- Added svgo 2.8.0 dependency manually due to [a bug in astro-icon](https://github.com/natemoo-re/astro-icon/issues/65)
