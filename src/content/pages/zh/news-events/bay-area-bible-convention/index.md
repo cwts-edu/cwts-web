@@ -32,7 +32,7 @@ Child Care: $10 (5-12 years old only)
 
 ### 日程表 Schedule
 | 時間 Time | 內容 Events |
-|    ---    |    ---    |
+|    ---:    |    :---:    |
 | 9:00 AM | 開幕，歡迎、報告 Opening |
 | 9:10 AM | 敬拜、主題信息 (一) Message 1 |
 | 10:20 AM | 休息 Break |
@@ -143,12 +143,12 @@ The workshop introduces the important role which the Church can play in Creation
 <details>
 <summary> B3: 真實的連結-天國使命的結合 </summary>
 
-本研究从基督教福音派的视角出发，探讨“连结神学”的概念及其在沟通与领导中的关键作用。在当今关系日益疏离的时代，这一神学强调人与神、人与人之间的连结的重要性。研究假设指出，缺乏有意义的关系和连结，无法实现高效的沟通表达或领导能力。“连结神学”为恢复关系深度与意义提供了圣经的蓝图，并能有效地改善沟通与领导的实践。通过将互动根植于圣经原则，个人和群体能够在使命中获得属灵的成长和现实的成效。这一神学理念不仅应对了现代社会的疏离问题，还为领导者和沟通者提供了切实可行的解决方案。</details>
+本研究從基督教福音派的視角出發，探討「連結神學」的概念及其在溝通與領導中的關鍵角色。在當今關係日益疏離的時代，這一神學強調人與神、人與人之間的連結的重要性。研究假設指出，缺乏有意義的關係和連結，無法實現高效率的溝通表達或領導能力。 「連結神學」為恢復關係深度與意義提供了聖經的藍圖，並能有效地改善溝通與領導的實踐。透過將互動根植於聖經原則，個人和群體能夠在使命中獲得屬靈的成長和現實的成效。這個神學理念不僅回應了現代社會的疏離問題，也為領導者和溝通者提供了切實可行的解決方案。</details>
 
 **講員 Speaker：[吴子平牧師/博士](#吴子平牧師博士)**
 
 <details>
-<summary> B4: Innovate Fearlessly for Missions </summary>
+<summary> B4: Innovate Fearlessly for Missions </summary> 
 
 Global missions need innovation. When we think about how we are going to reach people who are unreached and engage our churches, especially those with marketplace skills (especially those of the next generation who are digital nativess), how are we going to harness their ideas and resources to think differently and bring fresh, new ideas to impact global missions? This workshop will introduce innovation methods, design thinking, and different digital strategies to help take the Gospel to new people, places, and spaces. </details>
 
