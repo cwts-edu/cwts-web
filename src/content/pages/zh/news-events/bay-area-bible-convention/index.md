@@ -27,6 +27,8 @@ Child Care: $10 (5-12 years old only)
 
 <a class="text-3xl font-bold" href="https://form.jotform.com/233124890504149" target="_blank">報名鏈接 Registration Link</a>
 
+**報名截止日期 Registration deadline：3/10/2025**
+
 [日程表 Schedule](#日程表-Schedule) [主題信息 Messages](#主題信息-Messages ) [工作坊 A Workshops A](#工作坊-a-workshops-a) [工作坊 B Workshops B](#工作坊-b-workshops-b) [講員介紹 Speaker Info](#講員介紹-speaker-info) 
 </div>
 
