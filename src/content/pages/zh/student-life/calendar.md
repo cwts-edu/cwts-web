@@ -14,6 +14,7 @@ thumbnail: "/images/covers/student-life/calendar.thumbnail.jpg"
     }
 </style>
 
+|                                        |                                          |
 | -------------------------------------- | ---------------------------------------- |
 | >                                      | **SPRING SEMESTER 2025**                 |
 | Tuition Fees Due                       | Monday, January 13                       |
@@ -32,8 +33,10 @@ thumbnail: "/images/covers/student-life/calendar.thumbnail.jpg"
 | Final Exam                             | Tuesday - Monday, May 6-12               |
 | End of Semester Celebration            | Monday, May 12                           |
 | Commencement                           | Saturday, May 17                         |
+|                                        |                                          |
 | >                                      | **SUMMER SESSIONS 2025**                 |
 | Summer Online Courses                  | June 2-July 26 (8 weeks)                 |
+|                                        |                                          |
 | >                                      | **FALL SEMESTER 2025**                   |
 | New Student Orientation                | Monday, August 11                        |
 | Tuition Fees Due for Current students  | Monday, August 11                        |
@@ -52,6 +55,7 @@ thumbnail: "/images/covers/student-life/calendar.thumbnail.jpg"
 | Last day of Class                      | Monday, December 1                       |
 | Final Exam                             | Tuesday - Monday, December 2-8           |
 | Christmas Celebration                  | Monday, December 8                       |
+|                                        |                                          |
 | >                                      | **SPRING SEMESTER 2026**                 |
 | New Student Orientation                | Monday, January 12                       |
 | Tuition Fees Due                       | Friday, January 16                       |
