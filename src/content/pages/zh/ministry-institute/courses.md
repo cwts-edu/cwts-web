@@ -16,7 +16,7 @@ thumbnail: "/images/covers/ministry-institute/courses.thumbnail.jpg"
 </br>
 
 ## 全人發展心理學（課程編碼: PC02, 2 學分, ZOOM 授課）
-時間：3/15,22,29,4/5 四個週六9AM-12PM\
+時間：3/22,29,4/5,12 四個週六9AM-12PM\
 教師：劉慈謙 博士\
 [點擊報名](https://form.jotform.com/232775455948169)
 

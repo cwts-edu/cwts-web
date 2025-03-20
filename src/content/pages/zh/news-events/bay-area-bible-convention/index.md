@@ -6,8 +6,6 @@ thumbnail: "/images/covers/news-events/bay-area-bible-convention.thumbnail.jpg"
 ---
 <div class="text-center">
 
-<a href="https://form.jotform.com/233124890504149" target="\_blank">
-
 ![BABC Banner](/images/babc/BABC2025-banner.jpg)
 
 </a>
@@ -24,8 +22,6 @@ thumbnail: "/images/covers/news-events/bay-area-bible-convention.thumbnail.jpg"
 Admission: $30, Group admission: $20 (7 or more)
 Child Care: $10 (5-12 years old only) 
 以上費用皆含午餐 (lunch included) <br>
-
-<a class="text-3xl font-bold" href="https://form.jotform.com/233124890504149" target="_blank">報名鏈接 Registration Link</a>
 
 [日程表 Schedule](#日程表-Schedule) [主題信息 Messages](#主題信息-Messages ) [工作坊 A Workshops A](#工作坊-a-workshops-a) [工作坊 B Workshops B](#工作坊-b-workshops-b) [講員介紹 Speaker Info](#講員介紹-speaker-info) 
 </div>
