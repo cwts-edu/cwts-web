@@ -29,13 +29,17 @@ const bigMenu: boolean = items[0].children != null;
           ]}
         >
           <div>
-            <OptionalLink url={item.url}>{item.name}</OptionalLink>
+            <OptionalLink url={item.url} className={"hover:underline hover:font-bold transition duration-300"}>
+              {item.name}
+          </OptionalLink>
           </div>
           {item.children && (
             <ul class="text-base lg:text-sm ml-2">
               {item.children.map((subItem) => (
                 <li class="py-1">
-                  <OptionalLink url={subItem.url}>{subItem.name}</OptionalLink>
+                  <OptionalLink url={subItem.url} className={"hover:underline hover:font-bold transition duration-300"}>
+                    {subItem.name}
+                  </OptionalLink>
                 </li>
               ))}
             </ul>
@@ -56,7 +60,9 @@ const bigMenu: boolean = items[0].children != null;
             },
           ]}
         >
-          <OptionalLink url={item.url}>{item.name}</OptionalLink>
+          <OptionalLink url={item.url} className={"hover:underline hover:font-bold transition duration-300"}>
+              {item.name}
+          </OptionalLink>
         </li>
       ))}
     </ul>
