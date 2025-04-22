@@ -41,10 +41,10 @@ For a number of years, Dr. Lau has been attending Tri-Valley Chinese Bible Churc
     - _A Study of the Relationship Between Adults’ Self-Directed Learning Readiness and Selected Variables in Sunday Schools of Hong Kong Chinese Baptist Churches,_ ERIC 2001
     - _Curriculum materials on “The Study of Isaiah”,_ Distance Education Program, Hong Kong Baptist Theological Seminary 2000
   - B. Articles:
-    - 「基督教教育現況與面對的困難」”The Present Situation of Christian Education and the Problems Encountered.” Paper presented in the Chinese Christian Education Conference held by the Association of Canadian Chinese Theological Education, August 2014
-    - 「世俗化對基督教教育的挑戰」 “The Challenges of Secularism to Christian Education,” _CWTS Newsletter,_ April 2011.
-    - 「如何提升教牧的教導素質?」”How to Elevate the Teaching Quality of Pastors?”《教牧分享 Pastoral Sharing》,世界華福中心 Chinese Co-ordination Centre of World Evangelism, Sep. 2008.
-    - 「善於問和答的耶穌與今日聖經教師」 “Jesus’ Use of Questions and Answers and How We can Learn from Him,” 《榮耀的基督與當代信徒 The Glorious Christ and the Contemporary Christian》,Christian Witness Theological Seminary, 2003.
-    - 「書評 Book Review:《老當益壯 Aging with Vitality: A Path for Growth》」,《傳 Proclaim》,中國信徒佈道會 Chinese Christian Mission,Sep. 2002.
-    - 「教會中的成人教學法 “The Methods of Teaching Adults in Churches”」,_CWTS Newsletter,_ April 2002.
-    - 「基督教宗教教育的拓展 “The Development of Christian Religious Education in Churches”」, _CWTS Newsletter,_ January 2000
+    - 〈北美華人基督教教育現況與面對的困難〉"The Present Situation of Christian Education and the Problems Encountered." Paper presented in the Chinese Christian Education Conference held by the Association of Canadian Chinese Theological Education, August 2014
+    - 〈世俗化對基督教教育的挑戰〉 "The Challenges of Secularism to Christian Education," _CWTS Newsletter,_ April 2011.
+    - 〈如何提升教牧的教導素質?〉“How to Elevate the Teaching Quality of Pastors?” 《教牧分享 Pastoral Sharing》,世界華福中心 Chinese Co-ordination Centre of World Evangelism, Sep. 2008.
+    - 〈善於問和答的耶穌與今日聖經教師〉"Jesus’ Use of Questions and Answers and How We can Learn from Him," 《榮耀的基督與當代信徒 The Glorious Christ and the Contemporary Christian》,Christian Witness Theological Seminary, 2003.
+    - 書評 Book Review:〈老當益壯 Aging with Vitality: A Path for Growth〉,《傳 Proclaim》,中國信徒佈道會 Chinese Christian Mission,Sep. 2002.
+    - 〈教會中的成人教學法〉"The Methods of Teaching Adults in Churches",_CWTS Newsletter,_ April 2002.
+    - 〈基督教宗教教育的拓展〉"The Development of Christian Religious Education in Churches", _CWTS Newsletter,_ January 2000.

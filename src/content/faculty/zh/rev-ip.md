@@ -13,6 +13,7 @@ degrees:
 moreDegrees:
   - Th.M. 1983, Princeton Theological Seminary 神學碩士
   - M. Div. 1982, Fuller Theological Seminary 道學碩士
+
 former:
   - 基督工人神學院副院長, 副教授 (1995-2022)
   - 曉士頓華人基督教會牧師
@@ -33,5 +34,13 @@ former:
   - M.A. 1986, Brandeis University 文學碩士（主修古代近東研究）
   - Th.M. 1983, Princeton Theological Seminary 神學碩士
   - M. Div. 1982, Fuller Theological Seminary 道學碩士
+  - BA, MA 1978-1980, Azusa Pacific University文學學士，碩士
+  - Diploma, 1975 香港海外神學院神學文憑
 - **著述:**
-  - 《有聲聖經綜覽》（合著）美國福音證主協會，1990。
+     - 《3D研經系列：認識歷史書(下) 回歸信心路》。(客籍講師) 加拿大證主福音協會，2011。
+     - 《有聲聖經綜覽》（合著）美國福音證主協會，1991。
+  - 學術文章:
+    - 〈先知書、彌賽亞與當代信徒〉《榮耀的基督與當代信徒》基督工人神學院三十年院慶文集。美國：基督工人神學院, 2003。
+  - 譯著:
+    - 《證主21世紀聖經新釋》（合譯）香港：福音證主協會, 1999。
+    - 《超越虛空－傳道書中盼望的信息》（合譯）美國: 活泉出版社, 1982。

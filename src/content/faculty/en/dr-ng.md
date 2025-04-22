@@ -21,7 +21,7 @@ former:
   - Chief Editor and Director of Publications, China Graduate School of Theology (Hong Kong)
 ---
 
-Dr. Esther Ng grew up in a Christian family in Hong Kong. While studying at Hong Kong University, she received God’s call to full time Christian ministry. After obtaining her bachelor’s degree in Science, and teaching for two years at a high school, she left Hong Kong and received theological education in the United States. Afterwards she returned to Hong Kong and served for 17 years at the China Graduate School of Theology in teaching and editing. In 1995 she resigned and pursued further studies at Aberdeen University in Britain where she examined how the feminist theologian Elisabeth Schüssler Fiorenza attempted to reconstruct women’s role in early Christianity. After obtaining her Ph.D. she emigrated to the U.S.A. In 2000-2003 she taught New Testament courses at Wheaton College. Since 2003, she has served in various capacities at Christian Witness Theological Seminary. She retired from her full-time position in 2016 and has been Senior Adjunct Professor since then. In addition to teaching and writing, she plays the piano occasionally at church services and enjoys writing poems.
+Dr. Esther Ng grew up in a Christian family in Hong Kong. While studying at Hong Kong University, she received God’s call to full time Christian ministry. After obtaining her bachelor’s degree in Science, and teaching for two years at a high school, she left Hong Kong and received theological education in the United States. Afterwards she returned to Hong Kong and served for 17 years at the China Graduate School of Theology in teaching and editing. In 1995 she resigned and pursued further studies at Aberdeen University in Britain where she examined how the feminist theologian Elisabeth Schüssler Fiorenza attempted to reconstruct women’s role in early Christianity. After obtaining her Ph.D. she emigrated to the U.S.A. In 2000-2003 she taught New Testament courses at Wheaton College. Since 2003, she has served in various capacities at Christian Witness Theological Seminary. She retired from her full-time position in 2016 and has been Senior
 
 - **Education:**
   - Ph.D. 1999, University of Aberdeen, UK (Feminist Theology/ New Testament)
@@ -35,6 +35,7 @@ Dr. Esther Ng grew up in a Christian family in Hong Kong. While studying at Hong
     - _Jewish-Christian Discussions over the Mosaic Law in Justin Martyr’s Dialogue with Trypho._ Unpublished M.A. thesis, Indiana University, 1975.
     - _The Hermeneutical Principles of Redaction Criticism as Applied to the Apocalyptic Son of Man Sayings._ Unpublished M.A. thesis, Trinity Evangelical Divinity School, 1973.
   - B. More Important Edited Works in Chinese
+    - Selected Recent Articles Pertaining to Ethics (course reading, Christian Witness Theological Seminary), 2021.
     - Official Statements Pertaining to Ethics (course reading, Christian Witness Theological Seminary), 2018.
     - _The New Bible Dictionary–Chinese Edition._ Vol. 1 (A-J), Vol. 2 (K-Z). Hong Kong: Tien Dao Publishing House & China Graduate School of Theology, 1996.
     - _Jesus and Modern Man._ Edited by Esther Yue L. Ng and Gaddi C. Y. Hui. Hong Kong: China Graduate School of Theology, 1993.
@@ -44,6 +45,7 @@ Dr. Esther Ng grew up in a Christian family in Hong Kong. While studying at Hong
     - _The Bible–CGST Study Edition (OT and NT)._ 1st ed., Hong Kong: Christian Witness Press, 1987; Revised Version, 2000.
     - _In God’s Presence–Corporate Worship: Why and How._ Hong Kong: Tien Dao Publishing House and China Graduate School of Theology, 1979.
   - More Recently Published/Forthcoming Articles in English
+    - “Illness and God in the Gospels.” In _Illness and God in the Bible._ Edited by Timothy Yap. Biblische Notizen, 2025, forthcoming.
     - “Truth, Being True, and Theological Education.” CWTS 50th Anniversary Commemorative Volume, 2023, forthcoming.
     - “Did Joanna (Lk 8:3) Become Junia (Rom 16:7)?” _JETS_ 65.3, forthcoming.
     - “Montanism: Precursor of the Contemporary Charismatic Movement? Feminist Aspirations?” In _Spirit Wind: The Doctrine of the Holy Spirit in Global Theology: A Chinese Perspective,_ pp. 101-127. Edited by Peter L.H. Tie and Justin Tan. Eugene, Oregon: Wipf & Stock, 2021.

@@ -26,10 +26,13 @@ Born into a Christian home in Taiwan, Cindy Ou accepted Christ at a young age an
   - Ph.D. in New Testament, Trinity Evangelical Divinity School, 2020.
   - M.Div., Southwestern Baptist Theological Seminary, 2011.
   - B.M. in Piano Performance, University of Texas at Austin, 2008.
+- **Ph.D. Dissertation**
+  - Temple and Possessions: The Economic Vision of the People of God in Acts 1-5.
 - **Publications:**
-  - Ph.D. Dissertation
-    - Temple and Possessions: The Economic Vision of the People of God in Acts 1-5.
   - Articles (Chinese):
-    - “Letting Biblical Revelation Shape our Imagination – Another Vision of Worship” in Overseas
-Campus Magazine 163 (2023).
-    - “What Does the Bible Say About Mourning?” in Overseas Campus Magazine 161 (2023).
+    - “Memories of a New Dawn: Memory in Inside Out and the Gospels” in _Overseas Campus_ 167 (2024)
+    - "The Limiting and Giving of Power in the Gospels: Journeying with Jesus to the Bottom of the Pyramid" in _Behold_ (2024)
+    - "The Limiting and Giving of Power in the Pentateuch" in  _Behold_ (2024)
+    - “Constructing a Hopeful Future in a Disorganized World” in _Overseas Campus_ 165 (2024)
+    - “Letting Biblical Revelation Shape our Imagination – Another Vision of Worship” in _Overseas Campus_ 163 (2023).
+    - “What Does the Bible Say About Mourning?” in _Overseas Campus_ 161 (2023).
