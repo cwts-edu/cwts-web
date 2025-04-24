@@ -18,7 +18,7 @@ thumbnail: "/images/covers/degrees-programs/diploma-of-christian-studies.thumbna
 
 一、申請入學時，須繳交下列證件：
 
-1. 入學申請表格 (請按此鏈接下載入學申請表，如有困難可以向本院電郵索取)
+1. 入學申請表格 (申請表可在頁面底部下載，如有困難可以向本院電郵索取)
 2. 報名費 $50 元 (概不退還)
 3. 畢業證書 (影印本即可)
 4. 成績單 (由學校直接寄來本院)
@@ -61,7 +61,7 @@ thumbnail: "/images/covers/degrees-programs/diploma-of-christian-studies.thumbna
 
 春季入學：10/15(國際申請人)，11/30 (美國本地申請人)。
 
-註： 「國際申請人」為非美國公民或永久居民， 「美國本地申請人」為美國公民或永久居民，請點擊此連結[申請入學](https://cwts.populiweb.com/router/admissions/onlineapplications/index?embedded=1&application_form=2&source=3)
+註： 「國際申請人」為非美國公民或永久居民， 「美國本地申請人」為美國公民或永久居民，請點擊此連結[申請入學](https://cwts.populiweb.com/router/admissions/onlineapplications/index?application_form=2&source=3)
 
 - [按此下載申請表格](/docs/admissions/Application-Form-Masters-040924.pdf)
 - [按此下載推薦書表格](/docs/admissions/Recommendation-Form2020Fall-revised.pdf)
