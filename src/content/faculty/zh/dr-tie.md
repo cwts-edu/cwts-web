@@ -33,12 +33,12 @@ former:
     - _Restore Unity, Recover Identity, and Refine Orthopraxy: The Believers’ Priesthood in the Ecclesiology of James Leo Garrett, Jr._ Eugene, OR: Wipf & Stock, 2012
   - B. 文章:
     - “Spirit, Scripture, Saints, and Seminary: Toward a Reappropriation of ‘Spirit Illumination’ in ‘Scripture Interpretation’ for Seminarians.” In _Spirit Wind: The Doctrine of the Holy Spirit in Global Theology: A Chinese Perspective_ Edited by Peter L. H. Tie and Justin T. T. Tan Eugene, OR: Pickwick, 2020.
-    - “為今日華人教會重尋與實踐唯獨聖經.” In《義配恩源蕩蕩流: 宗教改革五百周年文集 _Living Streams: Martin Luther’s Theological and Spiritual Legacy–Essays in Commemoration of 500 years of Reformation_》，167-184。香港：牧職神學院出版社， 2017.
-    - “創造神，主基督，保惠師：約翰福音中的父、子、靈之教義、關係與意義” 在《我信三位一體的上帝》 (I Believe in the Trinity). 倪國瑞譯. Melbourne, AUS: MST Press, 2014, 36-57.
+    - 〈為今日華人教會重尋與實踐唯獨聖經〉。於《義配恩源蕩蕩流: 宗教改革五百周年文集 _Living Streams: Martin Luther’s Theological and Spiritual Legacy–Essays in Commemoration of 500 years of Reformation_》，167-184。香港：牧職神學院出版社， 2017.
+    - 〈創造神，主基督，保惠師：約翰福音中的父、子、靈之教義、關係與意義〉。於《我信三位一體的上帝》 (I Believe in the Trinity), 倪國瑞譯, 36-57. Melbourne, AUS: MST Press, 2014.
     - [“Jonathan Edwards’ ‘Eastern’ Trinitarianism?” In _Piety by Virtue._ Theology and Spiritual Formation 19. Melbourne, VIC: MST Press, 2014, 31-59.](http://issuu.com/mstchinese/docs/mstcj_19)
     - [“We Believe, Therefore We Live: A Christopraxis.” In _Christ, Life and Theology._ Theology and Spiritual Formation 17. Melbourne, AUS: MST Press, 2012, 10-19.](http://issuu.com/mstchinese/docs/mstcj_17)
   - C. 其他 (部分)：
-    - [“「僅僅愛耶穌就足夠了嗎？」: 神學的反思.” In 基督工人神學院院訊 (Christian Witness Theological Seminary Newsletter). USA: January 2021, 3-4.](https://www.cwts.edu/wp-content/uploads/2021/01/2021A.pdf)
-    - [“世界靜止，聖道依舊: 關於網絡聖餐的反思.” 基督人神學院院訊 (Christian Witness Theological Seminary Newsletter). USA: July 2020, 3-4.](https://www.cwts.edu/contact-info/newsletter/newsletter-jul2020/)
-    - [“The Importance of Orthodoxy and Orthopraxy.” Interviewed by the Brian Kaylor, author of the article and editor of Word &Way (a Baptist magazine in the Midwest). February 5, 2019.](https://wordandway.org/2019/02/05/the-importance-of-orthodoxy-and-orthopraxy/)
-    - [“宗教改革 500 年： ‘唯獨聖經’和今日教會” (Reformation 500: Sola Scriptura for the Churches Today). 基督工人神學院院訊 (Christian Witness Theological Seminary Newsletter). USA: Oct 2017, 4; 擴張帳幕：當代的使命和挑戰（基督工人神學院四十五週年紀念特刊）. USA: Christian Witness Theological Seminary, 2018, 43-44.](https://www.cwts.edu/wp-content/uploads/2017/10/2017Oct_Web3.pdf)
+    - [〈僅僅愛耶穌就足夠了嗎？: 神學的反思〉。基督工人神學院院訊 (Christian Witness Theological Seminary Newsletter). USA: January 2021, 3-4.](https://www.cwts.edu/wp-content/uploads/2021/01/2021A.pdf)
+    - [〈世界靜止，聖道依舊: 關於網絡聖餐的反思〉。基督人神學院院訊 (Christian Witness Theological Seminary Newsletter). USA: July 2020, 3-4.](https://www.cwts.edu/contact-info/newsletter/newsletter-jul2020/)
+    - [The Importance of Orthodoxy and Orthopraxy.” Interviewed by the Brian Kaylor, author of the article and editor of Word &Way (a Baptist magazine in the Midwest). February 5, 2019.](https://wordandway.org/2019/02/05/the-importance-of-orthodoxy-and-orthopraxy/)
+    - [〈宗教改革 500 年： ‘唯獨聖經’和今日教會〉(Reformation 500: Sola Scriptura for the Churches Today). 基督工人神學院院訊 (Christian Witness Theological Seminary Newsletter). USA: Oct 2017, 4; 擴張帳幕：當代的使命和挑戰（基督工人神學院四十五週年紀念特刊）. USA: Christian Witness Theological Seminary, 2018, 43-44.](https://www.cwts.edu/wp-content/uploads/2017/10/2017Oct_Web3.pdf)

@@ -22,17 +22,17 @@ former:
   - Evangelist, Hong Kong Bethel Church
 ---
 
-Dr. Jacob Cheung was born in Xingning (Guangdong, China), grew up in Hong Kong, and studied in Hong Kong, United Kingdom and USA. He was converted at Hong Kong Bethel Church where he also received God’s call to full-time ministry. By God’s grace, he can speak three Chinese dialects: Cantonese, Mandarin and Hakka. His hobbies include singing as well as studying Chinese history and literature in addition to the Bible, often enraptured in the world of the ancients. Rev. Tsang married in 1980 and has three children as a result. Currently, his family members all live overseas outside China. Besides teaching in CWTS, he also preaches in different churches, publishes papers in journal, is involved in leadership training, and assists editorial work for the Old Testament section of the Tien Dao Bible Commentary Series. May God’s grace richly abound in China!
+Pastor Tsang graduated from Bethel Bible Seminary in Hong Kong in his early years. He later received a Master of Divinity from Fuller Theological Seminary in the United States, a Master of Theology from Princeton Theological Seminary, and a Doctor of Philosophy from Sheffield University in the United Kingdom. He has served as a professor in some theological seminaries in Hong Kong, Director General of Hong Kong Bethel Church, Senior Pastor of Manchester Chinese Christian Church in the UK, Associate Professor of Old Testament and Director of Internship and Student Affairs at Christian Witness Theological Seminary in the United States. He now retired, still teaches some Old Testament courses, preaches in different churches in the Bay Area and gives special seminar online. He is the author of "Numbers" and "Judges" in the Tien Dao Bible Commentary Series, and "Old Testament Background Quick Browser" published by Tien Dao Publishing House Ltd. Pastor Tsang and his wife were blessed by God and have three children.
 
 - **Education:**
   - Ph.D., University of Sheffield (UK), 1989
   - Th.M., Princeton Theological Seminary , 1982
   - M.Div., Fuller Theological Seminary, 1976
 - **Publications in Chinese:**
-  - A. Monographs
+  - Monographs
     - _Numbers,_ Tien Dao Bible Commentary. Hong Kong: Tien Dao Publishing House, 2006.
     - _Judges,_ Tien Dao Bible Commentary. Hong Kong: Tien Dao Publishing House, 1998.
-  - B. Articles
+  - Articles
     - “Reflections on the Chinese New Year,” _Evangel Literature_, Issue 229, Jan-Feb 2014.
     - “Seeking Stewards,” _CWTS Newsletter,_ April, 2012.
     - “The Message of Matthew’s Gospel to the Chinese,” _Evangel Literature,_ Issue 216, Nov-Dec 2011 and issue 217, Jan-Feb 2012.

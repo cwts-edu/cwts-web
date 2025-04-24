@@ -29,8 +29,11 @@ former:
   - Temple and Possessions: The Economic Vision of the People of God in Acts 1-5
 - **著述:**
   - 文章:
+    - [“注入曙光的記憶：從《頭腦特工隊》與福音書看記憶”，《海外校園》167 (2024)](https://yzd.oc.org/oc167-12/)
+    - ["從福音書看賦權與限權：與耶穌走向金字塔底端"《舉目》(2024)](https://behold.oc.org/?p=63055)
+    - ["從摩西五經看賦權與限權"《舉目》(2024)](https://behold.oc.org/?p=62991)
+    - [“在失序的世界，建構有盼望的未來”，《海外校園》165 (2024)](https://yzd.oc.org/oc165-30/)
     - ["讓聖經的啟示塑造我們的想象 : 崇拜的另一個視野"，《海外校園》163 (2023)](https://yzd.oc.org/oc163-31/)
     - ["關於哀痛，聖經怎麼說？"，《海外校園》161 (2023)](https://yzd.oc.org/oc161-19/)
-
 
 
