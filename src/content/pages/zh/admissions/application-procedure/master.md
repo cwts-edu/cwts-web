@@ -61,7 +61,7 @@ thumbnail: "/images/covers/degrees-programs/diploma-of-christian-studies.thumbna
 
 春季入學：10/15(國際申請人)，11/30 (美國本地申請人)。
 
-註： 「國際申請人」為非美國公民或永久居民， 「美國本地申請人」為美國公民或永久居民。
+註： 「國際申請人」為非美國公民或永久居民， 「美國本地申請人」為美國公民或永久居民，請點擊此連結[申請入學](https://cwts.populiweb.com/router/admissions/onlineapplications/index?embedded=1&application_form=2&source=3)
 
 - [按此下載申請表格](/docs/admissions/Application-Form-Masters-040924.pdf)
 - [按此下載推薦書表格](/docs/admissions/Recommendation-Form2020Fall-revised.pdf)
