@@ -1,8 +1,8 @@
 ---
-title: 全人發展心理學
+title: 認識性格特別 建立和諧關係
 date: 2025-05-29
 thumbnail: /images/news/SoulCare-Personality.jpg
-url: https://form.jotform.com/251135663674157
+url: /zh/ministry-institute/recording/
 ---
 
 靈命關懷系列講座\
