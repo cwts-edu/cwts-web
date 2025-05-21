@@ -1,14 +1,12 @@
-- image: /images/carousel/2025-commencement.jpg 
-- link: https://form.jotform.com/250835885833065
-  image: /images/carousel/Leadership seminar banner.jpg 
-  newWindow: true
 - link: /zh/news-events/bay-area-bible-convention/
   image: /images/carousel/2025BABC recording.jpg 
-- image: /images/carousel/2025 Book Launch.jpg
+- link: /zh/ministry-institute/courses
+  image: /images/carousel/MI-2025-Fall.jpg
+- link: /zh/ministry-institute/courses
+  image: /images/carousel/MI-2025-Spring.jpg
 - link: /zh/academic/degrees-programs/master-of-theological-essentials
   image: /images/carousel/MTE Banner.jpg 
   newWindow: true
-- link: /zh/ministry-institute/courses
-  image: /images/carousel/MI-2025-Spring.jpg
+- image: /images/carousel/2025 Book Launch.jpg
 - link: /zh/about/accreditation
   image: /images/carousel/ats-10-years.jpg
