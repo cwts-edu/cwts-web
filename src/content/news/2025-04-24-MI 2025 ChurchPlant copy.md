@@ -1,9 +1,9 @@
 ---
-title: 植堂策略與推動
-date: 2025-04-24
-thumbnail: /images/news/MI-2025-ChurchPlant.jpg
-url: /zh/ministry-institute/courses/#植堂策略與推動課程編碼-mp01-2-學分-zoom-授課
+title: 釋經學入門
+date: 2025-05-24
+thumbnail: /images/news/MI-Hermeneutics.jpg
+url: /zh/ministry-institute/courses/#釋經學入門課程編碼be01-3學分-zoom授課
 ---
-植堂策略與推動\
+釋經學入門\
 培育中心證書課程 ZOOM課堂\
-4/24-5/15 逢週四晚 7-10PM
+8/7-28日逢周四晚：6:30-9PM

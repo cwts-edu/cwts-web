@@ -1,7 +1,7 @@
 ---
 title: 基神院訊
-date: 2024-01-29
-thumbnail: /images/news/newsletter-2024B.jpg
+date: 2025-04-01
+thumbnail: /images/news/newsletter-2025A.jpg
 url: /zh/news-events/newsletter/
 ---
 
