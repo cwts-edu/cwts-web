@@ -5,7 +5,7 @@ category: faculty
 order: 106
 positions:
   - 基督工人神學院學生事務主任
-  - 實踐神學助理教授
+  - 實踐神學副教授
 courses:
   - 教牧神學
   - 家庭事工
@@ -35,3 +35,4 @@ former:
 - **著述:**
   - _Step by Step, Truth and Clarity Toward an Old Testament Exegesis_ (舊約釋經初期工作 – 經文核心概念之形成與方法論之確認) (Th.M. 論文)
   - _Developing a Family-Oriented Discipleship Theory and Strategy for the Ethnic Chinese Churches in North America_ (北美華人教會在家庭實踐門徒訓練的理論與策略) (D.Min. 論文)
+  - [〈門徒，是基督徒的進階版嗎？(Is a Disciple a "Level-Up" Christian?)〉。《舉目雜誌》，2025年3月29日。](https://behold.oc.org/?p=67129)
