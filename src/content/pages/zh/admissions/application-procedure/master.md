@@ -20,13 +20,13 @@ thumbnail: "/images/covers/degrees-programs/diploma-of-christian-studies.thumbna
 
 1. 入學申請表格 (申請表可在頁面底部下載，如有困難可以向本院電郵索取)
 2. 報名費 $50 元 (概不退還)
-3. 畢業證書 (影印本即可)
-4. 成績單 (由學校直接寄來本院)
+3. 最高學歷的畢業證書副本
+4. 正式成績單 (由原就讀學校直接寄送至本院)
 5. 推薦書兩份 *神學精要碩士(MTE)只需一份推薦信 (由推薦人直接電郵 admissions@cwts.edu 或者郵寄來本院)
 6. 近期護照標準照一張（電子檔）
-7. 護照照片頁掃描件 (報讀網路學位的國際申請人不需要提交) 
+7. 護照個人資料頁與／或美國居留證之副本 (若無護照，請提供其他附有照片的身分證明，例如：身份證、駕照) 
 8. 財務資料表格及由銀行簽發的正式的存款證明\* (以及其它財力證明，包括收入、房產、有價證券等能證明你有能力支付所有在留美期間的學費和生活費的文件，這些文件在簽證時同樣也需要提交給簽證官，報讀網路學位的國際申請人不需要提交此文件)
-9. 健康資料表格\* (要求由醫生為國際申請人填寫，但報讀網路學位的國際申請人除外)
+9. 健康資料表格\* (要求由醫生為國際申請人填寫。報讀網路學位的國際申請人或美國居民無需提交)
 10. 申請人問卷\* (由招生部直接提供給申請人)
 11. 近期托福或雅思成績單\*\* (非必要，但是申請人必須具備一定的英文閱讀能力)。能證明申請人閱讀能力的方法如下：
     - 托福成績-450 分 (TOEFL iBT 45 分/ 網路考) (本院代號 3133)。或 IELTS 雅思成績 4 分。
@@ -61,9 +61,7 @@ thumbnail: "/images/covers/degrees-programs/diploma-of-christian-studies.thumbna
 
 春季入學：10/15(國際申請人)，11/30 (美國本地申請人)。
 
-註： 「國際申請人」為非美國公民或永久居民， 「美國本地申請人」為美國公民或永久居民，請點擊此連結[申請入學](https://cwts.populiweb.com/router/admissions/onlineapplications/index?application_form=2&source=3)
+註： 「國際申請人」為非美國公民或永久居民， 「美國本地申請人」為美國公民或永久居民。
+### [申請入學](https://cwts.populiweb.com/router/admissions/onlineapplications/index?application_form=2&source=3)
 
-- [按此下載申請表格](/docs/admissions/Application-Form-Masters-040924.pdf)
-- [按此下載推薦書表格](/docs/admissions/Recommendation-Form2020Fall-revised.pdf)
-- [按此下載財務資訊和獎學金申請表格](/docs/admissions/Scholarship-Master-updated-03062024v4.pdf)
-- [按此下載健康資料表格](/docs/admissions/Health-History-Form-revised.pdf)
+
