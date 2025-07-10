@@ -101,4 +101,4 @@ The command not to take the Lord's name in vain is often taken to be a prohibiti
 
 3:00 pm 當天活動結束 Closing
 
-\* 除 Dr. Ray Van Neste 的主題信息(將提供中文翻譯)，其他工作坊均為國語。
+\* 除 Dr. Carmen Joy Imes 的主題信息(將提供中文翻譯)，其他工作坊均為國語。
