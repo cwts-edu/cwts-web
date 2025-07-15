@@ -4,17 +4,6 @@ order: 504
 coverImage: "/images/covers/ministry-institute/courses.cover.jpg"
 thumbnail: "/images/covers/ministry-institute/courses.thumbnail.jpg"
 ---
-## 從高關聯互涉經文解讀舊約（課程編碼: BO02, 2 學分, ZOOM 授課）
-時間：6/5,12,19,26	四個週四6:30-9:30PM\
-教師：陳聲漢 博士\
-[點擊報名](https://form.jotform.com/242687214691160)
-
-### 課程簡介：
-舊約所涵蓋的資料非常廣泛，要將這些資料統合在一起實非易事。本課將透過高關聯經文（nexus passages）來探討舊約的統一性。透過這些高關聯經文，很多段落得以聯繫起來，展示出舊約文本和神學的統一性。本課使用的主要教材為陳聲漢博士的獲獎新作《你的律法奇妙：高關聯段落與舊約互涉經文釋經神學的潛能》（Wonders from Your Law: Nexus Passages and the Promise of an Exegetical Intertextual Old Testament Theology, IVP Academic, 2024），該書獲得Southwestern Journal of Theology 2024年聖經研究類大獎。關於該書的評論，可以參看 [SWJT 2024 Book of the Year](https://swbts.edu/news/swjt-names-mere-christian-hermeneutics-its-2024-book-of-the-year/) 及 [書評 文章](https://transform.westernseminary.edu/resources/books-we-enjoyed-2024)。
-
-### 教師簡介:
-陳聲漢博士現任加州金門神學院的舊約研究教授，之前他曾在田納西州的聯合大學 (Union University) 任教九年，在基督工人神學院任教五年。他的學術興趣和主要研究領域集中在五經、互涉經文、舊約神學和舊約對基督的見證。
-
 ## 釋經學入門（課程編碼BE01, 3學分, Zoom授課）
 時間：8月7,14,21,28日，四個週四晚 6:30-9PM\
 教師：蔡明謀牧師/博士 金甌姊妹\
@@ -27,15 +16,13 @@ thumbnail: "/images/covers/ministry-institute/courses.thumbnail.jpg"
 
 金甌姊妹： 金甌姊妹，基督工人神學院道學碩士。曾在科技公司擔任軟件開發工程師，受神呼召進入基督工人神學院就讀，取得道學碩士學位。金甌姊妹有負擔於神學教育，現就讀於三一福音神學院 (Trinity Evangelical Divinity School) 神學碩士系統神學方向，她的興趣是閱讀、籃球與書法，與先生育有一子。
 
-</br>
-
 ## 福音書（課程編碼BG01, 3學分, Zoom授課）
 時間：9月4,11,18,25日, 10月2,9,16,23,30日，9個周四晚 6:30-8:30PM\
 教師：歐雨虹博士\
 [點擊報名](https://form.jotform.com/251335307897161)
 
 ### 課程簡介：
- 
+四福音讓我們透過馬太、馬可、路加、約翰的敘事認識耶穌的身分與使命。課程會從歷史、文學、和神學的角度研讀福音書。了解歷史背景能幫助我們穿越時空進入第一世紀的世界，探討福音書的文學特性能幫助我們理解作者編排的意圖與巧思，福音書的神學就會更加立體與豐富。課程也會特別探討耶穌如何與不同人互動，讓我們可以被耶穌的言行和情感塑造，學習以基督的心為心。 
 ### 教師簡介:
 歐雨虹博士現任基督工人神學院神學碩士科主任, 新約助理教授，主授福音書, 新約，三一神學院哲學博士 (主修新約)。歐老師出生於台灣，從小在基督徒家庭長大，年幼時信主，六歲隨家人來美國。大學期間蒙神呼召，畢業後開始讀神學，研究興趣包括耶穌的情感學、新約中的女性、崇拜學、聖經神學。在教會參與講道與司琴的服事。歐老師與師丈育有兩個兒子。平時喜歡與兒子共讀繪本與小說。
 </br>

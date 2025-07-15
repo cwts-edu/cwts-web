@@ -20,8 +20,8 @@ thumbnail: "/images/covers/news-events/tan-lectureship.thumbnail.jpg"
 
 ## 2025 Daniel M. Tan Lectureship
 
-**2 堂主題信息 5 個工作坊**\
-2 Lectures 5 Workshops
+**2 堂主題信息 4 個工作坊**\
+2 Lectures 4 Workshops
 
 時間 Time: 9/20 Saturday 9:00 am - 3:00 pm\
 地點 Location: 基神本部 CWTS\
