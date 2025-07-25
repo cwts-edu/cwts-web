@@ -39,7 +39,7 @@ San Jose, CA 95131](https://goo.gl/maps/Gi57SXut58CT5Ui38)
 Carmen Joy Imes博士在Gordon-Conwell Theological Seminary道學碩士畢業後，獲得Wheaton College 神學博士學位，現任Talbot School of Theology at Biola University 舊約副教授。她著有《承擔神的名》（Bearing God’s Name，IVP 2019）與《成為神的形象》（Being God’s Image, IVP 2023）。卡門不僅在比歐拉大學授課，也透過BibleProject, Biblical Training, Admirato, Seminary Now 和 YouTube等平台 提供教學課程。她亦為《今日基督教》（Christianity Today）、《神學政治學》（Politics of Theology）和《水井》（The Well，校園團契出版社）等刊物撰稿。卡門經常受邀在教會、研討會與靈修營會中講道與教導。她熱情致力於裝備教會更深入地理解舊約聖經，並看見其對基督徒生活的重要意義。
 <details>
  <summary> Dr. Carmen Joy Imes received her Master of Divinity from Gordon-Conwell Theological Seminary...</summary>
- and later earned her PhD in Theology from Wheaton College. She currently serves as Associate Professor of Old Testament at the Talbot School of Theology at Biola University. She is the author of Bearing God’s Name (IVP, 2019) and Being God’s Image (IVP, 2023).
+ and later earned her PhD in Theology from Wheaton College. She currently serves as Associate Professor of Old Testament at the Talbot School of Theology at Biola University. She is the author of <i>Bearing God’s Name</i> (IVP, 2019) and <i>Being God’s Image</i> (IVP, 2023).
 In addition to teaching at Biola, Dr. Imes offers courses through platforms such as BibleProject, Biblical Training, Admirato, Seminary Now, and YouTube. She also writes for publications including Christianity Today, Politics of Theology, and The Well (published by InterVarsity’s Women in the Academy & Professions ministry).
 Dr. Imes is frequently invited to preach and teach at churches, conferences, and retreats. She is passionate about equipping the church to engage more deeply with the Old Testament and to recognize its vital significance for Christian life today. </details>
 
