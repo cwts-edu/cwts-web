@@ -45,7 +45,7 @@ thumbnail: "/images/covers/student-life/calendar.thumbnail.jpg"
 | Labor Day (no class)                   | Monday, September 1                      |
 | CWTS Annual Lectureship  (no class)    | Saturday, September 20                   |
 | Mid-term Exam / Class                  | Monday - Saturday, October 6-11          |
-| CWTS Ministry Sharing Banquet          | Sunday, October 19                       |
+| CWTS Ministry Sharing Banquet          | Sunday, October 12                       |
 | Taste of CWTS (via Zoom)               | Friday, October 24                       |
 | Spring Registration                    | November 1 - November 29                 |
 | Reading Period                         | Monday - Wednesday, November 24-26       |
