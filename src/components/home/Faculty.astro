@@ -1,8 +1,7 @@
 ---
 import "@libs/faculty";
-import { type FacultyMetadata, getFacultyMetadata } from "@libs/faculty";
-import { Language, T } from "@libs/language";
-import FacultyRow from "./FacultyRow";
+import { getFacultyMetadata } from "@libs/faculty";
+import { type Language, T } from "@libs/language";
 import Widget from "./Widget.astro";
 import type { Messages } from "./FacultyRow";
 
@@ -12,20 +11,7 @@ export interface Props {
 
 const { language } = Astro.props;
 
-const facultyFieldsToKeep: (keyof FacultyMetadata)[] = [
-  "url", "name", "photo", "positions", "courses"];
-
-// Keep useful fields in FacultyMetadata because the data will be embedded in the html
-function filterFields<T, K extends keyof T>(obj: T, keys: K[]): Pick<T, K> {
-  return keys.reduce((acc, key) => {
-    acc[key] = obj[key];
-    return acc;
-  }, {} as Pick<T, K>);
-}
-
-const faculty = getFacultyMetadata(language, ["faculty"]).map(
-  f => filterFields(f, facultyFieldsToKeep)
-);
+const faculty = getFacultyMetadata(language, ["faculty"]);
 const messages: Messages = {
   course_prefix: T("course_prefix", language),
   course_separator: T("course_separator", language),
@@ -45,5 +31,34 @@ const messages: Messages = {
       {T("faculty", language)}
     </span>
   </div>
-  <FacultyRow faculty={faculty} messages={messages} client:idle />
+  <div class:list={[
+    "grid gap-6",
+    "justify-between",
+    "lg:grid-cols-[repeat(6,minmax(150px,308px))]",
+    "sm:grid-cols-[repeat(3,minmax(150px,308px))]",
+    "grid-cols-[repeat(2,minmax(150px,308px))]",
+    "max-[348px]:grid-cols-1"]}>
+    {
+      faculty.map((person) => (
+        <a class="block bg-[#433434] p-3 rounded-lg flex flex-col gap-1" href={person.url}>
+          <div>
+            <img src={person.photo} class="w-full rounded-sm aspect-square"></img>
+          </div>
+          <div class="py-1 text-center">{person.name}</div>
+          <div class="text-xs flex flex-col gap-3">
+            {person.positions && (
+              <div>
+                <b>{messages.position_prefix}</b>
+                {person.positions.join(messages.position_separator)}
+              </div>
+            )}
+            <div>
+              <b>{messages.course_prefix}</b>
+              {person.courses.join(messages.course_separator)}
+            </div>
+          </div>
+        </a>
+      ))
+    }
+  </div>
 </Widget>
