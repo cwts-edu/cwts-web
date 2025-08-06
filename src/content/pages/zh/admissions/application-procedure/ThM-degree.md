@@ -21,7 +21,7 @@ thumbnail: "/images/covers/degrees-programs/master.thumbnail.jpg"
 申請所需資料：
 
 1. 報名費： 美金 $50（概不退還）
-2. 最高學歷的畢業證書副本
+2. 最高學歷的畢業證書副本 (包括MDiv學位)
 3. 正式成績單： 由原就讀學校直接寄送至本院
 4. 推薦信兩封
 5. 近期護照標準證件照一張（電子檔）
