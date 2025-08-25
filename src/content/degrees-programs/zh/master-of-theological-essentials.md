@@ -2,7 +2,7 @@
 title: 神學精要碩士
 length: 3年
 credits: 36
-order: 205
+order: 206  
 category: master
 thumbnail: "/images/covers/degrees-programs/master.thumbnail.jpg"
 ---
