@@ -1,6 +1,6 @@
 ---
 title: Diploma
-order: 201.8
+order: 201.9
 coverImage: "/images/covers/degrees-programs/diploma-of-christian-studies.cover.jpg"
 thumbnail: "/images/covers/degrees-programs/diploma-of-christian-studies.thumbnail.jpg"
 ---

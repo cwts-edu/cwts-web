@@ -13,10 +13,10 @@ thumbnail: "/images/covers/degrees-programs/diploma-of-christian-studies.thumbna
 4. 所有申請人必須具備流利的中文讀寫表達能力。必須具有一定的英文閱讀能力，申請人可以通過有效的托福雅思成績證明；如沒有所說考試成績，將在接受面試接受測試。
 
 ## 申請手續
-### 第一步：[填寫申請表](https://cwts.populiweb.com/router/admissions/onlineapplications/index?application_form=2&source=3)
+### 第一步：[填寫申請表](https://cwts.populiweb.com/router/admissions/onlineapplications/index?application_form=2&source=3), 學院進行初步審查
 ### 第二步：提交所需資料
 
-在收到本院招生部電郵通知，確認您的申請已通過初步審核後，您即可繼續提交以下所列之所需文件。 所有資料齊全後，我們才會開始正式審核您的申請。審核開始後三週內，學院將透過電郵通知您錄取結果。在此期間，如有需要進一步說明或補件，請依指示提供相關文件或資料。
+在收到本院招生部電郵通知，確認申請已通過初步審核後，申請人即可繼續提交以下所列之所需文件。所有資料齊全後，本院才會開始正式審核。審核開始後三週內，將透過電郵通知錄取結果。在此期間，如有需要，本院將請申請人提供補充說明或相關資料。
 
 申請所需資料：
 
@@ -37,8 +37,9 @@ thumbnail: "/images/covers/degrees-programs/diploma-of-christian-studies.thumbna
 
 \*僅適用於國際申請人 \
 \*\*僅適用於非英語為母語或未於英語授課學院取得學士以上學位之申請人
-### 第三步：錄取通知與後續步驟
-若申請通過，招生部將寄發正式的入學通知書。
+### 第三步：資料收齊之後，符合申請資格申請人將收到面試通知
+### 第四步：錄取通知與後續步驟
+若面試通過，招生部將寄發正式的入學通知書。
     - 報讀碩士學位的國際學生，將同時收到 I-20 表格。
     - 報讀神學精要碩士（MTE）的國際學生，僅可選修網路課程，無法申請學生簽證。
 ### 新生考試
