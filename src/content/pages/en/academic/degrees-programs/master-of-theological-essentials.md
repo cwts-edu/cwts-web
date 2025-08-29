@@ -1,6 +1,6 @@
 ---
 title: Master of Theological Essentials
-order: 201.7
+order: 201.8
 coverImage: "/images/covers/degrees-programs/master.cover.jpg"
 thumbnail: "/images/covers/degrees-programs/master.thumbnail.jpg"
 ---
@@ -15,16 +15,16 @@ The learning outcomes for an MTE graduate include: (1) demonstrating a foundatio
 | Category            | Credits Required | Courses                                                       | Credits |
 | ------------------- | ---------------- | ------------------------------------------------------------- | ------- |
 | General Studies     | 3                | Spiritual Formation                                           | 2       |
-|                     |                  | Research Methods                                              | 1       |
+| ^                   | ^                | Research Methods                                              | 1       |
 | Biblical Studies    | 18               | Hermeneutics A                                                | 1       |
-|                     |                  | Hermeneutics B                                                | 2       |
-|                     |                  | NT&OT Introduction                                            | 3       |
-|                     |                  | Pentateuch                                                    | 3       |
-|                     |                  | Gospels                                                       | 3       |
-|                     |                  | *Bible Electives                                              | 6       |
+| ^                   | ^                | Hermeneutics B                                                | 2       |
+| ^                   | ^                | NT&OT Introduction                                            | 3       |
+| ^                   | ^                | Pentateuch                                                    | 3       |
+| ^                   | ^                | Gospels                                                       | 3       |
+| ^                   | ^                | *Bible Electives                                              | 6       |
 | Theology Studies    | 9                | Systematic Theology A                                         | 3       |
-|                     |                  | Systematic Theology B or  C                                   | 3       |
-|                     |                  | Church History A or B                                         | 3       |
+| ^                   | ^                | Systematic Theology B or  C                                   | 3       |
+| ^                   | ^                | Church History A or B                                         | 3       |
 | General Electives   | 5                | **Elective                                                    | 5       |
 | Internship          | 1                | Field Education                                               | 1       |
 | Total               | 36               |                                                               |         |

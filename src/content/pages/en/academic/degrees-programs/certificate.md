@@ -1,6 +1,6 @@
 ---
 title: Certificate
-order: 201.9
+order: 202
 coverImage: "/images/covers/degrees-programs/certificate-in-servant-leadership.cover.jpg"
 thumbnail: "/images/covers/degrees-programs/certificate-in-servant-leadership.thumbnail.jpg"
 ---
