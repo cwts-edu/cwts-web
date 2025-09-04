@@ -1,5 +1,5 @@
 ---
-title: 跨文化領導碩士
+title: 跨文化領袖碩士
 length: 3年
 credits: 36
 order: 205  
