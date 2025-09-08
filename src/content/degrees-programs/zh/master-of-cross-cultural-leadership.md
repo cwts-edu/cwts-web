@@ -44,4 +44,4 @@ thumbnail: "/images/covers/degrees-programs/master.thumbnail.jpg"
 | ^                                | ^         | 實地研究與總整專案                                                                                       | 3     |
 | 總學分                        | 36       |                                                                                                                    | 36    |
 
-### [前往學位申請](/zh/admissions/application-procedure/mccl/)
+### [前往學位申請](/zh/admissions/application-procedure/mcl/)

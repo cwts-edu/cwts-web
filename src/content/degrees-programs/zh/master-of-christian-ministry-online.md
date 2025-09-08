@@ -50,4 +50,5 @@ CWTS 旨在培養裝備良好的基督教聖工碩士畢業生，他們：
 
 \* 實習和治學法可以在其它的學期進行
 
+#### [了解更多關於全網絡碩士學位](/zh/academic/online-program/)
 ### [前往學位申請](/zh/admissions/application-procedure/master/)
