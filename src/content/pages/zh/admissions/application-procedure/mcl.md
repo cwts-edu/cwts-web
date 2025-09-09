@@ -35,5 +35,6 @@ thumbnail: "/images/covers/degrees-programs/diploma-of-christian-studies.thumbna
 - 秋季入學：7 月 15 日
 - 春季入學：11 月 30 日
 ### [申請入學](https://cwts.populiweb.com/router/admissions/onlineapplications/index?application_form=2&source=3)
+### [更多了解學位](/zh/academic/degrees-programs/master-of-cross-cultural-leadership/)
 
 

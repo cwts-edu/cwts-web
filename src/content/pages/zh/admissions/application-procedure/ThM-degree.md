@@ -54,3 +54,4 @@ thumbnail: "/images/covers/degrees-programs/master.thumbnail.jpg"
 「國際申請人」指非美國公民或非永久居民。\
 「美國本地申請人」指美國公民或永久居民。
 ### [申請入學](https://cwts.populiweb.com/router/admissions/onlineapplications/index?application_form=2&source=3)
+### [更多了解學位](/zh/academic/degrees-programs/master-of-theology/)

@@ -59,4 +59,5 @@ thumbnail: "/images/covers/degrees-programs/master.thumbnail.jpg"
 \* 經卷選修:  新約書信，先知文學，聖經原文或者任何聖經經卷\
 \** 選修： 任何神學或者實踐課程，如教會歷史，系統神學，基督教倫理學，護教學，信仰與社會，家庭門訓，基督教教育，教牧神學，講道學等
 
+#### [更多了解關於全網絡碩士學位](/zh/academic/online-program)
 ### [前往學位申請](/zh/admissions/application-procedure/master/)
