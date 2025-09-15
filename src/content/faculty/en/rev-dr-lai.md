@@ -5,7 +5,6 @@ category: faculty
 order: 103
 positions:
   - Vice President, Global Ministries
-  - Director of D.Min. program
   - Associate Professor of New Testament
 courses:
   - New Testament Theology
