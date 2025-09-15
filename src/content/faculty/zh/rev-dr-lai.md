@@ -5,8 +5,7 @@ category: faculty
 order: 103
 positions:
   - 基督工人神學院副院長
-  - 教牧博士科主任
-  - 副教授
+  - 新約副教授
 courses:
   - 新約神學
   - 新約經卷

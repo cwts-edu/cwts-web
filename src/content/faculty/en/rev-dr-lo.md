@@ -4,6 +4,7 @@ name: Rev. Dr. Andrew Lo
 category: faculty
 order: 106
 positions:
+  - Director of D.Min. Program
   - Dean of Student Affairs
   - Associate Professor of Practical Theology
 courses:

@@ -4,6 +4,7 @@ name: 羅一強博士/牧師
 category: faculty
 order: 106
 positions:
+  - 教牧博士科主任
   - 基督工人神學院學生事務主任
   - 實踐神學副教授
 courses:
