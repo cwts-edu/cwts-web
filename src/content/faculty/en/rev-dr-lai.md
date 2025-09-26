@@ -5,7 +5,7 @@ category: faculty
 order: 103
 positions:
   - Vice President, Global Ministries
-  - Associate Professor of New Testament
+  - Associate Professor in New Testament
 courses:
   - New Testament Theology
   - New Testament Books

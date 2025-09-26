@@ -6,7 +6,7 @@ order: 106
 positions:
   - Director of D.Min. Program
   - Dean of Student Affairs
-  - Associate Professor of Practical Theology
+  - Associate Professor in Practical Theology
 courses:
   - Pastoral Theology
   - Family Ministry

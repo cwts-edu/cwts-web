@@ -5,7 +5,7 @@ category: faculty
 order: 104
 positions:
   - Academic Dean
-  - Associate Professor of Theology
+  - Associate Professor in Theology
 courses:
   - Systematic Theology
   - Apologetics
