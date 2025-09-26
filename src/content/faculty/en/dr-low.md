@@ -4,7 +4,7 @@ name: Dr. Daniel Low
 category: faculty
 order: 107
 positions:
-  - Associate Professor for Practical Theology
+  - Associate Professor in Practical Theology
 courses:
   - Missions
   - Evangelism

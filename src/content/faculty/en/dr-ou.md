@@ -4,7 +4,7 @@ name: Dr. Cindy Ou Liao
 category: faculty
 order: 110
 positions:
-  - Assistant Professor of New Testament
+  - Assistant Professor in New Testament
 courses:
   - Gospels
   - Acts
