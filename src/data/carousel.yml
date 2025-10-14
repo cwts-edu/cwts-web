@@ -5,6 +5,8 @@
   image: /images/carousel/MCL Banner.jpg
 - link: /zh/ministry-institute/courses
   image: /images/carousel/MI-2025-Fall.jpg
+- link: /zh/ministry-institute/courses
+  image: /images/carousel/MI-2026-Spring.jpg  
 - link: /zh/academic/degrees-programs/master-of-theological-essentials
   image: /images/carousel/MTE Banner.jpg 
   newWindow: true
