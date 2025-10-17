@@ -38,19 +38,26 @@ const studyModeWidget = defineCollection({
   }),
 });
 
+const facultySchema = z.object({
+  photo: z.optional(z.string()),
+  name: z.string(),
+  category: z.enum(["faculty", "senior-adjunct", "adjunct"]),
+  order: z.optional(z.number()),
+  positions: z.optional(z.array(z.string())),
+  courses: z.array(z.string()),
+  degrees: z.array(z.string()),
+  moreDegrees: z.optional(z.array(z.string())),
+  former: z.optional(z.array(z.string())),
+});
+
 const faculty = defineCollection({
   loader: glob({ pattern: ['**/*.md', '**/*.mdx'], base: 'src/content/faculty'}),
-  schema: z.object({
-    photo: z.optional(z.string()),
-    name: z.string(),
-    category: z.enum(["faculty", "senior-adjunct", "adjunct"]),
-    order: z.number(),
-    positions: z.optional(z.array(z.string())),
-    courses: z.array(z.string()),
-    degrees: z.array(z.string()),
-    moreDegrees: z.optional(z.array(z.string())),
-    former: z.optional(z.array(z.string())),
-  }),
+  schema: facultySchema,
+});
+
+const adjunctProf = defineCollection({
+  loader: glob({ pattern: ['**/adjunct-prof.yml'], base: 'src/content/faculty'}),
+  schema: z.array(facultySchema)
 });
 
 const degreesPrograms = defineCollection({
@@ -84,4 +91,5 @@ export const collections = {
   "degrees-widget": degreesWidget,
   "study-mode-widget": studyModeWidget,
   "degrees-programs": degreesPrograms,
+  "adjunct-prof": adjunctProf,
 };

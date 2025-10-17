@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=../../../../.astro\collections\adjunct-prof.schema.json
 - name: 陳耀鵬牧師/博士
   category: adjunct
   courses:

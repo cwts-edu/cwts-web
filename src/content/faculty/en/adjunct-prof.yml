@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=../../../../.astro\collections\adjunct-prof.schema.json
 - name: Rev. Dr. David Chan
   category: adjunct
   courses:
@@ -117,8 +118,8 @@
     - Pastoral Theology
   degrees:
     - D. Min. Chinese for Christ Theological Seminary
-    - M. Div. Chinese for Christ Theological Seminary 
-    - M.A. California Graduate School of Theology 
+    - M. Div. Chinese for Christ Theological Seminary
+    - M.A. California Graduate School of Theology
 
 - name: Dr. Herbert Tsang
   category: adjunct
@@ -137,7 +138,7 @@
   degrees:
     - Ph.D. State University of New York
     - M.T.S Gordon-Conwell Theological Seminary
- 
+
 - name: Ms. Sandra Young
   category: adjunct
   courses:
