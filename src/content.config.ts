@@ -2,7 +2,7 @@ import { defineCollection, z } from "astro:content";
 import { glob, file } from 'astro/loaders';
 
 const pages = defineCollection({
-  loader: glob({ pattern: ['**/*.md', '**/*.mdx'], base: 'src/content/pages'}),
+  loader: glob({ pattern: ['**/*.md', '**/*.mdx'], base: 'src/content/pages' }),
   schema: z.object({
     title: z.string(),
     order: z.number(),
@@ -13,7 +13,7 @@ const pages = defineCollection({
 });
 
 const news = defineCollection({
-  loader: glob({ pattern: ['**/*.md', '**/*.mdx'], base: 'src/content/news'}),
+  loader: glob({ pattern: ['**/*.md', '**/*.mdx'], base: 'src/content/news' }),
   schema: z.object({
     title: z.string(),
     date: z.date(),
@@ -23,7 +23,7 @@ const news = defineCollection({
 });
 
 const degreesWidget = defineCollection({
-  loader: glob({ pattern: ['**/*.md', '**/*.mdx'], base: 'src/content/degrees-widget'}),
+  loader: glob({ pattern: ['**/*.md', '**/*.mdx'], base: 'src/content/degrees-widget' }),
   schema: z.object({
     title: z.string(),
     shortTitle: z.optional(z.string()),
@@ -31,7 +31,7 @@ const degreesWidget = defineCollection({
 });
 
 const studyModeWidget = defineCollection({
-  loader: glob({ pattern: ['**/*.md', '**/*.mdx'], base: 'src/content/study-mode-widget'}),
+  loader: glob({ pattern: ['**/*.md', '**/*.mdx'], base: 'src/content/study-mode-widget' }),
   schema: z.object({
     title: z.string(),
     order: z.number(),
@@ -51,17 +51,17 @@ const facultySchema = z.object({
 });
 
 const faculty = defineCollection({
-  loader: glob({ pattern: ['**/*.md', '**/*.mdx'], base: 'src/content/faculty'}),
+  loader: glob({ pattern: ['**/*.md', '**/*.mdx'], base: 'src/content/faculty' }),
   schema: facultySchema,
 });
 
 const adjunctProf = defineCollection({
-  loader: glob({ pattern: ['**/adjunct-prof.yml'], base: 'src/content/faculty'}),
+  loader: glob({ pattern: ['**/adjunct-prof.yml'], base: 'src/content/faculty' }),
   schema: z.array(facultySchema)
 });
 
 const degreesPrograms = defineCollection({
-  loader: glob({ pattern: ['**/*.md', '**/*.mdx'], base: 'src/content/degrees-programs'}),
+  loader: glob({ pattern: ['**/*.md', '**/*.mdx'], base: 'src/content/degrees-programs' }),
   schema: z.object({
     title: z.string(),
     order: z.number(),
@@ -74,13 +74,22 @@ const degreesPrograms = defineCollection({
 });
 
 const jobs = defineCollection({
-  loader: glob({ pattern: ['**/*.md', '**/*.mdx'], base: 'src/content/jobs'}),
+  loader: glob({ pattern: ['**/*.md', '**/*.mdx'], base: 'src/content/jobs' }),
   schema: z.object({
     title: z.string(),
     location: z.string(),
     date: z.date(),
     file: z.optional(z.string()),
   }),
+});
+
+const carousel = defineCollection({
+  loader: glob({ pattern: ['carousel.yml'], base: 'src/content/homepage' }),
+  schema: z.array(z.object({
+    link: z.string().optional(),
+    image: z.string(),
+    newWindow: z.boolean().optional(),
+  }))
 });
 
 export const collections = {
@@ -92,4 +101,5 @@ export const collections = {
   "study-mode-widget": studyModeWidget,
   "degrees-programs": degreesPrograms,
   "adjunct-prof": adjunctProf,
+  carousel,
 };

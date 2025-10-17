@@ -10,8 +10,20 @@ export type FacultyMetadata = CollectionEntry<"faculty">["data"] & {
 };
 
 const facultyPages = await getCollection("faculty");
-const adjunctFacultyZh = (await getEntry("adjunct-prof", "zh/adjunct-prof"))?.data;
-const adjunctFacultyEn = (await getEntry("adjunct-prof", "en/adjunct-prof"))?.data;
+const adjunctFacultyEnPage = await getEntry("adjunct-prof", "en/adjunct-prof");
+const adjunctFacultyZhPage = await getEntry("adjunct-prof", "zh/adjunct-prof");
+if (!adjunctFacultyEnPage) {
+  throw new Error(
+    "src/content/faculty/en/adjunct-prof.yml does not exist",
+  );
+}
+if (!adjunctFacultyZhPage) {
+  throw new Error(
+    "src/content/faculty/zh/adjunct-prof.yml does not exist",
+  );
+}
+const adjunctFacultyEn = adjunctFacultyEnPage.data;
+const adjunctFacultyZh = adjunctFacultyZhPage.data;
 
 function filterPagesByLanguageCategory(
   pages: CollectionEntry<"faculty">[],
