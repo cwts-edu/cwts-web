@@ -145,6 +145,18 @@ const translation = defineCollection({
   }))
 });
 
+const menuItemSchema = z.object({
+  page: z.string(),
+  noUrl: z.boolean().optional(),
+  includeChildren: z.boolean().optional(),
+  children: z.array(z.lazy(() => menuItemSchema)).optional(),
+});
+
+const menu = defineCollection({
+  loader: glob({ pattern: ['en.yml', 'zh.yml'], base: 'src/content/menu' }),
+  schema: z.array(menuItemSchema),
+});
+
 export const collections = {
   pages,
   news,
@@ -159,4 +171,5 @@ export const collections = {
   shortcuts,
   "degrees-widget-data": degreesWidgetData,
   translation,
+  menu,
 };
