@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=../../../.astro/collections/why-us.schema.json
 - image: /images/why-us/strong-faculty.svg
   en: Strong Faculty
   zh: 屬靈傳承

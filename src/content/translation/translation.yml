@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=../../../.astro/collections/translation.schema.json
 "(":
   en: "("
   zh: "（"

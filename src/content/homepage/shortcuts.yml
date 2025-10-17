@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=../../../.astro/collections/shortcuts.schema.json
 zh:
   - name: 奉獻支持
     url: "/zh/donation"

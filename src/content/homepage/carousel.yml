@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=../../../.astro\collections\carousel.schema.json
 - link: https://form.jotform.com/252375350795161
   image: /images/carousel/2025 Open House.jpg
   newWindow: true
@@ -6,9 +7,9 @@
 - link: /zh/ministry-institute/courses
   image: /images/carousel/MI-2025-Fall.jpg
 - link: /zh/ministry-institute/courses
-  image: /images/carousel/MI-2026-Spring.jpg  
+  image: /images/carousel/MI-2026-Spring.jpg
 - link: /zh/academic/degrees-programs/master-of-theological-essentials
-  image: /images/carousel/MTE Banner.jpg 
+  image: /images/carousel/MTE Banner.jpg
   newWindow: true
 - image: /images/carousel/2025 Book Launch.jpg
 - link: /zh/about/accreditation

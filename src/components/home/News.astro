@@ -1,10 +1,9 @@
 ---
 import Widget from "./Widget.astro";
-import Carousel, { Props as CarouselProps } from "./Carousel";
+import Carousel, { type Props as CarouselProps } from "./Carousel";
 import type { Language } from "@libs/language";
 import { T } from "@libs/language";
-import { getCollection, render } from "astro:content";
-import carouselData from "@data/carousel.yml";
+import { getCollection, getEntry, render } from "astro:content";
 
 export interface Props {
   language: Language;
@@ -12,14 +11,17 @@ export interface Props {
 
 const { language } = Astro.props;
 
-const carouselProps: CarouselProps = {
-  items: carouselData,
-};
+const carouselEntry = await getEntry("carousel", "carousel");
+if (!carouselEntry) {
+  throw new Error(
+    "Carousel content file 'carousel.yml' not found in the 'carousel' collection. This file is required.",
+  );
+}
+
+const carouselProps: CarouselProps = { items: carouselEntry.data };
 
 const news = await Promise.all(
-  (
-    await getCollection("news")
-  )
+  (await getCollection("news"))
     .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
     .slice(0, 4)
     .map(async (page) => ({
@@ -27,7 +29,7 @@ const news = await Promise.all(
       thumbnail: page.data.thumbnail,
       url: page.data.url,
       Content: (await render(page)).Content,
-    }))
+    })),
 );
 ---
 

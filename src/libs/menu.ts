@@ -1,3 +1,7 @@
+import { getEntry } from "astro:content";
+import type { Language } from "./language";
+import listChildren from "./listing";
+
 interface MenuDataLink {
   name: string;
   url?: string;
@@ -16,8 +20,6 @@ type MenuData = (MenuDataLink | MenuDataPage) & {
 function isMenuDataSlug(data: MenuData): data is MenuDataPage {
   return (data as MenuDataPage).page !== undefined;
 }
-
-import { getEntry } from "astro:content";
 
 export interface MenuItem {
   name: string;
@@ -58,10 +60,21 @@ async function convertMenu(menu: MenuData[]): Promise<MenuItem[]> {
   return await Promise.all(menu.map(async (m) => convertMenuDataToMenuItem(m)));
 }
 
-import menuZh from "@data/menu-zh.yml";
-import menuEn from "@data/menu-en.yml";
-import type { Language } from "./language";
-import listChildren from "./listing";
+const menuEnEntry = await getEntry("menu", "en");
+if (!menuEnEntry) {
+  throw new Error(
+    "Menu data file 'en.yml' not found in the 'menu' collection. This file is required.",
+  );
+}
+const menuEn = menuEnEntry.data;
+
+const menuZhEntry = await getEntry("menu", "zh");
+if (!menuZhEntry) {
+  throw new Error(
+    "Menu data file 'zh.yml' not found in the 'menu' collection. This file is required.",
+  );
+}
+const menuZh = menuZhEntry.data;
 
 const menu = {
   en: await convertMenu(menuEn as MenuData[]),

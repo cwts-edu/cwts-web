@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=../../../.astro/collections/menu.schema.json
 - page: "zh/about"
   noUrl: true
   includeChildren: true
