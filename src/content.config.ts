@@ -137,6 +137,14 @@ const degreesWidgetData = defineCollection({
   })
 });
 
+const translation = defineCollection({
+  loader: glob({ pattern: ['translation.yml'], base: 'src/content/translation' }),
+  schema: z.record(z.object({
+    en: z.string(),
+    zh: z.string(),
+  }))
+});
+
 export const collections = {
   pages,
   news,
@@ -150,4 +158,5 @@ export const collections = {
   "why-us": whyUs,
   shortcuts,
   "degrees-widget-data": degreesWidgetData,
+  translation,
 };

@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=../../../.astro/collections/degrees-widget-data.schema.json
 zh:
   - slug: doctor
   - slug: master
