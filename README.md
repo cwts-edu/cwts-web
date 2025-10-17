@@ -12,9 +12,7 @@ Read [Wiki](https://github.com/cwts-edu/cwts-web/wiki) for how to setup dev envi
 <dt>src/components</dt>
 <dd>Reusable components used in pages and layouts</dd>
 <dt>src/content</dt>
-<dd>Content collections, e.g. sub-section pages, faculty bio</dd>
-<dt>src/data</dt>
-<dd>Data files to config various parts of the site</dd>
+<dd>Content collections, e.g. sub-section pages, faculty bio, and configuration data files (YAML, CSV)</dd>
 <dt>src/scripts</dt>
 <dd>Client-side scripts</dd>
 <dt>src/libs</dt>
