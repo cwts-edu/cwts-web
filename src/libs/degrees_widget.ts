@@ -9,12 +9,12 @@ export interface DegreesWidgetDataItem {
   children?: DegreesWidgetDataItem[];
 }
 
+import { type CollectionEntry, getCollection, getEntry, render } from "astro:content";
+
 interface RawDataItem {
   slug: string;
   children?: RawDataItem[];
 }
-
-import data from "@data/degrees_widget.yml";
 
 async function findAndConvertData(
   raw: RawDataItem,
@@ -39,6 +39,14 @@ async function findAndConvertData(
 export default async function getDegreesWidgetData(
   language: Language
 ): Promise<DegreesWidgetDataItem[]> {
+  const dataEntry = await getEntry("degrees-widget-data", "degrees-widget");
+  if (!dataEntry) {
+    throw new Error(
+      "Degrees widget data file 'degrees-widget.yml' not found in the 'degrees-widget-data' collection. This file is required.",
+    );
+  }
+  const data = dataEntry.data;
+
   const contents = await getCollection(
     "degrees-widget",
     ({ id }) => getLanguageBySlug(id).language === language

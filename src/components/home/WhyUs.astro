@@ -1,7 +1,6 @@
 ---
-import Container from "@components/common/Container.astro";
-import dataRaw from "@data/why-us.yml";
-import { Language, T } from "@libs/language";
+import { T, type Language } from "@libs/language";
+import { getEntry } from "astro:content";
 import Widget from "./Widget.astro";
 
 export interface Props {
@@ -12,7 +11,13 @@ type DataItem = Record<Language, string> & {
   image: string;
 };
 
-const data = dataRaw as DataItem[];
+const whyUsEntry = await getEntry("why-us", "why-us");
+if (!whyUsEntry) {
+  throw new Error(
+    "Why Us content file 'why-us.yml' not found in the 'why-us' collection. This file is required.",
+  );
+}
+const data = whyUsEntry.data as DataItem[];
 
 const { language } = Astro.props;
 ---
