@@ -149,7 +149,9 @@ const menuItemSchema = z.object({
   page: z.string(),
   noUrl: z.boolean().optional(),
   includeChildren: z.boolean().optional(),
-  children: z.array(z.lazy(() => menuItemSchema)).optional(),
+  get children(): z.ZodOptional<z.ZodArray<any>> {
+    return z.array(menuItemSchema).optional();
+  }
 });
 
 const menu = defineCollection({
