@@ -1,14 +1,21 @@
+<<<<<<< HEAD:src/content/homepage/carousel.yml
 # yaml-language-server: $schema=../../../.astro\collections\carousel.schema.json
 - link: https://form.jotform.com/252085690191156
   image: /images/carousel/MSTB Banner.jpg
   newWindow: true
 - link: /zh/academic/degrees-programs/master-of-cross-cultural-leadership
   image: /images/carousel/MCL Banner.jpg
+=======
+>>>>>>> master:src/data/carousel.yml
 - link: https://form.jotform.com/252375350795161
   image: /images/carousel/2025 Open House.jpg
   newWindow: true
+- link: /zh/academic/degrees-programs/master-of-cross-cultural-leadership
+  image: /images/carousel/MCL Banner.jpg
 - link: /zh/ministry-institute/courses
   image: /images/carousel/MI-2025-Fall.jpg
+- link: /zh/ministry-institute/courses
+  image: /images/carousel/MI-2026-Spring.jpg  
 - link: /zh/academic/degrees-programs/master-of-theological-essentials
   image: /images/carousel/MTE Banner.jpg
   newWindow: true
