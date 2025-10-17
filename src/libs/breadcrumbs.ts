@@ -16,7 +16,7 @@ async function getBreadcrumbBySlug(
 ): Promise<Breadcrumb | undefined> {
   try {
     const { language, slug } = getLanguageBySlug(s);
-    if (slug.startsWith(facultyPrefix)) {
+    if (slug.startsWith(facultyPrefix) && !slug.endsWith('adjunct-professors')) {
       const pageSlug = slug.substring(facultyPrefix.length);
       const page = await getEntry("faculty", `${language}/${pageSlug}`);
       return (
@@ -28,12 +28,12 @@ async function getBreadcrumbBySlug(
       );
     }
 
-    if (slug.startsWith(degreesProgramsPrefix)) {
+    if (slug.startsWith(degreesProgramsPrefix) && language == "zh") {
       const pageSlug = slug.substring(degreesProgramsPrefix.length);
       const page = await getEntry("degrees-programs", `${language}/${pageSlug}`);
       return (
         page && {
-          title: page.data.name,
+          title: page.data.title,
           link: "/" + s,
           isSelf,
         }

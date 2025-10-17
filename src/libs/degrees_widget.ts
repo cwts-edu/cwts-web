@@ -1,4 +1,4 @@
-import { type CollectionEntry, getCollection, render } from "astro:content";
+import { type CollectionEntry, getCollection, getEntry, render } from "astro:content";
 import { getLanguageBySlug, type Language } from "./language";
 import type { MarkdownInstance } from "astro";
 
@@ -9,7 +9,6 @@ export interface DegreesWidgetDataItem {
   children?: DegreesWidgetDataItem[];
 }
 
-import { type CollectionEntry, getCollection, getEntry, render } from "astro:content";
 
 interface RawDataItem {
   slug: string;
@@ -30,8 +29,8 @@ async function findAndConvertData(
     Content: Content,
     children: raw.children
       ? await Promise.all(
-          raw.children.map(async (c) => findAndConvertData(c, contentMap))
-        )
+        raw.children.map(async (c) => findAndConvertData(c, contentMap))
+      )
       : undefined,
   };
 }
