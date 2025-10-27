@@ -3,6 +3,7 @@ photo: /images/faculty/rev-dr-tsai.jpg
 name: 蔡明謀博士/牧師
 category: faculty
 order: 101
+email: luke.tsai@cwts.edu
 positions:
   - 基督工人神學院院長
   - 新約副教授

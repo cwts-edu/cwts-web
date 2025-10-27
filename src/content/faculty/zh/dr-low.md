@@ -3,6 +3,7 @@ photo: /images/faculty/dr-low.jpg
 name: 劉浩宇博士
 category: faculty
 order: 107
+email: daniel.low@cwts.edu
 positions:
   - 學生實習部主任, 實踐神學副教授
 courses:

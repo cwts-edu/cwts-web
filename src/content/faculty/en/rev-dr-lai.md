@@ -3,6 +3,7 @@ photo: /images/faculty/rev-dr-lai.jpg
 name: Rev. Dr. Kenny Lai
 category: faculty
 order: 103
+email: kenny.lai@cwts.edu
 positions:
   - Vice President, Global Ministries
   - Associate Professor in New Testament

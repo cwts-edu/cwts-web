@@ -3,6 +3,7 @@ photo: /images/faculty/dr-low.jpg
 name: Dr. Daniel Low
 category: faculty
 order: 107
+email: daniel.low@cwts.edu
 positions:
   - Associate Professor in Practical Theology
 courses:

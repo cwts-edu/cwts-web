@@ -3,6 +3,7 @@ photo: /images/faculty/dr-ou.png
 name: Dr. Cindy Ou Liao
 category: faculty
 order: 110
+email: cindy.ou@cwts.edu
 positions:
   - Assistant Professor in New Testament
 courses:
