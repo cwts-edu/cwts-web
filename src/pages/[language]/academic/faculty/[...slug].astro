@@ -38,13 +38,7 @@ const {Content} = await render(page);
   titleClass={["max-md:text-center"]}
   mainImage={page.data.photo}
 >
-  {
-    page.data.positions && (
-      <div class="text-xl my-2 max-md:text-center">
-        {page.data.positions.join(T("position_separator", language))}
-      </div>
-    )
-  }
+
   <div
     class="mt-2 mb-6 flex gap-16 max-md:flex-col items-start max-md:items-stretch max-md:gap-6"
   >
@@ -54,8 +48,19 @@ const {Content} = await render(page);
           <img src={page.data.photo} width="240" height="240" />
         </div>
       )
-    }
+    }  
+
     <div class="flex flex-col gap-7 text-darkblue text-xl grow">
+      
+   {
+    page.data.positions && (
+      <div class="text-xl my-2 max-md:text-center">
+        <p>
+          <b>{page.data.positions.join(T("position_separator", language))}</b>
+        </p>
+      </div>
+      )
+    }
       <div>
         <p><b>{T("course_prefix", language)}</b></p>
         <p>{page.data.courses.join(T("course_separator", language))}</p>
