@@ -28,23 +28,16 @@ export interface Props {
 
 const { page, slug } = Astro.props;
 const language = getLanguageBySlug(slug).language;
-const {Content} = await render(page);
+const { Content } = await render(page);
 ---
 
 <SectionNoCover
   language={language}
   title={page.data.name}
   slug={slug}
-  titleClass={["max-md:text-center"]}
+  titleClass={["text-center"]}
   mainImage={page.data.photo}
 >
-  {
-    page.data.positions && (
-      <div class="text-xl my-2 max-md:text-center">
-        {page.data.positions.join(T("position_separator", language))}
-      </div>
-    )
-  }
   <div
     class="mt-2 mb-6 flex gap-16 max-md:flex-col items-start max-md:items-stretch max-md:gap-6"
   >
@@ -56,6 +49,22 @@ const {Content} = await render(page);
       )
     }
     <div class="flex flex-col gap-7 text-darkblue text-xl grow">
+      {
+        (page.data.positions || page.data.email) && (
+          <div>
+            {page.data.positions && (
+              <p>
+                {page.data.positions.join(T("position_separator", language))}
+              </p>
+            )}
+            {page.data.email && (
+              <p>
+                <a href="mailto:{page.data.email}">{page.data.email}</a>
+              </p>
+            )}
+          </div>
+        )
+      }
       <div>
         <p><b>{T("course_prefix", language)}</b></p>
         <p>{page.data.courses.join(T("course_separator", language))}</p>
