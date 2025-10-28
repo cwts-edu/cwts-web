@@ -3,6 +3,7 @@ import SectionNoCover from "@layouts/SectionNoCover.astro";
 import { getLanguageBySlug, T } from "@libs/language";
 import { render } from "astro:content";
 import { type CollectionEntry, getCollection } from "astro:content";
+import { ObfuscatedEmail } from "astro-obfuscate/components";
 
 export async function getStaticPaths() {
   const pages = await getCollection("faculty");
@@ -59,7 +60,7 @@ const { Content } = await render(page);
             )}
             {page.data.email && (
               <p>
-                <a href="mailto:{page.data.email}">{page.data.email}</a>
+                <ObfuscatedEmail email={page.data.email} />
               </p>
             )}
           </div>
