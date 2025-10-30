@@ -3,6 +3,7 @@ photo: /images/faculty/rev-dr-lai.jpg
 name: 賴可中博士/牧師
 category: faculty
 order: 103
+email: kenny.lai@cwts.edu
 positions:
   - 基督工人神學院副院長
   - 新約副教授

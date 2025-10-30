@@ -43,6 +43,7 @@ const facultySchema = z.object({
   name: z.string(),
   category: z.enum(["faculty", "senior-adjunct", "adjunct"]),
   order: z.optional(z.number()),
+  email: z.string().email().optional(),
   positions: z.optional(z.array(z.string())),
   courses: z.array(z.string()),
   degrees: z.array(z.string()),

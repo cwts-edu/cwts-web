@@ -3,6 +3,7 @@ photo: /images/faculty/dr-ou.png
 name: 歐雨虹博士
 category: faculty
 order: 110
+email: cindy.ou@cwts.edu
 positions:
   - 神學碩士科主任, 新約助理教授
 courses:
