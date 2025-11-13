@@ -1,7 +1,6 @@
 # yaml-language-server: $schema=../../../.astro\collections\carousel.schema.json
-- link: https://form.jotform.com/252375350795161
-  image: /images/carousel/2025 Open House.jpg
-  newWindow: true
+- link: /zh/donation/
+  image: /images/carousel/2026 Matching Fund.jpg
 - link: /zh/academic/degrees-programs/master-of-cross-cultural-leadership
   image: /images/carousel/MCL Banner.jpg
 - link: /zh/ministry-institute/courses
