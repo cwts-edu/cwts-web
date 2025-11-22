@@ -3,6 +3,7 @@ photo: /images/faculty/rev-dr-tsai.jpg
 name: Rev. Dr. Luke Tsai
 category: faculty
 order: 101
+email: luke.tsai@cwts.edu
 positions:
   - President in CWTS
   - Associate Professor in New Testament

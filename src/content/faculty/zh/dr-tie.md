@@ -3,6 +3,7 @@ photo: /images/faculty/dr-tie.jpg
 name: 池峈鋒博士
 category: faculty
 order: 104
+email: peter.tie@cwts.edu
 positions:
   - 基督工人神學院教務主任
   - 系統神學副教授

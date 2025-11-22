@@ -3,6 +3,7 @@ photo: /images/faculty/rev-dr-lo.jpg
 name: Rev. Dr. Andrew Lo
 category: faculty
 order: 106
+email: andrew.lo@cwts.edu
 positions:
   - Director of D.Min. Program
   - Dean of Student Affairs
