@@ -118,7 +118,7 @@ thumbnail: "/images/covers/news-events/bay-area-bible-convention.thumbnail.jpg"
 **講員 Speaker：[梁澤銘博士](#梁澤銘博士)**
 
 <details>
-<summary> [靈命+領導力] B5: 葛培理：一位僕人型領袖的一生 (Zoom) </summary>
+<summary> [聖經、教會歷史] B5: 葛培理：一位僕人型領袖的一生 (Zoom) </summary>
 
 </details>
 
