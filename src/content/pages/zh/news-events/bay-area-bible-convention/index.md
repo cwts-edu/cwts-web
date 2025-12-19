@@ -59,7 +59,7 @@ thumbnail: "/images/covers/news-events/bay-area-bible-convention.thumbnail.jpg"
 **講員：[余萃平牧師](#余萃平牧師)**
 
 <details>
-<summary> [靈命+EQ ] A2 : </summary>
+<summary> [靈命+EQ ] A2 : 面對吐槽的時代，從耶穌學習如何面對批評 </summary>
 </details>
 
 **講員：[歐雨虹博士](#歐雨虹博士)**
@@ -93,15 +93,15 @@ thumbnail: "/images/covers/news-events/bay-area-bible-convention.thumbnail.jpg"
 
 </details>
 
-**講員：[黃英敏牧師 ](#黃英敏牧師)**
+**講員：[黃英敏牧師](#黃英敏牧師)**
 
 <details>
 
-<summary> [靈命+EQ] B2:  </summary>
+<summary> [靈命+EQ] B2: 面對信任崩解的時代，從耶穌學習如何發揮領導力 </summary>
 
 </details>
 
-**講員：[歐雨虹博士 ](#歐雨虹博士 )**
+**講員：[歐雨虹博士](#歐雨虹博士 )**
 
 <details>
 <summary> [家庭] B3: 先仆后领 </summary>
@@ -140,7 +140,7 @@ thumbnail: "/images/covers/news-events/bay-area-bible-convention.thumbnail.jpg"
 <div class="bio">
 
 #### 余萃平牧師
-![余萃平牧師 ](/images/babc/2026/yu.jpg)
+![余萃平牧師](/images/babc/2026/yu.jpg)
 
 余萃平牧師生長於台灣，1972年大學期間蒙恩跟從主。於1977年移民至加州舊金山灣區，從事銀行金融方面的工作近20年。1996年蒙神呼召，開始全職傳道服侍主，並同時在西方神學院（Western Seminary, San Jose）進修，多年後完成道學碩士學位的裝備。1998年開始在加州核桃溪市康郡福音教會牧會，主導英語事工; 2013年至今以服事華語會眾為主。其間21年擔任教牧委員會主席的職份，帶領全教會的牧者團隊及執事同工團隊侍奉主。余牧師和師母結婚48年，育有三位已成年的子女。
 </div>
@@ -148,9 +148,9 @@ thumbnail: "/images/covers/news-events/bay-area-bible-convention.thumbnail.jpg"
 <div class="bio">
 
 #### 歐雨虹博士
-![歐雨虹博士](/images/babc/2026/dr-ou.png)
+![歐雨虹博士](/images/babc/2026/dr-ou.jpg)
 
-歐雨虹博士現任基督工人神學院神學碩士科主任, 新約助理教授，主授福音書, 新約，三一神學院哲學博士 (主修新約)。歐老師出生於台灣，從小在基督徒家庭長大，年幼時信主，六歲隨家人來美國。大學期間蒙神呼召，畢業後開始讀神學，研究興趣包括耶穌的情感學、新約中的女性、崇拜學、聖經神學。在教會參與講道與司琴的服事。歐老師與師丈育有兩個兒子。平時喜歡與兒子共讀繪本與小說。
+歐雨虹博士現任基督工人神學院神學的新約助理教授，主授福音書與釋經學，從三一神學院取得新約博士。歐老師出生於台灣，從小在基督徒家庭長大，年幼時信主，六歲隨家人來美國。大學期間蒙神呼召，畢業後開始讀神學，研究興趣包括耶穌情感學、聖經中的女性、崇拜學、聖經神學。在教會參與講道與司琴的服事。歐老師與師丈育有兩個兒子。平時喜歡與兒子共讀繪本與小說。
 </div>
 
 <div class="bio">
