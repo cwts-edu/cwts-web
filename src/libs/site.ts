@@ -5,13 +5,11 @@ const siteData = {
     title: "Christian Witness Theological Seminary",
     shortTitle: "CWTS",
     home: "/en",
-    coverVideoTitle: "",
   },
   zh: {
     title: "CWTS 基督工人神學院",
     shortTitle: "基督工人神學院",
     home: "/",
-    coverVideoTitle: "",
   },
 };
 
@@ -27,10 +25,6 @@ class Site {
   }
   defaultCover = "/images/covers/default.cover.jpg";
   defaultThumbnail = "/images/covers/default.thumbnail.jpg";
-  coverVideoId = "";
-  coverVideoTitle(language: Language): string {
-    return siteData[language].coverVideoTitle;
-  }
 }
 
 export default new Site();

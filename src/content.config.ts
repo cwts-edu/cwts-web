@@ -92,15 +92,6 @@ const carousel = defineCollection({
   }))
 });
 
-const whyUs = defineCollection({
-  loader: glob({ pattern: ['why-us.yml'], base: 'src/content/homepage' }),
-  schema: z.array(z.object({
-    image: z.string(),
-    en: z.string(),
-    zh: z.string(),
-  }))
-});
-
 const shortcuts = defineCollection({
   loader: glob({ pattern: ['shortcuts.yml'], base: 'src/content/homepage' }),
   schema: z.object({
@@ -169,7 +160,6 @@ export const collections = {
   "degrees-programs": degreesPrograms,
   "adjunct-prof": adjunctProf,
   carousel,
-  "why-us": whyUs,
   shortcuts,
   "degrees-widget-data": degreesWidgetData,
   translation,
