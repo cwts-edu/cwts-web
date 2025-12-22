@@ -35,6 +35,13 @@ For a number of years, Dr. Lau has been attending Tri-Valley Chinese Bible Churc
   - Dip.Ed., University of Hong Kong, 1975
   - Dip.Th., Singapore Discipleship Training Centre, 1974
   - B.Sc., University of Hong Kong, 1969
+- **Former Ministries:**
+  - Director of Human Resources (CWTS)
+  - Associate Professor (CWTS)
+  - Registrar & Director of Field Education, Christian Witness Theological Seminary
+  - Director of Administration & Director of Development, Bible Seminary of Hong Kong
+  - High School Principal
+  - High School Teacher and Religious Education Director
 - **Selected Publications (in Chinese):**
   - A. Books:
     - _Holistic Christian Education: Christian Education Training Handbook_ 2007

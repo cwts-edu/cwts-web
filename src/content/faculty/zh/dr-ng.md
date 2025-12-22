@@ -29,6 +29,12 @@ former:
   - M.A. 1975, Indiana University 文學碩士（宗教研究）
   - M.A. 1973, Trinity Evangelical Divinity School 文學碩士（新約）
   - B. Sc. 1968, Hong Kong University 理學士 (動物學，植物學)
+- **曾任：**
+  - 基督工人神學院教務主任
+  - 基督工人神學院註冊主任
+  - 惠敦大學訪問助理教授
+  - 中國神學研究院講師
+  - 中國神學研究院出版部主任及總編輯
 - **已出版著述:**
   - _Reconstructing Christian Origins? The Feminist Theology of Elisabeth Schüssler Fiorenza: An Evaluation_《重繪基督教起源？評估費奧倫莎的婦女神學》（英文）（Paternoster, 2002）.
   - 《義僕與君王：馬太福音注釋（上、下冊）》 （中國神學研究院，1996）

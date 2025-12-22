@@ -3,6 +3,7 @@ photo: /images/faculty/dr-ou.png
 name: 歐雨虹博士
 category: faculty
 order: 110
+email: cindy.ou@cwts.edu
 positions:
   - 神學碩士科主任, 新約助理教授
 courses:
@@ -25,6 +26,11 @@ former:
   - Ph.D., Trinity Evangelical Divinity School, 2020. 哲學博士 (主修新約)
   - M.Div., Southwestern Baptist Theological Seminary, 2011. 道學碩士
   - B.M. University of Texas at Austin, 2008. 音樂學士 (主修鋼琴演奏)
+- **曾任：**
+  - 創新神學院客座教授
+  - 三一福音神學院客座講師
+  - 巴拿巴聖經與輔導學院教授
+  - 提摩太國際教育學院講師
 - **博士論文:**
   - Temple and Possessions: The Economic Vision of the People of God in Acts 1-5
 - **著述:**

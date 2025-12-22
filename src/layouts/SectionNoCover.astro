@@ -8,31 +8,46 @@ import BreadcrumbsJsonLd from "@components/section/BreadcrumbsJsonLd.astro";
 
 export interface Props {
   language: Language;
-  title: string;
+  title?: string;
   titleClass?: string[];
   slug: string;
   mainImage?: string;
+  hideTitle?: boolean;
 }
 
-const { language, title, titleClass = [], slug, mainImage } = Astro.props;
+const {
+  language,
+  title,
+  titleClass = [],
+  slug,
+  mainImage,
+  hideTitle = false,
+} = Astro.props;
+
+const pageTitle = title
+  ? `${title} - ${site.shortTitle(language)}`
+  : site.shortTitle(language);
 ---
 
-<Base
-  language={language}
-  title={`${title} - ${site.shortTitle(language)}`}
-  image={mainImage}
->
+<Base language={language} title={pageTitle} image={mainImage}>
   <Fragment slot="head">
     <BreadcrumbsJsonLd slug={slug} />
   </Fragment>
   <Breadcrumbs slug={slug} />
   <div class="bg-beige">
     <Container classList={["pb-6"]}>
-      <h1
-        class:list={["pt-6 text-3xl font-bold text-darkviolet", ...titleClass]}
-      >
-        {title}
-      </h1>
+      {
+        title && !hideTitle && (
+          <h1
+            class:list={[
+              "pt-6 text-3xl font-bold text-darkviolet",
+              ...titleClass,
+            ]}
+          >
+            {title}
+          </h1>
+        )
+      }
       <slot />
     </Container>
   </div>

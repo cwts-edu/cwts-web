@@ -3,6 +3,7 @@ photo: /images/faculty/dr-tie.jpg
 name: 池峈鋒博士
 category: faculty
 order: 104
+email: peter.tie@cwts.edu
 positions:
   - 基督工人神學院教務主任
   - 系統神學副教授
@@ -27,6 +28,9 @@ former:
   - S.T.M., Dallas Theological Seminary (Systematic Theology), 2003. 神學碩士（主修系統神學）
   - M. Div., New Orleans Baptist Theological Seminary (Christian Thought), 2001. 道學碩士（主修基督教思想）
   - B.S., University of Central Arkansas (Psychology), 1997. 學士（主修心理學）
+- **曾任：**
+  - 澳洲墨爾本神學院中文部神學講師 （2012-2016）
+  - 澳洲墨爾本神學院中文部實習負責人（2012-2016）
 - **著述:**
   - A. 書籍:
     - _Spirit Wind: The Doctrine of the Holy Spirit in Global Theology: A Chinese Perspective._ Edited by Peter L. H. Tie and Justin T. T. Tan. Eugene, OR: Pickwick, 2020

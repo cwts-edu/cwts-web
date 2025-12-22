@@ -3,6 +3,7 @@ photo: /images/faculty/rev-dr-lo.jpg
 name: Rev. Dr. Andrew Lo
 category: faculty
 order: 106
+email: andrew.lo@cwts.edu
 positions:
   - Director of D.Min. Program
   - Dean of Student Affairs
@@ -37,6 +38,10 @@ Pastor Lo enjoys playing and watching basketball, baseball, foosball, playing gu
   - Th.M., Logos Evangelical Seminary
   - M.Div., Logos Evangelical Seminary
   - M.S., University of Southern California (USC)
+- **Former Ministries:**
+  - Lead Pastor, Fort Bend Community Church, Houston, Texas
+  - Pastor, Fort Bend Community Church, Houston, Texas
+  - Visiting teacher, Global Mission Seminary
 - **Publications:**
   - _Step by Step, Truth and Clarity Toward an Old Testament Exegesis_ (Th.M. Thesis)
   - _Developing a Family-Oriented Discipleship Theory and Strategy for the Ethnic Chinese Churches in North America._ (D.Min. Dissertation, 2022).

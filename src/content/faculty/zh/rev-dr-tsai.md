@@ -3,6 +3,7 @@ photo: /images/faculty/rev-dr-tsai.jpg
 name: 蔡明謀博士/牧師
 category: faculty
 order: 101
+email: luke.tsai@cwts.edu
 positions:
   - 基督工人神學院院長
   - 新約副教授
@@ -29,6 +30,8 @@ former:
   - Th.M. 2009, Dallas Theological Seminary, 神學碩士
   - M.S. 1996, Stanford University, 電機碩士
   - B.S. 1992, University of California, Berkeley, 理學士（主修電機電腦）
+- **曾任：**
+  - 基督之家第一家英文部牧師﹑負責人
 - **著述:**
   - 博士論文:
     - _Brothers in Dispute: A Socio-Economic and Legal Analysis of the Litigants in the Church of Corinth._

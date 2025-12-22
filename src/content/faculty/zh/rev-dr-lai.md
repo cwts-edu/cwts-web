@@ -3,6 +3,7 @@ photo: /images/faculty/rev-dr-lai.jpg
 name: 賴可中博士/牧師
 category: faculty
 order: 103
+email: kenny.lai@cwts.edu
 positions:
   - 基督工人神學院副院長
   - 新約副教授
@@ -29,6 +30,9 @@ former:
   - S.T.M. 2001, Dallas Theological Seminary 神學碩士
   - M.Div. 1999, Overseas Theological Seminary 道學碩士
   - M.S.E.E. 1982, University of California, Los Angeles 電機碩士
+- **曾任：**
+  - 海外神學院教務主任及專任教授
+  - 德州愛運恩友堂會牧
 - **著述:**
   - 《彼得前書 – 經歷苦難進入榮耀》 明道研經叢書。香港：明道出版社 2010
   - _The Holy Spirit in 1 Peter: A Study of Petrine Pneumatology in Light of the Isaianic New Exodus_ (彼得前書的聖靈論) （博士論文）

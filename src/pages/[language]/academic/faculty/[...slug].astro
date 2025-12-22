@@ -3,6 +3,7 @@ import SectionNoCover from "@layouts/SectionNoCover.astro";
 import { getLanguageBySlug, T } from "@libs/language";
 import { render } from "astro:content";
 import { type CollectionEntry, getCollection } from "astro:content";
+import { ObfuscatedEmail } from "astro-obfuscate/components";
 
 export async function getStaticPaths() {
   const pages = await getCollection("faculty");
@@ -28,54 +29,56 @@ export interface Props {
 
 const { page, slug } = Astro.props;
 const language = getLanguageBySlug(slug).language;
-const {Content} = await render(page);
+const { Content } = await render(page);
 ---
 
 <SectionNoCover
   language={language}
   title={page.data.name}
+  hideTitle={true}
   slug={slug}
-  titleClass={["max-md:text-center"]}
   mainImage={page.data.photo}
 >
-  {
-    page.data.positions && (
-      <div class="text-xl my-2 max-md:text-center">
-        {page.data.positions.join(T("position_separator", language))}
-      </div>
-    )
-  }
-  <div
-    class="mt-2 mb-6 flex gap-16 max-md:flex-col items-start max-md:items-stretch max-md:gap-6"
-  >
+  <div class="pt-6 flex flex-col gap-6 md:flex-row md:gap-9 items-start">
     {
       page.data.photo && (
-        <div class="grow-0 shrink-0 flex justify-center">
-          <img src={page.data.photo} width="240" height="240" />
+        <div class="shrink-0 w-full md:w-[240px]">
+          <img
+            src={page.data.photo}
+            class="w-full aspect-square object-cover md:w-[240px] md:h-[240px]"
+            alt={page.data.name}
+          />
         </div>
       )
     }
-    <div class="flex flex-col gap-7 text-darkblue text-xl grow">
-      <div>
-        <p><b>{T("course_prefix", language)}</b></p>
-        <p>{page.data.courses.join(T("course_separator", language))}</p>
-      </div>
+    <div class="flex flex-col gap-6 text-black text-xl grow">
+      <h1 class="text-3xl font-bold text-darkviolet">{page.data.name}</h1>
       {
-        page.data.former && (
-          <div>
-            <p>
-              <b>{T("former_prefix", language)}</b>
-            </p>
-            {page.data.former.map((position) => (
-              <p>{position}</p>
-            ))}
-          </div>
+        page.data.positions && (
+          <p class="font-bold">
+            {page.data.positions.join(T("position_separator", language))}
+          </p>
+        )
+      }
+      {
+        page.data.email && (
+          <p>
+            <ObfuscatedEmail email={page.data.email} />
+          </p>
+        )
+      }
+      {
+        page.data.courses && page.data.courses.length > 0 && (
+          <p>
+            <span class="font-bold">{T("course_prefix", language)}</span>
+            {page.data.courses.join(T("course_separator", language))}
+          </p>
         )
       }
     </div>
   </div>
   <div
-    class="prose prose-ul:list-none prose-ul:pl-0 prose-li:ml-0 prose-li:pl-0 prose-li:my-2"
+    class="mt-10 prose prose-ul:list-none prose-ul:pl-0 prose-li:ml-0 prose-li:pl-0 prose-li:my-2"
   >
     <Content />
   </div>
