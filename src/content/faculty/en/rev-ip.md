@@ -35,6 +35,13 @@ In the past, Rev. Ip has a lot of experience learning different languages. In or
   - M. Div. 1982, Fuller Theological Seminary
   - BA, MA 1978-1980, Azusa Pacific University
   - Diploma, 1975 Overseas Theological Seminary (HK)
+- **Former Ministries:**
+  - Vice President, Associate Professor in Old Testament in CWTS (1995-2022)
+  - Pastor in Chinese Christian Church, Houston, Texas
+  - Pastor in First Chinese Baptist Church, Virginia
+  - Assistant Pastor in Chinese Christian Church of New England
+  - Coordinator in North American Congress of Chinese Evangelicals
+  - Pastor in Peace Evangelical Center, Hong Kong
 - **Publications in Chinese::**
     - _3D Bible Study Series: Knowing History II: Returning to the road of Faith._ (Guest Speaker) Christian Communications (Canada), 2011.
     - _A Survey of the Bible with Sound--Study Guide_ (co-author) U.S.A.: Christian Communications Inc. of U.S.A., 1991.

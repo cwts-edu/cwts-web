@@ -28,6 +28,17 @@ Pastor Tsang graduated from Bethel Bible Seminary in Hong Kong in his early year
   - Ph.D., University of Sheffield (UK), 1989
   - Th.M., Princeton Theological Seminary , 1982
   - M.Div., Fuller Theological Seminary, 1976
+- **Former Ministries:**
+  - Dean of Students and Director of Field Education (CWTS)
+  - Associate Professor (CWTS)
+  - Lecturer, COCM Bible College (UK)
+  - Senior Pastor, Manchester Chinese Christian Church (UK)
+  - Academic Dean & Lecturer , Bible Seminary of Hong Kong
+  - Lecturer, Evangel Theological College (Hong Kong)
+  - Pastor in charge, Hong Kong Bethel Church (Hong Kong)
+  - Lecturer, Bethel Bible Seminary (Hong Kong)
+  - Director of Religious Education, Bethel High School (Hong Kong)
+  - Evangelist, Hong Kong Bethel Church
 - **Publications in Chinese:**
   - Monographs
     - _Numbers,_ Tien Dao Bible Commentary. Hong Kong: Tien Dao Publishing House, 2006.

@@ -33,6 +33,8 @@ Dr. Tsai and his wife Jackie have two daughters, Dorothy and Susannah. In his sp
   - Th.M. 2009, Dallas Theological Seminary
   - M.S. 1996, Stanford University
   - B.S. 1992, University of California, Berkeley
+- **Former Ministries:**
+  - English pastor at Home of Christ Church in Menlo Park
 - **Publications:**
   - PhD Dissertation:
     - _Brothers in Dispute: A Socio-Economic and Legal Analysis of the Litigants in the Church of Corinth._

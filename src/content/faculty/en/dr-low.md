@@ -32,6 +32,11 @@ His research focuses on cross-cultural education, the religious identity of Budd
   - Ph.D, Biola University (Intercultural Education), 2014. 哲学博士 (跨文化教育)
   - M.Div. (Missions), Southwestern Baptist Theological Seminary, 2008. 道學碩士 (宣教)
   - B.A. (Honors), Nanyang Technological University National Institute of Education, 1999. 學士 (教育)
+- **Former Ministries:**
+  - William Carey International University, Vice President Academic Affairs (2020 – 2022)
+  - Raffles Christian International School, Dean-Principal (2018 – 2020)
+  - Concordia University Chicago, Program Director Master of Arts Teaching (2015 – 2018)
+  - Ministry of Education Singapore (1999 – 2005)
 - **Publications:**
   - Low, D. (2024). The Intersection of Two Missiological Voices: A Contemporary Education Model for Chinese Missionaries in Linda P. Saunders, Gregory Mathias, and Ed Smither (Eds.). _Equipping for Global Mission (EMS 32): Theological and Missiological Proposals and Case Studies._ Littleton, CO: William Carey Press.
   - Low, D. (2022). Review of Internationalizing the university: A spiritual approach, by Unkule, K. _International Journal of Christianity and Higher Education,_ 26(1), 96 – 97.

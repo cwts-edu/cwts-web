@@ -27,6 +27,11 @@ Born into a Christian home in Taiwan, Cindy Ou accepted Christ at a young age an
   - Ph.D. in New Testament, Trinity Evangelical Divinity School, 2020.
   - M.Div., Southwestern Baptist Theological Seminary, 2011.
   - B.M. in Piano Performance, University of Texas at Austin, 2008.
+- **Former Ministries:**
+  - Adjunct Professor at GETS Theological Seminary
+  - Adjunct Professor at Trinity Evangelical Divinity School
+  - Instructor at Barnabas School of Bible and Counseling
+  - Instructor at Timothy Training International
 - **Ph.D. Dissertation**
   - Temple and Possessions: The Economic Vision of the People of God in Acts 1-5.
 - **Publications:**

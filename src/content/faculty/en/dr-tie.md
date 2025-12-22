@@ -28,6 +28,9 @@ Born and raised in a Chinese family in Malaysia, Dr. Tie accepted Christ as his 
   - S.T.M., Dallas Theological Seminary (Systematic Theology), 2003.
   - M. Div., New Orleans Baptist Theological Seminary (Christian Thought), 2001.
   - B.S., University of Central Arkansas (Psychology), 1997.
+- **Former Ministries:**
+  - Lecturer in Theology, Melbourne School of Theology, Australia, 2012-2016
+  - Fieldwork Coordinator, Melbourne School of Theology, Australia, 2012-2016
 - **Publications:**
   - A. Books:
     - _Spirit Wind: The Doctrine of the Holy Spirit in Global Theology: A Chinese Perspective._ Edited by Peter L. H. Tie and Justin T. T. Tan. Eugene, OR: Pickwick, 2020.
