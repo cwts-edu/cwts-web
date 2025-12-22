@@ -111,8 +111,6 @@ HTML page generation starts from `src/pages/`.
 The homepage is a specialized page (`src/pages/index.astro` and `src/pages/en/index.astro`) composed of modular widgets.
 -   **Widgets:** The homepage logic is implemented via independent components located in `src/components/home/`.
 -   **Key Widgets:**
-    -   `VisionAndMission`: Displays the school's core values.
-    -   `WhyUs`: Highlights unique selling points.
     -   `News`: Fetches and displays recent news items from the content collection.
     -   `Degrees`: Showcases degree programs.
     -   `StudyModes`: Explains available learning formats.
