@@ -37,7 +37,7 @@ thumbnail: "/images/covers/student-life/calendar.thumbnail.jpg"
 | >                                      | **SPRING SEMESTER 2026**                 |
 | New Student Orientation                | Monday, January 12                       |
 | Tuition Fees Due                       | Friday, January 16                       |
-| Beginning of Regular Classes           | Monday, January 29                       |
+| Beginning of Regular Classes           | Monday, January 19                       |
 | President’s Day (no class)             | Monday, February 16                      |
 | Chinese/Lunar New Year Celebration     | Wednesday, February 18                   |
 | Taste of CWTS (Zoom)                   | Friday, March 6                          |
