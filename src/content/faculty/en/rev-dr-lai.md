@@ -3,6 +3,7 @@ photo: /images/faculty/rev-dr-lai.jpg
 name: Rev. Dr. Kenny Lai
 category: faculty
 order: 103
+email: kenny.lai@cwts.edu
 positions:
   - Vice President, Global Ministries
   - Associate Professor in New Testament
@@ -31,6 +32,9 @@ Besides teaching in seminary, Rev. Lai also preaches in different churches, part
   - S.T.M. 2001, Dallas Theological Seminary
   - M.Div. 1999, Overseas Theological Seminary
   - M.S.E.E. 1982, University of California, Los Angeles
+- **Former Ministries:**
+  - Academic Dean and Professor in Overseas Theological Seminary
+  - Pastor, Chinese Gospel Church, Coppell, TX
 - **Publications:**
   - A. Monographs
     - _First Peter: Undergoing Suffering, Entering Glory._ Hong Kong: Ming Dao Press, 2010 (in Chinese).

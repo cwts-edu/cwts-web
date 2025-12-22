@@ -3,6 +3,7 @@ photo: /images/faculty/rev-dr-lo.jpg
 name: 羅一強博士/牧師
 category: faculty
 order: 106
+email: andrew.lo@cwts.edu
 positions:
   - 教牧博士科主任
   - 基督工人神學院學生事務主任
@@ -33,6 +34,10 @@ former:
   - Th.M., Logos Evangelical Seminary 神學碩士
   - M.Div., Logos Evangelical Seminary 道學碩士
   - M.S., University of Southern California (USC) 環境工程碩士
+- **曾任：**
+  - 德州休士頓福遍中國教會 國語堂帶領牧師
+  - 德州休士頓福遍中國教會 國語堂牧師
+  - 普世宣教神學院 客座教師
 - **著述:**
   - _Step by Step, Truth and Clarity Toward an Old Testament Exegesis_ (舊約釋經初期工作 – 經文核心概念之形成與方法論之確認) (Th.M. 論文)
   - _Developing a Family-Oriented Discipleship Theory and Strategy for the Ethnic Chinese Churches in North America_ (北美華人教會在家庭實踐門徒訓練的理論與策略) (D.Min. 論文)

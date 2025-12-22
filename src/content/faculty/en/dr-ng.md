@@ -28,6 +28,12 @@ Dr. Esther Ng grew up in a Christian family in Hong Kong. While studying at Hong
   - M.A. 1975, Indiana University, U.S.A. (Religious Studies)
   - M.A. 1973, Trinity Evangelical Divinity School, U.S.A. (New Testament)
   - B.Sc. 1968, Hong Kong University, Hong Kong (Botany, Zoology)
+- **Former Ministries:**
+  - Academic Dean, Christian Witness Theological Seminary
+  - Registrar, Christian Witness Theological Seminary
+  - Visiting Assistant Professor, Wheaton College
+  - Lecturer, China Graduate School of Theology (Hong Kong)
+  - Chief Editor and Director of Publications, China Graduate School of Theology (Hong Kong)
 - **Selected Publications:**
   - A. Monographs
     - _Reconstructing Christian Origins? The Feminist Theology of Elisabeth Schüssler Fiorenza: An Evaluation._ Paternoster Biblical and Theological Monographs. Carlisle: Paternoster, 2002.
