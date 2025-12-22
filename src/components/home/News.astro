@@ -41,17 +41,22 @@ const news = await Promise.all(
 
   <div
     class:list={[
-      "flex gap-3 scrollbar-hide pt-4",
-      "lg:justify-between",
-      "max-lg:overflow-x-auto",
+      "grid pt-4 gap-6 justify-between",
+      "md:grid-cols-[repeat(4,minmax(0,200px))]",
+      "grid-cols-[repeat(2,minmax(0,200px))]",
+      "max-xs:grid-cols-1",
     ]}
   >
     {
       news.map((item) => (
-        <div class="w-[12.5rem] shrink-0">
-          <a href={item.url}>
+        <div class="w-full max-w-[200px] max-xs:max-w-none">
+          <a href={item.url} class="block">
             <div>
-              <img width="200" height="110" src={item.thumbnail} />
+              <img
+                src={item.thumbnail}
+                class="w-full aspect-[200/110] object-cover"
+                alt={item.title}
+              />
             </div>
             <div class="text-base py-2">{item.title}</div>
             <div class="text-xs whitespace-normal">

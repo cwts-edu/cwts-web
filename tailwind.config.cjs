@@ -112,9 +112,9 @@ module.exports = {
               paddingRight: em(10, 20),
             },
             "thead th:first-child, tbody td:first-child, tfoot td:first-child":
-              {
-                paddingRight: em(10, 20),
-              },
+            {
+              paddingRight: em(10, 20),
+            },
             iframe: {
               maxWidth: "100%",
             },
@@ -162,6 +162,7 @@ module.exports = {
       ui: ['"Roboto Condensed"', ...defaultFont],
     },
     screens: {
+      xs: "348px",
       sm: "576px",
       md: "768px",
       lg: "1024px",
