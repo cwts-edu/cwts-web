@@ -27,6 +27,7 @@ const degreesWidget = defineCollection({
   schema: z.object({
     title: z.string(),
     shortTitle: z.optional(z.string()),
+    order: z.number(),
   }),
 });
 
@@ -35,6 +36,7 @@ const studyModeWidget = defineCollection({
   schema: z.object({
     title: z.string(),
     order: z.number(),
+    url: z.optional(z.string()),
   }),
 });
 
@@ -111,24 +113,6 @@ const shortcuts = defineCollection({
   })
 });
 
-const degreesWidgetData = defineCollection({
-  loader: glob({ pattern: ['degrees-widget.yml'], base: 'src/content/homepage' }),
-  schema: z.object({
-    zh: z.array(z.object({
-      slug: z.string(),
-      children: z.array(z.object({
-        slug: z.string(),
-      })).optional(),
-    })),
-    en: z.array(z.object({
-      slug: z.string(),
-      children: z.array(z.object({
-        slug: z.string(),
-      })).optional(),
-    })),
-  })
-});
-
 const translation = defineCollection({
   loader: glob({ pattern: ['translation.yml'], base: 'src/content/translation' }),
   schema: z.record(z.object({
@@ -162,7 +146,6 @@ export const collections = {
   "adjunct-prof": adjunctProf,
   carousel,
   shortcuts,
-  "degrees-widget-data": degreesWidgetData,
   translation,
   menu,
 };

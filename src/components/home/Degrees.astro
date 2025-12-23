@@ -1,10 +1,8 @@
 ---
 import Button from "@components/common/Button.astro";
 import Container from "@components/common/Container.astro";
-import Tabs from "@components/common/Tabs.astro";
 import getDegreesWidgetData from "@libs/degrees_widget";
 import { type Language, T } from "@libs/language";
-import { Icon } from "astro-icon/components";
 
 export interface Props {
   language: Language;
@@ -42,68 +40,20 @@ const layoutSwitchClass =
           {T("degree_slogan", language)}
         </p>
       </div>
-      <div class="grow">
-        <Tabs
-          id="degrees"
-          classNames={["degrees", "md:tabs", "max-md:accordion"]}
-          tabClassNames={[
-            "text-xl grow flex cursor-pointer",
-            "md:py-2 md:px-4 md:flex-col md:border-l md:first-of-type:border-l-0 md:border-darkviolet md:border-dashed md:items-center md:gap-1",
-            "max-md:py-2 max-md:px-3 max-md:gap-3 max-md:text-while max-md:font-medium max-md:text-white max-md:bg-maxpurple max-md:items-center max-md:border-t-2",
-            "md:activetab:text-darkviolet md:activetab:font-medium",
-          ]}
-        >
-          {
-            data.map((item) => (
-              <>
-                <tab>
-                  <Icon class="h-5" name="scholar" />
-                  <div class="grow">{item.page.data.title}</div>
-                  <Icon
-                    class="md:hidden h-6 activetab:rotate-180"
-                    name="expand-circle-down"
-                  />
-                </tab>
-                <panel>
-                  {!item.children && (
-                    <div class="prose prose-tabs py-4">
-                      <item.Content />
-                    </div>
-                  )}
-                  {item.children && (
-                    <Tabs
-                      id="degree-masters"
-                      classNames={["tabs", "bg-lightpurple justify-between"]}
-                      tabClassNames={[
-                        "text-white p-2 cursor-pointer activetab:font-bold",
-                      ]}
-                      panelClassNames={["bg-neutral-100"]}
-                    >
-                      {item.children.map((child) => (
-                        <>
-                          <tab>
-                            <span class="max-sm:hidden">
-                              {child.page.data.title}
-                            </span>
-                            <span class="sm:hidden">
-                              {child.page.data.shortTitle ||
-                                child.page.data.title}
-                            </span>
-                          </tab>
-                          <panel>
-                            <div class="prose prose-tabs py-4">
-                              <child.Content />
-                            </div>
-                          </panel>
-                        </>
-                      ))}
-                    </Tabs>
-                  )}
-                </panel>
-              </>
-            ))
-          }
-        </Tabs>
+      <div class="grow flex flex-col gap-4">
+        {
+          data.map((item) => (
+            <div class="rounded-lg border border-neutral-300 p-6 bg-white">
+              <div class="text-xl text-darkviolet font-bold mb-3">
+                {item.page.data.title}
+              </div>
+              <div class="prose prose-tabs">
+                <item.Content />
+              </div>
+            </div>
+          ))
+        }
+
         <div class="mt-3">
           <Button
             text={T("learn_more", language)}

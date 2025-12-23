@@ -1,5 +1,6 @@
 ---
 title: Diploma
+order: 3
 ---
 
 # Diploma of Christian Studies (1 year, 30 credit hours)

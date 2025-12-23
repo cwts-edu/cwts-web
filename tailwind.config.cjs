@@ -135,17 +135,21 @@ module.exports = {
             "--tw-prose-headings": theme.colors.black,
             fontSize: rem(16),
             h1: {
-              fontSize: em(20, 16),
-            },
-            h1: {
-              fontSize: em(20, 16),
-              marginTop: em(8, 20),
-              marginBottom: em(8, 20),
+              fontSize: em(16, 16),
+              marginTop: em(8, 16),
+              marginBottom: em(8, 16),
             },
             h2: {
-              fontSize: em(18, 16),
-              marginTop: em(8, 18),
-              marginBottom: em(8, 18),
+              fontSize: em(16, 16),
+              marginTop: em(8, 16),
+              marginBottom: em(8, 16),
+            },
+            p: {
+              marginTop: em(12, 16),
+              marginBottom: em(12, 16),
+            },
+            ol: {
+              marginTop: em(8, 16),
             },
             li: {
               marginTop: "0",
