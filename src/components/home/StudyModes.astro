@@ -1,8 +1,8 @@
 ---
-import Tabs from "@components/common/Tabs.astro";
 import Widget from "./Widget.astro";
-import { Icon } from "astro-icon/components";
 import getStudyModeWidgetData from "@libs/study_mode_widget";
+import Button from "@components/common/Button.astro";
+import { T } from "@libs/language";
 
 const data = await getStudyModeWidgetData("zh");
 ---
@@ -17,31 +17,27 @@ const data = await getStudyModeWidgetData("zh");
   <div class="pb-6 text-2xl">
     基督工人神學院提供在校本部的全時間修讀，部分時間修讀以及基督教聖工碩士網絡學位修讀，通過不同的方式，讓學生能夠用最方便的方式參加神學學習。
   </div>
-  <Tabs
-    id="study-mode"
-    classNames={[
-      "tabs bg-white text-black max-md:justify-between md:px-6 px-4 rounded-lg",
-    ]}
-    tabClassNames={[
-      "md:w-48 max-md:grow max-md:shrink",
-      "flex flex-col pt-5 pb-2 px-1 items-center gap-1 cursor-pointer",
-      "activetab:border-b-2 activetab:text-darkviolet border-darkviolet",
-    ]}
-  >
+  <div class="flex flex-col xl:flex-row gap-6 xl:gap-10">
     {
       data.map((item) => (
-        <>
-          <tab>
-            <Icon class="h-5" name="scholar" />
-            <div>{item.page.data.title}</div>
-          </tab>
-          <panel>
-            <div class="prose prose-tabs pt-3 pb-5">
-              <item.Content />
-            </div>
-          </panel>
-        </>
+        <div class="rounded-lg border border-neutral-300 p-6 bg-white/95 text-darkblue">
+          <div class="flex justify-between items-center mb-4">
+            <h3 class="text-xl text-darkviolet font-bold">
+              {item.page.data.title}
+            </h3>
+            {item.page.data.url && (
+              <Button
+                text={T("learn_more", "zh")}
+                url={item.page.data.url}
+                classNames={["btn", "text-sm", "py-1", "px-3"]}
+              />
+            )}
+          </div>
+          <div class="prose prose-tabs">
+            <item.Content />
+          </div>
+        </div>
       ))
     }
-  </Tabs>
+  </div>
 </Widget>

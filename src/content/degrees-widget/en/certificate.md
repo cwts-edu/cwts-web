@@ -1,5 +1,6 @@
 ---
 title: Certificates
+order: 4
 ---
 
 ## Certificate of Children Ministry
