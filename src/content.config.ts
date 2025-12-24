@@ -28,6 +28,7 @@ const degreesWidget = defineCollection({
     title: z.string(),
     shortTitle: z.optional(z.string()),
     order: z.number(),
+    url: z.optional(z.string()),
   }),
 });
 
