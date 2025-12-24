@@ -1,6 +1,7 @@
 ---
 title: 博士學位課程
 order: 1
+url: /zh/academic/degrees-programs/doctor-of-ministry
 ---
 
 # 教牧博士（三至六年，40 個學分）

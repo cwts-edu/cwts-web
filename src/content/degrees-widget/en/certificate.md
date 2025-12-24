@@ -1,6 +1,7 @@
 ---
 title: Certificates
 order: 4
+url: /en/academic/degrees-programs
 ---
 
 # Certificate of Children Ministry

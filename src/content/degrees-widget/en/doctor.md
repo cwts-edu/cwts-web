@@ -1,6 +1,7 @@
 ---
 title: Doctor Degree
 order: 1
+url: /en/academic/degrees-programs/doctor-of-ministry
 ---
 
 # Doctor of Ministry (4-6 years, 40 credits hours)
