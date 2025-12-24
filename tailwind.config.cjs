@@ -135,9 +135,9 @@ module.exports = {
             "--tw-prose-headings": theme.colors.black,
             fontSize: rem(16),
             h1: {
-              fontSize: em(16, 16),
-              marginTop: em(8, 16),
-              marginBottom: em(8, 16),
+              fontSize: em(18, 16),
+              marginTop: em(8, 18),
+              marginBottom: em(8, 18),
             },
             h2: {
               fontSize: em(16, 16),
