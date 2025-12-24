@@ -18,7 +18,6 @@
     "@astrojs/react": "^4.2.0",
     "@astrojs/sitemap": "^3.2.1",
     "@astrojs/tailwind": "^6.0.0",
-    "@astropub/context": "^0.1.0",
     "@rollup/plugin-yaml": "^4.1.1",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",

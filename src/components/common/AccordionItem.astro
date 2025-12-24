@@ -1,15 +1,17 @@
 ---
 import { Icon } from "astro-icon/components";
-import { getAccordionContext } from "../../context/accordion";
 
-const context = getAccordionContext();
+export interface Props {
+  name: string;
+  open?: boolean;
+}
+const { name, open } = Astro.props;
 ---
 
-<details name={context?.name} class="group">
+<details name={name} open={open} class="group">
   <summary
     class:list={[
       "w-full flex items-center justify-between cursor-pointer list-none marker:hidden",
-      ...(context?.summaryClassNames || []),
     ]}
   >
     <slot name="summary" />
@@ -19,7 +21,7 @@ const context = getAccordionContext();
       <Icon name="angle-right" />
     </span>
   </summary>
-  <div class:list={[...(context?.detailsClassNames || [])]}>
+  <div>
     <slot />
   </div>
 </details>
