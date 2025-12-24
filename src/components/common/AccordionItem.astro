@@ -1,0 +1,25 @@
+---
+import { Icon } from "astro-icon/components";
+import { getAccordionContext } from "../../context/accordion";
+
+const context = getAccordionContext();
+---
+
+<details name={context?.name} class="group">
+  <summary
+    class:list={[
+      "w-full flex items-center justify-between cursor-pointer list-none marker:hidden",
+      ...(context?.summaryClassNames || []),
+    ]}
+  >
+    <slot name="summary" />
+    <span
+      class="ml-auto transform transition-transform duration-200 group-open:rotate-90"
+    >
+      <Icon name="angle-right" />
+    </span>
+  </summary>
+  <div class:list={[...(context?.detailsClassNames || [])]}>
+    <slot />
+  </div>
+</details>

@@ -1,0 +1,18 @@
+---
+import { AccordionProvider } from "../../context/accordion";
+
+export interface Props {
+  name: string;
+  summaryClassNames?: string[];
+  detailsClassNames?: string[];
+}
+const { name, summaryClassNames, detailsClassNames } = Astro.props;
+---
+
+<AccordionProvider
+  name={name}
+  summaryClassNames={summaryClassNames}
+  detailsClassNames={detailsClassNames}
+>
+  <slot />
+</AccordionProvider>
