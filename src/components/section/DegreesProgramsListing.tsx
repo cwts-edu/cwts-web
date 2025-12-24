@@ -11,6 +11,9 @@ export interface Props {
   categories: Category[];
   messages: {
     credits: string;
+    leftParen: string;
+    rightParen: string;
+    comma: string;
   };
 }
 
@@ -41,40 +44,90 @@ function CategorySelector({
   );
 }
 
-export default function (props: Props) {
+const AngleRightIcon = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 5.292 5.292"
+    fill="currentColor"
+    className="w-5 h-5"
+  >
+    <path d="M1.936 4.498l-.432-.432 1.42-1.42-1.42-1.42.432-.432 1.852 1.852z" />
+  </svg>
+);
+
+export default function DegreesProgramsListing(props: Props) {
   const [category, setCategory] = useState("all");
-  const items = props.data.filter((value) =>
-    category == "all" ? true : value.category.valueOf() == category
+
+  const filteredItems = props.data.filter((value) =>
+    category === "all" ? true : value.category.valueOf() === category
   );
+
+  const displayedCategories = props.categories
+    .filter((cat) => cat.value !== "all")
+    .filter((cat) => {
+      // If a specific category is selected, only show that one
+      if (category !== "all") {
+        return cat.value === category;
+      }
+      // Otherwise show all categories that have items
+      return filteredItems.some((item) => item.category === cat.value);
+    });
+
   return (
     <div className="not-prose">
-      <div>
+      <div className="mb-8">
         <CategorySelector
           categories={props.categories}
           currentValue={category}
           setCurrentValue={setCategory}
-        ></CategorySelector>
+        />
       </div>
-      <div className="gap-12 py-8 grid grid-cols-1 sm:max-md:grid-cols-2 md:grid-cols-3 text-darkblue">
-        {items.map((item) => (
-          <div key={item.slug} className="w-fit max-sm:w-full">
-            <a href={item.url}>
-              <img
-                src={item.thumbnail}
-                width="240"
-                className="max-sm:w-full my-1"
-              />
-              <div className="text-xl font-semibold">{item.title}</div>
-              <div className="flex justify-between text-base">
-                <div>{item.length}</div>
-                <div>
-                  {item.credits}
-                  {props.messages.credits}
-                </div>
+      <div className="flex flex-col gap-6">
+        {displayedCategories.map((cat) => {
+          const catItems = filteredItems.filter(
+            (item) => item.category === cat.value
+          );
+
+          if (catItems.length === 0) return null;
+
+          return (
+            <div
+              key={cat.value}
+              id={cat.value}
+              className="rounded-lg border border-neutral-300 bg-white p-6"
+            >
+              <h3 className="text-xl font-bold text-darkviolet mb-6">
+                {cat.label}
+              </h3>
+              <div className="flex flex-col gap-6">
+                {catItems.map((item) => (
+                  <a
+                    key={item.slug}
+                    href={item.url}
+                    className="flex justify-between items-center group text-black text-base"
+                  >
+                    <div>
+                      <span className="font-bold">{item.title}</span>{" "}
+                      <span>
+                        {[
+                          props.messages.leftParen,
+                          item.length,
+                          props.messages.comma,
+                          item.credits,
+                          props.messages.credits,
+                          props.messages.rightParen,
+                        ].join("")}
+                      </span>
+                    </div>
+                    <div className="text-darkviolet">
+                      <AngleRightIcon />
+                    </div>
+                  </a>
+                ))}
               </div>
-            </a>
-          </div>
-        ))}
+            </div>
+          );
+        })}
       </div>
     </div>
   );

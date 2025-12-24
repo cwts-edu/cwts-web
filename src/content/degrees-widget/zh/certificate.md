@@ -1,7 +1,7 @@
 ---
 title: 培育中心證書課程
 order: 4
-url: /zh/academic/degrees-programs
+url: /zh/academic/degrees-programs#certificate
 ---
 
 培育中心目前開設四個方向的證書課程：基督工人證書、兒童事工證書、家庭事工證書、宣教事工證書。
