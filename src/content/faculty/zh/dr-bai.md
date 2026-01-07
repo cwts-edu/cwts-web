@@ -3,6 +3,7 @@ photo: /images/faculty/dr-bai.jpg
 name: 柏雨成博士
 category: faculty
 order: 111
+email: yucheng.bai@cwts.edu
 positions:
   - 教會歷史助理教授
 courses:
