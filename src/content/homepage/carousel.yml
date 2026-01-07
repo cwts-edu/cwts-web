@@ -1,6 +1,4 @@
 # yaml-language-server: $schema=../../../.astro\collections\carousel.schema.json
-- link: /zh/donation/
-  image: /images/carousel/2026 Matching Fund.jpg
 - link: /zh/news-events/bay-area-bible-convention/
   image: /images/carousel/BABC2026.jpg
 - link: /zh/academic/degrees-programs/master-of-cross-cultural-leadership
