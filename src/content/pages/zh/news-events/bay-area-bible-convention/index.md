@@ -65,7 +65,7 @@ thumbnail: "/images/covers/news-events/bay-area-bible-convention.thumbnail.jpg"
 **講員：[歐雨虹博士](#歐雨虹博士)**
 
 <details>
-<summary> [職場] A3: 讓信仰成為你的職場優勢- 實踐與見證僕人領袖在華爾街的價值與競爭力 </summary>
+<summary> [職場] A3: 讓信仰成為你的職場優勢- 實踐與見證僕人領袖在華爾街的價值與競爭力 (Zoom) </summary>
 
 </details>
 
