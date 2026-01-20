@@ -1,4 +1,7 @@
 # yaml-language-server: $schema=../../../.astro\collections\carousel.schema.json
+- link: https://www.youtube.com/live/2qpudA7N__s
+  image: /images/carousel/CTLC.jpg
+  newWindow: true
 - link: /zh/news-events/bay-area-bible-convention/
   image: /images/carousel/BABC2026.jpg
 - link: /zh/admissions/tuition-scholarship/
