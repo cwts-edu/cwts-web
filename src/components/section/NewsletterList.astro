@@ -16,8 +16,7 @@ const years = Array.from(
 ).sort();
 
 function getTitle(year: number, issue: number) {
-  const months = ["一月", "四月", "七月", "十月"];
-  return `${year}${months[issue]}`;
+  return `${year}第${issue + 1}期`;
 }
 
 function getFileName(year: number, issue: number) {
