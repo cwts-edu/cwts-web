@@ -16,7 +16,7 @@ thumbnail: "/images/covers/academic/library.thumbnail.jpg"
 - 期刊區：不僅陳列最新期刊，還設有專門的期刊收藏區，方便師生查閱過去的期刊資料。
 - 影音及教材區：收錄豐富的多媒體資源，支持不同形式的學習和教學活動。
 - 電腦區：提供多種神學研究軟體資源及聖經工具等。
-- [館際互借](https://docs.google.com/forms/d/e/1FAIpQLSf6Or5P3hgldmdmUqBUuXMgNJSUwaQX7NPr5gHx019ECDlDrg/viewform)：通過填寫館際互借申請表，可借用其他圖書館的書籍，擴大資源利用範圍。
+- 館際互借：通過館際互借，可借用其他圖書館的書籍，擴大資源利用範圍。
 
 ### 電子資源
 圖書館訂閱了線上電子資料庫，為師生提供豐富的學術資源：
