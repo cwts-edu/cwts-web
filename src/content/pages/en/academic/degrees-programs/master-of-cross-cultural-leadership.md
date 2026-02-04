@@ -1,5 +1,5 @@
 ---
-title: Master of Cross-Cultural Leadership
+title: Master of Cross Cultural Leadership
 order: 201.7
 coverImage: "/images/covers/degrees-programs/master.cover.jpg"
 thumbnail: "/images/covers/degrees-programs/master.thumbnail.jpg"
@@ -35,7 +35,7 @@ Note: To successfully complete the degree program, participants need to complete
 | ^                                | ^         | Family Formation and Resilience Across Cultures                     | 3     |
 | Stack D : Mobilization for Cross-Cultural Movements | 6        | Resourcing for global missions            | 3     |
 | ^                                | ^         | Conversing with global faiths in global missions            | 3     |
-| Stack E : Cross-cultural Leadership and Communication | 6        | Cross-Cultural Leadership and Service   | 3     |
+| Stack E : Cross-Cultural Leadership and Communication | 6        | Cross-Cultural Leadership and Service   | 3     |
 | ^                                | ^         | Cross-Cultural Communication and Innovation                 | 3     |
 | Stack F : Cross-Cultural Research | 6        | Research Methods and Proposal                               | 3     |
 | ^                                | ^         | Field Research and Capstone                                 | 3     |
