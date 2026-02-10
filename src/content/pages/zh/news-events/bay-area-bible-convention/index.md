@@ -53,20 +53,25 @@ thumbnail: "/images/covers/news-events/bay-area-bible-convention.thumbnail.jpg"
 ### 工作坊 A Workshops A
 <details>
 <summary> [團隊建立] A1: 基督是教會的頭：建構以僕人的態度治理教會的團隊 </summary>
-
+「僕人領袖」的理念根植於耶穌基督的教導和榜樣，也是當今教會牧養及治理的一個值得重視的原則。這個觀念本身不難接受，行出來卻不容易，特別是在北美華人教會的大環境下，面對教會治理權柄觀念與決策模式的文化碰撞，實踐僕人領袖的教會治理更具相當的挑戰性。面對這種處境，本工作坊將嘗試從福音的角度重新檢視教會治理的屬靈權柄運作，探索在教會中可行的途徑，降低權威式決策在領導中的主導性，減少依賴家長式的管理模式 (這並非弱化牧職位份的地位與重要性)，並提升彼此聆聽、相互服事與共同治理的領導模式，建立參與式決策的協作領導文化，肯定同為主僕彼此尊重的規範，培育以僕人的態度治理教會的團隊。
 </details>
 
 **講員：[余萃平牧師](#余萃平牧師)**
 
 <details>
 <summary> [靈命+EQ ] A2 : 面對吐槽的時代，從耶穌學習如何面對批評 </summary>
+當年輕世代的會眾期待教會不再是由上而下的一言堂，而能有更透明、雙向的溝通時，教會領袖如何以安定與開放的心回應不同聲音? 
+
+面對批評，我們本能會防衛、反擊或逃避。健康的回應不是壓抑情緒、忍氣吞聲、假裝沒內傷，也不是急於辯解維護形象；既不防衛的否認，也不內耗的自我否定，而是在神面前操練分辨力，用耶穌恩慈的眼光看自己與對方。因為清楚自己在主裡的身分，便能有足夠安全感，坦然承認有限，也真誠面對他人的失望。 
+
+天父的喜悅，使耶穌能安然面對誤解、質疑與攻擊。當我們培養自我覺察，學習安住在上帝的喜悅中，就能從混亂回到安定，選擇更像耶穌的回應。
 </details>
 
 **講員：[歐雨虹博士](#歐雨虹博士)**
 
 <details>
 <summary> [職場] A3: 讓信仰成為你的職場優勢- 實踐與見證僕人領袖在華爾街的價值與競爭力 (Zoom) </summary>
-
+在華爾街的高壓環境中，競爭、權力與誘惑無所不在。本工作坊分享如何以「服事他人」取代「爭取勝出」，以信仰原則建立界線、守護家庭，並透過日常午餐連結培養真誠關係。從僕人姿態中孕育真領導力，讓「以神為CEO」成為抵抗偶像崇拜與恐懼的力量。學習如何讓信仰成為你職場中的核心競爭力，活出影響力與事業自由。
 </details>
 
 **講員：[朱瑋晶博士](#朱瑋晶博士)**
@@ -74,7 +79,9 @@ thumbnail: "/images/covers/news-events/bay-area-bible-convention.thumbnail.jpg"
 <details>
 
 <summary> [宣教] A4: 從人人到處處：在多中心宣教中做跟隨者，而非領導者  </summary>
+普世宣教已發生重大且永久性的範式轉移---從過往的單邊單向，轉向多中心與多向度的發展。這標誌著基督教重新回歸其“全球性的信仰”本質（Yeh,2016）。隨著多數世界（非西方世界/Majority World）教會在質與量上的蓬勃成長，基督信仰已不再由特定族裔主導，亦無絕對的地理中心。因此，在複雜的多文化網絡中，宣教的未來將取決於夥伴關係而非父權心態，過去那種“從西方到遠方”的舊思維已不復存在。
 
+在這樣的趨勢下，我們必須重新聚焦跟隨力（Followership），而非過度推崇各種形式的領導論（如僕人式或轉化式領導）。本工作坊旨在為追隨力發聲，論證其關鍵特質能構成一種強有力的典範，有效動員來自各地的群體投身全球宣教。這種觀察與跟隨的韌性---亦即與當地教會並肩探索，支持其落實自傳、自養、自理---是確保福音火炬傳承不息的唯一途徑。
 </details>
 
 **講員 Speaker：[劉浩宇博士](#劉浩宇博士)**
@@ -82,7 +89,15 @@ thumbnail: "/images/covers/news-events/bay-area-bible-convention.thumbnail.jpg"
 <details>
 
 <summary> [跨代] A5: Next Gen Discipleship (英語主講) </summary>
+Many churches long to see the next generation grow into faithful, courageous leaders. Yet even in healthy communities, young people who are sincere, gifted, and committed can struggle to step forward with confidence, navigate disagreement, or carry responsibility with joy.
 
+This workshop invites pastors, parents, and ministry leaders to reflect on how leadership is formed over time—not primarily through programs or positions, but through relationships that nurture trust, identity, and calling. Drawing from Scripture, pastoral experience, and insights from human development, the session explores how experiences of belonging, growth, and responsibility shape a person’s capacity to lead.
+
+Together, we will consider leadership formation across key seasons of life, from childhood to adolescence to young adulthood. We will reflect on how early experiences of welcome and safety ground identity, how seasons of questioning and growth shape character and discernment, and how trust and shared responsibility invite emerging adults to step into leadership with ownership and faith.
+
+Rather than offering a rigid model or set of techniques, this workshop provides a pastoral framework for thinking about formation, one that honors the realities leaders face while pointing toward practices that cultivate resilience, maturity, and trust. The focus is not on doing more, but on becoming the kind of community where leadership can grow naturally.
+This session is especially suited for those who care deeply about nurturing the next generation and want to lead in ways that are faithful, relational, and sustainable.
+The next generation does not need more pressure or expectations. They need communities grounded in love, patience, and hope.
 </details>
 
 **講員：[Pastor David Ding](#pastor-david-ding)**
@@ -90,7 +105,7 @@ thumbnail: "/images/covers/news-events/bay-area-bible-convention.thumbnail.jpg"
 ### 工作坊 B Workshops B
 <details>
 <summary> [社區外展] B1: 宣教不飛行，社區宣教需要您 </summary>
-
+神創造天地，預備好了天、地、萬物，再把按祂形象所造的寶貴人放在其中，並賜福、賜權柄給人“要生養眾多，遍滿地面，治理這地，也要管理海裡的魚、空中的鳥，和地上各樣行動的活物。” (創 1:28) 神的美好計劃裡，人在一個完美的環境成長生養，成為一個社群社區，學習過群體生活。耶穌在地上的時候給我們兩條更大的誡命： 一、盡心、盡性、盡意、盡力愛主─你的神； 二、要愛人如己 (可 12:30-31)。這裡，所愛的人就指著是我們的鄰舍、我們社區與城市的鄉親父老。 神的僕人領袖們，您已經獻上自己成為活祭，此生厲行最大的誡命愛神。今天期盼能與您一起來思考耶穌所吩咐的第二大誡命的落實和實踐。是否有一個可能，能與耶穌的大使命一起行動？在這個工作坊中，希望跟大家一起腦力激盪， 並分享一些這三年多來我在社區宣教的經驗和見證。您是否也躍躍欲試？
 </details>
 
 **講員：[黃英敏牧師](#黃英敏牧師)**
@@ -98,21 +113,25 @@ thumbnail: "/images/covers/news-events/bay-area-bible-convention.thumbnail.jpg"
 <details>
 
 <summary> [靈命+EQ] B2: 面對信任崩解的時代，從耶穌學習如何發揮領導力 </summary>
+當這世代對權威形象的信任逐漸崩解，我們需要從耶穌的生命重新想像領導力。耶穌的領導不是透過地位自上而下以屬靈權柄施壓，而是道成肉身，以僕人的生命吸引人同行。祂以憐憫回應需要，也給人選擇與拒絕的空間，使跟隨出於甘心樂意，而非壓力或恐懼。
 
+要重建信任，領袖必須避免屬靈勒索與權柄濫用，並且能覺察自己對他人的影響。人與人之間的互動不只取決於一方的意圖，也在於對方的實際感受。情感成熟的領袖不只覺察自己的動機，也願意謙卑聆聽他人在這段關係的真實體驗。當領袖願意承認自己的有限、尊重對方的意願與感受，並持續調整，才能發揮出能讓人信任的領導力。
 </details>
 
 **講員：[歐雨虹博士](#歐雨虹博士 )**
 
 <details>
 <summary> [家庭] B3: 先仆后领 </summary>
+此工作坊分享内容從家庭著眼，以人生的第一個出處為基，開始學習觀摩探究並實踐基督的生命，祂為何先來為僕，再來才為王？分享內容如題目一般樸實無華。受邀分享初衷不為傳遞新知、新觀。接受是感謝一份信任，亦是對另一份特殊恩典的感念！是我輩人生必須要記念並活出的傳承！若出生成長在一個四代都堆積滿神豐富恩惠的家庭中，身邊環繞的是真實而鮮活的基督僕人領袖時，生命不被影響，不被塑造，便如主所說“那人不生在世上倒好”。主亦說“因為多給誰，就向誰多取；多託誰，就向誰多要”。
 
+我們個人從神領受豐富的恩典，多而又多，在祂為我們建造、看守的家庭中，我們當如何與祂同工，先僕後領呢？工作坊會從家庭敬拜觀，家庭界限的護衛，真理的傳導，家庭成員各自身份，角色在不同階段的壓力處理，盼與大家同感先僕後領的生命歷程！
 </details>
 
 **講員 Speaker：[林為華傳道](#林為華傳道)**
 
 <details>
 <summary> [靈命+領導力] B4: 屬靈領導力-僕人式領導的特徵與實踐 (粵語主講) </summary> 
-
+在這個講求效率與競爭的時代，領導力常被等同於權力、地位與影響力。然而，聖經向我們揭示了一條截然不同的領導模式 ─ 僕人式領導。如果你渴望的不只是帶領團隊完成任務，而是能真正觸動人心、建立信任、帶來生命轉化，那麼這工作坊正是為你而設。僕人式領導不是技巧的堆砌，而是從內而外的生命更新；不是靠權勢或自身能力，而是靠神在領袖生命中的臨在與掌權。在這工作坊中，你將重新思考領導的本質，辨識那些阻礙你服事的內在聲音。邀請你一同探索，領導力如何成為恩典流動的管道，帶出深遠的生命影響。邀請你一同回到領導力的源頭，重新發現神所設計的領袖樣式。
 </details>
 
 **講員 Speaker：[梁澤銘博士](#梁澤銘博士)**
