@@ -1,5 +1,5 @@
 ---
-title: Master of Cross Cultural Leadership
+title: Master in Cross Cultural Leadership
 order: 201.7
 coverImage: "/images/covers/degrees-programs/master.cover.jpg"
 thumbnail: "/images/covers/degrees-programs/master.thumbnail.jpg"

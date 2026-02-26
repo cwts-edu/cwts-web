@@ -24,7 +24,7 @@ CWTS currently offers:
 | 3. [Master of Biblical Studies](/en/academic/degrees-programs/master-of-biblical-studies)                     | 2                 | 60    |
 | 4. [Master of Christian Ministry](/en/academic/degrees-programs/master-of-christian-ministry)                 | 2                 | 60    |
 | 5. [Master of Christian Ministry (Online)](/en/academic/degrees-programs/master-of-christian-ministry-online) | 3                 | 60    |
-| 6. [Master of Cross-Cultural Leadership](/en/academic/degrees-programs/master-of-cross-cultural-leadership)   | 3                 | 36    |
+| 6. [Master in Cross Cultural Leadership](/en/academic/degrees-programs/master-of-cross-cultural-leadership)   | 3                 | 36    |
 | 7. [Master of Theological Essentials](/en/academic/degrees-programs/master-of-theological-essentials)         | 3                 | 36    |
 
 

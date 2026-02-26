@@ -1,5 +1,5 @@
 ---
-title: 跨文化領袖碩士
+title: 跨文化領導碩士
 order: 301.4
 coverImage: "/images/covers/degrees-programs/diploma-of-christian-studies.cover.jpg"
 thumbnail: "/images/covers/degrees-programs/diploma-of-christian-studies.thumbnail.jpg"
