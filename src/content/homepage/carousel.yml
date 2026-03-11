@@ -1,21 +1,22 @@
 # yaml-language-server: $schema=../../../.astro\collections\carousel.schema.json
 - link: /zh/news-events/bay-area-bible-convention/
   image: /images/carousel/BABC2026.jpg
+- link: https://form.jotform.com/260676359739171
+  image: /images/carousel/CWTSday042026.jpg
+  newWindow: true
+- image: /images/carousel/2026Commencement.jpg
+- image: /images/carousel/Leadership2026.jpg
 - link: /zh/admissions/tuition-scholarship/
   image: /images/carousel/financial-aid.jpg
-- link: https://form.jotform.com/260325070731144
-  image: /images/carousel/Recruitment-202603.jpg
-  newWindow: true
 - link: /zh/about/ctlc
   image: /images/carousel/CTLC.jpg
   newWindow: true
 - link: /zh/academic/degrees-programs/master-of-cross-cultural-leadership
-  image: /images/carousel/MCL Banner.jpg
+  image: /images/carousel/MCCL.jpg
 - link: /zh/ministry-institute/courses
   image: /images/carousel/MI-2026-Spring.jpg
 - link: /zh/academic/degrees-programs/master-of-theological-essentials
   image: /images/carousel/MTE Banner.jpg
   newWindow: true
-- image: /images/carousel/2025 Book Launch.jpg
 - link: /zh/about/accreditation
   image: /images/carousel/ats-10-years.jpg
