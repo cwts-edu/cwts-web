@@ -89,3 +89,6 @@ programs_degrees:
 degree_slogan:
   en: CWTS offers 14 different degrees and certifications, allowing each student to choose the course that suits them best.
   zh: 基神設有14種不同的學位認證，讓每一位學生都能選擇適合自己的課程。
+chatbot_assistant:
+  en: CWTS Admission Assistant
+  zh: 基神招生助手
