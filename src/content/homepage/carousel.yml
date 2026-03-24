@@ -1,6 +1,4 @@
 # yaml-language-server: $schema=../../../.astro\collections\carousel.schema.json
-- link: /zh/news-events/bay-area-bible-convention/
-  image: /images/carousel/BABC2026.jpg
 - link: https://form.jotform.com/260676359739171
   image: /images/carousel/CWTSday042026.jpg
   newWindow: true
