@@ -3,7 +3,8 @@
   image: /images/carousel/CWTSday042026.jpg
   newWindow: true
 - image: /images/carousel/2026Commencement.jpg
-- image: /images/carousel/Leadership2026.jpg
+- link: /zh/news-events/servant-leadership
+  image: /images/carousel/Leadership2026.jpg
 - link: /zh/admissions/tuition-scholarship/
   image: /images/carousel/financial-aid.jpg
 - link: /zh/about/ctlc
