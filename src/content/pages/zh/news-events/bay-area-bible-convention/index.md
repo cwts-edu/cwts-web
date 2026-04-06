@@ -6,7 +6,7 @@ thumbnail: "/images/covers/news-events/bay-area-bible-convention.thumbnail.jpg"
 ---
 <div class="text-center">
 
-<a href="https://form.jotform.com/253245922570154" target="\_blank">
+<a href="https://form.jotform.com/253245922570154"  >
 
 ![BABC Banner](/images/babc/BABC2026.jpg)
 
