@@ -51,7 +51,7 @@ const news = await Promise.all(
       news.map((item) => (
         <div class="w-full max-w-[200px] max-xs:max-w-none">
           <a href={item.url} class="block">
-            <div>
+            <div class="rounded-lg overflow-hidden">
               <img
                 src={item.thumbnail}
                 class="w-full aspect-[200/110] object-cover"

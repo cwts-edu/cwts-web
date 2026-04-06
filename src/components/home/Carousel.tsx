@@ -19,25 +19,29 @@ export interface Props {
 
 export default function Carousel(props: Props) {
   return (
-    <Swiper
-      className="carousel"
-      navigation={true}
-      pagination={{
-        clickable: true,
-      }}
-      loop={true}
-      autoplay={{
-        delay: 5000,
-      }}
-      modules={[Autoplay, Navigation, Pagination]}
-    >
-      {props.items.map((item, index) => (
-        <SwiperSlide key={index}>
-          <OptionalLink url={item.link} newWindow={item.newWindow}>
-            <img src={item.image} className={"w-full"} />
-          </OptionalLink>
-        </SwiperSlide>
-      ))}
-    </Swiper>
+    <div className="carousel-outer">
+      <Swiper
+        className="carousel"
+        navigation={true}
+        pagination={{
+          clickable: true,
+          el: ".carousel-pagination",
+        }}
+        loop={true}
+        autoplay={{
+          delay: 5000,
+        }}
+        modules={[Autoplay, Navigation, Pagination]}
+      >
+        {props.items.map((item, index) => (
+          <SwiperSlide key={index}>
+            <OptionalLink url={item.link} newWindow={item.newWindow}>
+              <img src={item.image} className={"w-full"} />
+            </OptionalLink>
+          </SwiperSlide>
+        ))}
+      </Swiper>
+      <div className="carousel-pagination" />
+    </div>
   );
 }
