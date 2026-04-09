@@ -10,7 +10,9 @@
     "preview": "astro preview",
     "astro": "astro",
     "process-images": "tsx tools/process-images.ts",
-    "process-pdfs": "tsx tools/process-pdfs.ts"
+    "process-pdfs": "tsx tools/process-pdfs.ts",
+    "verify-build": "tsx tools/verify-build.ts",
+    "verify-build:update": "tsx tools/verify-build.ts --update-exceptions"
   },
   "dependencies": {
     "@astrojs/markdown-remark": "^6.1.0",
