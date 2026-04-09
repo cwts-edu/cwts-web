@@ -63,7 +63,8 @@ thumbnail: "/images/covers/news-events/servant-leadership.thumbnail.jpg"
 #### 馮浩鎏牧師/博士
 ![馮浩鎏牧師/博士](/images/leadership/2026/patrick-fung.jpg)
 
-新加坡神學院前院長。1989年，他與妻子回應呼召投身宣教，在南亞服事。其後擔任海外基督使團首位亞洲籍國際總主任。現任該機構國際事工特使，並兼任世界華福中心國際理事會主席。生於香港，早年於澳洲接受醫學訓練，其後經歷基督改變生命的恩典，遂轉而進修神學，並獲得香港大學中國教會歷史博士學位。
+即將出任新加坡神學院第八任院長、現任世界華福中心國際理事會主席。 <br>
+生於香港，早年於澳洲接受醫學訓練，因為經歷基督改變生命的恩典轉而進修神學並獲得香港大學中國教會歷史博士學位。1989年與妻子鄭珍妮醫生回應神的呼召加入海外基督使團（OMF），之後接受差派前往南亞一個穆斯林占多數的地區服事。2005年成為海外基督使團創會140年來首位亞洲籍的國際總主任，任職期間帶領並監督一支遍布亞洲、超過1400名宣教士的團隊。
 </div>
 
 <div class="bio">
@@ -71,7 +72,8 @@ thumbnail: "/images/covers/news-events/servant-leadership.thumbnail.jpg"
 #### 陳光牧師/博士
 ![陳光牧師/博士](/images/leadership/2026/guang-chen.jpg)
 
-中華歸主柏克萊教會主任牧師。來自山東，成長於基督徒家庭，15歲時悔改信主。 2000年赴美求學深造，曾是一位電機工程師，從事工業自動化控制工作23年。來美後在麻省羅威爾華人聖經教會聚會，並帶職服事多年。2002及2003年曾兩次蒙神呼召，願意將一生奉獻給神。經過8年尋求上帝旨意的歷程，于2011年1月回應神的呼召，辭去工程師的工作，進入神學院開始神學裝備。 2013年獲得哥頓康維爾神學院 (Gordon Conwell Theological Seminary) 道學碩士學位(M. Div)，同年8月進入芝加哥三一神學院 (Trinity Evangelical Divinity School)，2019年獲得舊約博士學位。
+中華歸主柏克萊教會主任牧師。<br>
+來自山東，成長於基督信仰的家庭，15歲時悔改信主。 2000年赴美求學，曾是一位電機工程師，從事工業自動化控制工作並在麻省羅威爾華人聖經教會帶職事奉多年。2002至2003年期間曾兩次蒙召，願意將一生奉獻給神。在經過8年的尋求後，終於在2011年1月回應呼召，進而辭去工作進入神學院接受裝備。 2013年獲得哥頓康維爾神學院 （Gordon Conwell Theological Seminary） 道學碩士學位（MDiv），同年8月進入芝加哥三一神學院 （Trinity Evangelical Divinity School）並於2019年獲得舊約博士學位。
 </div>
 
 <div class="bio">
@@ -79,7 +81,8 @@ thumbnail: "/images/covers/news-events/servant-leadership.thumbnail.jpg"
 #### Rev. Dr. Christine Youn
 ![Rev. Dr. Christine Youn](/images/leadership/2026/christine-youn.jpg)
 
-現任拿撒勒人會北加州區會助理區監督，致力於在多元事工處境中支持與培育牧者及各地教會。她畢業於拿撒勒神學院，獲教會使命與領導學教牧學博士學位。其博士論文《歸屬的衛斯理神經神學：創傷知情的聖潔觀與蒙愛群體的塑造》探討神學、靈命塑造與教會生活之間的關係。馮牧師專注於領導力、教會論，以及幫助教會更忠心地活出基督整體身體的呼召。
+拿撒勒人會北加州區會助理區監督。<br>
+畢業於拿撒勒神學院，獲教會使命與領導學教牧學博士學位。Dr. Youn 的博士論文 _《A Wesleyan Neurotheology of Belonging: Trauma-Informed Holiness and the Formation of Beloved Community》_ 在於探討神學、靈命塑造與教會生活之間的關係。Dr. Youn 專注於領導力、教會論，以及幫助教會更忠心地活出基督整體身體的呼召。
 </div>
 
 <div class="bio">
@@ -87,7 +90,8 @@ thumbnail: "/images/covers/news-events/servant-leadership.thumbnail.jpg"
 #### 劉浩宇博士
 ![劉浩宇博士](/images/leadership/2026/daniel-low.jpg)
 
-基督工人神學院實踐神學副教授，主授宣教、佈道、教育。Biola大學哲学博士 (跨文化教育)，曾任William Carey International University, Vice President Academic Affairs (2020 – 2022)。劉老師出生在馬來西亞，十歲與父母移民到新加坡。 1997 年聽見主呼召，2005 年到美國受裝備 – 在西南浸信神學院與 Biola 大學完成學業。他曾在新加坡的教育部，Biola 大學，Concordia Chicago 大學，Raffles 基督國際學校 (印尼)，和 William Carey 國際大學 擔任教導，訓練，領導的職位，也在南加州，新加坡不同的教會以國語和英語協助講台的服事。他的研究包裹 – 跨文化教育，佛教道教徒的宗教身分和本土化宣教策略。
+基督工人神學院實踐神學副教授，主授宣教、佈道、教育。<br>
+出生在馬來西亞，十歲與父母移民到新加坡。 1997 年蒙召，2005 年到美國西南浸信神學院接受裝備並在 Biola 大學完成哲學博士學位 （跨文化教育）。曾先後在新加坡政府教育部、Biola 大學、Concordia Chicago 大學、印尼 Raffles 基督國際學校、William Carey 國際大學等學校和機構擔任教導、訓練與領導等各樣職位，同時在南加州、新加坡等不同的教會以國語和英語協助講台的服事。劉博士的研究範圍包括跨文化教育、佛教道教徒的宗教身分以及本土化的宣教策略。
 </div>
 
 <div class="bio">
@@ -95,7 +99,8 @@ thumbnail: "/images/covers/news-events/servant-leadership.thumbnail.jpg"
 #### 蔡明謀牧師/博士
 ![蔡明謀牧師/博士](/images/leadership/2026/luke-tsai.jpg)
 
-基督工人神學院院長。出生於台灣，年幼之時便随父母全家移民來美。在美完成初中、高中教育。先後受教於伯克萊大學和斯坦福大學，取得理學士和碩士學位﹐主修電機。畢業後從事高科技工作，可是心中一直沒有忘記年少之時的感動，全時間服事神的心志並無消失。當神的時間來到，在全家及教會的祝福下，開始了全時間的神學教育裝備。在逹拉斯神學院取得神學碩士及哲學博士學位。
+基督工人神學院院長。<br>
+出生於台灣，年幼之時便随父母全家移民來美。在美完成初中、高中教育。先後就讀於伯克萊大學和斯坦福大學並獲得理學士和碩士學位﹐主修電機。畢業後從事高科技工作，可是心中一直沒有忘記年少時的感動，願意全時間服事神的心志從未消失。當神的時間來到，在家人及教會的祝福下於是開始了全時間的神學裝備，在逹拉斯神學院取得神學碩士及哲學博士學位。
 </div>
 
 ### 日程表
