@@ -12,7 +12,8 @@
     "process-images": "tsx tools/process-images.ts",
     "process-pdfs": "tsx tools/process-pdfs.ts",
     "verify-build": "tsx tools/verify-build.ts",
-    "verify-build:update": "tsx tools/verify-build.ts --update-exceptions"
+    "verify-build:update": "tsx tools/verify-build.ts --update-exceptions",
+    "sync-assembly": "tsx tools/sync-assembly.ts"
   },
   "dependencies": {
     "@astrojs/markdown-remark": "^6.1.0",
