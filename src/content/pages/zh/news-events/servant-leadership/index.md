@@ -36,7 +36,7 @@ thumbnail: "/images/covers/news-events/servant-leadership.thumbnail.jpg"
 ### 工作坊
 
 **工作坊1: 教會建造** <br>
-**講員：[陳光博士/牧師](#陳光博士牧師)** <br>
+**講員：[陳光牧師/博士](#陳光牧師博士)** <br>
 以中華歸主柏克萊教會（CFCB） 為案例，本工作坊將探討切乎實際且合乎聖經的可行策略來強化一間地方教會的生命、事工以及持久的健康。我們將一同來反思幾個關鍵的議題，包括領袖培育、會眾關顧、事工架構、異象傳遞以及跨代延續，旨在探究教會如何不僅能成長，更能恆久如實地茂盛興旺。
 
 **工作坊2(English)：蒙召服事：釋放教會中女性的恩賜** <br>
@@ -68,8 +68,8 @@ thumbnail: "/images/covers/news-events/servant-leadership.thumbnail.jpg"
 
 <div class="bio">
 
-#### 陳光博士/牧師
-![陳光博士/牧師](/images/leadership/2026/guang-chen.jpg)
+#### 陳光牧師/博士
+![陳光牧師/博士](/images/leadership/2026/guang-chen.jpg)
 
 中華歸主柏克萊教會主任牧師。來自山東，成長於基督徒家庭，15歲時悔改信主。 2000年赴美求學深造，曾是一位電機工程師，從事工業自動化控制工作23年。來美後在麻省羅威爾華人聖經教會聚會，並帶職服事多年。2002及2003年曾兩次蒙神呼召，願意將一生奉獻給神。經過8年尋求上帝旨意的歷程，于2011年1月回應神的呼召，辭去工程師的工作，進入神學院開始神學裝備。 2013年獲得哥頓康維爾神學院 (Gordon Conwell Theological Seminary) 道學碩士學位(M. Div)，同年8月進入芝加哥三一神學院 (Trinity Evangelical Divinity School)，2019年獲得舊約博士學位。
 </div>
