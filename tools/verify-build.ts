@@ -2,9 +2,9 @@ import fs from "fs";
 import path from "path";
 import { parse } from "node-html-parser";
 
-const DIST_DIR = "dist";
+const DIST_DIR = path.resolve("dist");
 const ASSET_EXTENSIONS = [".jpg", ".jpeg", ".png", ".gif", ".svg", ".webp", ".pdf"];
-const CONFIG_FILE = "verify-exceptions.json";
+const CONFIG_FILE = path.resolve("verify-exceptions.json");
 
 const toSlash = (p: string) => p.replace(/\\/g, "/");
 
@@ -46,7 +46,7 @@ function saveExceptions(exceptions: Exceptions) {
 async function* walk(dir: string): AsyncGenerator<string> {
   const files = await fs.promises.readdir(dir, { withFileTypes: true });
   for (const file of files) {
-    const res = path.resolve(dir, file.name);
+    const res = path.join(dir, file.name);
     if (file.isDirectory()) {
       yield* walk(res);
     } else {
@@ -71,7 +71,7 @@ function normalizePath(sourceFile: string, target: string): string {
     return path.join(DIST_DIR, cleanTarget);
   }
   const dir = path.dirname(sourceFile);
-  return path.join(dir, cleanTarget);
+  return path.resolve(dir, cleanTarget);
 }
 
 async function verify() {
@@ -250,7 +250,7 @@ async function verify() {
     console.log(`\nℹ️  Ignored ${ignoredCount} findings based on ${CONFIG_FILE}.`);
   }
 
-  if (filteredBrokenLinks.length > 0) {
+  if (filteredBrokenLinks.length > 0 || filteredUnusedImages.length > 0) {
     process.exit(1);
   }
 }
