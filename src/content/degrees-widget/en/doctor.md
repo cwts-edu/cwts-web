@@ -10,7 +10,7 @@ The D.Min. program is designed to provide pastors holding an M.Div. (or its equi
 
 The program consists of 3 components, including required courses, elective courses and thesis-project.
 
-- Required Courses：Contours of Contemporary Ministry in Chinese Churches and Research Methodology for D.Min., (8 credits)
-- Major Courses：4 courses from the chosen majors. (16 credits)
-- Elective courses: students can either choose 2 courses from other majors, or the following courses in Evangelism and Missions, or one or two special topics for guided study. (8 credits)
-- The thesis / project must be directly related to the major of study, involve the integration of theory and praxis, demonstrate creativity and make a concrete contribution. It can take the form of an academic dissertation, a training manual, a study guide, or a ministry project. (8 credits)
+- Required Courses: (2 courses, 4 credits) Research Methodology for D.Min. (4); Research Methods* (0). <br>
+_*Research Methods is a required self-study course offered every semester and graded on a Pass/Fail basis (DMin passing score: 80% [B-]). The course fee is $96. CWTS master’s graduates who have previously taken this course must retake it if they did not achieve a score of 80% (B-) or higher._
+- 7 courses (totaling 28 credits) are to be taken from the following four categories (preferably not more than 4 courses from one particular category) in Pastoral Counseling, Church Leadership, Preaching & Teaching, and Evangelism & Mission.
+- The thesis / project (8 credits): must be directly related to the major of study, involve the integration of theory and praxis, demonstrate creativity and make a concrete contribution. It can take the form of an a church research, a training manual, a study guide, or a ministry project. 
