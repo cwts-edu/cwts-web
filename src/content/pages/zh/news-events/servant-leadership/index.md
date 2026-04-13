@@ -19,7 +19,7 @@ thumbnail: "/images/covers/news-events/servant-leadership.thumbnail.jpg"
 <div class="text-center">
 
 ## 【2026】第二屆僕人領袖研討會<br>中國內地會領袖的生命傳承 
-時間：2026 年 5 月 18 日（星期六）<br>
+時間：2026 年 5 月 18 日（星期一）<br>
 地點：基督工人神學院院本部 <br>
 <a href = "https://maps.app.goo.gl/YUJouwzFzWPSibLY8" target="blank"> 1975 Concourse Dr. San Jose, CA 95131 <br>
 
