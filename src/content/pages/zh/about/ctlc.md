@@ -9,9 +9,6 @@ thumbnail: "/images/covers/about/ctlc.thumbnail.jpg"
 ![CTLC Banner](/images/about/ctlc.png)
 
 
-
-# 正式成立 
-
 </div>
 
 踏入2026年，很高與向大家宣佈一個非常興奮的消息。經過近兩年的籌備，「華人神學 領袖聯盟」(Chinese Theological Leadership Consortium, CTLC)正式成立，此聯盟是匯集 北美五所華人神學教育機構：由美國正道福音神學院(LES)領導，成員包括美國的基督工 人神學院(CWTS)、國際神學研究院(ITS)、創欣神學院(GETS)，以及加拿大的國際基督教 教育神學院(ISCE)。正道福音神學院獲得「禮來基金會」(Lilly Endowment Inc.)頒發一千 萬美元的資助款項，用以成立華人神學領袖聯盟 (首筆五百萬已於2025年12月發放，待聯盟於2027年底前成功籌得一百七十萬後，再作配額1:3比例發放第二筆的五百萬)。 
