@@ -15,10 +15,6 @@
     {
       "source": "mission/index.html",
       "target": "/zh/about/vision-and-mission/"
-    },
-    {
-      "source": "zh/academic/online-program/index.html",
-      "target": "/academic/degrees-programs/master-of-christian-ministry-online"
     }
   ],
   "ignoredAssets": [
@@ -55,6 +51,7 @@
     "_astro/newsletter-2025A.DBSdtA9V.pdf",
     "_astro/newsletter-2025B.BvELzpBS.pdf",
     "_astro/newsletter-2025C.BPK1jGEv.pdf",
+    "_astro/newsletter-2026A.CgInv_4g.pdf",
     "android-chrome-192x192.png",
     "android-chrome-512x512.png",
     "docs/admissions/Application-Form-DMin_111422.pdf",
