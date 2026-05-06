@@ -7,12 +7,15 @@ thumbnail: "/images/covers/about/board.thumbnail.jpg"
 
 - Rev. Dr. Daniel Tan (Emeritus Chair)
 - Rev. Dr. Jeffrey Lu (Chairman) \*
-- Mr. John Chen  (Vice Chairman)
-- Rev. Dr. Job Lee (Secretary) \*
-- Mrs. Shirley Soong
+- Rev. Dr. James Sun  (Vice Chairman)
+- Elder Dr. Cheng-Sung Huang (Secretary) \*
 - Dr. Haifeng Chen
-- Rev. Patrick Auyeung
+- Mrs. Shirley Soong
+- Rev. Dr. Patrick Auyeung
 - Elder Jian Shan
+- Rev. Dr. Matthew Lin
+- Dr. Link Jaw 
+- Rev. Dr. Guang Chen 
 - Rev. Dr. Luke Tsai \*
 
 \* Member of the Executive Committee
