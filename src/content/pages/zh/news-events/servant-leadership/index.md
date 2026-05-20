@@ -23,8 +23,6 @@ thumbnail: "/images/covers/news-events/servant-leadership.thumbnail.jpg"
 地點：基督工人神學院院本部 <br>
 <a href = "https://maps.app.goo.gl/YUJouwzFzWPSibLY8" target="blank"> 1975 Concourse Dr. San Jose, CA 95131 <br>
 
-<a class="text-3xl font-bold" href="https://form.jotform.com/260686884898181" target="_blank">我要報名</a>
-
 [工作坊](#工作坊) [講員介紹](#講員介紹) [日程表](#日程表)
 </div>
 
