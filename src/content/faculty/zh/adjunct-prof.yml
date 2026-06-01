@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../../.astro\collections\adjunct-prof.schema.json
+- name: 柏雨成博士
+  category: adjunct
+  courses:
+    - 教會歷史
+    - 中國教會歷史
+    - 倫理學
+  degrees:
+    - Ph.D., Duke University, 2025. 哲學博士 (主修世界基督教)
+    - M.T.S, Duke Divinity School, 2018. 
+    - M.A., Columbia University, 2016. 東亞語言與文化（專注於現代中國史）
+    - B.A., University of Arizona, 2014 (全球研究)
+
 - name: 陳耀鵬牧師/博士
   category: adjunct
   courses:
