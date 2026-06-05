@@ -16,23 +16,6 @@ thumbnail: "/images/covers/student-life/calendar.thumbnail.jpg"
 
 |                                        |                                          |
 | -------------------------------------- | ---------------------------------------- |
-| >                                      | **SPRING SEMESTER 2026**                 |
-| New Student Orientation                | Monday, January 12                       |
-| Tuition Fees Due                       | Friday, January 16                       |
-| Beginning of Regular Classes           | Monday, January 19                       |
-| President’s Day (no class)             | Monday, February 16                      |
-| Chinese/Lunar New Year Celebration     | Wednesday, February 18                   |
-| Taste of CWTS (Zoom)                   | Friday, March 6                          |
-| Mid-term Exam / Class                  | Monday - Saturday, March 9–14            |
-| Bay Area Bible Convention (BABC)       | Saturday, March 14                       |
-| Fall Registration                      | April 1-30                               |
-| Good Friday Service (no class)         | Friday, April 3                          |
-| Taste of CWTS (in-person)              | Wednesday, April 8                       |
-| Reading Period                         | Monday - Saturday, April 20-25           |
-| Last day of Class                      | Monday, May 4                            |
-| Final Exam                             | Tuesday - Monday, May 5-11               |
-| End of Semester Celebration            | Monday, May 11                           |
-| Commencement                           | Saturday, May 16                         |
 | >                                      | **SUMMER SESSION 2026**                  |
 | MCCL courses (Asynchr. online)         | May 18–September 4                       |
 | Other Asynchr. online courses          | June 1–July 26 (8 weeks)                 |
