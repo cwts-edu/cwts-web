@@ -2,7 +2,8 @@
 import Footer from "@components/footer/Footer.astro";
 import Header from "@components/header/Header.astro";
 import SEO from "@components/common/SEO.astro";
-import type { Language } from "@libs/language";
+import ChatbotWidget from "@components/common/ChatbotWidget";
+import { type Language, T } from "@libs/language";
 
 export interface Props {
   title: string;
@@ -27,5 +28,6 @@ import "@assets/base.css";
     <Header language={language} />
     <slot />
     <Footer language={language} />
+    <ChatbotWidget label={T("chatbot_assistant", language)} client:idle />
   </body>
 </html>
