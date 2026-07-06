@@ -1,4 +1,7 @@
 # yaml-language-server: $schema=../../../.astro\collections\carousel.schema.json
+- link: /zh/news-events/tan-lectureship/
+  image: /images/carousel/lectureship2026.jpg
+  newWindow: true
 - link: /zh/about/ctlc
   image: /images/carousel/CTLC Banner.jpg
   newWindow: true
