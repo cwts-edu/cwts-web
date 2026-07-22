@@ -11,8 +11,7 @@ Our vision is to glorify the Triune God as an influential and respected theologi
 
 ## 異象宣告
 
-我們的異象是成為一所具有影響力且備受敬重的神學院，支援華人教會完成耶穌基督的大
-使命，榮耀三一神。
+我們的異象是成為一所具有影響力且備受敬重的神學院，支援華人教會完成耶穌基督的大使命，榮耀三一神。
 
 ## Mission Statement
 

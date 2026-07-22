@@ -11,37 +11,63 @@ This program provides advanced training for those desiring greater mastery of th
 
 | Category           | Credits Required | Course                                                        | Credits |
 | ------------------ | ---------------- | ------------------------------------------------------------- | ------- |
-| Bible/Theology     | 20               | Functional Greek/Hebrew                                       | 0       |
-| ^                  | ^                | Greek A/B                                                     | 0       |
-| ^                  | ^                | Hebrew A/B                                                    | 0       |
-| ^                  | ^                | Research Methods                                              | 1       |
+| Bible/Theology     | 20               | Functional Greek/Hebrew (exmept if exam passed)               | 0       |
+| ^                  | ^                | Greek A/B (exmept if exam passed)                             | 0       |
+| ^                  | ^                | Hebrew A/B (exmept if exam passed)                            | 0       |
+| ^                  | ^                | *Research Methods                                             | 0       |
 | ^                  | ^                | Advanced Research Methods                                     | 1       |
 | ^                  | ^                | Greek Exegesis                                                | 3       |
 | ^                  | ^                | Hebrew Exegesis                                               | 3       |
 | ^                  | ^                | The Bible: Methodological, Historical, and Theological Themes | 3       |
 | ^                  | ^                | ThM Concentration (1)                                         | 3       |
 | ^                  | ^                | ThM Concentration (2)                                         | 3       |
-| ^                  | ^                | ThM Elective                                                  | 3       |
+| ^                  | ^                | ThM Elective                                                  | 4       |
 | Practical Subjects | 4                | Course and Curriculum Design                                  | 3       |
 | ^                  | ^                | Preaching Practicum                                           | 1       |
 | ThM Thesis         | 6                | Thesis A                                                      | 3       |
 | ^                  | ^                | Thesis B                                                      | 3       |
 
-What is a ThM degree?
+\* The length of a Chinese ThM thesis is 17,000–25,000 words (22–31 pages, including footnotes but excluding the bibliography), while the English version is 12,000–18,000 words (40–60 pages).
+
+\* Research Methods is a required self-study course, offered every semester, and graded on a Pass/Fail basis (passing score: 80% [B-]).
+
+1st year
+
+| Fall                    |      | Spring                    |      |
+| ----------------------- | ---- | ------------------------- | ---- |
+| Funcional Greek & Hebrew  | 0    | Greek A                  | 0    |
+| Bibliology /ThM Concentration(1) | 3    | Hebrew A          | 0    |
+| ThM Elective            | 3    | Greek Exegesis / Hebrew Exegesis   | 3    |
+| *Research Methods       | 0    | Course and Curriculum Design / ThM Concentration (2) | 3    |
+|                         |      | Advanced Research Methods  | 1    |
+|                         | 6    |                            | 7    |
+
+2nd year
+
+| Fall                    |      | Spring                      |     |
+| ----------------------- | ---- | ------------------------- | ---- |
+| Greek B                | 0    | Hebrew Exegesis / Greek Exegesis   | 3    |
+| Hebrew B               | 0    | ThM Concentration (2)/ Course and Curriculum Design | 3    |
+| ThM Concentration(1)/ Bibliology | 3    | Thesis B        | 3    |
+| Preaching Practicum    | 1    |                           |      |
+| Thesis A               | 3    |                           |      |
+|                        | 7    |                           | 9    |
+
+### What is a ThM degree?
 
 - A ThM is a second master’s degree that provides additional theological training beyond an MDiv degree. At CWTS, a ThM degree takes two years of full-time study consisting of coursework and a thesis (see above).
 - For admission requirements and admission forms, [see here](/zh/admissions/application-procedure/thm-degree)
 - For tuition and scholarship opportunities, [see here](/zh/admissions/tuition-scholarship).
 - For questions, contact admissions@cwts.edu.
 
-Why should I do a ThM at CWTS?
+### Why pursue a ThM at CWTS?
 
 - To prepare yourself for ministry in Chinese theological education
 - To enrich your ministry of teaching, preaching, and/or writing
 - To deepen your theological training through studying advanced topics in theology and biblical studies
 - To prepare for Ph.D. studies
 
-Distinctives of the ThM program at CWTS
+### Distinctives of the ThM program at CWTS
 
 - One on one mentoring by CWTS faculty for the duration of ThM studies, including thesis
 - Integrative approach involving multiple theological disciplines, spiritual life, and fellowship with other students

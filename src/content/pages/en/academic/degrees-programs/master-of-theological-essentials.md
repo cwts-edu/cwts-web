@@ -14,49 +14,24 @@ The learning outcomes for an MTE graduate include: (1) demonstrating a foundatio
 
 | Category            | Credits Required | Courses                                                       | Credits |
 | ------------------- | ---------------- | ------------------------------------------------------------- | ------- |
-| General Studies     | 3                | Spiritual Formation                                           | 2       |
-| ^                   | ^                | Research Methods                                              | 1       |
-| Biblical Studies    | 18               | Hermeneutics A                                                | 1       |
-| ^                   | ^                | Hermeneutics B                                                | 2       |
-| ^                   | ^                | NT&OT Introduction                                            | 3       |
+| General Studies     | 2                | Spiritual Formation                                           | 2       |
+| ^                   | ^                | Research Methods                                              | 0       |
+| Biblical Studies    | 18               | Hermeneutics                                                  | 3       |
+| ^                   | ^                | NT & OT Introduction                                          | 3       |
 | ^                   | ^                | Pentateuch                                                    | 3       |
 | ^                   | ^                | Gospels                                                       | 3       |
 | ^                   | ^                | *Bible Electives                                              | 6       |
 | Theology Studies    | 9                | Systematic Theology A                                         | 3       |
-| ^                   | ^                | Systematic Theology B or  C                                   | 3       |
-| ^                   | ^                | Church History A or B                                         | 3       |
-| General Electives   | 5                | **Elective                                                    | 5       |
+| ^                   | ^                | Systematic Theology B / C                                     | 3       |
+| ^                   | ^                | Church History A / B                                          | 3       |
+| General Electives   | 5                | **See note below                                              | 6       |
 | Internship          | 1                | Field Education                                               | 1       |
 | Total               | 36               |                                                               |         |
 
-*Bible Electives: NT Epistles, Prophetic Literatures, any biblical languages, any biblical books\
-**General Elective: any theological or practical courses, such as Church History, Systematic Theology, Christian Ethics, Apologetics, Faith in the Public, Family Discipleship, Christian Education, Pastoral Theology, Homiletics, etc.
+\* Research Methods is a required self-study course, offered every semester, and graded on a Pass/Fail basis (passing score: 70% [C-]). 
 
-1st year
+\* Bible Electives: NT Epistles, Prophetic Literatures, any biblical languages, or any biblical books
 
-| Fall                                             |     | Spring                                                             |     |
-| ------------------------------------------------ | --- | ------------------------------------------------------------------ | --- |
-| Research Methods*                                | 1   | Spiritual Formation & Foundation of Ministry                       | 2   |
-| NT & OT Introduction                             | 3   | Gospels                                                            | 3   |
-| Hermeneutics A & B                               | 3   |                                                                    |     |
-| Homiletics                                       | 3   |                                                                    |     |
-|                                                  | 7   |                                                                    | 5   |
+\** General Electives: any theological or practical courses, such as Church History, Systematic Theology, Christian Ethics, Faith in the Public Space, Family Discipleship, Christian Education, Pastoral Theology, Homiletics, etc.
 
-2nd year
-
-| Fall                                             |     | Spring                                                             |     |
-| ------------------------------------------------ | --- | ------------------------------------------------------------------ | --- |
-| Systematic Theology A                            | 3   | Systematic Theology B or C                                         | 3   |
-| Church History A or B                            | 3   | Pentateuch                                                         | 3   |
-|                                                  | 6   |                                                                    | 6   |
-
-3rd year
-
-| Fall                                             |     | Spring                                                             |     |
-| ------------------------------------------------ | --- | ------------------------------------------------------------------ | --- |
-| Bible Elective                                   | 3   | Bible Elective                                                     | 3   |
-| Theological/Pastoral Elective                    | 3   | Theological/Practical Elective                                     | 2   |
-|                                                  | 3   | Field Education                                                    | 1   |
-|                                                  | 6   |                                                                    | 6   |
-
-*Offered in every Fall semester 
+\* "Spiritual Formation" is a non-credit requirement for part-time students and must complete one semester of "Spiritual Formation" (course code: SF001) before graduation
