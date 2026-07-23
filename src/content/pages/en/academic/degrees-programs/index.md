@@ -27,15 +27,6 @@ CWTS currently offers:
 | 6. [Master in Cross Cultural Leadership](/en/academic/degrees-programs/master-of-cross-cultural-leadership)   | 3                 | 36    |
 | 7. [Master of Theological Essentials](/en/academic/degrees-programs/master-of-theological-essentials)         | 3                 | 36    |
 
-
-
-## Diploma programs
-
-| Program                                                                  | Years of FT study | Units |
-| ------------------------------------------------------------------------ | ----------------- | ----- |
-| 1. [Diploma of Christian Studies](/en/academic/degrees-programs/diploma) | 1                 | 30    |
-| 2. [Diploma of Church Leadership](/en/academic/degrees-programs/diploma) | 1                 | 30    |
-
 ## Certificate programs
 
 | Program                                                                          | Years of study     | Units |

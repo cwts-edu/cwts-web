@@ -39,7 +39,7 @@ Students who wish to pursue a concentration may select from the options listed i
 | Concentration Electives | 10 |   |                    | Pastoral / General | Family & Children | Mission |  
 | ----------------------- | -- | - | ------------------ | -------- | ---------- | --- |
 |                         |    | 2 | Discipleship       | ✓        | ✓         |  10 credits from MCCL courses.  | 
-|                         |    | 2 | Family Discipleship | ✓       | ✓         |  [(refer to MCCL)](en/academic/degrees-programs/master-of-cross-cultural-leadership/)  |
+|                         |    | 2 | Family Discipleship | ✓       | ✓         |  [(refer to MCCL)](/en/academic/degrees-programs/master-of-cross-cultural-leadership/)  |
 |                         |    | 2 | Worship            | ✓        |           |      | 
 |                         |    | 2 | Intro to Mission / Evangelism | ✓         |      |          
 |                         |    | 2 | Servant Leadership | ✓        | ✓         |      | 

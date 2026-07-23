@@ -39,7 +39,7 @@ thumbnail: "/images/covers/degrees-programs/master.thumbnail.jpg"
 | 主修科目 | 10 |    |                    | 教牧/通用 | 家庭與兒童 | 宣教 |  
 | -------- | ----- | ---- | ------------------- | --------- | -------- | ------ |
 |       |    | 2 | 門徒建造              | ✓       | ✓    |      修讀跨文化領導碩士共10學分.     | 
-|       |    | 2 | 家庭門訓               | ✓      | ✓    |  [(請參閱跨文化領導碩)](zh/academic/degrees-programs/master-of-cross-cultural-leadership/)        |
+|       |    | 2 | 家庭門訓               | ✓      | ✓    |  [(請參閱跨文化領導碩)](/zh/academic/degrees-programs/master-of-cross-cultural-leadership/)        |
 |       |    | 2 | 崇拜學                 | ✓      |      |         | 
 |       |    | 2 | 宣教學概論/宣教面面觀   | ✓      |      |          | 
 |       |    | 2 | 僕人領袖               | ✓      | ✓     |     | 
