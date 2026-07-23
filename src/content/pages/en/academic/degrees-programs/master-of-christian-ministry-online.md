@@ -8,6 +8,7 @@ thumbnail: "/images/covers/degrees-programs/master.thumbnail.jpg"
 **(4 years, 60 credit hours)**
 
 The online Master of Christian Ministry program is designed for distance students, and its courses and degrees are the same as the MCM onsite program. The difference is that the online program is divided into three semesters: Fall, Spring and Summer. The students in the MCM online program will follow the Pastoral/General Track (10 credits).
+Exception: Worship can be fulfilled as a practical elective course.
 
 1st year
 

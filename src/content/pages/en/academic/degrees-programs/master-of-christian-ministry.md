@@ -77,8 +77,8 @@ Students who wish to pursue a concentration may select from the options listed i
 | Pastoral Theology                                | 3   | *Worship                                                           | 2   |
 | Systematic Theology A / Intro to Christian Education | 3   | Family Discipleship                                            | 2   |
 | *Servant Leadership                              | 1   | Preaching Practicum I                                              | 1   |
-| Field Education                                  | 1   |                                                                    |     |
-|                                                  | 18  |                                                                    | 13  |
+|                                                  | 1   | Field Education                                                    | 1   |
+|                                                  | 17  |                                                                    | 14  |
 
 *Pastoral/General track electives offered
 
