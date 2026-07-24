@@ -32,7 +32,6 @@ _*Research Methods is a required self-study course offered every semester and gr
    | Preachingand Teaching | Contemporary Biblical Scholarship & Biblical Interpretation       | 4       |
    | ^                     | Chinese Tradition and Hermeneutics                                | 4       |
    | ^                     | Advanced Expository Preaching                                     | 4       |
-   | ^                     | Different Preaching Methods                                       | 4       |
    | ^                     | Christian Education & North American Chinese Churches             | 4       |
    | Evangelism and Missions | People Groups, Diverse Media and Evangelism                     | 4       |
    | ^                       | Church Growth and Church Planting                               | 4       |

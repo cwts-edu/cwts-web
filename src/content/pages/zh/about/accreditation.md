@@ -12,6 +12,8 @@ thumbnail: "/images/covers/about/accreditation.thumbnail.jpg"
 - Master of Divinity (MDiv) 道學碩士
 - Master of Christian Ministry (MCM) 基督教聖工碩士
 - Master in Biblical Studies (MBS) 聖經研究碩士
+- Master of Theological Essentials (MTE) 神學精要碩士 
+- Master in Cross Cultural Leadership (MCCL) 跨文化領導碩士
 
 美國加州私立大專教育機關 (BPPE) 認可
 

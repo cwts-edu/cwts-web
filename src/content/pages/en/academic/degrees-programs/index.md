@@ -5,7 +5,7 @@ coverImage: "/images/covers/academic/degrees-programs.cover.jpg"
 thumbnail: "/images/covers/academic/degrees-programs.thumbnail.jpg"
 ---
 
-CWTS offers one Doctor of Ministry program, seven Master degree programs (Theology, Divinity, Biblical Studies, Christian Ministry, Cross-Cultural Leadership, Theological Essentials), two Diploma programs (Christian Studies, Church Leadership), and one Certificate program (Children Ministry). Credit hours and years required for their completion are as follows:
+CWTS offers one Doctor of Ministry program, seven Master degree programs (Theology, Divinity, Biblical Studies, Christian Ministry, Cross-Cultural Leadership, Theological Essentials), and one Certificate program (Children Ministry). Credit hours and years required for their completion are as follows:
 
 CWTS currently offers:
 
@@ -26,15 +26,6 @@ CWTS currently offers:
 | 5. [Master of Christian Ministry (Online)](/en/academic/degrees-programs/master-of-christian-ministry-online) | 3                 | 60    |
 | 6. [Master in Cross Cultural Leadership](/en/academic/degrees-programs/master-of-cross-cultural-leadership)   | 3                 | 36    |
 | 7. [Master of Theological Essentials](/en/academic/degrees-programs/master-of-theological-essentials)         | 3                 | 36    |
-
-
-
-## Diploma programs
-
-| Program                                                                  | Years of FT study | Units |
-| ------------------------------------------------------------------------ | ----------------- | ----- |
-| 1. [Diploma of Christian Studies](/en/academic/degrees-programs/diploma) | 1                 | 30    |
-| 2. [Diploma of Church Leadership](/en/academic/degrees-programs/diploma) | 1                 | 30    |
 
 ## Certificate programs
 
