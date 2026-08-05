@@ -5,7 +5,8 @@ category: faculty
 order: 110
 email: cindy.ou@cwts.edu
 positions:
-  - 神學碩士科主任, 新約助理教授
+  - 基督工人神學院神學碩士科主任
+  - 新約助理教授
 courses:
   - 福音書
   - 新約
