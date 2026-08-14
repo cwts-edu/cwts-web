@@ -50,7 +50,7 @@ San Jose, CA 95131](https://goo.gl/maps/Gi57SXut58CT5Ui38)
 
 *英文講座/ AI自動文字翻譯
 
-**主題講員簡介 About the Keynote Speaker:**\
+**主題講員簡介 About the Keynote Speaker:**
 
 Joey Fung 博士, 富勒神學院（Fuller Theological Seminary）教授、心理學暨婚姻與家庭治療學院副院長，Travis 研究院 所長。
 
@@ -99,7 +99,7 @@ Drawing from both clinical practice and spiritual reflection, Tania examines the
 </details>
 
 **工作坊五： 如何應對婚姻中的情感抽離 (Zoom)** \
-**講員: 洪王雪倫母, MACE**
+**講員: 洪王雪倫師母, MACE**
 <details>
  <summary>  洪王雪倫母在家庭教育方面擁有將近20年的經驗，... </summary>
  之前曾擔任新加坡Focus on the Family愛家機構的首席培訓師和課程研發主管。洪師母精通中英雙語，為教會、學校、企業和社區主講過多次有關婚姻和家庭生活的教育講座和工作坊。她畢業自美國西南浸信會神學院，擁有基督教教育碩士學位，也是PREPARE/ENRICH 和T-JTA婚前婚後心理測驗工具的合格輔導員。同時，她也是多個循證育兒課程的合格認證培訓師。
