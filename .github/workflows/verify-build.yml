@@ -23,8 +23,6 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build site
-        run: npm run build
-
       - name: Verify build integrity
         run: npm run verify-build
+
