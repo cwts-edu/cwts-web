@@ -19,6 +19,22 @@ interface LinkInfo {
   type: "a" | "img" | "script" | "link" | "meta" | "source";
 }
 
+function matchesPattern(value: string, pattern: string): boolean {
+  if (pattern.startsWith("regex:")) {
+    try {
+      let regexStr = pattern.slice("regex:".length);
+      if (!regexStr.startsWith("^") && !regexStr.endsWith("$")) {
+        regexStr = `^${regexStr}$`;
+      }
+      const regex = new RegExp(regexStr);
+      return regex.test(value);
+    } catch {
+      return false;
+    }
+  }
+  return value === pattern;
+}
+
 function loadExceptions(): Exceptions {
   if (fs.existsSync(CONFIG_FILE)) {
     try {
@@ -26,10 +42,10 @@ function loadExceptions(): Exceptions {
       return {
         ignoredLinks: (data.ignoredLinks || []).map((l: any) => 
           typeof l === "string" 
-            ? { source: "*", target: toSlash(l) } 
-            : { source: toSlash(l.source), target: toSlash(l.target) }
+            ? { source: "*", target: l } 
+            : { source: l.source, target: l.target }
         ),
-        ignoredAssets: (data.ignoredAssets || []).map(toSlash)
+        ignoredAssets: (data.ignoredAssets || []).map((a: string) => a)
       };
     } catch (e) {
       console.warn(`⚠️ Failed to parse ${CONFIG_FILE}, ignoring.`);
@@ -189,16 +205,31 @@ async function verify() {
 
   // 4. Filter findings based on exceptions
   const filteredBrokenLinks = brokenLinks.filter(link => 
-    !exceptions.ignoredLinks.some(e => (e.source === "*" || e.source === link.source) && e.target === link.target)
+    !exceptions.ignoredLinks.some(e => 
+      (e.source === "*" || matchesPattern(link.source, e.source)) && 
+      (e.target === "*" || matchesPattern(link.target, e.target))
+    )
   );
   const unusedImages = Array.from(allImages).filter(img => !referencedAssets.has(img));
-  const filteredUnusedImages = unusedImages.filter(img => !exceptions.ignoredAssets.includes(img));
+  const filteredUnusedImages = unusedImages.filter(img => 
+    !exceptions.ignoredAssets.some(pattern => matchesPattern(img, pattern))
+  );
 
   if (updateExceptions) {
     const linkKeys = new Set<string>();
     const uniqueLinks: Array<{ source: string, target: string }> = [];
     
-    for (const l of brokenLinks) {
+    // Preserve existing ignored links
+    for (const e of exceptions.ignoredLinks) {
+      const key = `${e.source}|${e.target}`;
+      if (!linkKeys.has(key)) {
+        linkKeys.add(key);
+        uniqueLinks.push({ source: e.source, target: e.target });
+      }
+    }
+
+    // Add newly found unignored broken links
+    for (const l of filteredBrokenLinks) {
       const key = `${l.source}|${l.target}`;
       if (!linkKeys.has(key)) {
         linkKeys.add(key);
@@ -206,15 +237,21 @@ async function verify() {
       }
     }
 
+    // Preserve existing ignored assets (including regex patterns) and add new unignored assets
+    const assetSet = new Set<string>(exceptions.ignoredAssets);
+    for (const img of filteredUnusedImages) {
+      assetSet.add(img);
+    }
+
     const newExceptions: Exceptions = {
       ignoredLinks: uniqueLinks.sort((a, b) => a.source.localeCompare(b.source) || a.target.localeCompare(b.target)),
-      ignoredAssets: unusedImages.sort()
+      ignoredAssets: Array.from(assetSet).sort()
     };
     saveExceptions(newExceptions);
     process.exit(0);
   }
 
-  // 4. Report Results
+  // 5. Report Results
   console.log("\n--- Build Integrity Report ---");
 
   if (filteredBrokenLinks.length > 0) {
@@ -251,6 +288,23 @@ async function verify() {
   }
 
   if (filteredBrokenLinks.length > 0 || filteredUnusedImages.length > 0) {
+    const configName = path.basename(CONFIG_FILE);
+    console.error("\n" + "=".repeat(60));
+    console.error("❌ BUILD INTEGRITY VERIFICATION FAILED");
+    console.error("=".repeat(60));
+    console.error("\nHow to verify and resolve:");
+    console.error("  1. Check and fix broken links or missing assets in source files.");
+    console.error("  2. If the findings are intentional, add exceptions:");
+    console.error(`     • Automatically add current findings to ${configName}:`);
+    console.error("       $ npm run verify-build:update");
+    console.error(`     • Or manually add exceptions or regular expressions (prefixed with 'regex:') to ${configName}:`);
+    console.error("       Example in ignoredAssets (regex supported):");
+    console.error('         "regex:_astro/newsletter-.*\\.pdf"');
+    console.error("       Example in ignoredLinks:");
+    console.error('         { "source": "*", "target": "/en/about/president-message/" }');
+    console.error("  3. Re-run verification:");
+    console.error("       $ npm run verify-build");
+    console.error("=".repeat(60) + "\n");
     process.exit(1);
   }
 }
