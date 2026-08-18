@@ -37,7 +37,7 @@ thumbnail: "/images/covers/student-life/calendar.thumbnail.jpg"
 | Thanksgiving (no class)                | Thursday - Saturday, November 26-27      |
 | Last day of Class                      | Monday, November 30                      |
 | Final Exam                             | Tuesday - Monday, December 1-7           |
-| Year-End Christmas Celebration         | Monday, December 7                       |
+| Year-End Christmas Celebration         | Tuesday, December 8                      |
 | >                                      | **SPRING SEMESTER 2027**                 |
 | New Student Orientation                | Monday, January 11                       |
 | Tuition Fees Due for Current students  | Monday, January 11                       |
