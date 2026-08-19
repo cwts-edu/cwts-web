@@ -1,35 +1,31 @@
 ---
 import SectionNoCover from "@layouts/SectionNoCover.astro";
 import { getLanguageBySlug, T } from "@libs/language";
-import { render } from "astro:content";
-import { type CollectionEntry, getCollection } from "astro:content";
+import { content, type ContentEntry, type FacultyMetadata } from "@libs/content";
 import { ObfuscatedEmail } from "astro-obfuscate/components";
 
 export async function getStaticPaths() {
-  const pages = await getCollection("faculty");
-  return pages.map((page) => {
-    const { language, slug } = getLanguageBySlug(page.id);
-    return {
-      params: {
-        language: language,
-        slug: slug,
-      },
-      props: {
-        page,
-        slug: `${language}/academic/faculty/${slug}`,
-      },
-    };
-  });
+  const pages = await content.faculty.list();
+  return pages.map((page) => ({
+    params: {
+      language: page.language,
+      slug: page.slug,
+    },
+    props: {
+      page,
+      slug: `${page.language}/academic/faculty/${page.slug}`,
+    },
+  }));
 }
 
 export interface Props {
-  page: CollectionEntry<"faculty">;
+  page: ContentEntry<FacultyMetadata>;
   slug: string;
 }
 
 const { page, slug } = Astro.props;
 const language = getLanguageBySlug(slug).language;
-const { Content } = await render(page);
+const { Content } = await content.render(page);
 ---
 
 <SectionNoCover

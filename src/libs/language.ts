@@ -1,4 +1,4 @@
-import { getEntry } from "astro:content";
+import { content } from "./content";
 
 export type Language = "zh" | "en";
 
@@ -18,14 +18,7 @@ export function getLanguageBySlug(slug: string): {
   throw new Error("Unable to get language from slug: " + slug);
 }
 
-const translationEntry = await getEntry("translation", "translation");
-if (!translationEntry) {
-  throw new Error(
-    "Translation data file 'translation.yml' not found in the 'translation' collection. This file is required.",
-  );
-}
-
-const translation = translationEntry.data;
+const translation = await content.translation.getAll();
 
 export function T(msg: string, language: Language): string {
   if (!(msg in translation)) throw new Error("Unknown message: " + msg);
