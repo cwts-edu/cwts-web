@@ -130,6 +130,7 @@ export class FirebaseContentClient implements IContentClient {
 
     const doc = await response.json();
     const fields = this.decodeFirestoreFields(doc.fields);
+    if (fields.status === "deleted") return null;
     const parsedData = SchemaValidators[collection].parse(fields);
 
     return {
@@ -374,6 +375,7 @@ export class FirebaseContentClient implements IContentClient {
     for (const doc of documents) {
       const id = doc.name.split("/").pop()!;
       const fields = this.decodeFirestoreFields(doc.fields);
+      if (fields.status === "deleted") continue;
       const parsedData = validator.parse(fields);
 
       entries.push({

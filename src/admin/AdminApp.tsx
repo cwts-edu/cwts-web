@@ -9,68 +9,41 @@ import { NewsEditView } from "./views/NewsEditView";
 import { JobsListView, type JobItem } from "./views/JobsListView";
 import { JobsEditView } from "./views/JobsEditView";
 import { db } from "./config/firebase";
-import { collection, doc, getDocs, deleteDoc } from "firebase/firestore";
+import { collection, getDocs } from "firebase/firestore";
 import type { NewsMetadata, JobMetadata } from "../libs/content/schemas";
+import { INITIAL_NEWS_FIXTURES, INITIAL_JOBS_FIXTURES } from "./fixtures/initialContent";
 
-const INITIAL_NEWS: NewsItem[] = [
-  {
-    id: "2026-04-24-newsletter",
-    data: {
-      title: "基神院訊 2026",
-      date: new Date("2026-04-24"),
-      thumbnail: "/images/news/newsletter-2026A.jpg",
-      url: "/zh/news-events/newsletter/",
-    },
-    body: "基神院訊",
-    status: "published",
-    version: 1,
-    publishedVersion: 1,
+const INITIAL_NEWS: NewsItem[] = INITIAL_NEWS_FIXTURES.map((item) => ({
+  id: item.id,
+  data: {
+    title: item.data.title,
+    date: new Date(item.data.date),
+    thumbnail: item.data.thumbnail,
+    url: item.data.url,
   },
-  {
-    id: "2026-05-26-MI Bring Church Home",
-    data: {
-      title: "把教會帶回家",
-      date: new Date("2026-05-26"),
-      thumbnail: "/images/news/MI Bring Church Home.jpg",
-      url: "/zh/ministry-institute/courses/#把教會帶回家-課程編碼ff013學分zoom授課",
-    },
-    body: "基神證書課程 Zoom課堂\\\n9/3-10/8 逢周四晚",
-    status: "published",
-    version: 1,
-    publishedVersion: 1,
-  },
-];
+  body: item.body,
+  status: "published",
+  version: 1,
+  publishedVersion: 1,
+}));
 
-const INITIAL_JOBS: JobItem[] = [
-  {
-    id: "2026-07-08",
-    data: {
-      title: "矽谷基督徒聚會三谷分堂 - 全職傳道同工（音樂敬拜、拓展牧養）",
-      location: "Tri-Valley, CA",
-      date: new Date("2026-07-08"),
-      file: "/docs/jobs/2026-07-08-SVCA TV Worship Outreach.pdf",
-    },
-    status: "published",
-    version: 1,
-    publishedVersion: 1,
+const INITIAL_JOBS: JobItem[] = INITIAL_JOBS_FIXTURES.map((item) => ({
+  id: item.id,
+  data: {
+    title: item.data.title,
+    location: item.data.location,
+    date: new Date(item.data.date),
+    ...(item.data.file ? { file: item.data.file } : {}),
   },
-  {
-    id: "2026-07-06",
-    data: {
-      title: "基督之家第五家 - 主恩事工牧者",
-      location: "Fremont, CA",
-      date: new Date("2026-07-06"),
-      file: "/docs/jobs/2026-07-06-HOC5-Caring-Pastor.pdf",
-    },
-    status: "published",
-    version: 1,
-    publishedVersion: 1,
-  },
-];
+  body: item.body,
+  status: "published",
+  version: 1,
+  publishedVersion: 1,
+}));
 
 const AdminDashboard: React.FC = () => {
   const { user } = useAuth();
-  const { pendingChanges, saveChangeToDraft, publishDraftToProduction } = useDraft();
+  const { pendingChanges, saveChangeToDraft, discardDraftChange } = useDraft();
 
   const [currentTab, setCurrentTab] = useState<AdminTab>("dashboard");
   const [editingId, setEditingId] = useState<string | null>(null);
@@ -81,12 +54,13 @@ const AdminDashboard: React.FC = () => {
 
   const loadData = useCallback(async () => {
     try {
-      // 1. Fetch News
+      // 1. Fetch News (filter out soft-deleted items)
       const newsSnap = await getDocs(collection(db, "news"));
       if (!newsSnap.empty) {
         const loadedNews: NewsItem[] = [];
         newsSnap.forEach((d) => {
           const val = d.data();
+          if (val.status === "deleted") return; // Ignore soft-deleted documents
           loadedNews.push({
             id: d.id,
             data: {
@@ -106,12 +80,13 @@ const AdminDashboard: React.FC = () => {
         setNews(loadedNews);
       }
 
-      // 2. Fetch Jobs
+      // 2. Fetch Jobs (filter out soft-deleted items)
       const jobsSnap = await getDocs(collection(db, "jobs"));
       if (!jobsSnap.empty) {
         const loadedJobs: JobItem[] = [];
         jobsSnap.forEach((d) => {
           const val = d.data();
+          if (val.status === "deleted") return; // Ignore soft-deleted documents
           loadedJobs.push({
             id: d.id,
             data: {
@@ -148,7 +123,7 @@ const AdminDashboard: React.FC = () => {
   };
 
   // --------------------------------------------------------------------------
-  // News Handlers (Draft Save via DraftContext)
+  // News Handlers (Draft Save & Soft Delete)
   // --------------------------------------------------------------------------
   const handleSaveNewsDraft = async (item: { id: string; data: NewsMetadata; body: string }) => {
     await saveChangeToDraft("news", item.id, "update", item.data, item.body);
@@ -157,16 +132,18 @@ const AdminDashboard: React.FC = () => {
   };
 
   const handleDeleteNews = async (id: string) => {
-    try {
-      await deleteDoc(doc(db, "news", id));
-    } catch (e) {
-      console.warn("Could not delete from Firestore:", e);
+    const target = news.find((n) => n.id === id);
+    if (target) {
+      await saveChangeToDraft("news", id, "delete", target.data, target.body);
     }
-    setNews((prev) => prev.filter((n) => n.id !== id));
+  };
+
+  const handleUndoDeleteNews = async (id: string) => {
+    await discardDraftChange("news", id);
   };
 
   // --------------------------------------------------------------------------
-  // Jobs Handlers (Draft Save via DraftContext)
+  // Jobs Handlers (Draft Save & Soft Delete)
   // --------------------------------------------------------------------------
   const handleSaveJobDraft = async (item: { id: string; data: JobMetadata; body: string }) => {
     await saveChangeToDraft("jobs", item.id, "update", item.data, item.body);
@@ -175,50 +152,82 @@ const AdminDashboard: React.FC = () => {
   };
 
   const handleDeleteJob = async (id: string) => {
-    try {
-      await deleteDoc(doc(db, "jobs", id));
-    } catch (e) {
-      console.warn("Could not delete job from Firestore:", e);
+    const target = jobs.find((j) => j.id === id);
+    if (target) {
+      await saveChangeToDraft("jobs", id, "delete", target.data, target.body);
     }
-    setJobs((prev) => prev.filter((j) => j.id !== id));
+  };
+
+  const handleUndoDeleteJob = async (id: string) => {
+    await discardDraftChange("jobs", id);
   };
 
   // Overlay active draft items into the view list for the editor
-  const mergedNews = news.map((item) => {
-    const draft = pendingChanges.find((p) => p.collection === "news" && p.documentId === item.id);
-    if (draft) {
-      return {
-        ...item,
-        draftData: draft.data,
-        draftBody: draft.body,
-        status: "draft" as const,
-        updatedBy: draft.updatedBy,
-      };
-    }
-    return item;
-  });
+  const newsMap = new Map<string, NewsItem>(news.map((item) => [item.id, { ...item }]));
+  const newsDraftChanges = pendingChanges.filter((p) => p.collection === "news");
 
-  const mergedJobs = jobs.map((item) => {
-    const draft = pendingChanges.find((p) => p.collection === "jobs" && p.documentId === item.id);
-    if (draft) {
-      return {
-        ...item,
-        draftData: draft.data,
+  for (const draft of newsDraftChanges) {
+    const existing = newsMap.get(draft.documentId);
+    if (draft.action === "delete") {
+      if (existing) {
+        newsMap.set(draft.documentId, {
+          ...existing,
+          status: "deleted",
+          updatedBy: draft.updatedBy,
+        });
+      }
+    } else {
+      newsMap.set(draft.documentId, {
+        id: draft.documentId,
+        data: draft.data as NewsMetadata,
+        draftData: draft.data as NewsMetadata,
+        body: draft.body,
         draftBody: draft.body,
-        status: "draft" as const,
+        status: "draft",
         updatedBy: draft.updatedBy,
-      };
+        version: existing ? (existing.version || 1) + 1 : 1,
+        publishedVersion: existing?.publishedVersion,
+      });
     }
-    return item;
-  });
+  }
+  const mergedNews = Array.from(newsMap.values());
+
+  const jobsMap = new Map<string, JobItem>(jobs.map((item) => [item.id, { ...item }]));
+  const jobsDraftChanges = pendingChanges.filter((p) => p.collection === "jobs");
+
+  for (const draft of jobsDraftChanges) {
+    const existing = jobsMap.get(draft.documentId);
+    if (draft.action === "delete") {
+      if (existing) {
+        jobsMap.set(draft.documentId, {
+          ...existing,
+          status: "deleted",
+          updatedBy: draft.updatedBy,
+        });
+      }
+    } else {
+      jobsMap.set(draft.documentId, {
+        id: draft.documentId,
+        data: draft.data as JobMetadata,
+        draftData: draft.data as JobMetadata,
+        body: draft.body,
+        draftBody: draft.body,
+        status: "draft",
+        updatedBy: draft.updatedBy,
+        version: existing ? (existing.version || 1) + 1 : 1,
+        publishedVersion: existing?.publishedVersion,
+      });
+    }
+  }
+  const mergedJobs = Array.from(jobsMap.values());
 
   return (
     <AdminLayout currentTab={currentTab} onNavigate={handleNavigate}>
       {currentTab === "dashboard" && (
         <DashboardView
           onNavigate={handleNavigate}
-          newsCount={mergedNews.length}
-          jobsCount={mergedJobs.length}
+          newsCount={mergedNews.filter((n) => n.status !== "deleted").length}
+          jobsCount={mergedJobs.filter((j) => j.status !== "deleted").length}
           onRefreshData={loadData}
         />
       )}
@@ -229,6 +238,7 @@ const AdminDashboard: React.FC = () => {
           onNew={() => handleNavigate("news_new")}
           onEdit={(id) => handleNavigate("news_edit", id)}
           onDelete={handleDeleteNews}
+          onUndoDelete={handleUndoDeleteNews}
         />
       )}
 
@@ -253,6 +263,7 @@ const AdminDashboard: React.FC = () => {
           onNew={() => handleNavigate("jobs_new")}
           onEdit={(id) => handleNavigate("jobs_edit", id)}
           onDelete={handleDeleteJob}
+          onUndoDelete={handleUndoDeleteJob}
         />
       )}
 

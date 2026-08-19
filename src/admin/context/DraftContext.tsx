@@ -253,8 +253,36 @@ export const DraftProvider: React.FC<{ children: React.ReactNode }> = ({ childre
           }
         } catch {}
 
+        let currentData = change.data;
+        let currentBody = change.body;
+
         if (change.action === "delete") {
-          batch.delete(canonicalRef);
+          // Soft delete in Canonical document
+          batch.set(
+            canonicalRef,
+            {
+              status: "deleted",
+              version: currentVer,
+              publishedVersion: currentVer,
+              deletedBy: audit,
+              deletedAt: new Date().toISOString(),
+              updatedAt: new Date().toISOString(),
+            },
+            { merge: true }
+          );
+
+          // Create Immutable Version Snapshot marking status as deleted
+          const versionRef = doc(db, change.collection, change.documentId, "versions", String(currentVer));
+          batch.set(versionRef, {
+            version: currentVer,
+            status: "deleted",
+            data: currentData || {},
+            body: currentBody || "",
+            deletedBy: audit,
+            releaseId,
+            releaseDescription: draftDescription,
+            createdAt: new Date().toISOString(),
+          });
         } else {
           // Write Canonical document
           batch.set(canonicalRef, {

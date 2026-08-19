@@ -140,19 +140,31 @@ export const DraftReviewModal: React.FC<Props> = ({ isOpen, onClose, onNavigateT
                 {pendingChanges.map((change) => (
                   <div
                     key={`${change.collection}_${change.documentId}`}
-                    className="p-4 flex items-center justify-between gap-4 hover:bg-slate-900/40 transition"
+                    className={`p-4 flex items-center justify-between gap-4 transition ${
+                      change.action === "delete" ? "bg-red-950/20" : "hover:bg-slate-900/40"
+                    }`}
                   >
                     <div className="overflow-hidden space-y-1">
                       <div className="flex items-center gap-2">
-                        <span className="px-2 py-0.5 rounded bg-purple-900/50 text-purple-300 border border-purple-500/30 text-[10px] uppercase font-bold">
-                          {change.collection}
-                        </span>
-                        <span className="text-sm font-semibold text-white truncate">
+                        {change.action === "delete" ? (
+                          <span className="px-2 py-0.5 rounded bg-red-900/50 text-red-300 border border-red-500/30 text-[10px] uppercase font-bold">
+                            🔴 DELETE {change.collection}
+                          </span>
+                        ) : (
+                          <span className="px-2 py-0.5 rounded bg-purple-900/50 text-purple-300 border border-purple-500/30 text-[10px] uppercase font-bold">
+                            {change.collection}
+                          </span>
+                        )}
+                        <span
+                          className={`text-sm font-semibold truncate ${
+                            change.action === "delete" ? "line-through text-red-300" : "text-white"
+                          }`}
+                        >
                           {change.data?.title || "Untitled Entry"}
                         </span>
                       </div>
                       <div className="text-[11px] text-slate-400 truncate">
-                        Modified by {change.updatedBy.email}
+                        {change.action === "delete" ? "Marked for deletion" : "Modified"} by {change.updatedBy.email}
                       </div>
                     </div>
 

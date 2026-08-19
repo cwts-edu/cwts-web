@@ -8,7 +8,7 @@ export interface JobItem {
   draftData?: JobMetadata;
   body?: string;
   draftBody?: string;
-  status: "published" | "draft";
+  status: "published" | "draft" | "deleted";
   version?: number;
   publishedVersion?: number;
   updatedBy?: AuditUser;
@@ -20,9 +20,10 @@ interface Props {
   onNew: () => void;
   onEdit: (id: string) => void;
   onDelete: (id: string) => Promise<void>;
+  onUndoDelete?: (id: string) => Promise<void>;
 }
 
-export const JobsListView: React.FC<Props> = ({ items, onNew, onEdit, onDelete }) => {
+export const JobsListView: React.FC<Props> = ({ items, onNew, onEdit, onDelete, onUndoDelete }) => {
   // Always sort newest first by posted date
   const sortedItems = React.useMemo(() => {
     return [...items].sort((a, b) => {
@@ -77,18 +78,29 @@ export const JobsListView: React.FC<Props> = ({ items, onNew, onEdit, onDelete }
             <tbody className="divide-y divide-slate-800">
               {sortedItems.map((item) => {
                 const activeData = item.draftData || item.data;
+                const isDeleted = item.status === "deleted";
                 const isDraft = item.status === "draft" || (item.version && item.publishedVersion && item.version > item.publishedVersion);
+
                 return (
-                  <tr key={item.id} className="hover:bg-slate-800/40 transition">
+                  <tr
+                    key={item.id}
+                    className={`transition ${isDeleted ? "bg-red-950/20 opacity-60" : "hover:bg-slate-800/40"}`}
+                  >
                     <td className="py-3.5 px-6 max-w-xs">
-                      <div className="font-semibold text-white truncate">{activeData.title}</div>
+                      <div className={`font-semibold text-white truncate ${isDeleted ? "line-through text-slate-400" : ""}`}>
+                        {activeData.title}
+                      </div>
                     </td>
                     <td className="py-3.5 px-6 text-xs text-slate-300 whitespace-nowrap">{activeData.location}</td>
                     <td className="py-3.5 px-6 text-xs text-slate-300 whitespace-nowrap font-mono">
                       {new Date(activeData.date).toISOString().split("T")[0]}
                     </td>
                     <td className="py-3.5 px-6 whitespace-nowrap">
-                      {isDraft ? (
+                      {isDeleted ? (
+                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-red-500/10 text-red-300 border border-red-500/30 text-xs font-medium">
+                          🔴 Pending Deletion (Draft)
+                        </span>
+                      ) : isDraft ? (
                         <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-amber-500/10 text-amber-300 border border-amber-500/30 text-xs font-medium">
                           🟡 Draft {item.version ? `v${item.version}` : ""}
                         </span>
@@ -116,22 +128,29 @@ export const JobsListView: React.FC<Props> = ({ items, onNew, onEdit, onDelete }
                       </div>
                     </td>
                     <td className="py-3.5 px-6 text-right space-x-2 whitespace-nowrap">
-                      <button
-                        onClick={() => onEdit(item.id)}
-                        className="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-xs font-medium text-slate-200 rounded-lg transition"
-                      >
-                        Edit
-                      </button>
-                      <button
-                        onClick={() => {
-                          if (confirm(`Are you sure you want to delete "${activeData.title}"?`)) {
-                            onDelete(item.id);
-                          }
-                        }}
-                        className="px-2.5 py-1.5 bg-red-900/30 hover:bg-red-900/50 text-xs font-medium text-red-300 rounded-lg transition"
-                      >
-                        Delete
-                      </button>
+                      {isDeleted ? (
+                        <button
+                          onClick={() => onUndoDelete && onUndoDelete(item.id)}
+                          className="px-3 py-1.5 bg-emerald-900/40 hover:bg-emerald-900/60 text-xs font-medium text-emerald-300 border border-emerald-500/30 rounded-lg transition"
+                        >
+                          ↩️ Undo Delete
+                        </button>
+                      ) : (
+                        <>
+                          <button
+                            onClick={() => onEdit(item.id)}
+                            className="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-xs font-medium text-slate-200 rounded-lg transition"
+                          >
+                            Edit
+                          </button>
+                          <button
+                            onClick={() => onDelete(item.id)}
+                            className="px-2.5 py-1.5 bg-red-900/30 hover:bg-red-900/50 text-xs font-medium text-red-300 rounded-lg transition"
+                          >
+                            Delete
+                          </button>
+                        </>
+                      )}
                     </td>
                   </tr>
                 );

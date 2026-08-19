@@ -14,6 +14,8 @@ import type {
   StudyModeWidgetMetadata,
 } from "./schemas";
 
+export type ContentStatus = "draft" | "published" | "deleted";
+
 export interface AuditUser {
   uid: string;
   email: string;
@@ -24,7 +26,7 @@ export interface AuditUser {
 
 export interface VersionRecord<T = any> {
   version: number;
-  status: "draft" | "published";
+  status: ContentStatus;
   data: T;
   body?: string;
   html?: string;
@@ -38,7 +40,7 @@ export interface ContentEntry<T = any> {
   id: string;
   slug: string;
   language: Language;
-  status: "draft" | "published";
+  status: ContentStatus;
   version?: number;
   publishedVersion?: number;
   data: T;
@@ -54,7 +56,7 @@ export interface ContentEntry<T = any> {
 
 export interface CollectionFilter<T> {
   language?: Language;
-  status?: "draft" | "published";
+  status?: ContentStatus;
   limit?: number;
   where?: { [K in keyof T]?: T[K] };
   orderBy?: { field: keyof T; direction: "asc" | "desc" };
