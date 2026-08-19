@@ -10,6 +10,7 @@ const firebaseConfig = {
   storageBucket: import.meta.env.PUBLIC_FIREBASE_STORAGE_BUCKET || "cwts-cms.appspot.com",
   messagingSenderId: import.meta.env.PUBLIC_FIREBASE_MESSAGING_SENDER_ID || "1234567890",
   appId: import.meta.env.PUBLIC_FIREBASE_APP_ID || "1:1234567890:web:abcdef",
+  measurementId: import.meta.env.PUBLIC_FIREBASE_MEASUREMENT_ID || undefined,
 };
 
 const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
