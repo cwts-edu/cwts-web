@@ -1,0 +1,28 @@
+---
+import AdminApp from "../../admin/AdminApp";
+import "@assets/base.css";
+
+export function getStaticPaths() {
+  return [
+    { params: { app: undefined } },
+    { params: { app: "news" } },
+    { params: { app: "jobs" } },
+  ];
+}
+---
+
+<!doctype html>
+<html lang="zh-Hant" class="dark h-full bg-slate-950">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>CWTS Admin Portal</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  </head>
+  <body class="h-full bg-slate-950 text-slate-100 antialiased selection:bg-purple-500 selection:text-white">
+    <div id="admin-root" class="min-h-full">
+      <AdminApp client:only="react" />
+    </div>
+  </body>
+</html>

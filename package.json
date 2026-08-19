@@ -30,6 +30,7 @@
     "astro-icon": "^1.0.0-next.2",
     "astro-obfuscate": "^0.0.5",
     "d3-dsv": "^3.0.1",
+    "firebase": "^12.17.1",
     "github-slugger": "^2.0.0",
     "install": "^0.13.0",
     "netlify-redirect-parser": "^14.2.0",
