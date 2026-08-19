@@ -148,11 +148,11 @@ export const DraftReviewModal: React.FC<Props> = ({ isOpen, onClose, onNavigateT
                           {change.collection}
                         </span>
                         <span className="text-sm font-semibold text-white truncate">
-                          {change.data?.title || change.documentId}
+                          {change.data?.title || "Untitled Entry"}
                         </span>
                       </div>
-                      <div className="text-[11px] text-slate-400 font-mono truncate">
-                        ID: {change.documentId} • Modified by {change.updatedBy.email}
+                      <div className="text-[11px] text-slate-400 truncate">
+                        Modified by {change.updatedBy.email}
                       </div>
                     </div>
 

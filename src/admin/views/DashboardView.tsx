@@ -151,10 +151,7 @@ export const DashboardView: React.FC<Props> = ({ onNavigate, newsCount, jobsCoun
                     {change.collection}
                   </span>
                   <span className="text-white font-medium">
-                    {change.data?.title || change.documentId}
-                  </span>
-                  <span className="text-slate-400 font-mono text-[11px]">
-                    ({change.documentId})
+                    {change.data?.title || "Untitled Entry"}
                   </span>
                 </div>
 

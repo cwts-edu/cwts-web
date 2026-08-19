@@ -66,7 +66,7 @@ export const NewsListView: React.FC<Props> = ({ items, onNew, onEdit, onDelete }
             <thead className="bg-slate-800/80 text-xs font-semibold text-slate-400 uppercase tracking-wider border-b border-slate-700">
               <tr>
                 <th className="py-3.5 px-6">Thumbnail</th>
-                <th className="py-3.5 px-6">Title & Version</th>
+                <th className="py-3.5 px-6">Article Title</th>
                 <th className="py-3.5 px-6">Publish Date</th>
                 <th className="py-3.5 px-6">Status</th>
                 <th className="py-3.5 px-6">Last Modified By</th>
@@ -94,7 +94,6 @@ export const NewsListView: React.FC<Props> = ({ items, onNew, onEdit, onDelete }
                     </td>
                     <td className="py-3.5 px-6 max-w-xs">
                       <div className="font-semibold text-white truncate">{activeData.title}</div>
-                      <div className="text-[11px] font-mono text-purple-400 truncate mt-0.5">{item.id}</div>
                     </td>
                     <td className="py-3.5 px-6 text-xs text-slate-300 whitespace-nowrap font-mono">
                       {new Date(activeData.date).toISOString().split("T")[0]}

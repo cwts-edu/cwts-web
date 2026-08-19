@@ -19,30 +19,6 @@ interface Props {
   onCancel: () => void;
 }
 
-function slugify(text: string): string {
-  return text
-    .toString()
-    .toLowerCase()
-    .trim()
-    .replace(/\s+/g, "-")
-    .replace(/&/g, "-and-")
-    .replace(/[^\w\-\u4e00-\u9fa5]+/g, "")
-    .replace(/\-\-+/g, "-")
-    .replace(/^-+/, "")
-    .replace(/-+$/, "");
-}
-
-function extractShortIdFromExisting(fullId: string, dateStr: string): string {
-  if (fullId.startsWith(`${dateStr}-`)) {
-    return fullId.slice(dateStr.length + 1);
-  }
-  const match = fullId.match(/^\d{4}-\d{2}-\d{2}-(.*)$/);
-  if (match) {
-    return match[1];
-  }
-  return fullId;
-}
-
 export const NewsEditView: React.FC<Props> = ({ initialItem, onSave, onCancel }) => {
   const currentActive = initialItem?.draftData || initialItem?.data;
   const initialDateStr = currentActive?.date
@@ -50,9 +26,7 @@ export const NewsEditView: React.FC<Props> = ({ initialItem, onSave, onCancel })
     : new Date().toISOString().split("T")[0];
 
   const [dateStr, setDateStr] = useState(initialDateStr);
-  const [shortId, setShortId] = useState(
-    initialItem ? extractShortIdFromExisting(initialItem.id, initialDateStr) : ""
-  );
+  const [timestampSuffix] = useState(() => Date.now().toString(36));
   const [title, setTitle] = useState(currentActive?.title || "");
   const [thumbnail, setThumbnail] = useState(currentActive?.thumbnail || "/images/news/");
   const [url, setUrl] = useState(currentActive?.url || "/zh/news-events/");
@@ -91,10 +65,8 @@ export const NewsEditView: React.FC<Props> = ({ initialItem, onSave, onCancel })
     loadVersions();
   }, [initialItem?.id]);
 
-  const computedSlug = React.useMemo(() => {
-    const cleanShort = slugify(shortId || title || "news");
-    return dateStr ? `${dateStr}-${cleanShort}` : cleanShort;
-  }, [dateStr, shortId, title]);
+  // Target document ID: fixed initialItem.id for existing, or Date + timestamp for new
+  const targetDocId = initialItem ? initialItem.id : `${dateStr}-${timestampSuffix}`;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -115,7 +87,7 @@ export const NewsEditView: React.FC<Props> = ({ initialItem, onSave, onCancel })
 
     try {
       setIsSaving(true);
-      await onSave({ id: computedSlug, data: validation.data, body });
+      await onSave({ id: targetDocId, data: validation.data, body });
     } catch (err: any) {
       setError(err.message || "Failed to save draft");
       setIsSaving(false);
@@ -134,7 +106,8 @@ export const NewsEditView: React.FC<Props> = ({ initialItem, onSave, onCancel })
   };
 
   return (
-    <div className="max-w-4xl space-y-6">
+    <div className="max-w-4xl mx-auto space-y-8">
+      {/* Header */}
       <div className="flex items-center justify-between">
         <div>
           <div className="flex items-center gap-3">
@@ -173,7 +146,7 @@ export const NewsEditView: React.FC<Props> = ({ initialItem, onSave, onCancel })
       {showHistory && (
         <div className="bg-slate-900 border border-purple-500/40 rounded-2xl p-6 space-y-4 shadow-2xl">
           <div className="flex items-center justify-between border-b border-slate-800 pb-3">
-            <h3 className="text-sm font-bold text-purple-300">Published Version History for {initialItem?.id}</h3>
+            <h3 className="text-sm font-bold text-purple-300">Published Version History</h3>
             <button onClick={() => setShowHistory(false)} className="text-xs text-slate-400 hover:text-white">
               Close
             </button>
@@ -227,18 +200,13 @@ export const NewsEditView: React.FC<Props> = ({ initialItem, onSave, onCancel })
               type="text"
               required
               value={title}
-              onChange={(e) => {
-                setTitle(e.target.value);
-                if (!shortId && !initialItem) {
-                  setShortId(slugify(e.target.value).slice(0, 30));
-                }
-              }}
+              onChange={(e) => setTitle(e.target.value)}
               placeholder="e.g. 基神院訊 2026 夏季號"
               className="w-full px-4 py-2.5 bg-slate-950 border border-slate-700 rounded-xl text-white text-sm focus:outline-none focus:border-purple-500 transition"
             />
           </div>
 
-          <div>
+          <div className="sm:col-span-2">
             <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">
               Publish Date *
             </label>
@@ -249,34 +217,6 @@ export const NewsEditView: React.FC<Props> = ({ initialItem, onSave, onCancel })
               onChange={(e) => setDateStr(e.target.value)}
               className="w-full px-4 py-2.5 bg-slate-950 border border-slate-700 rounded-xl text-white text-sm focus:outline-none focus:border-purple-500 transition"
             />
-          </div>
-
-          <div>
-            <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">
-              Short Identifier (Name) *
-            </label>
-            <input
-              type="text"
-              required
-              value={shortId}
-              onChange={(e) => setShortId(e.target.value)}
-              placeholder="e.g. newsletter or teach-learn"
-              className="w-full px-4 py-2.5 bg-slate-950 border border-slate-700 rounded-xl text-white text-sm font-mono focus:outline-none focus:border-purple-500 transition"
-            />
-          </div>
-
-          <div className="sm:col-span-2 p-3.5 bg-slate-950/80 border border-purple-500/30 rounded-xl flex items-center justify-between gap-4">
-            <div className="overflow-hidden">
-              <span className="text-[11px] font-semibold text-purple-400 uppercase tracking-wider block">
-                Computed Document ID (Auto-Generated)
-              </span>
-              <span className="font-mono text-sm text-purple-200 truncate block mt-0.5">
-                {computedSlug}
-              </span>
-            </div>
-            <span className="px-2 py-1 rounded bg-purple-900/40 text-purple-300 text-[10px] font-medium border border-purple-500/30 whitespace-nowrap">
-              Auto-Synced
-            </span>
           </div>
 
           <div className="sm:col-span-2">
@@ -302,41 +242,40 @@ export const NewsEditView: React.FC<Props> = ({ initialItem, onSave, onCancel })
               required
               value={thumbnail}
               onChange={(e) => setThumbnail(e.target.value)}
-              placeholder="/images/news/sample.jpg"
+              placeholder="/images/news/example.jpg"
               className="w-full px-4 py-2.5 bg-slate-950 border border-slate-700 rounded-xl text-white text-sm focus:outline-none focus:border-purple-500 transition"
             />
           </div>
 
           <div className="sm:col-span-2">
             <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">
-              Card Subtitle / Body Description
+              Short Description / Excerpt (Markdown)
             </label>
             <textarea
-              rows={3}
+              rows={4}
               value={body}
               onChange={(e) => setBody(e.target.value)}
-              placeholder="Brief description displayed on the homepage news card..."
-              className="w-full px-4 py-2.5 bg-slate-950 border border-slate-700 rounded-xl text-white text-sm focus:outline-none focus:border-purple-500 transition resize-none"
+              placeholder="Enter article description or highlights shown below title..."
+              className="w-full px-4 py-3 bg-slate-950 border border-slate-700 rounded-xl text-white text-sm focus:outline-none focus:border-purple-500 font-mono transition"
             />
           </div>
         </div>
 
-        {/* Single Save Action */}
-        <div className="pt-4 border-t border-slate-800 flex items-center justify-between gap-4">
+        {/* Action Button: Single Save to Draft */}
+        <div className="pt-4 border-t border-slate-800 flex items-center justify-end gap-4">
           <button
             type="button"
             onClick={onCancel}
-            className="py-2.5 px-5 bg-slate-800 hover:bg-slate-700 text-xs font-medium text-slate-300 rounded-xl transition"
+            className="px-5 py-2.5 text-xs font-semibold text-slate-400 hover:text-white transition"
           >
             Cancel
           </button>
-
           <button
             type="submit"
             disabled={isSaving}
-            className="py-2.5 px-6 bg-purple-600 hover:bg-purple-500 disabled:opacity-50 text-xs font-bold text-white rounded-xl shadow-lg transition"
+            className="px-6 py-2.5 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 disabled:opacity-50 text-xs font-bold text-slate-950 rounded-xl shadow-lg transition flex items-center gap-2"
           >
-            {isSaving ? "Saving..." : "Save to Draft Workspace"}
+            {isSaving ? "Saving..." : "💾 Save to Draft Workspace"}
           </button>
         </div>
       </form>

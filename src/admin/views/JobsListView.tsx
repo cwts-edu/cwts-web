@@ -65,7 +65,7 @@ export const JobsListView: React.FC<Props> = ({ items, onNew, onEdit, onDelete }
           <table className="w-full text-left text-sm text-slate-300">
             <thead className="bg-slate-800/80 text-xs font-semibold text-slate-400 uppercase tracking-wider border-b border-slate-700">
               <tr>
-                <th className="py-3.5 px-6">Job Title & ID</th>
+                <th className="py-3.5 px-6">Job Title</th>
                 <th className="py-3.5 px-6">Location</th>
                 <th className="py-3.5 px-6">Posted Date</th>
                 <th className="py-3.5 px-6">Status</th>
@@ -82,7 +82,6 @@ export const JobsListView: React.FC<Props> = ({ items, onNew, onEdit, onDelete }
                   <tr key={item.id} className="hover:bg-slate-800/40 transition">
                     <td className="py-3.5 px-6 max-w-xs">
                       <div className="font-semibold text-white truncate">{activeData.title}</div>
-                      <div className="text-[11px] font-mono text-blue-400 truncate mt-0.5">{item.id}</div>
                     </td>
                     <td className="py-3.5 px-6 text-xs text-slate-300 whitespace-nowrap">{activeData.location}</td>
                     <td className="py-3.5 px-6 text-xs text-slate-300 whitespace-nowrap font-mono">

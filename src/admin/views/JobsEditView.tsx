@@ -19,27 +19,6 @@ interface Props {
   onCancel: () => void;
 }
 
-function slugify(text: string): string {
-  return text
-    .toString()
-    .toLowerCase()
-    .trim()
-    .replace(/\s+/g, "-")
-    .replace(/&/g, "-and-")
-    .replace(/[^\w\-\u4e00-\u9fa5]+/g, "")
-    .replace(/\-\-+/g, "-")
-    .replace(/^-+/, "")
-    .replace(/-+$/, "");
-}
-
-function extractShortIdFromExisting(fullId: string, dateStr: string): string {
-  if (fullId === dateStr) return "";
-  if (fullId.startsWith(`${dateStr}-`)) {
-    return fullId.slice(dateStr.length + 1);
-  }
-  return fullId;
-}
-
 export const JobsEditView: React.FC<Props> = ({ initialItem, onSave, onCancel }) => {
   const currentActive = initialItem?.draftData || initialItem?.data;
   const initialDateStr = currentActive?.date
@@ -47,9 +26,7 @@ export const JobsEditView: React.FC<Props> = ({ initialItem, onSave, onCancel })
     : new Date().toISOString().split("T")[0];
 
   const [dateStr, setDateStr] = useState(initialDateStr);
-  const [shortId, setShortId] = useState(
-    initialItem ? extractShortIdFromExisting(initialItem.id, initialDateStr) : ""
-  );
+  const [timestampSuffix] = useState(() => Date.now().toString(36));
   const [title, setTitle] = useState(currentActive?.title || "");
   const [location, setLocation] = useState(currentActive?.location || "CA");
   const [file, setFile] = useState(currentActive?.file || "");
@@ -87,11 +64,8 @@ export const JobsEditView: React.FC<Props> = ({ initialItem, onSave, onCancel })
     loadVersions();
   }, [initialItem?.id]);
 
-  const computedSlug = React.useMemo(() => {
-    const cleanShort = slugify(shortId);
-    if (dateStr && cleanShort) return `${dateStr}-${cleanShort}`;
-    return dateStr || cleanShort || `job-${Date.now()}`;
-  }, [dateStr, shortId]);
+  // Target document ID: fixed initialItem.id for existing, or Date + timestamp for new
+  const targetDocId = initialItem ? initialItem.id : `${dateStr}-${timestampSuffix}`;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -112,7 +86,7 @@ export const JobsEditView: React.FC<Props> = ({ initialItem, onSave, onCancel })
 
     try {
       setIsSaving(true);
-      await onSave({ id: computedSlug, data: validation.data, body });
+      await onSave({ id: targetDocId, data: validation.data, body });
     } catch (err: any) {
       setError(err.message || "Failed to save draft");
       setIsSaving(false);
@@ -131,7 +105,8 @@ export const JobsEditView: React.FC<Props> = ({ initialItem, onSave, onCancel })
   };
 
   return (
-    <div className="max-w-4xl space-y-6">
+    <div className="max-w-4xl mx-auto space-y-8">
+      {/* Header */}
       <div className="flex items-center justify-between">
         <div>
           <div className="flex items-center gap-3">
@@ -142,7 +117,9 @@ export const JobsEditView: React.FC<Props> = ({ initialItem, onSave, onCancel })
               Draft Mode
             </span>
           </div>
-          <p className="text-xs text-slate-400 mt-1">Configure position details and PDF attachments.</p>
+          <p className="text-xs text-slate-400 mt-1">
+            Changes will be saved into your site draft workspace. Preview or publish site-wide when ready.
+          </p>
         </div>
 
         <div className="flex items-center gap-3">
@@ -168,7 +145,7 @@ export const JobsEditView: React.FC<Props> = ({ initialItem, onSave, onCancel })
       {showHistory && (
         <div className="bg-slate-900 border border-blue-500/40 rounded-2xl p-6 space-y-4 shadow-2xl">
           <div className="flex items-center justify-between border-b border-slate-800 pb-3">
-            <h3 className="text-sm font-bold text-blue-300">Published Version History for {initialItem?.id}</h3>
+            <h3 className="text-sm font-bold text-blue-300">Published Version History</h3>
             <button onClick={() => setShowHistory(false)} className="text-xs text-slate-400 hover:text-white">
               Close
             </button>
@@ -190,7 +167,7 @@ export const JobsEditView: React.FC<Props> = ({ initialItem, onSave, onCancel })
                     Published by {ver.author?.email || "Admin"} on {new Date(ver.createdAt).toLocaleString()}
                   </div>
                   <div className="text-slate-500 text-[11px] truncate max-w-md mt-0.5">
-                    Title: "{ver.data.title}" ({ver.data.location})
+                    Title: "{ver.data.title}"
                   </div>
                 </div>
                 <button
@@ -216,18 +193,13 @@ export const JobsEditView: React.FC<Props> = ({ initialItem, onSave, onCancel })
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           <div className="sm:col-span-2">
             <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">
-              Job / Position Title *
+              Job Title *
             </label>
             <input
               type="text"
               required
               value={title}
-              onChange={(e) => {
-                setTitle(e.target.value);
-                if (!shortId && !initialItem) {
-                  setShortId(slugify(e.target.value).slice(0, 30));
-                }
-              }}
+              onChange={(e) => setTitle(e.target.value)}
               placeholder="e.g. 矽谷基督徒聚會 - 全職傳道同工"
               className="w-full px-4 py-2.5 bg-slate-950 border border-slate-700 rounded-xl text-white text-sm focus:outline-none focus:border-blue-500 transition"
             />
@@ -235,14 +207,14 @@ export const JobsEditView: React.FC<Props> = ({ initialItem, onSave, onCancel })
 
           <div>
             <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">
-              Location *
+              Location / Region *
             </label>
             <input
               type="text"
               required
               value={location}
               onChange={(e) => setLocation(e.target.value)}
-              placeholder="e.g. Santa Clara, CA"
+              placeholder="e.g. Fremont, CA or Remote"
               className="w-full px-4 py-2.5 bg-slate-950 border border-slate-700 rounded-xl text-white text-sm focus:outline-none focus:border-blue-500 transition"
             />
           </div>
@@ -262,77 +234,49 @@ export const JobsEditView: React.FC<Props> = ({ initialItem, onSave, onCancel })
 
           <div className="sm:col-span-2">
             <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">
-              Short Identifier (Optional suffix)
-            </label>
-            <input
-              type="text"
-              value={shortId}
-              onChange={(e) => setShortId(e.target.value)}
-              placeholder="e.g. svca-worship or hoc5"
-              className="w-full px-4 py-2.5 bg-slate-950 border border-slate-700 rounded-xl text-white text-sm font-mono focus:outline-none focus:border-blue-500 transition"
-            />
-          </div>
-
-          <div className="sm:col-span-2 p-3.5 bg-slate-950/80 border border-blue-500/30 rounded-xl flex items-center justify-between gap-4">
-            <div className="overflow-hidden">
-              <span className="text-[11px] font-semibold text-blue-400 uppercase tracking-wider block">
-                Computed Document ID (Auto-Generated)
-              </span>
-              <span className="font-mono text-sm text-blue-200 truncate block mt-0.5">
-                {computedSlug}
-              </span>
-            </div>
-            <span className="px-2 py-1 rounded bg-blue-900/40 text-blue-300 text-[10px] font-medium border border-blue-500/30 whitespace-nowrap">
-              Auto-Synced
-            </span>
-          </div>
-
-          <div className="sm:col-span-2">
-            <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">
-              PDF Document Path (Optional)
+              Attached Job Description PDF File (Optional)
             </label>
             <input
               type="text"
               value={file}
               onChange={(e) => setFile(e.target.value)}
-              placeholder="/docs/jobs/sample.pdf"
+              placeholder="/docs/jobs/example.pdf"
               className="w-full px-4 py-2.5 bg-slate-950 border border-slate-700 rounded-xl text-white text-sm focus:outline-none focus:border-blue-500 transition"
             />
-            <p className="mt-1 text-[11px] text-slate-500">
-              Leave blank if providing Markdown body description below instead of a PDF attachment.
-            </p>
+            <span className="text-[11px] text-slate-400 mt-1 block">
+              If PDF file is provided, clicking the listing will download the PDF directly.
+            </span>
           </div>
 
           <div className="sm:col-span-2">
             <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">
-              Job Description / Content (Optional)
+              Job Description Body (Markdown - Used if no PDF attached)
             </label>
             <textarea
-              rows={4}
+              rows={5}
               value={body}
               onChange={(e) => setBody(e.target.value)}
-              placeholder="Responsibilities, requirements, and application contact details..."
-              className="w-full px-4 py-2.5 bg-slate-950 border border-slate-700 rounded-xl text-white text-sm focus:outline-none focus:border-blue-500 transition resize-none"
+              placeholder="Enter full job duties, requirements, and application instructions..."
+              className="w-full px-4 py-3 bg-slate-950 border border-slate-700 rounded-xl text-white text-sm focus:outline-none focus:border-blue-500 font-mono transition"
             />
           </div>
         </div>
 
-        {/* Single Save Action */}
-        <div className="pt-4 border-t border-slate-800 flex items-center justify-between gap-4">
+        {/* Action Button: Single Save to Draft */}
+        <div className="pt-4 border-t border-slate-800 flex items-center justify-end gap-4">
           <button
             type="button"
             onClick={onCancel}
-            className="py-2.5 px-5 bg-slate-800 hover:bg-slate-700 text-xs font-medium text-slate-300 rounded-xl transition"
+            className="px-5 py-2.5 text-xs font-semibold text-slate-400 hover:text-white transition"
           >
             Cancel
           </button>
-
           <button
             type="submit"
             disabled={isSaving}
-            className="py-2.5 px-6 bg-blue-600 hover:bg-blue-500 disabled:opacity-50 text-xs font-bold text-white rounded-xl shadow-lg transition"
+            className="px-6 py-2.5 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 disabled:opacity-50 text-xs font-bold text-slate-950 rounded-xl shadow-lg transition flex items-center gap-2"
           >
-            {isSaving ? "Saving..." : "Save to Draft Workspace"}
+            {isSaving ? "Saving..." : "💾 Save to Draft Workspace"}
           </button>
         </div>
       </form>
