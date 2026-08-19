@@ -4,25 +4,27 @@
 **Topic:** Headless CMS on Firebase Free Tier (Spark Plan), Unified Admin Webapp (`cwts.edu/admin`), Direct Content Interface, Draft Workspaces, Netlify Staging Preview, Immutable Version History & Production Release Pipeline  
 **Target Environments:** Local Development + Netlify CI/CD + Firebase Spark Plan + Cloudflare Edge  
 **Date:** August 2026  
-**Status:** Architectural Specification & Implementation Plan  
+**Status:** Implemented Architectural Specification  
 
 ---
 
 ## 1. Executive Summary & Core Architectural Shift
 
-This document details the architectural design for transitioning the CWTS website to a **Firebase-backed Headless CMS Webapp** integrated directly into the codebase.
+This document details the architectural design for the CWTS website's **Firebase-backed Headless CMS Webapp** integrated directly into the codebase.
 
 ### The Core Architectural Principles:
 1. **Unified Codebase & Build Pipeline (`cwts.edu/admin`):** The CMS Admin webapp is embedded as an Astro Client Island SPA under `src/admin/`. Running `npm run build` builds both the public SSG website and the Admin Webapp into `dist/` and `dist/admin/` with a single command.
 2. **Zero Code Duplication (Shared Schema & Types):** The public site and the Admin app share the exact same Zod validation schemas (`src/libs/content/schemas.ts`), TypeScript types, media dimension constants, and Firebase client SDKs.
 3. **Direct Content Interface (`@libs/content`):** The entire site code consumes content exclusively via a strongly-typed `IContentClient` interface (`content.news.list()`, `content.pages.getBySlug()`), completely isolated from `astro:content`.
 4. **Pluggable & Hybrid Backends:** The underlying implementation is swappable (`FirebaseContentClient`, `AstroContentClient`, `HybridContentClient`), enabling safe, zero-risk progressive canary migrations (`news` and `jobs` first).
-5. **Draft Workspaces & Accumulated Changes:** All edits made by an editor accumulate within a private Draft Workspace. Unfinished drafts do not affect the live website.
-6. **Netlify Staging Deploy Preview:** A **"Preview"** action in the CMS triggers a Netlify Staging Build with the `DRAFT_ID`. Netlify overlays the draft changes onto the canonical data, giving the editor a real, shareable staging URL to review before going live.
-7. **Immutable Published Version History & Rollbacks:** Every published release automatically creates an immutable snapshot (`/collection/{id}/versions/{versionNumber}`). Editors can inspect past versions, compare diffs, and revert individual items or whole releases in one click.
-8. **One-Click Production Release & Audit Trail:** A **"Publish to Production"** action promotes all accumulated draft changes into canonical Firestore collections, logs the responsible editor, and triggers the live production Netlify build.
-9. **Cross-Build Asset Caching:** Persistent ETag/MD5 metadata cache (`.cache/cwts-assets/`) on Local and Netlify CI/CD builds, guaranteeing **sub-second builds and near-zero Firebase Storage egress (100% within the Spark Free Tier).**
-10. **Zero-Compute Free Tier (Spark Plan):** In-browser client-side Web Workers, Canvas, and PDF.js perform all image resizing and PDF cover rendering prior to upload.
+5. **Stable Document Identity & In-Place Mutation:** Documents are permanently identified by their immutable `id`. Title or metadata edits modify the canonical document in-place rather than mutating the document ID. New items are automatically assigned `Date + Timestamp` identifiers (`${dateStr}-${Date.now().toString(36)}`), completely eliminating manual identifier inputs from the UI.
+6. **Draft Workspaces & Accumulated Changes:** All edits made by an editor accumulate within a private Draft Workspace. Unfinished drafts do not affect the live website.
+7. **Draft-Based Soft Deletion & Non-Destructive Versioning:** Deleting an item in the CMS registers an `action: "delete"` in the draft workspace with an instant **Undo Delete** action. Upon production publishing, the canonical document is soft-deleted (`status: "deleted"`) and an immutable snapshot version (`status: "deleted"`) is archived. Content queries automatically filter out soft-deleted items while preserving the complete audit history.
+8. **Netlify Staging Deploy Preview & Progress Countdown:** A **"Preview"** action in the CMS triggers a Netlify Staging Build with the `DRAFT_ID`. Netlify overlays the draft changes onto canonical data, giving the editor a real, shareable staging URL to review before going live.
+9. **Immutable Published Version History & Rollbacks:** Every published release automatically creates an immutable snapshot (`/{collection}/{id}/versions/{versionNumber}`). Editors can inspect past versions and restore form inputs or roll back releases in one click.
+10. **Full HTML5 Browser History & Deep-Linking:** The Admin SPA utilizes the HTML5 History API (`pushState`, `popstate`) and maps to static Astro subroutes (`/admin/news`, `/admin/jobs/new`, `/admin/news/edit?id=...`), supporting browser Back/Forward navigation and bookmarked URLs.
+11. **Cross-Build Asset Caching:** Persistent ETag/MD5 metadata cache (`.cache/cwts-assets/`) on Local and Netlify CI/CD builds, guaranteeing **sub-second builds and near-zero Firebase Storage egress (100% within the Spark Free Tier).**
+12. **Zero-Compute Free Tier (Spark Plan):** In-browser client-side Web Workers, Canvas, and PDF.js perform all image resizing and PDF cover rendering prior to upload.
 
 ---
 
@@ -32,14 +34,14 @@ This document details the architectural design for transitioning the CWTS websit
 flowchart TD
     subgraph ADMIN_PORTAL ["Admin CMS Webapp (cwts.edu/admin)"]
         AUTH["Whitelist Auth Guard<br/>(@cwts.edu & Admins)"]
-        FORMS["Zod Schema-Validated Editors"]
-        MEDIA["In-Browser Image Resizer & PDF.js"]
-        DRAFT_WS["Accumulated Draft Workspace<br/>(News, Jobs, Faculty, Pages)"]
+        ROUTER["HTML5 History Router<br/>(/admin/news, /admin/jobs)"]
+        FORMS["Zod Schema-Validated Editors<br/>(Auto Date+Timestamp ID)"]
+        DRAFT_WS["Accumulated Draft Workspace<br/>(Create, Update, Soft-Delete)"]
         HISTORY["Version History & Rollback UI<br/>(v1, v2, v3... Revert to Draft)"]
     end
 
     subgraph FIRESTORE_DATABASE ["Cloud Firestore (Default DB)"]
-        CANONICAL["Canonical Published Collections<br/>/news, /jobs, /faculty, /pages"]
+        CANONICAL["Canonical Published Collections<br/>/news, /jobs, /faculty, /pages<br/>(status: published | deleted)"]
         VERSIONS["Immutable Version Snapshots<br/>/{collection}/{id}/versions/{v}"]
         DRAFTS["Draft Workspaces<br/>/drafts/{draftId}/changes/{docId}"]
         RELEASES["Release History Audit<br/>/releases/{releaseId}"]
@@ -55,32 +57,33 @@ flowchart TD
         PROD_SITE["Live Production Website<br/>(cwts.edu)"]
     end
 
-    AUTH --> FORMS
-    FORMS -->|1. Save Edits| DRAFT_WS
+    AUTH --> ROUTER
+    ROUTER --> FORMS
+    FORMS -->|1. Save Edits / Soft Delete| DRAFT_WS
     DRAFT_WS -->|Save Pending Changes| DRAFTS
 
-    DRAFT_WS -->|2. Click 'Preview' (Webhook)| STAGING_BUILD
+    DRAFT_WS -->|2. Click 'Preview'| STAGING_BUILD
     DRAFTS & CANONICAL -->|Overlay Draft onto Canonical| STAGING_BUILD
     STAGING_BUILD --> STAGING_SITE
     STAGING_SITE -.->|Visual Review / Feedback| ADMIN_PORTAL
 
     DRAFT_WS -->|3. Click 'Publish'| CANONICAL
-    CANONICAL -->|Snapshot Published State| VERSIONS
+    CANONICAL -->|Snapshot Published / Deleted State| VERSIONS
     CANONICAL -->|Log Release Audit| RELEASES
     DRAFT_WS -->|Trigger Production Webhook| PROD_BUILD
-    CANONICAL -->|Build Static HTML| PROD_BUILD
+    CANONICAL -->|Build Static HTML (Filter Deleted)| PROD_BUILD
     PROD_BUILD --> PROD_SITE
 
-    VERSIONS -->|Revert Old Version to Draft| DRAFT_WS
+    VERSIONS -->|Restore Snapshot to Form| DRAFT_WS
 ```
 
 ---
 
-## 3. Unified Codebase Structure & Admin Webapp (`cwts.edu/admin`)
+## 3. Directory Structure & Admin Subroutes
 
-The Admin Webapp lives inside `src/admin/` and is served at `cwts.edu/admin` via an Astro catch-all client route.
+The Admin Webapp lives inside `src/admin/` and is statically pre-rendered by Astro at `src/pages/admin/[...app].astro`.
 
-### 3.1 Directory Structure
+### 3.1 Directory Layout
 ```
 cwts-web/
 ├── public/
@@ -88,41 +91,56 @@ cwts-web/
 │   └── favicon.svg
 ├── src/
 │   ├── admin/                      # React CMS Admin Single-Page App (SPA)
-│   │   ├── AdminApp.tsx            # Root Router & State Provider
+│   │   ├── AdminApp.tsx            # Root Router (pushState/popstate) & App Container
 │   │   ├── components/
 │   │   │   ├── AdminLayout.tsx     # Admin Header, Sidebar, Navigation
 │   │   │   ├── AuthGate.tsx        # Whitelist Access Guard & Login Modal
-│   │   │   ├── editor/             # TipTap WYSIWYG Editor
-│   │   │   └── media/              # In-Browser Media Resizer & Upload Dropzone
+│   │   │   └── DraftReviewModal.tsx # Release Center & Deployment Progress Bar
 │   │   ├── config/
 │   │   │   ├── firebase.ts         # Firebase Client SDK
 │   │   │   └── whitelist.ts        # Admin Email Whitelist Service
 │   │   ├── context/
 │   │   │   ├── AuthContext.tsx     # User & Whitelist Auth Context
-│   │   │   └── DraftContext.tsx    # Active Draft Workspace Context
+│   │   │   └── DraftContext.tsx    # Active Draft Workspace Context & Batch Publish
+│   │   ├── fixtures/
+│   │   │   └── initialContent.ts   # Tracked TypeScript Initial Content Fixtures
+│   │   ├── services/
+│   │   │   ├── netlifyDeploy.ts    # Staging Preview & Production Hook Triggers
+│   │   │   └── seedDatabase.ts     # In-Browser Firestore Initial Seeding Service
 │   │   └── views/
-│   │       ├── DashboardView.tsx   # Workspace Overview & Quick Actions
-│   │       ├── NewsListView.tsx    # News Table with Draft & Version Badges
-│   │       ├── NewsEditView.tsx    # News Editor (Auto-Slug, Save Draft, Publish, History)
-│   │       ├── JobsListView.tsx    # Jobs Table with Draft & Version Badges
-│   │       └── JobsEditView.tsx    # Jobs Editor (PDF Upload, Save Draft, Publish, History)
+│   │       ├── DashboardView.tsx   # Overview, One-Click Seeding & Release Center
+│   │       ├── NewsListView.tsx    # News Table (Soft Delete & Undo)
+│   │       ├── NewsEditView.tsx    # News Editor (Auto-ID, Draft Save, History)
+│   │       ├── JobsListView.tsx    # Jobs Table (Soft Delete & Undo)
+│   │       └── JobsEditView.tsx    # Jobs Editor (Auto-ID, PDF Support, History)
 │   ├── libs/
 │   │   └── content/                # SHARED DOMAIN LAYER
 │   │       ├── schemas.ts          # Shared Zod Schemas & TypeScript Types
 │   │       ├── constants.ts        # Shared Dimensions, Image Specs, Locales
-│   │       ├── types.ts            # IContentClient Contract (with VersionRecord & AuditUser)
-│   │       ├── firebaseClient.ts   # Firestore Client with Draft Overlay
+│   │       ├── types.ts            # IContentClient Contract (with ContentStatus & AuditUser)
+│   │       ├── firebaseClient.ts   # Firestore Client with Draft Overlay & Soft Delete Filter
 │   │       ├── astroClient.ts      # Local Fallback Client
 │   │       ├── hybridClient.ts     # Progressive Migration Router
 │   │       └── index.ts            # Master Content Singleton Export
 │   └── pages/
 │       ├── admin/
-│       │   └── [...app].astro      # Astro Mount Point for Admin SPA
+│       │   └── [...app].astro      # Astro Mount Point for Admin SPA Subroutes
 │       ├── index.astro
 │       └── [language]/[...slug].astro
 ├── netlify.toml
 └── package.json
 ```
+
+### 3.2 URL Routing & History Sync
+| URL Path | CMS View | Description |
+| :--- | :--- | :--- |
+| `/admin` or `/admin/dashboard` | `DashboardView` | Overview statistics, active draft summary, and database seeding |
+| `/admin/news` | `NewsListView` | News articles table sorted newest first |
+| `/admin/news/new` | `NewsEditView` | Create news article (auto-generates `YYYY-MM-DD-timestamp` ID) |
+| `/admin/news/edit?id={id}` | `NewsEditView` | Edit existing news article (locks permanent document ID) |
+| `/admin/jobs` | `JobsListView` | Church job board postings with soft delete support |
+| `/admin/jobs/new` | `JobsEditView` | Create job posting (auto-generates `YYYY-MM-DD-timestamp` ID) |
+| `/admin/jobs/edit?id={id}` | `JobsEditView` | Edit existing job posting (locks permanent document ID) |
 
 ---
 
@@ -201,11 +219,14 @@ export const PageMetadataSchema = z.object({
   showChildren: z.boolean().default(false),
 });
 export type PageMetadata = z.infer<typeof PageMetadataSchema>;
+
+// 5. Content Status
+export type ContentStatus = "published" | "draft" | "deleted";
 ```
 
 ---
 
-## 5. Draft Workspaces, Staging Preview, Version History & Rollback Pipeline
+## 5. Draft Workspaces, Staging Preview, Soft Delete & Release Pipeline
 
 ```mermaid
 sequenceDiagram
@@ -217,11 +238,11 @@ sequenceDiagram
     participant Staging as Staging Preview Site
     participant Prod as Live Production (cwts.edu)
 
-    Note over Editor,CMS: Phase 1: Drafting & Accumulation
+    Note over Editor,CMS: Phase 1: Drafting & Soft Deletion
     Editor->>CMS: Edit News article & Save
     CMS->>FS: Write to /drafts/{draftId}/changes/{docId} (with author audit)
-    Editor->>CMS: Edit Job posting & Save
-    CMS->>FS: Write to /drafts/{draftId}/changes/{docId} (accumulated)
+    Editor->>CMS: Soft Delete Job posting
+    CMS->>FS: Write to /drafts/{draftId}/changes/{docId} (action: delete)
 
     Note over Editor,Netlify: Phase 2: Staging Deploy Preview
     Editor->>CMS: Click "🔍 Preview on Staging"
@@ -239,115 +260,54 @@ sequenceDiagram
         Note over Editor,Prod: Phase 4: Production Release & Snapshot
         Editor->>CMS: Click "🚀 Publish to Production"
         CMS->>FS: Merge /drafts/draft_123 changes into Canonical collections
+        CMS->>FS: Soft-delete removed items (status: deleted)
         CMS->>FS: Create immutable Version Snapshots in /{collection}/{id}/versions/{v}
         CMS->>FS: Log Release Record in /releases/{releaseId}
         CMS->>Netlify: POST Production Build Hook (DRAFT_ID=null)
-        Netlify->>FS: Fetch Canonical data only
+        Netlify->>FS: Fetch Canonical data (skip status: deleted)
         Netlify->>Prod: Deploy Live Site to cwts.edu
         CMS-->>Editor: Display "Published Successfully (vN)!"
     end
 
     Note over Editor,CMS: Phase 5: Revert / Rollback (If needed)
-    Editor->>CMS: Open Version History -> Click "Revert to v2"
-    CMS->>FS: Fetch snapshot from /{collection}/{id}/versions/2
-    CMS->>Editor: Load v2 into Active Draft Workspace as proposed change
+    Editor->>CMS: Open Version History -> Click "Restore to Form"
+    CMS->>FS: Fetch snapshot from /{collection}/{id}/versions/{v}
+    CMS->>Editor: Load snapshot data into active form
 ```
 
-### 5.1 Firestore Data Model for Workspaces & Versions
+### 5.1 Document Identity Strategy
+- **Existing Documents:** Document IDs are immutable. Editing title, date, or other attributes modifies the existing document in-place and preserves `initialItem.id`.
+- **New Documents:** Automatically assigned a unique ID composed of `Date + Timestamp` (e.g. `2026-09-01-ml8q9x`).
 
-#### A. Draft Workspace: `/drafts/{draftId}`
-```json
-{
-  "draftId": "draft_yusheng_20260818",
-  "title": "August Newsletter & Fall Faculty Update",
-  "status": "active",
-  "author": {
-    "uid": "abc123xyz",
-    "email": "yusheng.sjtu@gmail.com",
-    "displayName": "Yusheng",
-    "timestamp": "2026-08-18T19:20:00.000Z"
-  },
-  "stagedDeployUrl": "https://deploy-preview-42--cwts-staging.netlify.app",
-  "createdAt": "2026-08-18T19:00:00.000Z",
-  "updatedAt": "2026-08-18T19:25:00.000Z"
-}
-```
+### 5.2 Soft Deletion Lifecycle
+1. **Queued in Draft:** Clicking "Delete" records `action: "delete"` in `/drafts/{draftId}/changes/{coll}_{docId}`.
+2. **Instant Undo:** The item remains visible in the list with `🔴 Pending Deletion (Draft)` and strike-through styling, alongside an **"↩️ Undo Delete"** button.
+3. **Staging Preview:** Staging builds automatically filter out items marked with draft deletion.
+4. **Production Publish:**
+   - Canonical document is updated to `status: "deleted"`, `version: currentVer + 1`, `deletedBy: auditUser`, `deletedAt: ISOString`.
+   - An immutable snapshot version is created in `/{collection}/{id}/versions/{version}` with `status: "deleted"`.
+   - Canonical content queries (`IContentClient`) automatically skip `status: "deleted"` documents.
 
-#### B. Accumulated Changes Subcollection: `/drafts/{draftId}/changes/{changeDocId}`
-Each document records an individual entity change within this draft workspace:
 ```json
+// Example: Deleted Version Snapshot (/{collection}/{id}/versions/3)
 {
-  "collection": "news",
-  "documentId": "2026-04-24-newsletter",
-  "action": "update",
+  "version": 3,
+  "status": "deleted",
   "data": {
-    "title": "基神院訊 2026 夏季號 (Draft Revision)",
-    "date": "2026-04-24T00:00:00.000Z",
-    "thumbnail": "/images/news/newsletter-2026A.jpg",
-    "url": "/zh/news-events/newsletter/"
+    "title": "已截止 矽谷基督徒聚會傳道同工",
+    "location": "Fremont, CA",
+    "date": "2026-08-01T00:00:00.000Z"
   },
-  "body": "基神院訊夏季號精彩內容...",
-  "updatedBy": {
-    "email": "yusheng.sjtu@gmail.com",
-    "timestamp": "2026-08-18T19:25:00.000Z"
-  }
-}
-```
-
-#### C. Immutable Version Snapshots: `/{collection}/{id}/versions/{versionNumber}`
-Every publish event stores an immutable, point-in-time snapshot of the published object:
-```json
-{
-  "version": 2,
-  "status": "published",
-  "data": {
-    "title": "基神院訊 2026 夏季號",
-    "date": "2026-04-24T00:00:00.000Z",
-    "thumbnail": "/images/news/newsletter-2026A.jpg",
-    "url": "/zh/news-events/newsletter/"
-  },
-  "body": "基神院訊夏季號精彩內容...",
-  "publishedBy": {
+  "body": "本職缺已結束徵聘...",
+  "deletedBy": {
     "email": "admin@cwts.edu",
     "displayName": "Seminary Admin",
-    "timestamp": "2026-08-18T19:30:00.000Z"
+    "timestamp": "2026-08-19T22:30:00.000Z"
   },
-  "releaseId": "rel_20260818_193000",
-  "createdAt": "2026-08-18T19:30:00.000Z"
+  "releaseId": "rel_20260819_223000",
+  "createdAt": "2026-08-19T22:30:00.000Z"
 }
 ```
-
-#### D. Immutable Production Release Log: `/releases/{releaseId}`
-Records the global production deployment event:
-```json
-{
-  "releaseId": "rel_20260818_193000",
-  "draftId": "draft_yusheng_20260818",
-  "publishedBy": {
-    "email": "admin@cwts.edu",
-    "timestamp": "2026-08-18T19:30:00.000Z"
-  },
-  "changesCount": 3,
-  "changesSummary": [
-    { "collection": "news", "id": "2026-04-24-newsletter", "action": "update", "newVersion": 2 },
-    { "collection": "jobs", "id": "2026-08-01-cantonese", "action": "create", "newVersion": 1 }
-  ]
-}
-```
-
----
-
-### 5.2 How Reverting Works (Single-Item & Global Release)
-
-1. **Granular Single-Item Revert**:
-   - In the CMS, opening an item displays the **"📜 Version History"** button.
-   - Shows all historical published versions (`v1`, `v2`, `v3`) with timestamps and authors.
-   - Clicking **"Restore to Draft"** on `v1` pulls that version's snapshot into the active draft workspace as a proposed change.
-   - The editor can preview the restored version on Staging and publish it when ready.
-
-2. **Global Release Rollback**:
-   - The CMS Dashboard provides a **Release History** timeline.
-   - If a production release caused unexpected issues, clicking **"Rollback Release"** fetches the snapshots prior to that release, creates a rollback draft, and triggers a Staging Preview before pushing the rollback live to Production.
 
 ---
 
@@ -356,11 +316,11 @@ Records the global production deployment event:
 During Netlify SSG builds, `FirebaseContentClient` checks for the environment variable `DRAFT_ID`:
 
 1. **Production Build (`DRAFT_ID=""`)**:
-   - Queries canonical Firestore collections (`/news`, `/jobs`, `/pages`, etc.).
+   - Queries canonical Firestore collections (`/news`, `/jobs`, `/pages`, etc.) and skips any document where `status === "deleted"`.
 2. **Staging / Preview Build (`DRAFT_ID="draft_xxx"`)**:
    - Fetches canonical collections into memory.
    - Fetches `/drafts/${DRAFT_ID}/changes/*`.
-   - **Overlays** the draft changes onto the canonical records (merging updates, adding created docs, removing deleted docs).
+   - **Overlays** the draft changes onto canonical records (merging updates, adding created docs, removing deleted docs).
    - Generates the staging static HTML reflecting the exact preview state.
 
 ```typescript
@@ -373,7 +333,7 @@ export class FirebaseContentClient implements IContentClient {
   }
 
   async getCollection<K extends keyof ContentSchemaMap>(collection: K): Promise<ContentEntry<ContentSchemaMap[K]>[]> {
-    // 1. Fetch canonical collection from Firestore
+    // 1. Fetch canonical collection from Firestore (skipping status === "deleted")
     const canonicalEntries = await this.fetchCanonicalCollection(collection);
 
     // 2. If no active draft preview, return canonical
@@ -406,27 +366,6 @@ export class FirebaseContentClient implements IContentClient {
   }
 }
 ```
-
----
-
-### 5.4 Netlify Build Hooks Configuration
-
-1. **Staging Deploy Preview Hook**:
-   - URL: `https://api.netlify.com/build_hooks/staging-preview-hook`
-   - Triggered by CMS:
-     ```typescript
-     await fetch('https://api.netlify.com/build_hooks/staging-preview-hook', {
-       method: 'POST',
-       headers: { 'Content-Type': 'application/json' },
-       body: JSON.stringify({
-         title: `Staging Preview for Draft: ${draftId}`,
-         env: { DRAFT_ID: draftId, CONTENT_SOURCE: 'firebase' }
-       })
-     });
-     ```
-2. **Production Release Hook**:
-   - URL: `https://api.netlify.com/build_hooks/production-release-hook`
-   - Triggered by CMS on **"Publish to Production"** after merging changes in Firestore.
 
 ---
 
@@ -512,29 +451,3 @@ sequenceDiagram
 | **Storage Daily Egress** | 1 GB / day (10 GB/mo on Blaze) | **~0 MB** (Cached on Netlify & Local builds) | **< 1.0% used** |
 | **Auth MAU** | 50,000 / month | 10 accounts | **0.02% used** |
 | **Cloud Functions** | *Requires Blaze* | **0 Functions used** | **100% Spark Compliant** |
-
----
-
-## 10. Step-by-Step Implementation Roadmap
-
-```mermaid
-gantt
-    title CWTS Headless CMS Implementation Roadmap
-    dateFormat  YYYY-MM-DD
-    section Phase 1: Shared Layer & Cache
-    Create src/libs/content/ Schemas & Types       :done, p1_1, 2026-08-01, 3d
-    Direct Content Interface Refactoring           :done, p1_2, after p1_1, 3d
-    Asset Caching & Netlify Plugin Implementation  :p1_3, after p1_2, 3d
-    section Phase 2: Pilot Migration & Seeding
-    Seeding Tool for news & jobs (seed-firestore)  :done, p2_1, 2026-08-18, 1d
-    Draft Workspaces & Netlify Preview Logic       :active, p2_2, 2026-08-19, 3d
-    section Phase 3: Admin Webapp (cwts.edu/admin)
-    Mount /admin SPA & Whitelist Auth Gate         :done, p3_1, 2026-08-18, 1d
-    Draft Accumulator & Staging Preview UI         :active, p3_2, after p3_1, 3d
-    Version History Drawer & Rollback Controls     :active, p3_3, after p3_2, 2d
-    React + TipTap WYSIWYG & Schema Forms          :p3_4, after p3_3, 4d
-    In-Browser Image & PDF.js Processors           :p3_5, after p3_4, 3d
-    section Phase 4: Full Production Rollout
-    Canary Pilot (news & jobs on staging preview)  :p4_1, after p3_5, 3d
-    Production Release to cwts.edu                 :p4_2, after p4_1, 2d
-```
