@@ -13,6 +13,65 @@ import { collection, getDocs } from "firebase/firestore";
 import type { NewsMetadata, JobMetadata } from "../libs/content/schemas";
 import { INITIAL_NEWS_FIXTURES, INITIAL_JOBS_FIXTURES } from "./fixtures/initialContent";
 
+export interface AdminRouteState {
+  tab: AdminTab;
+  param?: string;
+}
+
+export function parseAdminLocation(): AdminRouteState {
+  if (typeof window === "undefined") {
+    return { tab: "dashboard" };
+  }
+  const path = window.location.pathname.replace(/\/+$/, "");
+  const searchParams = new URLSearchParams(window.location.search);
+  const idParam = searchParams.get("id") || undefined;
+
+  if (path === "/admin" || path === "/admin/dashboard" || path === "") {
+    return { tab: "dashboard" };
+  }
+  if (path === "/admin/news/new") {
+    return { tab: "news_new" };
+  }
+  if (path === "/admin/news/edit") {
+    return { tab: "news_edit", param: idParam };
+  }
+  if (path === "/admin/news") {
+    return { tab: "news" };
+  }
+  if (path === "/admin/jobs/new") {
+    return { tab: "jobs_new" };
+  }
+  if (path === "/admin/jobs/edit") {
+    return { tab: "jobs_edit", param: idParam };
+  }
+  if (path === "/admin/jobs") {
+    return { tab: "jobs" };
+  }
+
+  return { tab: "dashboard" };
+}
+
+export function buildAdminUrl(tab: AdminTab, param?: string): string {
+  switch (tab) {
+    case "dashboard":
+      return "/admin";
+    case "news":
+      return "/admin/news";
+    case "news_new":
+      return "/admin/news/new";
+    case "news_edit":
+      return param ? `/admin/news/edit?id=${encodeURIComponent(param)}` : "/admin/news/edit";
+    case "jobs":
+      return "/admin/jobs";
+    case "jobs_new":
+      return "/admin/jobs/new";
+    case "jobs_edit":
+      return param ? `/admin/jobs/edit?id=${encodeURIComponent(param)}` : "/admin/jobs/edit";
+    default:
+      return "/admin";
+  }
+}
+
 const INITIAL_NEWS: NewsItem[] = INITIAL_NEWS_FIXTURES.map((item) => ({
   id: item.id,
   data: {
@@ -45,12 +104,24 @@ const AdminDashboard: React.FC = () => {
   const { user } = useAuth();
   const { pendingChanges, saveChangeToDraft, discardDraftChange } = useDraft();
 
-  const [currentTab, setCurrentTab] = useState<AdminTab>("dashboard");
-  const [editingId, setEditingId] = useState<string | null>(null);
+  const [currentTab, setCurrentTab] = useState<AdminTab>(() => parseAdminLocation().tab);
+  const [editingId, setEditingId] = useState<string | null>(() => parseAdminLocation().param || null);
 
   const [news, setNews] = useState<NewsItem[]>(INITIAL_NEWS);
   const [jobs, setJobs] = useState<JobItem[]>(INITIAL_JOBS);
   const [isLoadingData, setIsLoadingData] = useState<boolean>(true);
+
+  // Sync state when user presses browser Back/Forward buttons
+  useEffect(() => {
+    const handlePopState = () => {
+      const route = parseAdminLocation();
+      setCurrentTab(route.tab);
+      setEditingId(route.param || null);
+    };
+
+    window.addEventListener("popstate", handlePopState);
+    return () => window.removeEventListener("popstate", handlePopState);
+  }, []);
 
   const loadData = useCallback(async () => {
     try {
@@ -116,10 +187,22 @@ const AdminDashboard: React.FC = () => {
     loadData();
   }, [loadData]);
 
-  const handleNavigate = (tab: AdminTab, param?: string) => {
+  const handleNavigate = (tab: AdminTab, param?: string, replace = false) => {
     if (param) setEditingId(param);
     else setEditingId(null);
     setCurrentTab(tab);
+
+    const targetUrl = buildAdminUrl(tab, param);
+    if (typeof window !== "undefined") {
+      const currentUrl = window.location.pathname + window.location.search;
+      if (currentUrl !== targetUrl) {
+        if (replace) {
+          window.history.replaceState({ tab, param }, "", targetUrl);
+        } else {
+          window.history.pushState({ tab, param }, "", targetUrl);
+        }
+      }
+    }
   };
 
   // --------------------------------------------------------------------------
@@ -127,8 +210,7 @@ const AdminDashboard: React.FC = () => {
   // --------------------------------------------------------------------------
   const handleSaveNewsDraft = async (item: { id: string; data: NewsMetadata; body: string }) => {
     await saveChangeToDraft("news", item.id, "update", item.data, item.body);
-    setCurrentTab("news");
-    setEditingId(null);
+    handleNavigate("news");
   };
 
   const handleDeleteNews = async (id: string) => {
@@ -147,8 +229,7 @@ const AdminDashboard: React.FC = () => {
   // --------------------------------------------------------------------------
   const handleSaveJobDraft = async (item: { id: string; data: JobMetadata; body: string }) => {
     await saveChangeToDraft("jobs", item.id, "update", item.data, item.body);
-    setCurrentTab("jobs");
-    setEditingId(null);
+    handleNavigate("jobs");
   };
 
   const handleDeleteJob = async (id: string) => {

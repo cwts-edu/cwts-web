@@ -5,8 +5,13 @@ import "@assets/base.css";
 export function getStaticPaths() {
   return [
     { params: { app: undefined } },
+    { params: { app: "dashboard" } },
     { params: { app: "news" } },
+    { params: { app: "news/new" } },
+    { params: { app: "news/edit" } },
     { params: { app: "jobs" } },
+    { params: { app: "jobs/new" } },
+    { params: { app: "jobs/edit" } },
   ];
 }
 ---
