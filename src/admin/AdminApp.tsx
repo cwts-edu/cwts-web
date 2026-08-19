@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { AuthProvider, useAuth } from "./context/AuthContext";
 import { DraftProvider, useDraft } from "./context/DraftContext";
 import { AuthGate } from "./components/AuthGate";
@@ -79,68 +79,67 @@ const AdminDashboard: React.FC = () => {
   const [jobs, setJobs] = useState<JobItem[]>(INITIAL_JOBS);
   const [isLoadingData, setIsLoadingData] = useState<boolean>(true);
 
-  // Load canonical items from Firestore if available
-  useEffect(() => {
-    async function loadData() {
-      try {
-        // 1. Fetch News
-        const newsSnap = await getDocs(collection(db, "news"));
-        if (!newsSnap.empty) {
-          const loadedNews: NewsItem[] = [];
-          newsSnap.forEach((d) => {
-            const val = d.data();
-            loadedNews.push({
-              id: d.id,
-              data: {
-                title: val.title,
-                date: val.date?.toDate ? val.date.toDate() : new Date(val.date),
-                thumbnail: val.thumbnail,
-                url: val.url,
-              },
-              body: val.body || "",
-              status: val.status || "published",
-              version: val.version || 1,
-              publishedVersion: val.publishedVersion || 1,
-              updatedBy: val.updatedBy,
-              publishedBy: val.publishedBy,
-            });
+  const loadData = useCallback(async () => {
+    try {
+      // 1. Fetch News
+      const newsSnap = await getDocs(collection(db, "news"));
+      if (!newsSnap.empty) {
+        const loadedNews: NewsItem[] = [];
+        newsSnap.forEach((d) => {
+          const val = d.data();
+          loadedNews.push({
+            id: d.id,
+            data: {
+              title: val.title,
+              date: val.date?.toDate ? val.date.toDate() : new Date(val.date),
+              thumbnail: val.thumbnail,
+              url: val.url,
+            },
+            body: val.body || "",
+            status: val.status || "published",
+            version: val.version || 1,
+            publishedVersion: val.publishedVersion || 1,
+            updatedBy: val.updatedBy,
+            publishedBy: val.publishedBy,
           });
-          setNews(loadedNews);
-        }
-
-        // 2. Fetch Jobs
-        const jobsSnap = await getDocs(collection(db, "jobs"));
-        if (!jobsSnap.empty) {
-          const loadedJobs: JobItem[] = [];
-          jobsSnap.forEach((d) => {
-            const val = d.data();
-            loadedJobs.push({
-              id: d.id,
-              data: {
-                title: val.title,
-                location: val.location,
-                date: val.date?.toDate ? val.date.toDate() : new Date(val.date),
-                ...(val.file ? { file: val.file } : {}),
-              },
-              body: val.body || "",
-              status: val.status || "published",
-              version: val.version || 1,
-              publishedVersion: val.publishedVersion || 1,
-              updatedBy: val.updatedBy,
-              publishedBy: val.publishedBy,
-            });
-          });
-          setJobs(loadedJobs);
-        }
-      } catch (err) {
-        console.warn("Could not connect to live Firestore (using initial state):", err);
-      } finally {
-        setIsLoadingData(false);
+        });
+        setNews(loadedNews);
       }
-    }
 
-    loadData();
+      // 2. Fetch Jobs
+      const jobsSnap = await getDocs(collection(db, "jobs"));
+      if (!jobsSnap.empty) {
+        const loadedJobs: JobItem[] = [];
+        jobsSnap.forEach((d) => {
+          const val = d.data();
+          loadedJobs.push({
+            id: d.id,
+            data: {
+              title: val.title,
+              location: val.location,
+              date: val.date?.toDate ? val.date.toDate() : new Date(val.date),
+              ...(val.file ? { file: val.file } : {}),
+            },
+            body: val.body || "",
+            status: val.status || "published",
+            version: val.version || 1,
+            publishedVersion: val.publishedVersion || 1,
+            updatedBy: val.updatedBy,
+            publishedBy: val.publishedBy,
+          });
+        });
+        setJobs(loadedJobs);
+      }
+    } catch (err) {
+      console.warn("Could not connect to live Firestore (using initial state):", err);
+    } finally {
+      setIsLoadingData(false);
+    }
   }, []);
+
+  useEffect(() => {
+    loadData();
+  }, [loadData]);
 
   const handleNavigate = (tab: AdminTab, param?: string) => {
     if (param) setEditingId(param);
@@ -149,17 +148,10 @@ const AdminDashboard: React.FC = () => {
   };
 
   // --------------------------------------------------------------------------
-  // News Handlers (Draft Save via DraftContext & Quick Publish)
+  // News Handlers (Draft Save via DraftContext)
   // --------------------------------------------------------------------------
   const handleSaveNewsDraft = async (item: { id: string; data: NewsMetadata; body: string }) => {
     await saveChangeToDraft("news", item.id, "update", item.data, item.body);
-    setCurrentTab("news");
-    setEditingId(null);
-  };
-
-  const handlePublishNewsDirect = async (item: { id: string; data: NewsMetadata; body: string }) => {
-    await saveChangeToDraft("news", item.id, "update", item.data, item.body);
-    await publishDraftToProduction();
     setCurrentTab("news");
     setEditingId(null);
   };
@@ -174,17 +166,10 @@ const AdminDashboard: React.FC = () => {
   };
 
   // --------------------------------------------------------------------------
-  // Jobs Handlers (Draft Save via DraftContext & Quick Publish)
+  // Jobs Handlers (Draft Save via DraftContext)
   // --------------------------------------------------------------------------
   const handleSaveJobDraft = async (item: { id: string; data: JobMetadata; body: string }) => {
     await saveChangeToDraft("jobs", item.id, "update", item.data, item.body);
-    setCurrentTab("jobs");
-    setEditingId(null);
-  };
-
-  const handlePublishJobDirect = async (item: { id: string; data: JobMetadata; body: string }) => {
-    await saveChangeToDraft("jobs", item.id, "update", item.data, item.body);
-    await publishDraftToProduction();
     setCurrentTab("jobs");
     setEditingId(null);
   };
@@ -234,6 +219,7 @@ const AdminDashboard: React.FC = () => {
           onNavigate={handleNavigate}
           newsCount={mergedNews.length}
           jobsCount={mergedJobs.length}
+          onRefreshData={loadData}
         />
       )}
 
@@ -248,8 +234,7 @@ const AdminDashboard: React.FC = () => {
 
       {currentTab === "news_new" && (
         <NewsEditView
-          onSaveDraft={handleSaveNewsDraft}
-          onPublish={handlePublishNewsDirect}
+          onSave={handleSaveNewsDraft}
           onCancel={() => handleNavigate("news")}
         />
       )}
@@ -257,8 +242,7 @@ const AdminDashboard: React.FC = () => {
       {currentTab === "news_edit" && (
         <NewsEditView
           initialItem={mergedNews.find((n) => n.id === editingId)}
-          onSaveDraft={handleSaveNewsDraft}
-          onPublish={handlePublishNewsDirect}
+          onSave={handleSaveNewsDraft}
           onCancel={() => handleNavigate("news")}
         />
       )}
@@ -274,8 +258,7 @@ const AdminDashboard: React.FC = () => {
 
       {currentTab === "jobs_new" && (
         <JobsEditView
-          onSaveDraft={handleSaveJobDraft}
-          onPublish={handlePublishJobDirect}
+          onSave={handleSaveJobDraft}
           onCancel={() => handleNavigate("jobs")}
         />
       )}
@@ -283,8 +266,7 @@ const AdminDashboard: React.FC = () => {
       {currentTab === "jobs_edit" && (
         <JobsEditView
           initialItem={mergedJobs.find((j) => j.id === editingId)}
-          onSaveDraft={handleSaveJobDraft}
-          onPublish={handlePublishJobDirect}
+          onSave={handleSaveJobDraft}
           onCancel={() => handleNavigate("jobs")}
         />
       )}

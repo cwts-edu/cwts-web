@@ -9,6 +9,8 @@ interface ParsedDoc<T = any> {
   body: string;
   bodyHtml: string;
   status: "published" | "draft";
+  version: number;
+  publishedVersion: number;
   language: "zh" | "en";
   createdAt: string;
   updatedAt: string;
@@ -32,7 +34,6 @@ function parseFrontmatter(content: string): { data: Record<string, any>; body: s
     const trimmed = line.trim();
     if (!trimmed || trimmed.startsWith("#")) continue;
 
-    // Check array item
     if (trimmed.startsWith("- ") && currentKey && currentArray) {
       currentArray.push(trimmed.substring(2).trim().replace(/^["']|["']$/g, ""));
       continue;
@@ -44,7 +45,6 @@ function parseFrontmatter(content: string): { data: Record<string, any>; body: s
       let value = trimmed.substring(colonIdx + 1).trim();
 
       if (value === "") {
-        // Might be starting an array or object
         currentKey = key;
         currentArray = [];
         data[key] = currentArray;
@@ -52,12 +52,10 @@ function parseFrontmatter(content: string): { data: Record<string, any>; body: s
         currentKey = null;
         currentArray = null;
 
-        // Strip quotes
         if ((value.startsWith('"') && value.endsWith('"')) || (value.startsWith("'") && value.endsWith("'"))) {
           value = value.slice(1, -1);
         }
 
-        // Parse boolean / number / date
         if (value.toLowerCase() === "true") {
           data[key] = true;
         } else if (value.toLowerCase() === "false") {
@@ -81,7 +79,7 @@ function markdownToBasicHtml(md: string): string {
   return lines.map((line) => `<p>${line.replace(/\\\s*$/, "<br/>")}</p>`).join("\n");
 }
 
-async function loadNews(): Promise<ParsedDoc[]> {
+export async function loadNews(): Promise<ParsedDoc[]> {
   const newsDir = path.resolve("src/content/news");
   const files = await fs.promises.readdir(newsDir);
   const docs: ParsedDoc[] = [];
@@ -107,6 +105,8 @@ async function loadNews(): Promise<ParsedDoc[]> {
       body,
       bodyHtml: markdownToBasicHtml(body),
       status: "published",
+      version: 1,
+      publishedVersion: 1,
       language: "zh",
       createdAt: validated.date.toISOString(),
       updatedAt: new Date().toISOString(),
@@ -116,7 +116,7 @@ async function loadNews(): Promise<ParsedDoc[]> {
   return docs.sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
 }
 
-async function loadJobs(): Promise<ParsedDoc[]> {
+export async function loadJobs(): Promise<ParsedDoc[]> {
   const jobsDir = path.resolve("src/content/jobs");
   const files = await fs.promises.readdir(jobsDir);
   const docs: ParsedDoc[] = [];
@@ -142,6 +142,8 @@ async function loadJobs(): Promise<ParsedDoc[]> {
       body,
       bodyHtml: markdownToBasicHtml(body),
       status: "published",
+      version: 1,
+      publishedVersion: 1,
       language: "zh",
       createdAt: validated.date.toISOString(),
       updatedAt: new Date().toISOString(),
@@ -152,12 +154,11 @@ async function loadJobs(): Promise<ParsedDoc[]> {
 }
 
 async function main() {
-  const args = process.argv.slice(2);
   const exportDir = path.resolve("data-fixtures");
   await fs.promises.mkdir(exportDir, { recursive: true });
 
-  console.log("🌱 CWTS Firestore Seeding & Migration Tool");
-  console.log("=========================================\n");
+  console.log("🌱 CWTS Initial Fixtures Generator");
+  console.log("===================================\n");
 
   console.log("📦 1. Processing 'news' collection...");
   const newsDocs = await loadNews();
@@ -167,7 +168,7 @@ async function main() {
   const jobsDocs = await loadJobs();
   console.log(`   ✅ Loaded and validated ${jobsDocs.length} job posting documents.`);
 
-  // Write JSON fixtures
+  // Write JSON fixtures for Admin UI
   const newsFixturePath = path.join(exportDir, "news.json");
   const jobsFixturePath = path.join(exportDir, "jobs.json");
   await fs.promises.writeFile(newsFixturePath, JSON.stringify(newsDocs, null, 2), "utf-8");
@@ -177,16 +178,10 @@ async function main() {
   console.log(`   - ${newsFixturePath} (${newsDocs.length} items)`);
   console.log(`   - ${jobsFixturePath} (${jobsDocs.length} items)`);
 
-  console.log("\n📋 Sample News Payload:");
-  console.log(JSON.stringify(newsDocs[0], null, 2));
-
-  console.log("\n📋 Sample Job Payload:");
-  console.log(JSON.stringify(jobsDocs[0], null, 2));
-
-  console.log("\n✨ Seeding fixtures generated successfully!");
+  console.log("\n✨ Fixtures generated! You can now seed via the Admin UI.");
 }
 
 main().catch((err) => {
-  console.error("❌ Seeding failed:", err);
+  console.error("❌ Fixture generation failed:", err);
   process.exit(1);
 });

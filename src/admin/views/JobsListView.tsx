@@ -23,13 +23,22 @@ interface Props {
 }
 
 export const JobsListView: React.FC<Props> = ({ items, onNew, onEdit, onDelete }) => {
+  // Always sort newest first by posted date
+  const sortedItems = React.useMemo(() => {
+    return [...items].sort((a, b) => {
+      const dateA = new Date((a.draftData || a.data).date).getTime();
+      const dateB = new Date((b.draftData || b.data).date).getTime();
+      return dateB - dateA;
+    });
+  }, [items]);
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-2xl font-bold text-white tracking-tight">Job Postings</h2>
           <p className="text-xs text-slate-400 mt-1">
-            Manage church and ministry job board postings with drafting and publishing control.
+            Manage church and ministry job board postings (sorted newest first).
           </p>
         </div>
         <button
@@ -41,7 +50,7 @@ export const JobsListView: React.FC<Props> = ({ items, onNew, onEdit, onDelete }
       </div>
 
       <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-xl">
-        {items.length === 0 ? (
+        {sortedItems.length === 0 ? (
           <div className="p-12 text-center text-slate-400 space-y-3">
             <div className="text-4xl">💼</div>
             <p className="text-sm font-medium">No job postings found.</p>
@@ -58,6 +67,7 @@ export const JobsListView: React.FC<Props> = ({ items, onNew, onEdit, onDelete }
               <tr>
                 <th className="py-3.5 px-6">Job Title & ID</th>
                 <th className="py-3.5 px-6">Location</th>
+                <th className="py-3.5 px-6">Posted Date</th>
                 <th className="py-3.5 px-6">Status</th>
                 <th className="py-3.5 px-6">Document</th>
                 <th className="py-3.5 px-6">Last Modified By</th>
@@ -65,7 +75,7 @@ export const JobsListView: React.FC<Props> = ({ items, onNew, onEdit, onDelete }
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-800">
-              {items.map((item) => {
+              {sortedItems.map((item) => {
                 const activeData = item.draftData || item.data;
                 const isDraft = item.status === "draft" || (item.version && item.publishedVersion && item.version > item.publishedVersion);
                 return (
@@ -75,6 +85,9 @@ export const JobsListView: React.FC<Props> = ({ items, onNew, onEdit, onDelete }
                       <div className="text-[11px] font-mono text-blue-400 truncate mt-0.5">{item.id}</div>
                     </td>
                     <td className="py-3.5 px-6 text-xs text-slate-300 whitespace-nowrap">{activeData.location}</td>
+                    <td className="py-3.5 px-6 text-xs text-slate-300 whitespace-nowrap font-mono">
+                      {new Date(activeData.date).toISOString().split("T")[0]}
+                    </td>
                     <td className="py-3.5 px-6 whitespace-nowrap">
                       {isDraft ? (
                         <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-amber-500/10 text-amber-300 border border-amber-500/30 text-xs font-medium">

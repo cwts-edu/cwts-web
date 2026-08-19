@@ -1,14 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import type { AdminTab } from "../components/AdminLayout";
 import { useDraft } from "../context/DraftContext";
+import { useAuth } from "../context/AuthContext";
+import { seedFirestoreDatabase } from "../services/seedDatabase";
 
 interface Props {
   onNavigate: (tab: AdminTab, param?: string) => void;
   newsCount: number;
   jobsCount: number;
+  onRefreshData?: () => Promise<void>;
 }
 
-export const DashboardView: React.FC<Props> = ({ onNavigate, newsCount, jobsCount }) => {
+export const DashboardView: React.FC<Props> = ({ onNavigate, newsCount, jobsCount, onRefreshData }) => {
+  const { user } = useAuth();
   const {
     pendingChanges,
     isStagingBuilding,
@@ -18,10 +22,37 @@ export const DashboardView: React.FC<Props> = ({ onNavigate, newsCount, jobsCoun
     discardDraftChange,
   } = useDraft();
 
+  const [isSeeding, setIsSeeding] = useState(false);
+  const [seedMessage, setSeedMessage] = useState<string | null>(null);
+
+  const handleSeedDatabase = async () => {
+    if (!confirm("This will upload all 4 initial News articles and 10 Job postings into live Firestore under your admin account. Proceed?")) {
+      return;
+    }
+
+    setIsSeeding(true);
+    setSeedMessage(null);
+
+    const audit = {
+      uid: user?.uid || "admin",
+      email: user?.email || "admin@cwts.edu",
+      displayName: user?.displayName || user?.email || "CWTS Admin",
+      timestamp: new Date().toISOString(),
+    };
+
+    const res = await seedFirestoreDatabase(audit);
+    setIsSeeding(false);
+    setSeedMessage(res.message);
+
+    if (res.success && onRefreshData) {
+      await onRefreshData();
+    }
+  };
+
   return (
     <div className="space-y-8">
       {/* Welcome Banner */}
-      <div className="bg-gradient-to-r from-purple-900/60 to-indigo-900/60 border border-purple-500/20 rounded-3xl p-8 backdrop-blur shadow-xl">
+      <div className="bg-gradient-to-r from-purple-900/60 to-indigo-900/60 border border-purple-500/20 rounded-3xl p-8 backdrop-blur shadow-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
         <div className="max-w-2xl space-y-3">
           <span className="px-3 py-1 bg-purple-500/20 text-purple-300 text-xs font-semibold rounded-full border border-purple-400/30">
             Headless CMS Portal
@@ -33,7 +64,33 @@ export const DashboardView: React.FC<Props> = ({ onNavigate, newsCount, jobsCoun
             Draft and publish website content with full versioning, Netlify staging previews, and automated deployment pipelines.
           </p>
         </div>
+
+        {/* One-Click Seeding Button */}
+        <button
+          onClick={handleSeedDatabase}
+          disabled={isSeeding}
+          className="px-4 py-2.5 bg-slate-800 hover:bg-slate-700 disabled:opacity-50 text-xs font-semibold text-purple-200 border border-purple-500/40 rounded-2xl shadow-lg transition flex items-center gap-2 shrink-0"
+        >
+          {isSeeding ? (
+            <>
+              <div className="w-3.5 h-3.5 border-2 border-purple-400 border-t-transparent rounded-full animate-spin" />
+              Seeding Firestore...
+            </>
+          ) : (
+            <>
+              <span>📥</span>
+              Seed / Reset Initial Content
+            </>
+          )}
+        </button>
       </div>
+
+      {seedMessage && (
+        <div className="p-4 bg-emerald-950/40 border border-emerald-500/40 rounded-2xl text-emerald-300 text-xs flex items-center justify-between">
+          <span>{seedMessage}</span>
+          <button onClick={() => setSeedMessage(null)} className="text-emerald-400 hover:text-white">✕</button>
+        </div>
+      )}
 
       {/* Active Draft Workspace Card */}
       {pendingChanges.length > 0 && (

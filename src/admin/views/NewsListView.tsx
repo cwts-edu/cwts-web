@@ -23,13 +23,22 @@ interface Props {
 }
 
 export const NewsListView: React.FC<Props> = ({ items, onNew, onEdit, onDelete }) => {
+  // Always sort newest first by publish date
+  const sortedItems = React.useMemo(() => {
+    return [...items].sort((a, b) => {
+      const dateA = new Date((a.draftData || a.data).date).getTime();
+      const dateB = new Date((b.draftData || b.data).date).getTime();
+      return dateB - dateA;
+    });
+  }, [items]);
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-2xl font-bold text-white tracking-tight">News Articles</h2>
           <p className="text-xs text-slate-400 mt-1">
-            Manage homepage news announcements with full versioning and draft workflows.
+            Manage homepage news announcements (sorted newest first).
           </p>
         </div>
         <button
@@ -41,7 +50,7 @@ export const NewsListView: React.FC<Props> = ({ items, onNew, onEdit, onDelete }
       </div>
 
       <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-xl">
-        {items.length === 0 ? (
+        {sortedItems.length === 0 ? (
           <div className="p-12 text-center text-slate-400 space-y-3">
             <div className="text-4xl">📰</div>
             <p className="text-sm font-medium">No news articles found.</p>
@@ -58,13 +67,14 @@ export const NewsListView: React.FC<Props> = ({ items, onNew, onEdit, onDelete }
               <tr>
                 <th className="py-3.5 px-6">Thumbnail</th>
                 <th className="py-3.5 px-6">Title & Version</th>
+                <th className="py-3.5 px-6">Publish Date</th>
                 <th className="py-3.5 px-6">Status</th>
                 <th className="py-3.5 px-6">Last Modified By</th>
                 <th className="py-3.5 px-6 text-right">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-800">
-              {items.map((item) => {
+              {sortedItems.map((item) => {
                 const activeData = item.draftData || item.data;
                 const isDraft = item.status === "draft" || (item.version && item.publishedVersion && item.version > item.publishedVersion);
                 return (
@@ -85,6 +95,9 @@ export const NewsListView: React.FC<Props> = ({ items, onNew, onEdit, onDelete }
                     <td className="py-3.5 px-6 max-w-xs">
                       <div className="font-semibold text-white truncate">{activeData.title}</div>
                       <div className="text-[11px] font-mono text-purple-400 truncate mt-0.5">{item.id}</div>
+                    </td>
+                    <td className="py-3.5 px-6 text-xs text-slate-300 whitespace-nowrap font-mono">
+                      {new Date(activeData.date).toISOString().split("T")[0]}
                     </td>
                     <td className="py-3.5 px-6 whitespace-nowrap">
                       {isDraft ? (
