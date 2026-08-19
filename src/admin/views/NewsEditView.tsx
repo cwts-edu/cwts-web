@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { NewsMetadataSchema, type NewsMetadata } from "../../libs/content/schemas";
 import type { NewsItem } from "./NewsListView";
 
@@ -8,19 +8,57 @@ interface Props {
   onCancel: () => void;
 }
 
+function slugify(text: string): string {
+  return text
+    .toString()
+    .toLowerCase()
+    .trim()
+    .replace(/\s+/g, "-") // Replace spaces with -
+    .replace(/&/g, "-and-")
+    .replace(/[^\w\-\u4e00-\u9fa5]+/g, "") // Keep alphanumeric, dashes, and Chinese characters
+    .replace(/\-\-+/g, "-") // Replace multiple - with single -
+    .replace(/^-+/, "") // Trim - from start
+    .replace(/-+$/, ""); // Trim - from end
+}
+
+function extractShortIdFromExisting(fullId: string, dateStr: string): string {
+  if (fullId.startsWith(`${dateStr}-`)) {
+    return fullId.slice(dateStr.length + 1);
+  }
+  // Try matching any YYYY-MM-DD- prefix
+  const match = fullId.match(/^\d{4}-\d{2}-\d{2}-(.*)$/);
+  if (match) {
+    return match[1];
+  }
+  return fullId;
+}
+
 export const NewsEditView: React.FC<Props> = ({ initialItem, onSave, onCancel }) => {
-  const [id, setId] = useState(initialItem?.id || `news-${Date.now()}`);
-  const [title, setTitle] = useState(initialItem?.data.title || "");
-  const [dateStr, setDateStr] = useState(
-    initialItem?.data.date
-      ? new Date(initialItem.data.date).toISOString().split("T")[0]
-      : new Date().toISOString().split("T")[0]
+  const initialDateStr = initialItem?.data.date
+    ? new Date(initialItem.data.date).toISOString().split("T")[0]
+    : new Date().toISOString().split("T")[0];
+
+  const [dateStr, setDateStr] = useState(initialDateStr);
+  const [shortId, setShortId] = useState(
+    initialItem ? extractShortIdFromExisting(initialItem.id, initialDateStr) : ""
   );
+  const [title, setTitle] = useState(initialItem?.data.title || "");
   const [thumbnail, setThumbnail] = useState(initialItem?.data.thumbnail || "/images/news/");
   const [url, setUrl] = useState(initialItem?.data.url || "/zh/news-events/");
   const [body, setBody] = useState(initialItem?.body || "");
+  const [isManualSlug, setIsManualSlug] = useState(false);
+  const [customSlug, setCustomSlug] = useState(initialItem?.id || "");
   const [error, setError] = useState<string | null>(null);
   const [isSaving, setIsSaving] = useState(false);
+
+  // Compute slug automatically from date and shortId
+  const computedSlug = React.useMemo(() => {
+    if (isManualSlug && customSlug) {
+      return customSlug;
+    }
+    const cleanShort = slugify(shortId || title || "news");
+    return dateStr ? `${dateStr}-${cleanShort}` : cleanShort;
+  }, [dateStr, shortId, title, isManualSlug, customSlug]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -43,7 +81,7 @@ export const NewsEditView: React.FC<Props> = ({ initialItem, onSave, onCancel })
     try {
       setIsSaving(true);
       await onSave({
-        id: id.trim(),
+        id: computedSlug,
         data: validation.data,
         body,
       });
@@ -60,7 +98,9 @@ export const NewsEditView: React.FC<Props> = ({ initialItem, onSave, onCancel })
           <h2 className="text-2xl font-bold text-white tracking-tight">
             {initialItem ? "Edit News Article" : "Create New News Article"}
           </h2>
-          <p className="text-xs text-slate-400 mt-1">Configure announcement headline, thumbnail, and link.</p>
+          <p className="text-xs text-slate-400 mt-1">
+            Displayed on the 4-card announcement grid below the homepage carousel.
+          </p>
         </div>
         <button
           onClick={onCancel}
@@ -86,7 +126,13 @@ export const NewsEditView: React.FC<Props> = ({ initialItem, onSave, onCancel })
               type="text"
               required
               value={title}
-              onChange={(e) => setTitle(e.target.value)}
+              onChange={(e) => {
+                setTitle(e.target.value);
+                if (!shortId && !initialItem) {
+                  // Suggest shortId if empty
+                  setShortId(slugify(e.target.value).slice(0, 30));
+                }
+              }}
               placeholder="e.g. 基神院訊 2026 夏季號"
               className="w-full px-4 py-2.5 bg-slate-950 border border-slate-700 rounded-xl text-white text-sm focus:outline-none focus:border-purple-500 transition"
             />
@@ -107,16 +153,31 @@ export const NewsEditView: React.FC<Props> = ({ initialItem, onSave, onCancel })
 
           <div>
             <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">
-              Document ID (Slug) *
+              Short Identifier (Name) *
             </label>
             <input
               type="text"
               required
-              disabled={!!initialItem}
-              value={id}
-              onChange={(e) => setId(e.target.value)}
-              className="w-full px-4 py-2.5 bg-slate-950 border border-slate-700 disabled:opacity-50 rounded-xl text-white text-sm font-mono focus:outline-none focus:border-purple-500 transition"
+              value={shortId}
+              onChange={(e) => setShortId(e.target.value)}
+              placeholder="e.g. newsletter or teach-learn"
+              className="w-full px-4 py-2.5 bg-slate-950 border border-slate-700 rounded-xl text-white text-sm font-mono focus:outline-none focus:border-purple-500 transition"
             />
+          </div>
+
+          {/* Computed Document ID / Slug Display */}
+          <div className="sm:col-span-2 p-3.5 bg-slate-950/80 border border-purple-500/30 rounded-xl flex items-center justify-between gap-4">
+            <div className="overflow-hidden">
+              <span className="text-[11px] font-semibold text-purple-400 uppercase tracking-wider block">
+                Computed Firestore Document ID (Auto-Generated)
+              </span>
+              <span className="font-mono text-sm text-purple-200 truncate block mt-0.5">
+                {computedSlug}
+              </span>
+            </div>
+            <span className="px-2 py-1 rounded bg-purple-900/40 text-purple-300 text-[10px] font-medium border border-purple-500/30 whitespace-nowrap">
+              Auto-Synced
+            </span>
           </div>
 
           <div className="sm:col-span-2">

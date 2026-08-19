@@ -8,19 +8,48 @@ interface Props {
   onCancel: () => void;
 }
 
+function slugify(text: string): string {
+  return text
+    .toString()
+    .toLowerCase()
+    .trim()
+    .replace(/\s+/g, "-")
+    .replace(/&/g, "-and-")
+    .replace(/[^\w\-\u4e00-\u9fa5]+/g, "")
+    .replace(/\-\-+/g, "-")
+    .replace(/^-+/, "")
+    .replace(/-+$/, "");
+}
+
+function extractShortIdFromExisting(fullId: string, dateStr: string): string {
+  if (fullId === dateStr) return "";
+  if (fullId.startsWith(`${dateStr}-`)) {
+    return fullId.slice(dateStr.length + 1);
+  }
+  return fullId;
+}
+
 export const JobsEditView: React.FC<Props> = ({ initialItem, onSave, onCancel }) => {
-  const [id, setId] = useState(initialItem?.id || `job-${Date.now()}`);
+  const initialDateStr = initialItem?.data.date
+    ? new Date(initialItem.data.date).toISOString().split("T")[0]
+    : new Date().toISOString().split("T")[0];
+
+  const [dateStr, setDateStr] = useState(initialDateStr);
+  const [shortId, setShortId] = useState(
+    initialItem ? extractShortIdFromExisting(initialItem.id, initialDateStr) : ""
+  );
   const [title, setTitle] = useState(initialItem?.data.title || "");
   const [location, setLocation] = useState(initialItem?.data.location || "CA");
-  const [dateStr, setDateStr] = useState(
-    initialItem?.data.date
-      ? new Date(initialItem.data.date).toISOString().split("T")[0]
-      : new Date().toISOString().split("T")[0]
-  );
   const [file, setFile] = useState(initialItem?.data.file || "");
   const [body, setBody] = useState(initialItem?.body || "");
   const [error, setError] = useState<string | null>(null);
   const [isSaving, setIsSaving] = useState(false);
+
+  const computedSlug = React.useMemo(() => {
+    const cleanShort = slugify(shortId);
+    if (dateStr && cleanShort) return `${dateStr}-${cleanShort}`;
+    return dateStr || cleanShort || `job-${Date.now()}`;
+  }, [dateStr, shortId]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -43,7 +72,7 @@ export const JobsEditView: React.FC<Props> = ({ initialItem, onSave, onCancel })
     try {
       setIsSaving(true);
       await onSave({
-        id: id.trim(),
+        id: computedSlug,
         data: validation.data,
         body,
       });
@@ -86,7 +115,12 @@ export const JobsEditView: React.FC<Props> = ({ initialItem, onSave, onCancel })
               type="text"
               required
               value={title}
-              onChange={(e) => setTitle(e.target.value)}
+              onChange={(e) => {
+                setTitle(e.target.value);
+                if (!shortId && !initialItem) {
+                  setShortId(slugify(e.target.value).slice(0, 30));
+                }
+              }}
               placeholder="e.g. 矽谷基督徒聚會 - 全職傳道同工"
               className="w-full px-4 py-2.5 bg-slate-950 border border-slate-700 rounded-xl text-white text-sm focus:outline-none focus:border-blue-500 transition"
             />
@@ -121,16 +155,30 @@ export const JobsEditView: React.FC<Props> = ({ initialItem, onSave, onCancel })
 
           <div className="sm:col-span-2">
             <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">
-              Document ID (Slug) *
+              Short Identifier (Optional suffix)
             </label>
             <input
               type="text"
-              required
-              disabled={!!initialItem}
-              value={id}
-              onChange={(e) => setId(e.target.value)}
-              className="w-full px-4 py-2.5 bg-slate-950 border border-slate-700 disabled:opacity-50 rounded-xl text-white text-sm font-mono focus:outline-none focus:border-blue-500 transition"
+              value={shortId}
+              onChange={(e) => setShortId(e.target.value)}
+              placeholder="e.g. svca-worship or hoc5"
+              className="w-full px-4 py-2.5 bg-slate-950 border border-slate-700 rounded-xl text-white text-sm font-mono focus:outline-none focus:border-blue-500 transition"
             />
+          </div>
+
+          {/* Computed Document ID Display */}
+          <div className="sm:col-span-2 p-3.5 bg-slate-950/80 border border-blue-500/30 rounded-xl flex items-center justify-between gap-4">
+            <div className="overflow-hidden">
+              <span className="text-[11px] font-semibold text-blue-400 uppercase tracking-wider block">
+                Computed Firestore Document ID (Auto-Generated)
+              </span>
+              <span className="font-mono text-sm text-blue-200 truncate block mt-0.5">
+                {computedSlug}
+              </span>
+            </div>
+            <span className="px-2 py-1 rounded bg-blue-900/40 text-blue-300 text-[10px] font-medium border border-blue-500/30 whitespace-nowrap">
+              Auto-Synced
+            </span>
           </div>
 
           <div className="sm:col-span-2">
