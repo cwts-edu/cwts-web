@@ -110,8 +110,8 @@ export class FirebaseContentClient implements IContentClient {
         if (draftChange.action === "delete") return null;
         const parsedData = SchemaValidators[collection].parse(draftChange.data);
         return {
-          id: draftChange.documentId,
-          slug: draftChange.documentId,
+          id: draftChange.documentId || id,
+          slug: draftChange.documentId || id,
           language: (draftChange.data.language as Language) || "zh",
           status: "draft",
           data: parsedData,
@@ -411,8 +411,16 @@ export class FirebaseContentClient implements IContentClient {
 
   private async fetchDraftChangeDoc(draftId: string, targetCollection: string, docId: string): Promise<any | null> {
     try {
-      const url = `${this.baseUrl}/drafts/${draftId}/changes/${docId}`;
-      const response = await fetch(url);
+      // 1. Try formatted doc name: e.g. news_2026-04-24-newsletter
+      const prefixedUrl = `${this.baseUrl}/drafts/${draftId}/changes/${targetCollection}_${docId}`;
+      let response = await fetch(prefixedUrl);
+      
+      // 2. Fallback to raw docId
+      if (!response.ok) {
+        const rawUrl = `${this.baseUrl}/drafts/${draftId}/changes/${docId}`;
+        response = await fetch(rawUrl);
+      }
+
       if (!response.ok) return null;
       const doc = await response.json();
       const fields = this.decodeFirestoreFields(doc.fields);

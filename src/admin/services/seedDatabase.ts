@@ -1,8 +1,7 @@
 import { db } from "../config/firebase";
-import { doc, setDoc, writeBatch } from "firebase/firestore";
+import { doc, writeBatch } from "firebase/firestore";
 import type { AuditUser } from "../../libs/content/types";
-import newsFixtures from "../../../data-fixtures/news.json";
-import jobsFixtures from "../../../data-fixtures/jobs.json";
+import { INITIAL_NEWS_FIXTURES, INITIAL_JOBS_FIXTURES } from "../fixtures/initialContent";
 
 export interface SeedResult {
   success: boolean;
@@ -16,7 +15,7 @@ export async function seedFirestoreDatabase(author: AuditUser): Promise<SeedResu
     const batch = writeBatch(db);
 
     // 1. Seed News
-    for (const item of newsFixtures) {
+    for (const item of INITIAL_NEWS_FIXTURES) {
       const docRef = doc(db, "news", item.id);
       batch.set(docRef, {
         ...item.data,
@@ -47,7 +46,7 @@ export async function seedFirestoreDatabase(author: AuditUser): Promise<SeedResu
     }
 
     // 2. Seed Jobs
-    for (const item of jobsFixtures) {
+    for (const item of INITIAL_JOBS_FIXTURES) {
       const docRef = doc(db, "jobs", item.id);
       batch.set(docRef, {
         ...item.data,
@@ -81,9 +80,9 @@ export async function seedFirestoreDatabase(author: AuditUser): Promise<SeedResu
 
     return {
       success: true,
-      newsCount: newsFixtures.length,
-      jobsCount: jobsFixtures.length,
-      message: `Successfully seeded ${newsFixtures.length} news articles and ${jobsFixtures.length} job postings into live Firestore!`,
+      newsCount: INITIAL_NEWS_FIXTURES.length,
+      jobsCount: INITIAL_JOBS_FIXTURES.length,
+      message: `Successfully seeded ${INITIAL_NEWS_FIXTURES.length} news articles and ${INITIAL_JOBS_FIXTURES.length} job postings into live Firestore!`,
     };
   } catch (err: any) {
     console.error("Failed to seed database from Admin UI:", err);
