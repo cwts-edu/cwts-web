@@ -14,16 +14,41 @@ import type {
   StudyModeWidgetMetadata,
 } from "./schemas";
 
+export interface AuditUser {
+  uid: string;
+  email: string;
+  displayName?: string;
+  photoURL?: string;
+  timestamp: string; // ISO string
+}
+
+export interface VersionRecord<T = any> {
+  version: number;
+  status: "draft" | "published";
+  data: T;
+  body?: string;
+  html?: string;
+  author: AuditUser;
+  createdAt: string;
+  publishedAt?: string;
+  changeNote?: string;
+}
+
 export interface ContentEntry<T = any> {
   id: string;
   slug: string;
   language: Language;
   status: "draft" | "published";
+  version?: number;
+  publishedVersion?: number;
   data: T;
+  draftData?: T;
   rawEntry?: any;
   Content?: any; // Component rendering Markdown/MDX
   body?: string; // Raw markdown or text body
   html?: string; // Compiled or rich text HTML
+  updatedBy?: AuditUser;
+  publishedBy?: AuditUser;
   updatedAt: Date;
 }
 

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { AuthProvider } from "./context/AuthContext";
+import { AuthProvider, useAuth } from "./context/AuthContext";
+import { DraftProvider, useDraft } from "./context/DraftContext";
 import { AuthGate } from "./components/AuthGate";
 import { AdminLayout, type AdminTab } from "./components/AdminLayout";
 import { DashboardView } from "./views/DashboardView";
@@ -8,7 +9,7 @@ import { NewsEditView } from "./views/NewsEditView";
 import { JobsListView, type JobItem } from "./views/JobsListView";
 import { JobsEditView } from "./views/JobsEditView";
 import { db } from "./config/firebase";
-import { collection, doc, getDocs, setDoc, deleteDoc } from "firebase/firestore";
+import { collection, doc, getDocs, deleteDoc } from "firebase/firestore";
 import type { NewsMetadata, JobMetadata } from "../libs/content/schemas";
 
 const INITIAL_NEWS: NewsItem[] = [
@@ -21,6 +22,9 @@ const INITIAL_NEWS: NewsItem[] = [
       url: "/zh/news-events/newsletter/",
     },
     body: "基神院訊",
+    status: "published",
+    version: 1,
+    publishedVersion: 1,
   },
   {
     id: "2026-05-26-MI Bring Church Home",
@@ -31,6 +35,9 @@ const INITIAL_NEWS: NewsItem[] = [
       url: "/zh/ministry-institute/courses/#把教會帶回家-課程編碼ff013學分zoom授課",
     },
     body: "基神證書課程 Zoom課堂\\\n9/3-10/8 逢周四晚",
+    status: "published",
+    version: 1,
+    publishedVersion: 1,
   },
 ];
 
@@ -43,6 +50,9 @@ const INITIAL_JOBS: JobItem[] = [
       date: new Date("2026-07-08"),
       file: "/docs/jobs/2026-07-08-SVCA TV Worship Outreach.pdf",
     },
+    status: "published",
+    version: 1,
+    publishedVersion: 1,
   },
   {
     id: "2026-07-06",
@@ -52,10 +62,16 @@ const INITIAL_JOBS: JobItem[] = [
       date: new Date("2026-07-06"),
       file: "/docs/jobs/2026-07-06-HOC5-Caring-Pastor.pdf",
     },
+    status: "published",
+    version: 1,
+    publishedVersion: 1,
   },
 ];
 
 const AdminDashboard: React.FC = () => {
+  const { user } = useAuth();
+  const { pendingChanges, saveChangeToDraft, publishDraftToProduction } = useDraft();
+
   const [currentTab, setCurrentTab] = useState<AdminTab>("dashboard");
   const [editingId, setEditingId] = useState<string | null>(null);
 
@@ -63,7 +79,7 @@ const AdminDashboard: React.FC = () => {
   const [jobs, setJobs] = useState<JobItem[]>(INITIAL_JOBS);
   const [isLoadingData, setIsLoadingData] = useState<boolean>(true);
 
-  // Load live data from Firestore if available
+  // Load canonical items from Firestore if available
   useEffect(() => {
     async function loadData() {
       try {
@@ -82,6 +98,11 @@ const AdminDashboard: React.FC = () => {
                 url: val.url,
               },
               body: val.body || "",
+              status: val.status || "published",
+              version: val.version || 1,
+              publishedVersion: val.publishedVersion || 1,
+              updatedBy: val.updatedBy,
+              publishedBy: val.publishedBy,
             });
           });
           setNews(loadedNews);
@@ -102,12 +123,17 @@ const AdminDashboard: React.FC = () => {
                 ...(val.file ? { file: val.file } : {}),
               },
               body: val.body || "",
+              status: val.status || "published",
+              version: val.version || 1,
+              publishedVersion: val.publishedVersion || 1,
+              updatedBy: val.updatedBy,
+              publishedBy: val.publishedBy,
             });
           });
           setJobs(loadedJobs);
         }
       } catch (err) {
-        console.warn("Could not connect to live Firestore (using default initial data):", err);
+        console.warn("Could not connect to live Firestore (using initial state):", err);
       } finally {
         setIsLoadingData(false);
       }
@@ -122,31 +148,18 @@ const AdminDashboard: React.FC = () => {
     setCurrentTab(tab);
   };
 
-  const handleSaveNews = async (item: { id: string; data: NewsMetadata; body: string }) => {
-    try {
-      await setDoc(doc(db, "news", item.id), {
-        title: item.data.title,
-        date: item.data.date.toISOString(),
-        thumbnail: item.data.thumbnail,
-        url: item.data.url,
-        body: item.body,
-        status: "published",
-        updatedAt: new Date().toISOString(),
-      });
-    } catch (e) {
-      console.warn("Could not save to remote Firestore directly:", e);
-    }
+  // --------------------------------------------------------------------------
+  // News Handlers (Draft Save via DraftContext & Quick Publish)
+  // --------------------------------------------------------------------------
+  const handleSaveNewsDraft = async (item: { id: string; data: NewsMetadata; body: string }) => {
+    await saveChangeToDraft("news", item.id, "update", item.data, item.body);
+    setCurrentTab("news");
+    setEditingId(null);
+  };
 
-    setNews((prev) => {
-      const idx = prev.findIndex((n) => n.id === item.id);
-      if (idx >= 0) {
-        const next = [...prev];
-        next[idx] = item;
-        return next;
-      }
-      return [item, ...prev];
-    });
-
+  const handlePublishNewsDirect = async (item: { id: string; data: NewsMetadata; body: string }) => {
+    await saveChangeToDraft("news", item.id, "update", item.data, item.body);
+    await publishDraftToProduction();
     setCurrentTab("news");
     setEditingId(null);
   };
@@ -155,36 +168,23 @@ const AdminDashboard: React.FC = () => {
     try {
       await deleteDoc(doc(db, "news", id));
     } catch (e) {
-      console.warn("Could not delete from remote Firestore:", e);
+      console.warn("Could not delete from Firestore:", e);
     }
     setNews((prev) => prev.filter((n) => n.id !== id));
   };
 
-  const handleSaveJob = async (item: { id: string; data: JobMetadata; body: string }) => {
-    try {
-      await setDoc(doc(db, "jobs", item.id), {
-        title: item.data.title,
-        location: item.data.location,
-        date: item.data.date.toISOString(),
-        ...(item.data.file ? { file: item.data.file } : {}),
-        body: item.body,
-        status: "published",
-        updatedAt: new Date().toISOString(),
-      });
-    } catch (e) {
-      console.warn("Could not save to remote Firestore directly:", e);
-    }
+  // --------------------------------------------------------------------------
+  // Jobs Handlers (Draft Save via DraftContext & Quick Publish)
+  // --------------------------------------------------------------------------
+  const handleSaveJobDraft = async (item: { id: string; data: JobMetadata; body: string }) => {
+    await saveChangeToDraft("jobs", item.id, "update", item.data, item.body);
+    setCurrentTab("jobs");
+    setEditingId(null);
+  };
 
-    setJobs((prev) => {
-      const idx = prev.findIndex((j) => j.id === item.id);
-      if (idx >= 0) {
-        const next = [...prev];
-        next[idx] = item;
-        return next;
-      }
-      return [item, ...prev];
-    });
-
+  const handlePublishJobDirect = async (item: { id: string; data: JobMetadata; body: string }) => {
+    await saveChangeToDraft("jobs", item.id, "update", item.data, item.body);
+    await publishDraftToProduction();
     setCurrentTab("jobs");
     setEditingId(null);
   };
@@ -193,24 +193,53 @@ const AdminDashboard: React.FC = () => {
     try {
       await deleteDoc(doc(db, "jobs", id));
     } catch (e) {
-      console.warn("Could not delete from remote Firestore:", e);
+      console.warn("Could not delete job from Firestore:", e);
     }
     setJobs((prev) => prev.filter((j) => j.id !== id));
   };
+
+  // Overlay active draft items into the view list for the editor
+  const mergedNews = news.map((item) => {
+    const draft = pendingChanges.find((p) => p.collection === "news" && p.documentId === item.id);
+    if (draft) {
+      return {
+        ...item,
+        draftData: draft.data,
+        draftBody: draft.body,
+        status: "draft" as const,
+        updatedBy: draft.updatedBy,
+      };
+    }
+    return item;
+  });
+
+  const mergedJobs = jobs.map((item) => {
+    const draft = pendingChanges.find((p) => p.collection === "jobs" && p.documentId === item.id);
+    if (draft) {
+      return {
+        ...item,
+        draftData: draft.data,
+        draftBody: draft.body,
+        status: "draft" as const,
+        updatedBy: draft.updatedBy,
+      };
+    }
+    return item;
+  });
 
   return (
     <AdminLayout currentTab={currentTab} onNavigate={handleNavigate}>
       {currentTab === "dashboard" && (
         <DashboardView
           onNavigate={handleNavigate}
-          newsCount={news.length}
-          jobsCount={jobs.length}
+          newsCount={mergedNews.length}
+          jobsCount={mergedJobs.length}
         />
       )}
 
       {currentTab === "news" && (
         <NewsListView
-          items={news}
+          items={mergedNews}
           onNew={() => handleNavigate("news_new")}
           onEdit={(id) => handleNavigate("news_edit", id)}
           onDelete={handleDeleteNews}
@@ -219,22 +248,24 @@ const AdminDashboard: React.FC = () => {
 
       {currentTab === "news_new" && (
         <NewsEditView
-          onSave={handleSaveNews}
+          onSaveDraft={handleSaveNewsDraft}
+          onPublish={handlePublishNewsDirect}
           onCancel={() => handleNavigate("news")}
         />
       )}
 
       {currentTab === "news_edit" && (
         <NewsEditView
-          initialItem={news.find((n) => n.id === editingId)}
-          onSave={handleSaveNews}
+          initialItem={mergedNews.find((n) => n.id === editingId)}
+          onSaveDraft={handleSaveNewsDraft}
+          onPublish={handlePublishNewsDirect}
           onCancel={() => handleNavigate("news")}
         />
       )}
 
       {currentTab === "jobs" && (
         <JobsListView
-          items={jobs}
+          items={mergedJobs}
           onNew={() => handleNavigate("jobs_new")}
           onEdit={(id) => handleNavigate("jobs_edit", id)}
           onDelete={handleDeleteJob}
@@ -243,15 +274,17 @@ const AdminDashboard: React.FC = () => {
 
       {currentTab === "jobs_new" && (
         <JobsEditView
-          onSave={handleSaveJob}
+          onSaveDraft={handleSaveJobDraft}
+          onPublish={handlePublishJobDirect}
           onCancel={() => handleNavigate("jobs")}
         />
       )}
 
       {currentTab === "jobs_edit" && (
         <JobsEditView
-          initialItem={jobs.find((j) => j.id === editingId)}
-          onSave={handleSaveJob}
+          initialItem={mergedJobs.find((j) => j.id === editingId)}
+          onSaveDraft={handleSaveJobDraft}
+          onPublish={handlePublishJobDirect}
           onCancel={() => handleNavigate("jobs")}
         />
       )}
@@ -263,7 +296,9 @@ export const AdminApp: React.FC = () => {
   return (
     <AuthProvider>
       <AuthGate>
-        <AdminDashboard />
+        <DraftProvider>
+          <AdminDashboard />
+        </DraftProvider>
       </AuthGate>
     </AuthProvider>
   );

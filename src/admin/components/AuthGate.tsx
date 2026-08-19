@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useAuth } from "../context/AuthContext";
+import { isFirebaseConfigured } from "../config/firebase";
 
 export const AuthGate: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { user, isAuthorized, isLoading, error, signInWithGoogle, signInWithEmail, signOut } = useAuth();
@@ -32,6 +33,17 @@ export const AuthGate: React.FC<{ children: React.ReactNode }> = ({ children }) 
 
         <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md px-4">
           <div className="bg-slate-800 py-8 px-6 shadow-2xl rounded-2xl border border-slate-700 sm:px-10 space-y-6">
+            {!isFirebaseConfigured && (
+              <div className="p-3 bg-amber-900/40 border border-amber-500/50 rounded-xl text-amber-200 text-xs space-y-1">
+                <div className="font-bold flex items-center gap-1.5">
+                  <span>⚠️</span> Firebase Configuration Missing
+                </div>
+                <p>
+                  Vite did not detect valid <code>PUBLIC_FIREBASE_*</code> keys in <code>.env</code>. Please check your <code>.env</code> file and restart the development server (<code>npm run dev</code>).
+                </p>
+              </div>
+            )}
+
             {error && (
               <div className="p-3 bg-red-900/40 border border-red-500/50 rounded-lg text-red-300 text-sm">
                 {error}

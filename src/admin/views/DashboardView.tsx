@@ -1,13 +1,23 @@
 import React from "react";
 import type { AdminTab } from "../components/AdminLayout";
+import { useDraft } from "../context/DraftContext";
 
 interface Props {
-  onNavigate: (tab: AdminTab) => void;
+  onNavigate: (tab: AdminTab, param?: string) => void;
   newsCount: number;
   jobsCount: number;
 }
 
 export const DashboardView: React.FC<Props> = ({ onNavigate, newsCount, jobsCount }) => {
+  const {
+    pendingChanges,
+    isStagingBuilding,
+    stagingUrl,
+    triggerStagingPreview,
+    publishDraftToProduction,
+    discardDraftChange,
+  } = useDraft();
+
   return (
     <div className="space-y-8">
       {/* Welcome Banner */}
@@ -20,10 +30,103 @@ export const DashboardView: React.FC<Props> = ({ onNavigate, newsCount, jobsCoun
             Welcome to CWTS Content Manager
           </h1>
           <p className="text-slate-300 text-sm leading-relaxed">
-            Manage latest news announcements and church job postings. All changes are validated with schema checks and synchronized with Firestore.
+            Draft and publish website content with full versioning, Netlify staging previews, and automated deployment pipelines.
           </p>
         </div>
       </div>
+
+      {/* Active Draft Workspace Card */}
+      {pendingChanges.length > 0 && (
+        <div className="bg-amber-950/20 border border-amber-500/40 rounded-2xl p-6 space-y-4 shadow-xl">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl bg-amber-500/20 border border-amber-500/30 flex items-center justify-center text-xl">
+                🟡
+              </div>
+              <div>
+                <h3 className="text-base font-bold text-amber-200">
+                  Active Draft Workspace ({pendingChanges.length} pending change{pendingChanges.length > 1 ? "s" : ""})
+                </h3>
+                <p className="text-xs text-amber-300/70 mt-0.5">
+                  These changes are saved in your private draft. Preview them on Netlify staging before deploying to live production.
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => triggerStagingPreview()}
+                disabled={isStagingBuilding}
+                className="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 disabled:opacity-50 text-xs font-semibold text-purple-300 border border-purple-500/30 rounded-xl transition shadow"
+              >
+                {isStagingBuilding ? "Building Staging..." : "🔍 Preview on Staging"}
+              </button>
+
+              {stagingUrl && (
+                <a
+                  href={stagingUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="px-3 py-1.5 bg-purple-900/40 hover:bg-purple-900/60 text-xs font-semibold text-purple-200 border border-purple-500/50 rounded-xl transition"
+                >
+                  Open Staging ↗
+                </a>
+              )}
+
+              <button
+                onClick={() => publishDraftToProduction()}
+                className="px-4 py-1.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-xs font-bold text-white rounded-xl shadow transition"
+              >
+                🚀 Publish Live
+              </button>
+            </div>
+          </div>
+
+          {/* Pending Changes List */}
+          <div className="divide-y divide-amber-900/40 bg-slate-950/60 rounded-xl border border-amber-500/20 overflow-hidden">
+            {pendingChanges.map((change) => (
+              <div
+                key={`${change.collection}_${change.documentId}`}
+                className="p-3 flex items-center justify-between text-xs hover:bg-slate-900/40 transition"
+              >
+                <div className="flex items-center gap-3">
+                  <span className="px-2 py-0.5 rounded bg-purple-900/40 text-purple-300 border border-purple-500/30 text-[10px] uppercase font-semibold">
+                    {change.collection}
+                  </span>
+                  <span className="text-white font-medium">
+                    {change.data?.title || change.documentId}
+                  </span>
+                  <span className="text-slate-400 font-mono text-[11px]">
+                    ({change.documentId})
+                  </span>
+                </div>
+
+                <div className="flex items-center gap-3">
+                  <span className="text-[11px] text-slate-400">
+                    Modified by {change.updatedBy.email}
+                  </span>
+                  <button
+                    onClick={() => {
+                      if (change.collection === "news") onNavigate("news_edit", change.documentId);
+                      if (change.collection === "jobs") onNavigate("jobs_edit", change.documentId);
+                    }}
+                    className="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-lg text-xs"
+                  >
+                    Edit
+                  </button>
+                  <button
+                    onClick={() => discardDraftChange(change.collection, change.documentId)}
+                    className="px-2 py-1 text-red-400 hover:text-red-300 text-xs"
+                    title="Discard change"
+                  >
+                    ✕
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* Metrics Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

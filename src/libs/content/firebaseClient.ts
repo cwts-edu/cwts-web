@@ -3,6 +3,7 @@ import type {
   ContentEntry,
   DegreesWidgetDataItem,
   StudyModeWidgetDataItem,
+  VersionRecord,
 } from "./types";
 import {
   type ContentSchemaMap,
@@ -15,60 +16,113 @@ import {
 import site from "../site";
 import { slug as slugify } from "github-slugger";
 
+export function resolveActiveDraftId(): string | undefined {
+  // 1. Explicit environment variable (Local dev, CI override)
+  if (typeof process !== "undefined" && process.env?.DRAFT_ID) {
+    return process.env.DRAFT_ID.trim();
+  }
+
+  // 2. Parsed from Netlify Build Hook payload (INCOMING_HOOK_BODY)
+  if (typeof process !== "undefined" && process.env?.INCOMING_HOOK_BODY) {
+    try {
+      const payload = JSON.parse(process.env.INCOMING_HOOK_BODY);
+      if (payload.draftId) {
+        console.log(`🎯 [Netlify Build] Staging Preview active for draft: ${payload.draftId}`);
+        return String(payload.draftId).trim();
+      }
+    } catch (e) {
+      console.warn("⚠️ Could not parse Netlify INCOMING_HOOK_BODY payload:", e);
+    }
+  }
+
+  return undefined;
+}
+
 export class FirebaseContentClient implements IContentClient {
   private projectId: string;
   private baseUrl: string;
+  private draftId?: string;
 
-  constructor(options: { projectId: string }) {
+  constructor(options: { projectId: string; draftId?: string }) {
     this.projectId = options.projectId;
     this.baseUrl = `https://firestore.googleapis.com/v1/projects/${this.projectId}/databases/(default)/documents`;
+    this.draftId = options.draftId || resolveActiveDraftId();
   }
 
+  /**
+   * Fetches canonical documents and applies draft changes overlay if draftId is active.
+   */
   async getCollection<K extends keyof ContentSchemaMap>(
     collection: K,
     filter?: (entry: ContentEntry<ContentSchemaMap[K]>) => boolean
   ): Promise<ContentEntry<ContentSchemaMap[K]>[]> {
-    const url = `${this.baseUrl}/${collection}`;
-    const response = await fetch(url);
-    if (!response.ok) {
-      if (response.status === 404) return [];
-      throw new Error(`Failed to fetch collection ${String(collection)}: ${response.statusText}`);
+    // 1. Fetch canonical published documents
+    const canonicalEntries = await this.fetchCanonicalCollection(collection);
+
+    // 2. If no staging draft is active, return canonical directly
+    if (!this.draftId) {
+      return filter ? canonicalEntries.filter(filter) : canonicalEntries;
     }
 
-    const { documents } = await response.json();
-    if (!documents) return [];
+    // 3. Fetch draft overlay changes from /drafts/{draftId}/changes
+    const draftChanges = await this.fetchDraftChanges(this.draftId, String(collection));
+
+    // 4. Merge overlay changes
+    const map = new Map<string, ContentEntry<ContentSchemaMap[K]>>(
+      canonicalEntries.map((e) => [e.id, e])
+    );
 
     const validator = SchemaValidators[collection];
-    const entries: ContentEntry<ContentSchemaMap[K]>[] = [];
 
-    for (const doc of documents) {
-      const id = doc.name.split("/").pop()!;
-      const fields = this.decodeFirestoreFields(doc.fields);
-      const parsedData = validator.parse(fields);
-
-      const entry: ContentEntry<ContentSchemaMap[K]> = {
-        id,
-        slug: fields.slug || id,
-        language: (fields.language as Language) || "zh",
-        status: fields.status || "published",
-        data: parsedData,
-        body: fields.body || "",
-        html: fields.bodyHtml || fields.html || fields.body || "",
-        updatedAt: new Date(doc.updateTime),
-      };
-
-      if (!filter || filter(entry)) {
-        entries.push(entry);
+    for (const change of draftChanges) {
+      if (change.action === "delete") {
+        map.delete(change.documentId);
+      } else {
+        const parsedData = validator.parse(change.data);
+        map.set(change.documentId, {
+          id: change.documentId,
+          slug: change.documentId,
+          language: (change.data.language as Language) || "zh",
+          status: "draft",
+          data: parsedData,
+          body: change.body || "",
+          html: change.bodyHtml || change.body || "",
+          updatedAt: new Date(change.updatedAt || Date.now()),
+        });
       }
     }
 
-    return entries;
+    const merged = Array.from(map.values());
+    return filter ? merged.filter(filter) : merged;
   }
 
+  /**
+   * Fetches single entry with draft overlay support.
+   */
   async getEntry<K extends keyof ContentSchemaMap>(
     collection: K,
     id: string
   ): Promise<ContentEntry<ContentSchemaMap[K]> | null> {
+    // 1. If draft active, check draft changes first
+    if (this.draftId) {
+      const draftChange = await this.fetchDraftChangeDoc(this.draftId, String(collection), id);
+      if (draftChange) {
+        if (draftChange.action === "delete") return null;
+        const parsedData = SchemaValidators[collection].parse(draftChange.data);
+        return {
+          id: draftChange.documentId,
+          slug: draftChange.documentId,
+          language: (draftChange.data.language as Language) || "zh",
+          status: "draft",
+          data: parsedData,
+          body: draftChange.body || "",
+          html: draftChange.bodyHtml || draftChange.body || "",
+          updatedAt: new Date(draftChange.updatedAt || Date.now()),
+        };
+      }
+    }
+
+    // 2. Fall back to canonical collection
     const url = `${this.baseUrl}/${collection}/${id}`;
     const response = await fetch(url);
     if (response.status === 404) return null;
@@ -83,10 +137,41 @@ export class FirebaseContentClient implements IContentClient {
       slug: fields.slug || id,
       language: (fields.language as Language) || "zh",
       status: fields.status || "published",
+      version: fields.version || 1,
+      publishedVersion: fields.publishedVersion || 1,
       data: parsedData,
       body: fields.body || "",
       html: fields.bodyHtml || fields.html || fields.body || "",
       updatedAt: new Date(doc.updateTime),
+    };
+  }
+
+  /**
+   * Fetches historical version snapshot from /{collection}/{id}/versions/{versionNumber}
+   */
+  async getVersion<K extends keyof ContentSchemaMap>(
+    collection: K,
+    id: string,
+    versionNumber: number
+  ): Promise<VersionRecord<ContentSchemaMap[K]> | null> {
+    const url = `${this.baseUrl}/${collection}/${id}/versions/${versionNumber}`;
+    const response = await fetch(url);
+    if (response.status === 404) return null;
+    if (!response.ok) throw new Error(`Failed to fetch version ${versionNumber} of ${String(collection)}/${id}`);
+
+    const doc = await response.json();
+    const fields = this.decodeFirestoreFields(doc.fields);
+    const parsedData = SchemaValidators[collection].parse(fields.data);
+
+    return {
+      version: fields.version,
+      status: fields.status,
+      data: parsedData,
+      body: fields.body,
+      html: fields.bodyHtml,
+      author: fields.author,
+      createdAt: fields.createdAt,
+      publishedAt: fields.publishedAt,
     };
   }
 
@@ -269,6 +354,73 @@ export class FirebaseContentClient implements IContentClient {
       return entry ? entry.data : [];
     },
   };
+
+  private async fetchCanonicalCollection<K extends keyof ContentSchemaMap>(
+    collection: K
+  ): Promise<ContentEntry<ContentSchemaMap[K]>[]> {
+    const url = `${this.baseUrl}/${collection}`;
+    const response = await fetch(url);
+    if (!response.ok) {
+      if (response.status === 404) return [];
+      throw new Error(`Failed to fetch collection ${String(collection)}: ${response.statusText}`);
+    }
+
+    const { documents } = await response.json();
+    if (!documents) return [];
+
+    const validator = SchemaValidators[collection];
+    const entries: ContentEntry<ContentSchemaMap[K]>[] = [];
+
+    for (const doc of documents) {
+      const id = doc.name.split("/").pop()!;
+      const fields = this.decodeFirestoreFields(doc.fields);
+      const parsedData = validator.parse(fields);
+
+      entries.push({
+        id,
+        slug: fields.slug || id,
+        language: (fields.language as Language) || "zh",
+        status: fields.status || "published",
+        version: fields.version || 1,
+        publishedVersion: fields.publishedVersion || 1,
+        data: parsedData,
+        body: fields.body || "",
+        html: fields.bodyHtml || fields.html || fields.body || "",
+        updatedAt: new Date(doc.updateTime),
+      });
+    }
+
+    return entries;
+  }
+
+  private async fetchDraftChanges(draftId: string, targetCollection: string): Promise<any[]> {
+    try {
+      const url = `${this.baseUrl}/drafts/${draftId}/changes`;
+      const response = await fetch(url);
+      if (!response.ok) return [];
+      const { documents } = await response.json();
+      if (!documents) return [];
+
+      return documents
+        .map((doc: any) => this.decodeFirestoreFields(doc.fields))
+        .filter((c: any) => c.collection === targetCollection);
+    } catch {
+      return [];
+    }
+  }
+
+  private async fetchDraftChangeDoc(draftId: string, targetCollection: string, docId: string): Promise<any | null> {
+    try {
+      const url = `${this.baseUrl}/drafts/${draftId}/changes/${docId}`;
+      const response = await fetch(url);
+      if (!response.ok) return null;
+      const doc = await response.json();
+      const fields = this.decodeFirestoreFields(doc.fields);
+      return fields.collection === targetCollection ? fields : null;
+    } catch {
+      return null;
+    }
+  }
 
   private decodeFirestoreFields(fields: Record<string, any>): Record<string, any> {
     const result: Record<string, any> = {};

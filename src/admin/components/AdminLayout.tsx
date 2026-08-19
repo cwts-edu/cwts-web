@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { useAuth } from "../context/AuthContext";
+import { useDraft } from "../context/DraftContext";
+import { DraftReviewModal } from "./DraftReviewModal";
 
 export type AdminTab = "dashboard" | "news" | "news_new" | "news_edit" | "jobs" | "jobs_new" | "jobs_edit";
 
@@ -11,12 +13,19 @@ interface Props {
 
 export const AdminLayout: React.FC<Props> = ({ currentTab, onNavigate, children }) => {
   const { user, signOut } = useAuth();
+  const { pendingChanges, isStagingBuilding, stagingUrl } = useDraft();
+  const [showReviewModal, setShowReviewModal] = useState(false);
 
   const isNavActive = (tab: string) => {
     if (tab === "dashboard" && currentTab === "dashboard") return true;
     if (tab === "news" && (currentTab === "news" || currentTab === "news_new" || currentTab === "news_edit")) return true;
     if (tab === "jobs" && (currentTab === "jobs" || currentTab === "jobs_new" || currentTab === "jobs_edit")) return true;
     return false;
+  };
+
+  const handleNavigateToEdit = (collection: string, docId: string) => {
+    if (collection === "news") onNavigate("news_edit", docId);
+    if (collection === "jobs") onNavigate("jobs_edit", docId);
   };
 
   return (
@@ -111,32 +120,63 @@ export const AdminLayout: React.FC<Props> = ({ currentTab, onNavigate, children 
 
       {/* Main Column */}
       <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
-        {/* Top Navbar */}
-        <header className="h-16 bg-slate-900/80 backdrop-blur border-b border-slate-800 flex items-center justify-between px-8 z-10">
+        {/* Top Header */}
+        <header className="h-16 bg-slate-900/90 backdrop-blur border-b border-slate-800 flex items-center justify-between px-8 z-10">
           <div className="flex items-center gap-3">
             <span className="text-sm font-semibold text-slate-300">
               {currentTab === "dashboard" && "Overview Dashboard"}
               {(currentTab === "news" || currentTab === "news_new" || currentTab === "news_edit") && "News Articles"}
               {(currentTab === "jobs" || currentTab === "jobs_new" || currentTab === "jobs_edit") && "Job Postings"}
             </span>
+
+            {pendingChanges.length > 0 && (
+              <button
+                onClick={() => setShowReviewModal(true)}
+                className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-amber-500/10 text-amber-300 border border-amber-500/30 hover:bg-amber-500/20 transition"
+              >
+                🟡 {pendingChanges.length} Draft Change{pendingChanges.length > 1 ? "s" : ""} Pending Review
+              </button>
+            )}
           </div>
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3">
+            {/* Direct Link to Staging Preview if available */}
+            {stagingUrl && (
+              <a
+                href={stagingUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-purple-900/40 hover:bg-purple-900/60 text-xs font-semibold text-purple-200 border border-purple-500/50 transition"
+              >
+                <span>Staging Site</span>
+                <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                </svg>
+              </a>
+            )}
+
+            {/* Site-Level Review & Release Center Button */}
+            <button
+              onClick={() => setShowReviewModal(true)}
+              className={`inline-flex items-center gap-2 px-4 py-1.5 rounded-xl text-xs font-bold transition shadow-md ${
+                pendingChanges.length > 0
+                  ? "bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white"
+                  : "bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700"
+              }`}
+            >
+              <span>📋</span>
+              Review Draft & Release {pendingChanges.length > 0 && `(${pendingChanges.length})`}
+            </button>
+
+            <div className="h-4 w-px bg-slate-800 mx-1" />
+
             <a
               href="/"
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-2 text-xs font-medium text-slate-400 hover:text-purple-300 transition"
+              className="text-xs font-medium text-slate-400 hover:text-slate-200 transition"
             >
-              <span>View Live Website</span>
-              <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-                />
-              </svg>
+              Live cwts.edu
             </a>
           </div>
         </header>
@@ -146,6 +186,13 @@ export const AdminLayout: React.FC<Props> = ({ currentTab, onNavigate, children 
           <div className="max-w-6xl mx-auto">{children}</div>
         </main>
       </div>
+
+      {/* Site-Level Draft Review & Release Modal */}
+      <DraftReviewModal
+        isOpen={showReviewModal}
+        onClose={() => setShowReviewModal(false)}
+        onNavigateToEdit={handleNavigateToEdit}
+      />
     </div>
   );
 };
