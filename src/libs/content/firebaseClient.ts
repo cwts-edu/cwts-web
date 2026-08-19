@@ -218,7 +218,11 @@ export class FirebaseContentClient implements IContentClient {
     list: async (language?: Language, limit?: number) => {
       const items = await this.getCollection("news");
       let filtered = language ? items.filter((i) => i.language === language) : items;
-      filtered.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+      filtered.sort((a, b) => {
+        const diff = b.data.date.getTime() - a.data.date.getTime();
+        if (diff !== 0) return diff;
+        return b.id.localeCompare(a.id);
+      });
       return limit ? filtered.slice(0, limit) : filtered;
     },
     getById: (id: string) => this.getEntry("news", id),
@@ -228,7 +232,11 @@ export class FirebaseContentClient implements IContentClient {
     list: async (language?: Language) => {
       const items = await this.getCollection("jobs");
       const filtered = language ? items.filter((i) => i.language === language) : items;
-      return filtered.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+      return filtered.sort((a, b) => {
+        const diff = b.data.date.getTime() - a.data.date.getTime();
+        if (diff !== 0) return diff;
+        return b.id.localeCompare(a.id);
+      });
     },
     getById: (id: string) => this.getEntry("jobs", id),
   };

@@ -29,7 +29,9 @@ export const JobsListView: React.FC<Props> = ({ items, onNew, onEdit, onDelete, 
     return [...items].sort((a, b) => {
       const dateA = new Date((a.draftData || a.data).date).getTime();
       const dateB = new Date((b.draftData || b.data).date).getTime();
-      return dateB - dateA;
+      const diff = dateB - dateA;
+      if (diff !== 0) return diff;
+      return b.id.localeCompare(a.id);
     });
   }, [items]);
 

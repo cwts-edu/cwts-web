@@ -131,7 +131,11 @@ export class AstroContentClient implements IContentClient {
     list: async (language?: Language, limit?: number) => {
       const all = await this.getCollection("news");
       let filtered = language ? all.filter((n) => n.language === language) : all;
-      filtered.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+      filtered.sort((a, b) => {
+        const diff = b.data.date.getTime() - a.data.date.getTime();
+        if (diff !== 0) return diff;
+        return b.id.localeCompare(a.id);
+      });
       return limit ? filtered.slice(0, limit) : filtered;
     },
     getById: async (id: string) => {
