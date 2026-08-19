@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useDraft, type DraftChangeItem } from "../context/DraftContext";
+import { useDraft } from "../context/DraftContext";
 
 interface Props {
   isOpen: boolean;
@@ -9,11 +9,13 @@ interface Props {
 
 export const DraftReviewModal: React.FC<Props> = ({ isOpen, onClose, onNavigateToEdit }) => {
   const {
-    activeDraftId,
     draftDescription,
     setDraftDescription,
     pendingChanges,
     isStagingBuilding,
+    stagingBuildCountdown,
+    isProdDeploying,
+    prodDeployCountdown,
     stagingUrl,
     triggerStagingPreview,
     publishDraftToProduction,
@@ -22,33 +24,48 @@ export const DraftReviewModal: React.FC<Props> = ({ isOpen, onClose, onNavigateT
   } = useDraft();
 
   const [isPublishing, setIsPublishing] = useState(false);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   if (!isOpen) return null;
 
   const handlePreview = async () => {
     setErrorMessage(null);
+    setSuccessMessage(null);
     try {
-      await triggerStagingPreview();
+      const res = await triggerStagingPreview();
+      if (!res.success) {
+        setErrorMessage(res.message);
+      }
     } catch (err: any) {
-      setErrorMessage(err.message || "Failed to trigger staging preview");
+      setErrorMessage(err.message || "Failed to trigger staging build");
     }
   };
 
   const handlePublish = async () => {
     if (!draftDescription.trim()) {
-      setErrorMessage("Please enter a brief description for this release (e.g. 'August Newsletter and Pastor Job opening').");
+      setErrorMessage("Please enter a short release description before publishing.");
+      return;
+    }
+
+    if (
+      !confirm(
+        `Are you sure you want to publish ${pendingChanges.length} changes to production?\n\nThis will trigger a live production build.`
+      )
+    ) {
       return;
     }
 
     setErrorMessage(null);
+    setSuccessMessage(null);
     setIsPublishing(true);
+
     try {
-      const result = await publishDraftToProduction();
-      if (!result.success) {
-        setErrorMessage(result.message);
+      const res = await publishDraftToProduction();
+      if (res.success) {
+        setSuccessMessage("Release published successfully! Netlify production build is in progress.");
       } else {
-        onClose();
+        setErrorMessage(res.message);
       }
     } catch (err: any) {
       setErrorMessage(err.message || "Failed to publish release");
@@ -58,35 +75,40 @@ export const DraftReviewModal: React.FC<Props> = ({ isOpen, onClose, onNavigateT
   };
 
   const handleDiscardAll = async () => {
-    if (confirm("Are you sure you want to discard ALL pending changes in this draft workspace? This cannot be undone.")) {
+    if (confirm("Are you sure you want to discard ALL changes in your draft workspace?")) {
       await discardEntireDraft();
       onClose();
     }
   };
 
   return (
-    <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 flex items-center justify-center p-4">
-      <div className="bg-slate-900 border border-slate-800 rounded-3xl max-w-2xl w-full p-6 sm:p-8 space-y-6 shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md">
+      <div className="bg-slate-900 border border-slate-700/80 rounded-3xl p-6 sm:p-8 max-w-2xl w-full max-h-[90vh] flex flex-col shadow-2xl space-y-6">
         {/* Header */}
         <div className="flex items-center justify-between border-b border-slate-800 pb-4 shrink-0">
-          <div>
-            <div className="flex items-center gap-2">
-              <span className="text-xl">📋</span>
-              <h2 className="text-xl font-bold text-white tracking-tight">
-                Draft Review & Release Center
-              </h2>
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-purple-600 to-indigo-600 flex items-center justify-center text-xl shadow-lg">
+              🚀
             </div>
-            <p className="text-xs text-slate-400 mt-1">
-              Review all accumulated site changes, provide a release note, and preview or publish.
-            </p>
+            <div>
+              <h2 className="text-lg font-bold text-white">Draft Workspace & Release Center</h2>
+              <p className="text-xs text-slate-400">Review pending changes before previewing or publishing.</p>
+            </div>
           </div>
           <button
             onClick={onClose}
-            className="w-8 h-8 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-300 flex items-center justify-center text-xs transition"
+            className="w-8 h-8 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white flex items-center justify-center transition text-sm"
           >
             ✕
           </button>
         </div>
+
+        {/* Feedback Alerts */}
+        {successMessage && (
+          <div className="p-3 bg-emerald-900/40 border border-emerald-500/50 rounded-xl text-emerald-300 text-xs shrink-0">
+            {successMessage}
+          </div>
+        )}
 
         {errorMessage && (
           <div className="p-3 bg-red-900/40 border border-red-500/50 rounded-xl text-red-300 text-xs shrink-0">
@@ -113,6 +135,54 @@ export const DraftReviewModal: React.FC<Props> = ({ isOpen, onClose, onNavigateT
               This summary is saved into the immutable release log and displayed in the Netlify build audit.
             </p>
           </div>
+
+          {/* Staging Build Progress Countdown Bar */}
+          {stagingBuildCountdown !== null && (
+            <div className="p-4 bg-purple-950/40 border border-purple-500/50 rounded-2xl space-y-2.5">
+              <div className="flex items-center justify-between text-xs">
+                <span className="font-bold text-purple-200 flex items-center gap-2">
+                  <span className="w-2.5 h-2.5 rounded-full bg-purple-400 animate-ping inline-block" />
+                  Building Staging Preview on Netlify...
+                </span>
+                <span className="font-mono font-bold text-purple-300">
+                  {stagingBuildCountdown}s remaining
+                </span>
+              </div>
+              <div className="w-full bg-slate-950 rounded-full h-2.5 overflow-hidden border border-purple-500/30">
+                <div
+                  className="bg-gradient-to-r from-purple-500 via-indigo-400 to-purple-400 h-full transition-all duration-1000 ease-linear rounded-full"
+                  style={{ width: `${Math.round(((45 - stagingBuildCountdown) / 45) * 100)}%` }}
+                />
+              </div>
+              <p className="text-[11px] text-purple-300/70">
+                Netlify is generating static pages with your private draft overlay. The preview link will activate automatically in {stagingBuildCountdown}s.
+              </p>
+            </div>
+          )}
+
+          {/* Production Deploy Progress Countdown Bar */}
+          {prodDeployCountdown !== null && (
+            <div className="p-4 bg-emerald-950/40 border border-emerald-500/50 rounded-2xl space-y-2.5">
+              <div className="flex items-center justify-between text-xs">
+                <span className="font-bold text-emerald-200 flex items-center gap-2">
+                  <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping inline-block" />
+                  Deploying to Live Production on Netlify...
+                </span>
+                <span className="font-mono font-bold text-emerald-300">
+                  {prodDeployCountdown}s remaining
+                </span>
+              </div>
+              <div className="w-full bg-slate-950 rounded-full h-2.5 overflow-hidden border border-emerald-500/30">
+                <div
+                  className="bg-gradient-to-r from-emerald-500 via-teal-400 to-emerald-400 h-full transition-all duration-1000 ease-linear rounded-full"
+                  style={{ width: `${Math.round(((45 - prodDeployCountdown) / 45) * 100)}%` }}
+                />
+              </div>
+              <p className="text-[11px] text-emerald-300/70">
+                Netlify is building and deploying live production static pages.
+              </p>
+            </div>
+          )}
 
           {/* Accumulated Changes List */}
           <div className="space-y-3">
@@ -169,7 +239,7 @@ export const DraftReviewModal: React.FC<Props> = ({ isOpen, onClose, onNavigateT
                     </div>
 
                     <div className="flex items-center gap-2 shrink-0">
-                      {onNavigateToEdit && (
+                      {onNavigateToEdit && change.action !== "delete" && (
                         <button
                           type="button"
                           onClick={() => {
@@ -241,7 +311,7 @@ export const DraftReviewModal: React.FC<Props> = ({ isOpen, onClose, onNavigateT
               {isStagingBuilding ? (
                 <>
                   <div className="w-3 h-3 border-2 border-purple-400 border-t-transparent rounded-full animate-spin" />
-                  Building Staging...
+                  Building ({stagingBuildCountdown ?? 45}s)...
                 </>
               ) : (
                 <>
@@ -254,14 +324,14 @@ export const DraftReviewModal: React.FC<Props> = ({ isOpen, onClose, onNavigateT
             {/* 2. Publish to Production */}
             <button
               type="button"
-              disabled={isPublishing || pendingChanges.length === 0}
+              disabled={isPublishing || isProdDeploying || pendingChanges.length === 0}
               onClick={handlePublish}
               className="py-2.5 px-6 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 disabled:opacity-40 text-xs font-bold text-white rounded-xl shadow-lg transition flex items-center gap-2"
             >
-              {isPublishing ? (
+              {isPublishing || isProdDeploying ? (
                 <>
                   <div className="w-3 h-3 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                  Publishing...
+                  Deploying ({prodDeployCountdown ?? 45}s)...
                 </>
               ) : (
                 <>

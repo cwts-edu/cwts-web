@@ -45,6 +45,9 @@ interface DraftContextValue {
   pendingChanges: DraftChangeItem[];
   isLoadingDraft: boolean;
   isStagingBuilding: boolean;
+  stagingBuildCountdown: number | null;
+  isProdDeploying: boolean;
+  prodDeployCountdown: number | null;
   stagingUrl: string | null;
   statusMessage: string | null;
   saveChangeToDraft: (
@@ -68,7 +71,13 @@ export const DraftProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const [draftDescription, setDraftDescription] = useState<string>("");
   const [pendingChanges, setPendingChanges] = useState<DraftChangeItem[]>([]);
   const [isLoadingDraft, setIsLoadingDraft] = useState<boolean>(true);
+  
   const [isStagingBuilding, setIsStagingBuilding] = useState<boolean>(false);
+  const [stagingBuildCountdown, setStagingBuildCountdown] = useState<number | null>(null);
+
+  const [isProdDeploying, setIsProdDeploying] = useState<boolean>(false);
+  const [prodDeployCountdown, setProdDeployCountdown] = useState<number | null>(null);
+
   const [stagingUrl, setStagingUrl] = useState<string | null>(null);
   const [statusMessage, setStatusMessage] = useState<string | null>(null);
 
@@ -102,7 +111,7 @@ export const DraftProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         items.push({
           id: d.id,
           collection: val.collection,
-          documentId: val.documentId || d.id,
+          documentId: val.documentId,
           action: val.action || "update",
           data: val.data,
           body: val.body,
@@ -111,18 +120,19 @@ export const DraftProvider: React.FC<{ children: React.ReactNode }> = ({ childre
           updatedAt: val.updatedAt,
         });
       });
+
       setPendingChanges(items);
     } catch (err) {
-      console.warn("Could not load draft changes from Firestore:", err);
+      console.warn("Could not load draft workspace from Firestore:", err);
     } finally {
       setIsLoadingDraft(false);
     }
   };
 
   const getAuditUser = (): AuditUser => ({
-    uid: user?.uid || "admin",
-    email: user?.email || "admin@cwts.edu",
-    displayName: user?.displayName || user?.email || "CWTS Editor",
+    uid: user?.uid || "anonymous",
+    email: user?.email || "unknown@cwts.edu",
+    displayName: user?.displayName || user?.email || "CWTS Admin",
     photoURL: user?.photoURL || undefined,
     timestamp: new Date().toISOString(),
   });
@@ -136,7 +146,7 @@ export const DraftProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   ) => {
     const audit = getAuditUser();
     const changeItem: DraftChangeItem = {
-      id: docId,
+      id: `${coll}_${docId}`,
       collection: coll,
       documentId: docId,
       action,
@@ -207,6 +217,7 @@ export const DraftProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
   const triggerStagingPreview = async (): Promise<DeployTriggerResult> => {
     setIsStagingBuilding(true);
+    setStagingBuildCountdown(45);
     setStatusMessage("Triggering Netlify staging deploy preview...");
 
     const audit = getAuditUser();
@@ -222,11 +233,25 @@ export const DraftProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
     const result = await triggerNetlifyStagingPreview(activeDraftId, audit.email);
 
-    setIsStagingBuilding(false);
-    if (result.success && result.stagingUrl) {
-      setStagingUrl(result.stagingUrl);
-      setStatusMessage("Staging Preview Ready!");
+    if (result.success) {
+      // 45-second timed progress countdown for Netlify build completion
+      let count = 45;
+      const interval = setInterval(() => {
+        count -= 1;
+        if (count <= 0) {
+          clearInterval(interval);
+          setStagingBuildCountdown(null);
+          setIsStagingBuilding(false);
+          setStagingUrl(result.stagingUrl || "https://cwts-staging.netlify.app");
+          setStatusMessage("Staging Preview Ready!");
+        } else {
+          setStagingBuildCountdown(count);
+          setStatusMessage(`Building Staging Preview (${count}s remaining)...`);
+        }
+      }, 1000);
     } else {
+      setIsStagingBuilding(false);
+      setStagingBuildCountdown(null);
       setStatusMessage(result.message);
     }
 
@@ -237,6 +262,8 @@ export const DraftProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     const audit = getAuditUser();
     const releaseId = `rel_${Date.now()}`;
     setStatusMessage("Publishing changes to production...");
+    setIsProdDeploying(true);
+    setProdDeployCountdown(45);
 
     try {
       const batch = writeBatch(db);
@@ -341,10 +368,24 @@ export const DraftProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     // 4. Trigger Netlify Production Build Hook
     const deployResult = await triggerNetlifyProductionDeploy(releaseId, audit.email);
 
+    // Timed countdown for production deployment
+    let count = 45;
+    const interval = setInterval(() => {
+      count -= 1;
+      if (count <= 0) {
+        clearInterval(interval);
+        setProdDeployCountdown(null);
+        setIsProdDeploying(false);
+        setStatusMessage("Successfully deployed to live production!");
+      } else {
+        setProdDeployCountdown(count);
+        setStatusMessage(`Deploying to live production (${count}s remaining)...`);
+      }
+    }, 1000);
+
     setPendingChanges([]);
     setDraftDescription("");
     setStagingUrl(null);
-    setStatusMessage("Successfully published to production!");
 
     return deployResult;
   };
@@ -358,6 +399,9 @@ export const DraftProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         pendingChanges,
         isLoadingDraft,
         isStagingBuilding,
+        stagingBuildCountdown,
+        isProdDeploying,
+        prodDeployCountdown,
         stagingUrl,
         statusMessage,
         saveChangeToDraft,
