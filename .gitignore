@@ -22,3 +22,6 @@ pnpm-debug.log*
 
 # Do not checkin original assets because they are usually quite large
 assets-original/
+
+# Generated fixtures
+data-fixtures/
