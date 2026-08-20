@@ -111,9 +111,16 @@ function scanTextForNewsOrJobPaths(text: string, outputSet: Set<string>) {
 async function collectReferencedNewsAndJobsAssets(): Promise<Set<string>> {
   const referenced = new Set<string>();
 
+  const activeDraftId = resolveActiveDraftId();
+  if (activeDraftId) {
+    console.log(`✨ [Sync Assets] Draft overlay ACTIVE: '${activeDraftId}' (Syncing draft media references)`);
+  } else {
+    console.log(`🚀 [Sync Assets] Production build: syncing published canonical media references`);
+  }
+
   const client = new FirebaseContentClient({
     projectId: process.env.PUBLIC_FIREBASE_PROJECT_ID || process.env.FIREBASE_PROJECT_ID || "cwts-cms",
-    draftId: resolveActiveDraftId(),
+    draftId: activeDraftId,
   });
 
   try {

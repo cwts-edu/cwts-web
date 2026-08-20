@@ -93,6 +93,11 @@ export class FirebaseContentClient implements IContentClient {
 
     // 3. Fetch draft overlay changes from /drafts/{draftId}/changes
     const draftChanges = await this.fetchDraftChanges(this.draftId, String(collection));
+    if (draftChanges.length > 0) {
+      console.log(
+        `✨ [Draft Build] Applied ${draftChanges.length} draft change(s) for collection '${collection}' from draft '${this.draftId}'`
+      );
+    }
 
     // 4. Merge overlay changes
     const map = new Map<string, ContentEntry<ContentSchemaMap[K]>>(
@@ -135,6 +140,7 @@ export class FirebaseContentClient implements IContentClient {
       const draftChange = await this.fetchDraftChangeDoc(this.draftId, String(collection), id);
       if (draftChange) {
         if (draftChange.action === "delete") return null;
+        console.log(`✨ [Draft Build] Applied draft entry overlay for '${String(collection)}/${id}'`);
         const parsedData = SchemaValidators[collection].parse(draftChange.data);
         return {
           id: draftChange.documentId || id,
