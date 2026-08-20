@@ -178,6 +178,32 @@ export async function syncAssets() {
     console.log(`   - ${p}`);
   }
 
+  const isDummyMode =
+    process.env.DUMMY_ASSETS === "true" ||
+    process.env.SYNC_ASSETS_MODE === "dummy" ||
+    process.env.MOCK_ASSETS === "true";
+
+  if (isDummyMode) {
+    console.log(
+      `⚡ [Dummy Assets Mode] Creating placeholder files for ${referencedPaths.size} referenced assets (0 network egress / 0 storage downloads)...`
+    );
+    let createdCount = 0;
+    for (const storagePath of referencedPaths) {
+      const distPath = path.join(DIST_DIR, storagePath);
+      if (!fs.existsSync(distPath)) {
+        ensureDirectoryExistence(distPath);
+        fs.writeFileSync(distPath, "");
+        createdCount++;
+      }
+    }
+    // Gracefully terminate Firestore connection channel
+    await terminate(db).catch(() => {});
+    console.log(
+      `✅ [Dummy Assets Mode] Successfully ensured ${referencedPaths.size} placeholder assets in dist/ (${createdCount} created, 0 downloads).\n`
+    );
+    return;
+  }
+
   let downloadedCount = 0;
   let cachedCount = 0;
   const failedAssets: Array<{ path: string; error: string; code?: string }> = [];
