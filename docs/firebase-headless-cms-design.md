@@ -1,8 +1,8 @@
 # Headless CMS Architecture & Progressive Migration Design Document
 
 **Project:** Christian Witness Theological Seminary (CWTS) Website  
-**Topic:** Headless CMS on Firebase Free Tier (Spark Plan), Unified Admin Webapp (`cwts.edu/admin`), Direct Content Interface, Draft Workspaces, Netlify Staging Preview, Immutable Version History & Production Release Pipeline  
-**Target Environments:** Local Development + Netlify CI/CD + Firebase Spark Plan + Cloudflare Edge  
+**Topic:** Headless CMS on Firebase Blaze Plan (Operating 100% Within Included No-Cost Quotas), Unified Admin Webapp (`cwts.edu/admin`), Direct Content Interface, Media Library & In-Browser Cropper, Draft Workspaces, Netlify Staging Preview, Immutable Version History & Production Release Pipeline  
+**Target Environments:** Local Development + Netlify CI/CD + Firebase Blaze Plan + Cloudflare Edge  
 **Date:** August 2026  
 **Status:** Implemented Architectural Specification  
 
@@ -18,13 +18,14 @@ This document details the architectural design for the CWTS website's **Firebase
 3. **Direct Content Interface (`@libs/content`):** The entire site code consumes content exclusively via a strongly-typed `IContentClient` interface (`content.news.list()`, `content.pages.getBySlug()`), completely isolated from `astro:content`.
 4. **Pluggable & Hybrid Backends:** The underlying implementation is swappable (`FirebaseContentClient`, `AstroContentClient`, `HybridContentClient`), enabling safe, zero-risk progressive canary migrations (`news` and `jobs` first).
 5. **Stable Document Identity & In-Place Mutation:** Documents are permanently identified by their immutable `id`. Title or metadata edits modify the canonical document in-place rather than mutating the document ID. New items are automatically assigned `Date + Timestamp` identifiers (`${dateStr}-${Date.now().toString(36)}`), completely eliminating manual identifier inputs from the UI.
-6. **Draft Workspaces & Accumulated Changes:** All edits made by an editor accumulate within a private Draft Workspace. Unfinished drafts do not affect the live website.
-7. **Draft-Based Soft Deletion & Non-Destructive Versioning:** Deleting an item in the CMS registers an `action: "delete"` in the draft workspace with an instant **Undo Delete** action. Upon production publishing, the canonical document is soft-deleted (`status: "deleted"`) and an immutable snapshot version (`status: "deleted"`) is archived. Content queries automatically filter out soft-deleted items while preserving the complete audit history.
-8. **Netlify Staging Deploy Preview & Progress Countdown:** A **"Preview"** action in the CMS triggers a Netlify Staging Build with the `DRAFT_ID`. Netlify overlays the draft changes onto canonical data, giving the editor a real, shareable staging URL to review before going live.
-9. **Immutable Published Version History & Rollbacks:** Every published release automatically creates an immutable snapshot (`/{collection}/{id}/versions/{versionNumber}`). Editors can inspect past versions and restore form inputs or roll back releases in one click.
-10. **Full HTML5 Browser History & Deep-Linking:** The Admin SPA utilizes the HTML5 History API (`pushState`, `popstate`) and maps to static Astro subroutes (`/admin/news`, `/admin/jobs/new`, `/admin/news/edit?id=...`), supporting browser Back/Forward navigation and bookmarked URLs.
-11. **Cross-Build Asset Caching:** Persistent ETag/MD5 metadata cache (`.cache/cwts-assets/`) on Local and Netlify CI/CD builds, guaranteeing **sub-second builds and near-zero Firebase Storage egress (100% within the Spark Free Tier).**
-12. **Zero-Compute Free Tier (Spark Plan):** In-browser client-side Web Workers, Canvas, and PDF.js perform all image resizing and PDF cover rendering prior to upload.
+6. **Centralized Media Library & In-Browser Processing:** All media assets (images, PDFs, covers) are managed in Firebase Storage. An interactive in-browser canvas editor provides real-time cropping, zooming, and dimension enforcement (e.g. 400×220 news thumbnails) with zero backend compute requirements.
+7. **Draft Workspaces & Accumulated Changes:** All edits made by an editor accumulate within a private Draft Workspace. Unfinished drafts do not affect the live website.
+8. **Draft-Based Soft Deletion & Non-Destructive Versioning:** Deleting an item in the CMS registers an `action: "delete"` in the draft workspace with an instant **Undo Delete** action. Upon production publishing, the canonical document is soft-deleted (`status: "deleted"`) and an immutable snapshot version (`status: "deleted"`) is archived. Content queries automatically filter out soft-deleted items while preserving the complete audit history.
+9. **Netlify Staging Deploy Preview & Progress Countdown:** A **"Preview"** action in the CMS triggers a Netlify Staging Build with the `DRAFT_ID`. Netlify overlays the draft changes onto canonical data, giving the editor a real, shareable staging URL to review before going live.
+10. **Immutable Published Version History & Rollbacks:** Every published release automatically creates an immutable snapshot (`/{collection}/{id}/versions/{versionNumber}`). Editors can inspect past versions and restore form inputs or roll back releases in one click.
+11. **Full HTML5 Browser History & Deep-Linking:** The Admin SPA utilizes the HTML5 History API (`pushState`, `popstate`) and maps to static Astro subroutes (`/admin/news`, `/admin/jobs/new`, `/admin/media`, `/admin/news/edit?id=...`), supporting browser Back/Forward navigation and bookmarked URLs.
+12. **Cross-Build Asset Caching & Netlify Plugin:** Persistent ETag/MD5 metadata cache (`.cache/cwts-assets/`) restored across builds via a custom Netlify Build Plugin (`plugins/netlify-plugin-cwts-cache`), guaranteeing **sub-second builds and near-zero Firebase Storage egress (100% within the Blaze Plan no-cost quota).**
+13. **Zero-Compute Architecture (Blaze Plan No-Cost Quota):** Firebase Cloud Storage requires a linked billing account (Blaze Plan). By performing all image resizing and cropping directly in-browser using HTML5 Canvas & Web Workers and leveraging Netlify build caching, the application operates entirely within Firebase's included free quotas ($0.00/month).
 
 ---
 
@@ -34,22 +35,26 @@ This document details the architectural design for the CWTS website's **Firebase
 flowchart TD
     subgraph ADMIN_PORTAL ["Admin CMS Webapp (cwts.edu/admin)"]
         AUTH["Whitelist Auth Guard<br/>(@cwts.edu & Admins)"]
-        ROUTER["HTML5 History Router<br/>(/admin/news, /admin/jobs)"]
+        ROUTER["HTML5 History Router<br/>(/admin/news, /admin/jobs, /admin/media)"]
         FORMS["Zod Schema-Validated Editors<br/>(Auto Date+Timestamp ID)"]
+        CROPPER["In-Browser Image Cropper<br/>(Canvas 400x220 Aspect Lock)"]
+        MEDIA_PICKER["Media Picker & Field Modal<br/>(Browse, Upload, Select)"]
         DRAFT_WS["Accumulated Draft Workspace<br/>(Create, Update, Soft-Delete)"]
         HISTORY["Version History & Rollback UI<br/>(v1, v2, v3... Revert to Draft)"]
     end
 
-    subgraph FIRESTORE_DATABASE ["Cloud Firestore (Default DB)"]
-        CANONICAL["Canonical Published Collections<br/>/news, /jobs, /faculty, /pages<br/>(status: published | deleted)"]
+    subgraph FIREBASE_SERVICES ["Firebase Backend (Blaze Plan - $0 Within Free Quotas)"]
+        CANONICAL["Canonical Firestore Collections<br/>/news, /jobs, /faculty, /pages<br/>(status: published | deleted)"]
         VERSIONS["Immutable Version Snapshots<br/>/{collection}/{id}/versions/{v}"]
         DRAFTS["Draft Workspaces<br/>/drafts/{draftId}/changes/{docId}"]
         RELEASES["Release History Audit<br/>/releases/{releaseId}"]
+        STORAGE["Firebase Cloud Storage<br/>images/news/, docs/jobs/, images/covers/"]
     end
 
     subgraph NETLIFY_BUILDS ["Netlify CI / CD Pipelines"]
-        STAGING_BUILD["Netlify Staging / Deploy Preview<br/>(DRAFT_ID=draft_xxx)"]
-        PROD_BUILD["Netlify Production Build<br/>(DRAFT_ID=null)"]
+        CACHE_PLUGIN["Netlify Cache Plugin<br/>(Restore .cache/cwts-assets/)"]
+        SSG_BUILD["Astro Static Site Generator<br/>(HybridContentClient)"]
+        SYNC_ASSETS["Selective Media Asset Sync<br/>(Download Referenced Only)"]
     end
 
     subgraph SITES ["Target Environments"]
@@ -58,21 +63,27 @@ flowchart TD
     end
 
     AUTH --> ROUTER
-    ROUTER --> FORMS
+    ROUTER --> FORMS & MEDIA_PICKER
+    FORMS --> CROPPER
+    CROPPER -->|Upload Clean Blob| STORAGE
+    MEDIA_PICKER -->|Select File Path| FORMS
     FORMS -->|1. Save Edits / Soft Delete| DRAFT_WS
     DRAFT_WS -->|Save Pending Changes| DRAFTS
 
-    DRAFT_WS -->|2. Click 'Preview'| STAGING_BUILD
-    DRAFTS & CANONICAL -->|Overlay Draft onto Canonical| STAGING_BUILD
-    STAGING_BUILD --> STAGING_SITE
+    DRAFT_WS -->|2. Click 'Preview'| SSG_BUILD
+    DRAFTS & CANONICAL -->|Overlay Draft onto Canonical| SSG_BUILD
+    CACHE_PLUGIN -->|Restore Disk Cache| SYNC_ASSETS
+    STORAGE -->|Download Cache Misses| SYNC_ASSETS
+    SYNC_ASSETS -->|Copy into dist/| SSG_BUILD
+    SSG_BUILD --> STAGING_SITE
     STAGING_SITE -.->|Visual Review / Feedback| ADMIN_PORTAL
 
     DRAFT_WS -->|3. Click 'Publish'| CANONICAL
     CANONICAL -->|Snapshot Published / Deleted State| VERSIONS
     CANONICAL -->|Log Release Audit| RELEASES
-    DRAFT_WS -->|Trigger Production Webhook| PROD_BUILD
-    CANONICAL -->|Build Static HTML (Filter Deleted)| PROD_BUILD
-    PROD_BUILD --> PROD_SITE
+    DRAFT_WS -->|Trigger Production Webhook| SSG_BUILD
+    CANONICAL -->|Build Static HTML (Filter Deleted)| SSG_BUILD
+    SSG_BUILD --> PROD_SITE
 
     VERSIONS -->|Restore Snapshot to Form| DRAFT_WS
 ```
@@ -86,6 +97,11 @@ The Admin Webapp lives inside `src/admin/` and is statically pre-rendered by Ast
 ### 3.1 Directory Layout
 ```
 cwts-web/
+├── netlify.toml                    # Netlify build config & cache plugin registration
+├── plugins/
+│   └── netlify-plugin-cwts-cache/  # Custom Netlify cache plugin for .cache/cwts-assets
+│       ├── index.js                # onPreBuild / onPostBuild cache save & restore
+│       └── manifest.yml            # Plugin manifest
 ├── public/
 │   ├── _redirects                  # Netlify redirect: /admin/* -> /admin/index.html 200
 │   └── favicon.svg
@@ -95,9 +111,14 @@ cwts-web/
 │   │   ├── components/
 │   │   │   ├── AdminLayout.tsx     # Admin Header, Sidebar, Navigation
 │   │   │   ├── AuthGate.tsx        # Whitelist Access Guard & Login Modal
-│   │   │   └── DraftReviewModal.tsx # Release Center & Deployment Progress Bar
+│   │   │   ├── DraftReviewModal.tsx # Release Center & Deployment Progress Bar
+│   │   │   └── media/
+│   │   │       ├── ImageCropperModal.tsx # Interactive aspect-ratio image cropper
+│   │   │       ├── MediaField.tsx        # Form field with preview & picker trigger
+│   │   │       └── MediaPickerModal.tsx  # Asset library selector with upload/crop
 │   │   ├── config/
-│   │   │   ├── firebase.ts         # Firebase Client SDK
+│   │   │   ├── firebase.ts         # Firebase Client SDK & Auth/Storage initialization
+│   │   │   ├── mediaCollections.ts # Configurable media folders & dimension registry
 │   │   │   └── whitelist.ts        # Admin Email Whitelist Service
 │   │   ├── context/
 │   │   │   ├── AuthContext.tsx     # User & Whitelist Auth Context
@@ -106,19 +127,23 @@ cwts-web/
 │   │   │   └── initialContent.ts   # Tracked TypeScript Initial Content Fixtures
 │   │   ├── services/
 │   │   │   ├── netlifyDeploy.ts    # Staging Preview & Production Hook Triggers
-│   │   │   └── seedDatabase.ts     # In-Browser Firestore Initial Seeding Service
+│   │   │   ├── seedDatabase.ts     # In-Browser Firestore & Storage Seeding Service
+│   │   │   └── storageService.ts   # Firebase Storage upload, list, delete & preview URLs
+│   │   ├── utils/
+│   │   │   └── dateUtils.ts        # formatSafeDate utility supporting Firestore Timestamps
 │   │   └── views/
 │   │       ├── DashboardView.tsx   # Overview, One-Click Seeding & Release Center
-│   │       ├── NewsListView.tsx    # News Table (Soft Delete & Undo)
-│   │       ├── NewsEditView.tsx    # News Editor (Auto-ID, Draft Save, History)
-│   │       ├── JobsListView.tsx    # Jobs Table (Soft Delete & Undo)
-│   │       └── JobsEditView.tsx    # Jobs Editor (Auto-ID, PDF Support, History)
+│   │       ├── MediaLibraryView.tsx # Standalone Media Explorer (/admin/media)
+│   │       ├── NewsListView.tsx    # News Table (Thumbnail preview, Soft Delete & Undo)
+│   │       ├── NewsEditView.tsx    # News Editor (Auto-ID, MediaField, Draft Save)
+│   │       ├── JobsListView.tsx    # Jobs Table (PDF badges, Soft Delete & Undo)
+│   │       └── JobsEditView.tsx    # Jobs Editor (Auto-ID, PDF MediaField, Draft Save)
 │   ├── libs/
 │   │   └── content/                # SHARED DOMAIN LAYER
 │   │       ├── schemas.ts          # Shared Zod Schemas & TypeScript Types
 │   │       ├── constants.ts        # Shared Dimensions, Image Specs, Locales
 │   │       ├── types.ts            # IContentClient Contract (with ContentStatus & AuditUser)
-│   │       ├── firebaseClient.ts   # Firestore Client with Draft Overlay & Soft Delete Filter
+│   │       ├── firebaseClient.ts   # Firestore Client with Draft Overlay & Auto-Discovery
 │   │       ├── astroClient.ts      # Local Fallback Client
 │   │       ├── hybridClient.ts     # Progressive Migration Router
 │   │       └── index.ts            # Master Content Singleton Export
@@ -127,28 +152,203 @@ cwts-web/
 │       │   └── [...app].astro      # Astro Mount Point for Admin SPA Subroutes
 │       ├── index.astro
 │       └── [language]/[...slug].astro
-├── netlify.toml
-└── package.json
+└── tools/
+    ├── loadEnv.ts                  # Shared CLI environment loader (.env, .env.production)
+    ├── seed-firestore.ts           # CLI tool to seed Firestore collections
+    ├── seed-storage.ts             # CLI tool to seed Firebase Storage binary assets
+    ├── sync-assets.ts              # Build-time selective media asset sync with cache
+    └── verify-build.ts             # Integrity and broken-link verification suite
 ```
 
 ### 3.2 URL Routing & History Sync
 | URL Path | CMS View | Description |
 | :--- | :--- | :--- |
-| `/admin` or `/admin/dashboard` | `DashboardView` | Overview statistics, active draft summary, and database seeding |
-| `/admin/news` | `NewsListView` | News articles table sorted newest first |
-| `/admin/news/new` | `NewsEditView` | Create news article (auto-generates `YYYY-MM-DD-timestamp` ID) |
-| `/admin/news/edit?id={id}` | `NewsEditView` | Edit existing news article (locks permanent document ID) |
-| `/admin/jobs` | `JobsListView` | Church job board postings with soft delete support |
-| `/admin/jobs/new` | `JobsEditView` | Create job posting (auto-generates `YYYY-MM-DD-timestamp` ID) |
-| `/admin/jobs/edit?id={id}` | `JobsEditView` | Edit existing job posting (locks permanent document ID) |
+| `/admin` or `/admin/dashboard` | `DashboardView` | Overview statistics, active draft summary, and database/storage seeding |
+| `/admin/media` | `MediaLibraryView` | Standalone Media Library explorer with collection tabs, crop upload, and preview |
+| `/admin/news` | `NewsListView` | News articles table sorted newest first with thumbnail preview images |
+| `/admin/news/new` | `NewsEditView` | Create news article (auto-generates `YYYY-MM-DD-timestamp` ID, 400×220 cropper) |
+| `/admin/news/edit?id={id}` | `NewsEditView` | Edit existing news article (locks permanent document ID, crop/picker) |
+| `/admin/jobs` | `JobsListView` | Church job board postings with PDF badges and soft delete support |
+| `/admin/jobs/new` | `JobsEditView` | Create job posting (auto-generates `YYYY-MM-DD-timestamp` ID, PDF picker) |
+| `/admin/jobs/edit?id={id}` | `JobsEditView` | Edit existing job posting (locks permanent document ID, PDF picker) |
 
 ---
 
-## 4. Shared Schema Registry & Type System
+## 4. Media Library, In-Browser Cropper & Asset Management
+
+Media files are separated from git tracking and managed directly via Firebase Cloud Storage (Blaze Plan). All image processing occurs on the client's browser with zero backend compute invocations, operating 100% within the monthly no-cost quotas.
+
+```mermaid
+flowchart LR
+    subgraph USER_BROWSER ["Client Browser (/admin)"]
+        INPUT["User File Input / Drop"]
+        CROPPER["ImageCropperModal<br/>(Pan, Zoom, 200:110 Aspect Lock)"]
+        CANVAS["HTML5 Canvas<br/>(Bicubic Downsampling to 400x220)"]
+        BLOB["Compressed Blob (image/jpeg)"]
+    end
+
+    subgraph STORAGE_SERVICE ["Storage Service & Firebase Storage"]
+        SVC["storageService.uploadMediaFile()"]
+        FSTORAGE["Firebase Cloud Storage<br/>(images/news/xxx.jpg)"]
+        PREVIEW["resolveMediaPreviewUrl()<br/>(Streaming ?alt=media URL)"]
+    end
+
+    subgraph FORM_USAGE ["News & Jobs Forms"]
+        FORM["NewsEditView / JobsEditView<br/>(canonical path: /images/news/xxx.jpg)"]
+    end
+
+    INPUT --> CROPPER
+    CROPPER --> CANVAS
+    CANVAS --> BLOB
+    BLOB --> SVC
+    SVC --> FSTORAGE
+    FSTORAGE --> PREVIEW
+    PREVIEW --> FORM
+```
+
+### 4.1 Configurable Media Collection Registry (`src/admin/config/mediaCollections.ts`)
+Each media collection defines its destination storage path, file type, size constraints, and optional target dimensions:
+
+```typescript
+export const MEDIA_COLLECTIONS: MediaCollectionConfig[] = [
+  {
+    id: "news-thumbnails",
+    title: "News Thumbnails",
+    collectionPath: "images/news",
+    type: "image",
+    description: "Thumbnail images for Latest News articles. Strict 200:110 aspect ratio.",
+    targetDimensions: { width: 400, height: 220 },
+    aspectRatioLabel: "200:110 (News Card Standard)",
+    allowedExtensions: [".jpg", ".jpeg", ".png", ".webp"],
+    maxSizeBytes: 2 * 1024 * 1024, // 2MB
+  },
+  {
+    id: "job-documents",
+    title: "Job Posting Documents",
+    collectionPath: "docs/jobs",
+    type: "document",
+    description: "Downloadable PDF job descriptions.",
+    allowedExtensions: [".pdf"],
+    maxSizeBytes: 25 * 1024 * 1024, // 25MB
+  },
+  {
+    id: "carousel",
+    title: "Homepage Carousel",
+    collectionPath: "images/carousel",
+    type: "image",
+    targetDimensions: { width: 2560, height: 1067 },
+    aspectRatioLabel: "16:9 Banner",
+    allowedExtensions: [".jpg", ".jpeg", ".png", ".webp"],
+    maxSizeBytes: 5 * 1024 * 1024,
+  },
+  {
+    id: "page-covers",
+    title: "Page Header Covers",
+    collectionPath: "images/covers",
+    type: "image",
+    targetDimensions: { width: 1440, height: 1080 },
+    aspectRatioLabel: "4:3 Header Cover",
+    allowedExtensions: [".jpg", ".jpeg", ".png", ".webp"],
+    maxSizeBytes: 5 * 1024 * 1024,
+  },
+  {
+    id: "general-images",
+    title: "General Assets",
+    collectionPath: "images/general",
+    type: "image",
+    allowedExtensions: [".jpg", ".jpeg", ".png", ".webp", ".svg"],
+    maxSizeBytes: 5 * 1024 * 1024,
+  },
+];
+```
+
+### 4.2 Interactive In-Browser Image Cropper (`src/admin/components/media/ImageCropperModal.tsx`)
+- **Aspect Ratio Locking:** Locks aspect ratios to exact specifications (e.g. `200 / 110` for News cards) while allowing free pan and zoom.
+- **Interactive Controls:** Drag/touch panning, real-time zoom slider (1.0× to 3.0×), and rule-of-thirds compositional grid.
+- **High-Quality Canvas Downsampling:** Performs bicubic image smoothing and outputs an optimized `image/jpeg` or `image/webp` blob resized precisely to `targetDimensions.width` × `targetDimensions.height`.
+- **Zero Server Compute:** Completely client-side execution; no Cloud Functions or image processing server required.
+
+### 4.3 Reusable Form Integration (`MediaField.tsx` & `MediaPickerModal.tsx`)
+- **MediaField Component:** Used in `NewsEditView` and `JobsEditView` to display real-time thumbnail previews, file metadata, and quick action buttons (Upload & Crop, Browse Library, Clear).
+- **MediaPickerModal Component:** Reusable modal with search, upload dropzone, and asset gallery. Selecting an image automatically passes the canonical site-relative path (`/images/news/filename.jpg`) to the form while rendering live previews via `resolveMediaPreviewUrl()`.
+- **Direct Preview Streaming:** `resolveMediaPreviewUrl()` transforms relative paths to direct Firebase Storage streaming URLs (`https://firebasestorage.googleapis.com/v0/b/{bucket}/o/{path}?alt=media`), allowing the Admin React SPA to display images immediately without requiring local copies in `public/`.
+
+---
+
+## 5. Build-Time Media Asset Synchronization & Netlify Cache Plugin
+
+To keep static page builds fast and ensure zero broken links, media assets are synchronized from Firebase Storage during Astro static compilation.
+
+```mermaid
+sequenceDiagram
+    autonumber
+    participant Netlify as Netlify Build Runner
+    participant CachePlugin as Netlify Cache Plugin
+    participant Cache as Persistent Disk Cache (.cache/cwts-assets/)
+    participant Astro as Astro SSG Build
+    participant ContentClient as FirebaseContentClient
+    participant Sync as syncAssets() Pipeline
+    participant Storage as Firebase Cloud Storage
+
+    Netlify->>CachePlugin: onPreBuild
+    CachePlugin->>Cache: utils.cache.restore(".cache/cwts-assets")
+    Note over Cache: Restores cached media & manifest.json
+
+    Netlify->>Astro: npm run build
+    Astro->>ContentClient: Fetch news & jobs (with draft overlay if active)
+    Astro->>Astro: Generate static HTML pages in dist/
+
+    Astro->>Sync: astro:build:done hook -> await syncAssets()
+    Sync->>ContentClient: Load news & jobs (Single Source of Truth)
+    Sync->>Sync: Extract referenced paths (e.g. 14 items)
+
+    loop For each referenced media asset
+        Sync->>Storage: getMetadata(fileRef)
+        alt MD5 matches manifest & file exists in cache
+            Sync->>Cache: Copy directly to dist/ (0 network egress)
+        else Cache miss or outdated MD5
+            Sync->>Storage: getBytes(fileRef)
+            Storage-->>Sync: Stream binary buffer
+            Sync->>Cache: Write to .cache/cwts-assets/
+            Sync->>Sync: Write to dist/ & update manifest.json
+        end
+    end
+
+    Astro-->>Netlify: Build complete
+    Netlify->>CachePlugin: onPostBuild
+    CachePlugin->>Cache: utils.cache.save(".cache/cwts-assets")
+    Note over Netlify: Cache preserved for subsequent builds!
+```
+
+### 5.1 Single Source of Truth via `FirebaseContentClient`
+In [`tools/sync-assets.ts`](file:///Users/yusheng/Documents/GitHub/cwts-web/tools/sync-assets.ts), the synchronization pipeline does not perform manual Firestore collection queries. Instead, it directly calls `FirebaseContentClient`:
+```typescript
+const client = new FirebaseContentClient({
+  projectId: process.env.PUBLIC_FIREBASE_PROJECT_ID || "cwts-cms",
+  draftId: resolveActiveDraftId(),
+});
+
+const newsEntries = await client.getCollection("news");
+const jobEntries = await client.getCollection("jobs");
+```
+This guarantees **100% parity**: whatever Astro renders into HTML (whether canonical production articles or draft overlay items) is precisely what `syncAssets()` downloads into `dist/`.
+
+### 5.2 Build Failure on Media Fetch Errors
+If a referenced asset cannot be retrieved or downloaded from Firebase Storage, `syncAssets()` outputs detailed error diagnostics (Storage Bucket, path, error code, error message) and **throws an Error to fail the build immediately**. This prevents deploying broken pages with missing media.
+
+### 5.3 Netlify Build Cache Plugin (`plugins/netlify-plugin-cwts-cache/`)
+Configured in `netlify.toml` according to the official Netlify Build Plugin specification:
+- **`onPreBuild`:** Restores `.cache/cwts-assets` from Netlify's persistent cache.
+- **`onPostBuild`:** Saves updated assets and `manifest.json` back to Netlify's cache.
+- **Result:** Builds on Netlify serve media from cache with **0 network egress**, ensuring 100% Spark Free Plan quota compliance.
+
+---
+
+## 6. Shared Schema Registry & Type System
 
 All entities across the public website and the CMS Admin webapp share the exact same Zod validation schemas and dimension constants from `src/libs/content/`.
 
-### 4.1 Shared Dimension Constants (`src/libs/content/constants.ts`)
+### 6.1 Shared Dimension Constants (`src/libs/content/constants.ts`)
 
 ```typescript
 export const MEDIA_SPECS = {
@@ -163,7 +363,7 @@ export const SUPPORTED_LANGUAGES = ['zh', 'en'] as const;
 export const DEFAULT_LANGUAGE = 'zh' as const;
 ```
 
-### 4.2 Shared Zod Schemas (`src/libs/content/schemas.ts`)
+### 6.2 Shared Zod Schemas (`src/libs/content/schemas.ts`)
 
 ```typescript
 import { z } from "zod";
@@ -226,7 +426,7 @@ export type ContentStatus = "published" | "draft" | "deleted";
 
 ---
 
-## 5. Draft Workspaces, Staging Preview, Soft Delete & Release Pipeline
+## 7. Draft Workspaces, Staging Preview, Soft Delete & Release Pipeline
 
 ```mermaid
 sequenceDiagram
@@ -246,8 +446,8 @@ sequenceDiagram
 
     Note over Editor,Netlify: Phase 2: Staging Deploy Preview
     Editor->>CMS: Click "🔍 Preview on Staging"
-    CMS->>Netlify: POST Build Hook (DRAFT_ID=draft_123)
-    Netlify->>FS: Fetch Canonical data + Overlay /drafts/draft_123 changes
+    CMS->>Netlify: POST Build Hook (INCOMING_HOOK_BODY={ draftId: "draft_xxx" })
+    Netlify->>FS: Fetch Canonical data + Overlay /drafts/{draftId}/changes
     Netlify->>Staging: Deploy Preview at preview--cwts-staging.netlify.app
     Netlify-->>CMS: Return Staging URL
     CMS-->>Editor: Display "Staging Ready: Open Preview ↗"
@@ -259,7 +459,7 @@ sequenceDiagram
     else Everything looks great
         Note over Editor,Prod: Phase 4: Production Release & Snapshot
         Editor->>CMS: Click "🚀 Publish to Production"
-        CMS->>FS: Merge /drafts/draft_123 changes into Canonical collections
+        CMS->>FS: Merge /drafts/{draftId} changes into Canonical collections
         CMS->>FS: Soft-delete removed items (status: deleted)
         CMS->>FS: Create immutable Version Snapshots in /{collection}/{id}/versions/{v}
         CMS->>FS: Log Release Record in /releases/{releaseId}
@@ -275,11 +475,11 @@ sequenceDiagram
     CMS->>Editor: Load snapshot data into active form
 ```
 
-### 5.1 Document Identity Strategy
+### 7.1 Document Identity Strategy
 - **Existing Documents:** Document IDs are immutable. Editing title, date, or other attributes modifies the existing document in-place and preserves `initialItem.id`.
 - **New Documents:** Automatically assigned a unique ID composed of `Date + Timestamp` (e.g. `2026-09-01-ml8q9x`).
 
-### 5.2 Soft Deletion Lifecycle
+### 7.2 Soft Deletion Lifecycle
 1. **Queued in Draft:** Clicking "Delete" records `action: "delete"` in `/drafts/{draftId}/changes/{coll}_{docId}`.
 2. **Instant Undo:** The item remains visible in the list with `🔴 Pending Deletion (Draft)` and strike-through styling, alongside an **"↩️ Undo Delete"** button.
 3. **Staging Preview:** Staging builds automatically filter out items marked with draft deletion.
@@ -287,142 +487,6 @@ sequenceDiagram
    - Canonical document is updated to `status: "deleted"`, `version: currentVer + 1`, `deletedBy: auditUser`, `deletedAt: ISOString`.
    - An immutable snapshot version is created in `/{collection}/{id}/versions/{version}` with `status: "deleted"`.
    - Canonical content queries (`IContentClient`) automatically skip `status: "deleted"` documents.
-
-```json
-// Example: Deleted Version Snapshot (/{collection}/{id}/versions/3)
-{
-  "version": 3,
-  "status": "deleted",
-  "data": {
-    "title": "已截止 矽谷基督徒聚會傳道同工",
-    "location": "Fremont, CA",
-    "date": "2026-08-01T00:00:00.000Z"
-  },
-  "body": "本職缺已結束徵聘...",
-  "deletedBy": {
-    "email": "admin@cwts.edu",
-    "displayName": "Seminary Admin",
-    "timestamp": "2026-08-19T22:30:00.000Z"
-  },
-  "releaseId": "rel_20260819_223000",
-  "createdAt": "2026-08-19T22:30:00.000Z"
-}
-```
-
----
-
-### 5.3 Build-Time Draft Overlay in `FirebaseContentClient`
-
-During Netlify SSG builds, `FirebaseContentClient` checks for the environment variable `DRAFT_ID`:
-
-1. **Production Build (`DRAFT_ID=""`)**:
-   - Queries canonical Firestore collections (`/news`, `/jobs`, `/pages`, etc.) and skips any document where `status === "deleted"`.
-2. **Staging / Preview Build (`DRAFT_ID="draft_xxx"`)**:
-   - Fetches canonical collections into memory.
-   - Fetches `/drafts/${DRAFT_ID}/changes/*`.
-   - **Overlays** the draft changes onto canonical records (merging updates, adding created docs, removing deleted docs).
-   - Generates the staging static HTML reflecting the exact preview state.
-
-```typescript
-// src/libs/content/firebaseClient.ts (Draft Overlay Logic)
-export class FirebaseContentClient implements IContentClient {
-  private draftId?: string;
-
-  constructor(options: { projectId: string; draftId?: string }) {
-    this.draftId = options.draftId || process.env.DRAFT_ID;
-  }
-
-  async getCollection<K extends keyof ContentSchemaMap>(collection: K): Promise<ContentEntry<ContentSchemaMap[K]>[]> {
-    // 1. Fetch canonical collection from Firestore (skipping status === "deleted")
-    const canonicalEntries = await this.fetchCanonicalCollection(collection);
-
-    // 2. If no active draft preview, return canonical
-    if (!this.draftId) {
-      return canonicalEntries;
-    }
-
-    // 3. Fetch draft overlay changes from /drafts/{draftId}/changes
-    const draftChanges = await this.fetchDraftChanges(this.draftId, collection);
-    
-    // 4. Apply overlay
-    const mergedMap = new Map(canonicalEntries.map(e => [e.id, e]));
-    for (const change of draftChanges) {
-      if (change.action === 'delete') {
-        mergedMap.delete(change.documentId);
-      } else {
-        mergedMap.set(change.documentId, {
-          id: change.documentId,
-          slug: change.documentId,
-          language: change.data.language || 'zh',
-          status: 'draft',
-          data: change.data,
-          body: change.body,
-          updatedAt: new Date(change.updatedBy.timestamp)
-        });
-      }
-    }
-
-    return Array.from(mergedMap.values());
-  }
-}
-```
-
----
-
-## 6. Client-Side Asset Processing (100% Spark Free Plan)
-
-### 6.1 In-Browser Image Processor (`src/admin/services/imageProcessor.ts`)
-When an editor drops an image in the CMS, all size variants (`.cover.webp`, `.thumbnail.webp`, `.news.webp`, `.carousel.webp`) are generated in the browser using HTML5 Canvas & WebP compression prior to upload:
-
-```typescript
-export async function resizeImageInBrowser(
-  file: File,
-  targetWidth: number,
-  targetHeight: number,
-  quality = 0.85
-): Promise<Blob> {
-  const img = await createImageBitmap(file);
-  const canvas = document.createElement("canvas");
-  canvas.width = targetWidth;
-  canvas.height = targetHeight;
-  const ctx = canvas.getContext("2d")!;
-  
-  // High-quality bicubic downscaling
-  ctx.imageSmoothingEnabled = true;
-  ctx.imageSmoothingQuality = "high";
-  ctx.drawImage(img, 0, 0, targetWidth, targetHeight);
-  
-  return new Promise((resolve) => {
-    canvas.toBlob((blob) => resolve(blob!), "image/webp", quality);
-  });
-}
-```
-
----
-
-## 7. Cross-Build Asset Caching (Local & Netlify CI/CD)
-
-```mermaid
-sequenceDiagram
-    autonumber
-    participant Build as Astro Build (Local / Netlify)
-    participant Cache as Persistent Disk Cache (.cache/cwts-assets/)
-    participant Storage as Firebase Cloud Storage
-
-    Build->>Cache: Read manifest.json
-    Build->>Storage: HEAD /media/covers/spring-2026.cover.webp
-    Storage-->>Build: Returns ETag / x-goog-hash (MD5) & Size
-
-    alt ETag matches manifest entry & local file exists
-        Build->>Cache: Copy from .cache/cwts-assets/ to public/images/
-        Note over Build: 0 bytes downloaded from Firebase! (Fast & Free)
-    else ETag is new or mismatched
-        Build->>Storage: GET /media/covers/spring-2026.cover.webp
-        Storage-->>Build: Stream binary data
-        Build->>Cache: Save to .cache/cwts-assets/ & update manifest.json
-        Build->>Build: Copy to public/images/
-    end
-```
 
 ---
 
@@ -440,14 +504,37 @@ sequenceDiagram
 
 ---
 
-## 9. Firebase Free Tier (Spark Plan) Quota Verification
-
-| Resource | Spark Free Quota | CWTS Usage (Est.) | Status |
+## 9. Firebase Blaze Plan Free Usage Quotas & Cost Safety
+ 
+Firebase requires upgrading to the **Blaze (Pay-as-you-go) Plan** to provision and access Firebase Cloud Storage. However, the Blaze plan includes substantial **no-cost usage quotas** every month before any charges apply. By designing the CMS around client-side processing, static page compilation, and persistent CI caching, the CWTS website operates **100% within the monthly free tier ($0.00/month)**.
+ 
+### 9.1 Blaze Plan Free Tier Quotas vs. Estimated CWTS Usage
+ 
+| Service & Resource | Blaze Plan Monthly No-Cost Quota | CWTS Usage (Est.) | Status / Headroom |
 | :--- | :--- | :--- | :--- |
-| **Firestore Storage** | 1 GB | ~25 MB (500 docs + version history) | **2.5% used** |
-| **Firestore Daily Reads** | 50,000 / day | ~500–2,000 / day | **1.0%–4.0% used** |
-| **Firestore Daily Writes** | 20,000 / day | ~50 / day | **0.25% used** |
-| **Storage Capacity** | 5 GB | ~2.0 GB | **40.0% used** |
-| **Storage Daily Egress** | 1 GB / day (10 GB/mo on Blaze) | **~0 MB** (Cached on Netlify & Local builds) | **< 1.0% used** |
-| **Auth MAU** | 50,000 / month | 10 accounts | **0.02% used** |
-| **Cloud Functions** | *Requires Blaze* | **0 Functions used** | **100% Spark Compliant** |
+| **Cloud Firestore Stored Data** | **1 GiB** total storage | ~25 MB (500 docs + version snapshots) | **~2.5% used** (975 MB free) |
+| **Cloud Firestore Document Reads** | **50,000** / day (1.5M / month) | ~500–2,000 / day | **1.0%–4.0% used** (96% free) |
+| **Cloud Firestore Document Writes** | **20,000** / day (600k / month) | ~50 / day | **0.25% used** (>99% free) |
+| **Cloud Firestore Document Deletes** | **20,000** / day (600k / month) | ~10 / day | **0.05% used** (>99% free) |
+| **Cloud Storage Stored Data** | **5 GB-months** | ~2.0 GB (news images & job PDFs) | **40.0% used** (3.0 GB free) |
+| **Cloud Storage Download Operations (Class B)** | **50,000 operations** / month | ~500–1,500 / month | **1.0%–3.0% used** (97% free) |
+| **Cloud Storage Upload Operations (Class A)** | **5,000 operations** / month | ~50–100 / month | **1.0%–2.0% used** (98% free) |
+| **Cloud Storage Egress / Bandwidth** | **100 GB** / month (Google Cloud Free Tier) | **~0 MB** (Cached via Netlify Build Plugin & CDN) | **< 0.1% used** (>99.9% free) |
+| **Firebase Authentication (Google / Email)** | **50,000 MAUs** / month | ~10 administrative accounts | **0.02% used** (>99.9% free) |
+| **Cloud Functions / Backend Compute** | *Not utilized* | **0 Functions deployed** (100% In-Browser & SSG) | **$0.00 / Zero Compute** |
+ 
+---
+ 
+### 9.2 Cost Safety Architecture & Controls
+ 
+1. **Netlify Build Cache Plugin (`plugins/netlify-plugin-cwts-cache`)**:
+   - Persists `.cache/cwts-assets/` and `manifest.json` across CI runs.
+   - Builds download each unique binary asset from Firebase Storage only **once**; subsequent builds serve assets with **0 network egress and 0 storage download operations**.
+ 
+2. **Client-Side Image Processing & Aspect Enforcement**:
+   - Image resizing, bicubic downscaling, aspect locking (400×220), and WebP/JPEG compression execute inside the editor's browser using HTML5 Canvas.
+   - Eliminates all Cloud Functions or external image resizing services.
+ 
+3. **Recommended Google Cloud Budget Alerts**:
+   - In the [Google Cloud Console Billing Dashboard](https://console.cloud.google.com/billing), set up an automated budget alert with a threshold of **$1.00** and **$5.00**.
+   - Sends instant email alerts to administrators in the event of unexpected usage spikes before any material cost is incurred.
