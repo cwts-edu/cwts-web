@@ -100,8 +100,11 @@ export const RichTextEditor: React.FC<Props> = ({
   };
 
   const handleSelectMedia = (item: MediaItem) => {
-    const path = item.storagePath.startsWith("/") ? item.storagePath : `/${item.storagePath}`;
-    editor.chain().focus().setImage({ src: path, alt: item.name }).run();
+    const rawPath = item?.siteRelativePath || (item?.filePath ? `/${item.filePath}` : "");
+    const path = rawPath.startsWith("/") ? rawPath : `/${rawPath}`;
+    if (path && path !== "/") {
+      editor.chain().focus().setImage({ src: path, alt: item.name || "image" }).run();
+    }
     setShowMediaPicker(false);
   };
 
