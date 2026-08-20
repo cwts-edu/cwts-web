@@ -4,12 +4,20 @@ export type Language = "zh" | "en";
 export type FacultyCategory = "faculty" | "senior-adjunct" | "adjunct";
 export type DegreeCategory = "doctor" | "master" | "diploma" | "certificate";
 
+function normalizeSiteUrl(val: string): string {
+  if (!val) return val;
+  if (val.startsWith("http://") || val.startsWith("https://") || val.startsWith("/")) {
+    return val;
+  }
+  return `/${val}`;
+}
+
 // 1. Pages Schema
 export const PageMetadataSchema = z.object({
   title: z.string(),
   order: z.number(),
-  coverImage: z.string().optional(),
-  thumbnail: z.string().optional(),
+  coverImage: z.string().optional().transform((v) => (v ? normalizeSiteUrl(v) : v)),
+  thumbnail: z.string().optional().transform((v) => (v ? normalizeSiteUrl(v) : v)),
   showChildren: z.boolean().optional(),
   referencedAssets: z.array(z.string()).optional(),
 });
@@ -19,8 +27,8 @@ export type PageMetadata = z.infer<typeof PageMetadataSchema>;
 export const NewsMetadataSchema = z.object({
   title: z.string(),
   date: z.coerce.date(),
-  thumbnail: z.string(),
-  url: z.string(),
+  thumbnail: z.string().transform(normalizeSiteUrl),
+  url: z.string().transform(normalizeSiteUrl),
   referencedAssets: z.array(z.string()).optional(),
 });
 export type NewsMetadata = z.infer<typeof NewsMetadataSchema>;
@@ -76,7 +84,7 @@ export const JobMetadataSchema = z.object({
   title: z.string(),
   location: z.string(),
   date: z.coerce.date(),
-  file: z.string().optional(),
+  file: z.string().optional().transform((v) => (v ? normalizeSiteUrl(v) : v)),
   referencedAssets: z.array(z.string()).optional(),
 });
 export type JobMetadata = z.infer<typeof JobMetadataSchema>;

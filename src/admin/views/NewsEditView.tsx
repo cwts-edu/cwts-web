@@ -254,15 +254,18 @@ export const NewsEditView: React.FC<Props> = ({ initialItem, onSave, onCancel })
 
           <div className="sm:col-span-2">
             <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">
-              Short Description / Excerpt (Markdown)
+              Short Description / Excerpt (Plain Text)
             </label>
             <textarea
               rows={4}
               value={body}
               onChange={(e) => setBody(e.target.value)}
-              placeholder="Enter article description or highlights shown below title..."
-              className="w-full px-4 py-3 bg-slate-950 border border-slate-700 rounded-xl text-white text-sm focus:outline-none focus:border-purple-500 font-mono transition"
+              placeholder="Enter text directly. Press Enter for a new line, or Enter twice for a new paragraph..."
+              className="w-full px-4 py-3 bg-slate-950 border border-slate-700 rounded-xl text-white text-sm focus:outline-none focus:border-purple-500 transition"
             />
+            <p className="text-[11px] text-slate-400 mt-1.5">
+              Enter lines directly with Enter/Return (no backslashes <code className="text-purple-300">{"\\"}</code> needed). Single Return creates a line break; double Return creates a paragraph.
+            </p>
           </div>
         </div>
 

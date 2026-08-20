@@ -18,6 +18,7 @@ import site from "../site";
 import { slug as slugify } from "github-slugger";
 import { createComponent, unescapeHTML } from "astro/runtime/server/index.js";
 import { createMarkdownProcessor } from "@astrojs/markdown-remark";
+import { textLinesToHtml } from "./textUtils";
 
 let markdownProcessorPromise: Promise<any> | null = null;
 function getMarkdownProcessor() {
@@ -208,6 +209,11 @@ export class FirebaseContentClient implements IContentClient {
     if (fields.status === "deleted") return null;
     const parsedData = SchemaValidators[collection].parse(fields);
 
+    let html = fields.bodyHtml || fields.html || "";
+    if (!html && fields.body) {
+      html = collection === "news" ? textLinesToHtml(fields.body) : fields.body;
+    }
+
     return {
       id,
       slug: fields.slug || id,
@@ -217,7 +223,7 @@ export class FirebaseContentClient implements IContentClient {
       publishedVersion: fields.publishedVersion || 1,
       data: parsedData,
       body: fields.body || "",
-      html: fields.bodyHtml || fields.html || fields.body || "",
+      html,
       updatedAt: new Date(doc.updateTime),
     };
   }

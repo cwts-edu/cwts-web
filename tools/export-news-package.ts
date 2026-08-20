@@ -4,6 +4,8 @@ import * as yaml from "js-yaml";
 import { marked } from "marked";
 import JSZip from "jszip";
 
+import { textLinesToHtml, markdownToTextLines } from "../src/libs/content/textUtils";
+
 interface NewsDocument {
   id: string;
   title: string;
@@ -21,20 +23,23 @@ interface NewsDocument {
   updatedAt: string;
 }
 
-function parseMarkdownFile(filePath: string): { frontmatter: any; body: string; bodyHtml: string } {
+function parseMarkdownFile(filePath: string): { frontmatter: any; rawBody: string; textLines: string; bodyHtml: string } {
   const content = fs.readFileSync(filePath, "utf-8");
   const match = content.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n([\s\S]*)$/);
 
   if (!match) {
     const rawBody = content.trim();
-    return { frontmatter: {}, body: rawBody, bodyHtml: rawBody ? (marked.parse(rawBody) as string) : "" };
+    const textLines = markdownToTextLines(rawBody);
+    const bodyHtml = textLinesToHtml(textLines);
+    return { frontmatter: {}, rawBody, textLines, bodyHtml };
   }
 
   const frontmatter = (yaml.load(match[1]) as any) || {};
-  const body = match[2].trim();
-  const bodyHtml = body ? (marked.parse(body) as string) : "";
+  const rawBody = match[2].trim();
+  const textLines = markdownToTextLines(rawBody);
+  const bodyHtml = textLinesToHtml(textLines);
 
-  return { frontmatter, body, bodyHtml };
+  return { frontmatter, rawBody, textLines, bodyHtml };
 }
 
 async function exportNewsPackage() {
@@ -55,7 +60,7 @@ async function exportNewsPackage() {
 
   for (const file of files) {
     const filePath = path.join(newsDir, file);
-    const { frontmatter, body, bodyHtml } = parseMarkdownFile(filePath);
+    const { frontmatter, rawBody, textLines, bodyHtml } = parseMarkdownFile(filePath);
 
     const slug = path.parse(file).name;
     const docAssets: string[] = [];
@@ -69,7 +74,7 @@ async function exportNewsPackage() {
     }
 
     // Extract any inline image assets from markdown/html
-    const imgMatches = (body + " " + bodyHtml).matchAll(/(?:images|docs)\/[^"'\s)]+/g);
+    const imgMatches = (rawBody + " " + bodyHtml).matchAll(/(?:images|docs)\/[^"'\s)]+/g);
     for (const match of imgMatches) {
       const assetPath = match[0].replace(/^\/+/, "");
       docAssets.push(assetPath);
@@ -84,9 +89,9 @@ async function exportNewsPackage() {
       id: slug,
       title: frontmatter.title || slug,
       date: dateStr,
-      ...(cleanThumbnail ? { thumbnail: cleanThumbnail } : {}),
+      ...(cleanThumbnail ? { thumbnail: `/${cleanThumbnail}` } : {}),
       ...(frontmatter.url ? { url: frontmatter.url } : {}),
-      body,
+      body: textLines,
       bodyHtml,
       referencedAssets: Array.from(new Set(docAssets)),
       status: "published",

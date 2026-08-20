@@ -16,6 +16,7 @@ import {
   type DeployTriggerResult,
 } from "../services/netlifyDeploy";
 import type { AuditUser } from "../../libs/content/types";
+import { textLinesToHtml } from "../../libs/content/textUtils";
 
 export interface DraftChangeItem {
   id: string; // docId
@@ -323,10 +324,15 @@ export const DraftProvider: React.FC<{ children: React.ReactNode }> = ({ childre
             createdAt: new Date().toISOString(),
           });
         } else {
+          const bodyHtml =
+            change.bodyHtml ||
+            (change.collection === "news" && change.body ? textLinesToHtml(change.body) : undefined);
+
           // Write Canonical document
           batch.set(canonicalRef, {
             ...change.data,
             body: change.body,
+            ...(bodyHtml ? { bodyHtml } : {}),
             status: "published",
             version: currentVer,
             publishedVersion: currentVer,
@@ -342,6 +348,7 @@ export const DraftProvider: React.FC<{ children: React.ReactNode }> = ({ childre
             status: "published",
             data: change.data,
             body: change.body,
+            ...(bodyHtml ? { bodyHtml } : {}),
             publishedBy: audit,
             releaseId,
             releaseDescription: draftDescription,

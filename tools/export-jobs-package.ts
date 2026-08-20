@@ -85,7 +85,7 @@ async function exportJobsPackage() {
       title: frontmatter.title || slug,
       date: dateStr,
       ...(frontmatter.location ? { location: frontmatter.location } : {}),
-      ...(cleanFile ? { file: cleanFile } : {}),
+      ...(cleanFile ? { file: `/${cleanFile}` } : {}),
       body,
       bodyHtml,
       referencedAssets: Array.from(new Set(docAssets)),
