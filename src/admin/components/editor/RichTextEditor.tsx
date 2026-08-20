@@ -6,6 +6,7 @@ import Image from "@tiptap/extension-image";
 import Placeholder from "@tiptap/extension-placeholder";
 import { MediaPickerModal } from "../media/MediaPickerModal";
 import type { MediaItem } from "../../config/mediaCollections";
+import { resolveMediaPreviewUrl } from "../../services/storageService";
 
 interface Props {
   initialContentHtml?: string;
@@ -100,10 +101,14 @@ export const RichTextEditor: React.FC<Props> = ({
   };
 
   const handleSelectMedia = (item: MediaItem) => {
-    const rawPath = item?.siteRelativePath || (item?.filePath ? `/${item.filePath}` : "");
-    const path = rawPath.startsWith("/") ? rawPath : `/${rawPath}`;
-    if (path && path !== "/") {
-      editor.chain().focus().setImage({ src: path, alt: item.name || "image" }).run();
+    const googleStorageUrl =
+      item.downloadUrl || resolveMediaPreviewUrl(item.siteRelativePath || item.filePath);
+    if (googleStorageUrl) {
+      editor
+        .chain()
+        .focus()
+        .setImage({ src: googleStorageUrl, alt: item.name || "image" })
+        .run();
     }
     setShowMediaPicker(false);
   };

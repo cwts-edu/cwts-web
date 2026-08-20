@@ -51,13 +51,13 @@ function extractNewsOrJobStoragePath(rawUrlOrPath: string): string | null {
 
   const trimmed = rawUrlOrPath.trim();
 
-  // 1. Direct site-relative paths e.g. /images/news/pic.jpg or /docs/jobs/file.pdf
-  if (trimmed.startsWith("/images/news/") || trimmed.startsWith("/docs/jobs/")) {
+  // 1. Direct site-relative paths e.g. /images/... or /docs/...
+  if (trimmed.startsWith("/images/") || trimmed.startsWith("/docs/")) {
     return trimmed.replace(/^\/+/, "");
   }
 
-  // 2. Relative paths without leading slash e.g. images/news/pic.jpg or docs/jobs/file.pdf
-  if (trimmed.startsWith("images/news/") || trimmed.startsWith("docs/jobs/")) {
+  // 2. Relative paths without leading slash e.g. images/... or docs/...
+  if (trimmed.startsWith("images/") || trimmed.startsWith("docs/")) {
     return trimmed;
   }
 
@@ -67,7 +67,7 @@ function extractNewsOrJobStoragePath(rawUrlOrPath: string): string | null {
       const match = trimmed.match(/\/o\/([^?]+)/);
       if (match && match[1]) {
         const decoded = decodeURIComponent(match[1]);
-        if (decoded.startsWith("images/news/") || decoded.startsWith("docs/jobs/")) {
+        if (decoded.startsWith("images/") || decoded.startsWith("docs/")) {
           return decoded;
         }
       }
