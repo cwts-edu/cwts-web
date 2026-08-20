@@ -204,7 +204,7 @@ async function verify() {
     if (fbStoragePath) {
       const match = distFilesMap.get(toSlash(fbStoragePath).toLowerCase());
       if (match) {
-        referencedAssets.add(match);
+        referencedAssets.add(match.toLowerCase());
       }
       return;
     }
@@ -217,7 +217,7 @@ async function verify() {
     if (!isExternalResource) {
       const resolved = resolveDistFile(sourceFile, target, distFilesMap);
       if (resolved.exists && resolved.actualRelPath) {
-        referencedAssets.add(resolved.actualRelPath);
+        referencedAssets.add(resolved.actualRelPath.toLowerCase());
       } else {
         brokenLinks.push({ source: relSource, target: toSlash(target), type });
       }
@@ -279,7 +279,7 @@ async function verify() {
       (e.target === "*" || matchesPattern(link.target, e.target))
     )
   );
-  const unusedImages = Array.from(allImages).filter(img => !referencedAssets.has(img));
+  const unusedImages = Array.from(allImages).filter(img => !referencedAssets.has(img.toLowerCase()));
   const filteredUnusedImages = unusedImages.filter(img => 
     !exceptions.ignoredAssets.some(pattern => matchesPattern(img, pattern))
   );
