@@ -124,9 +124,9 @@ async function collectReferencedNewsAndJobsAssets(): Promise<Set<string>> {
   });
 
   try {
-    // 1. Query news collection using content client
-    const newsEntries = await client.getCollection("news");
-    console.log(`📰 Loaded ${newsEntries.length} news entries from Firebase content client.`);
+    // 1. Query news collection using content client (homepage renders the top 4 latest news)
+    const newsEntries = await client.news.list(undefined, 4);
+    console.log(`📰 Loaded ${newsEntries.length} active news entries from Firebase content client.`);
     for (const entry of newsEntries) {
       if (entry.data?.thumbnail) {
         const sp = extractNewsOrJobStoragePath(entry.data.thumbnail);
