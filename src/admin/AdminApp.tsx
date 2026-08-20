@@ -15,7 +15,6 @@ import { MediaLibraryView } from "./views/MediaLibraryView";
 import { db } from "./config/firebase";
 import { collection, getDocs } from "firebase/firestore";
 import type { NewsMetadata, JobMetadata } from "../libs/content/schemas";
-import { INITIAL_NEWS_FIXTURES, INITIAL_JOBS_FIXTURES } from "./fixtures/initialContent";
 
 export interface AdminRouteState {
   tab: AdminTab;
@@ -98,34 +97,6 @@ export function buildAdminUrl(tab: AdminTab, param?: string): string {
   }
 }
 
-const INITIAL_NEWS: NewsItem[] = INITIAL_NEWS_FIXTURES.map((item) => ({
-  id: item.id,
-  data: {
-    title: item.data.title,
-    date: new Date(item.data.date),
-    thumbnail: item.data.thumbnail,
-    url: item.data.url,
-  },
-  body: item.body,
-  status: "published",
-  version: 1,
-  publishedVersion: 1,
-}));
-
-const INITIAL_JOBS: JobItem[] = INITIAL_JOBS_FIXTURES.map((item) => ({
-  id: item.id,
-  data: {
-    title: item.data.title,
-    location: item.data.location,
-    date: new Date(item.data.date),
-    ...(item.data.file ? { file: item.data.file } : {}),
-  },
-  body: item.body,
-  status: "published",
-  version: 1,
-  publishedVersion: 1,
-}));
-
 const AdminDashboard: React.FC = () => {
   const { user } = useAuth();
   const { pendingChanges, saveChangeToDraft, discardDraftChange } = useDraft();
@@ -133,8 +104,8 @@ const AdminDashboard: React.FC = () => {
   const [currentTab, setCurrentTab] = useState<AdminTab>(() => parseAdminLocation().tab);
   const [editingId, setEditingId] = useState<string | null>(() => parseAdminLocation().param || null);
 
-  const [news, setNews] = useState<NewsItem[]>(INITIAL_NEWS);
-  const [jobs, setJobs] = useState<JobItem[]>(INITIAL_JOBS);
+  const [news, setNews] = useState<NewsItem[]>([]);
+  const [jobs, setJobs] = useState<JobItem[]>([]);
   const [faculty, setFaculty] = useState<UnifiedFacultyItem[]>([]);
   const [isLoadingData, setIsLoadingData] = useState<boolean>(true);
 

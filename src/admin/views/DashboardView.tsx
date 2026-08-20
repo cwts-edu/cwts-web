@@ -2,7 +2,6 @@ import React, { useState, useEffect, useCallback } from "react";
 import type { AdminTab } from "../components/AdminLayout";
 import { useDraft } from "../context/DraftContext";
 import { useAuth } from "../context/AuthContext";
-import { seedFirestoreDatabase } from "../services/seedDatabase";
 import { db } from "../config/firebase";
 import {
   checkPendingMigrations,
@@ -38,9 +37,6 @@ export const DashboardView: React.FC<Props> = ({
     publishDraftToProduction,
     discardDraftChange,
   } = useDraft();
-
-  const [isSeeding, setIsSeeding] = useState(false);
-  const [seedMessage, setSeedMessage] = useState<string | null>(null);
 
   // Migration State (Async & Non-Blocking)
   const [pendingMigrations, setPendingMigrations] = useState<PendingMigrationSummary[]>([]);
@@ -98,41 +94,6 @@ export const DashboardView: React.FC<Props> = ({
     } finally {
       setIsMigrating(false);
       setMigrationProgress(null);
-    }
-  };
-
-  const handleSeedDatabase = async () => {
-    if (
-      !confirm(
-        "This will upload all 4 initial News articles, 10 Job postings, and their media assets (images & PDFs) into live Firestore & Firebase Storage under your admin account. Proceed?"
-      )
-    ) {
-      return;
-    }
-
-    setIsSeeding(true);
-    setSeedMessage(null);
-
-    const audit = {
-      uid: user?.uid || "admin",
-      email: user?.email || "admin@cwts.edu",
-      displayName: user?.displayName || user?.email || "CWTS Admin",
-      timestamp: new Date().toISOString(),
-    };
-
-    const res = await seedFirestoreDatabase(audit);
-    setIsSeeding(false);
-
-    if (res.success) {
-      setSeedMessage(
-        `✅ Database seeded successfully: ${res.newsCount} news articles, ${res.jobsCount} job postings, and ${res.assetsCount} media assets.`
-      );
-      if (onRefreshData) {
-        await onRefreshData();
-      }
-      await checkMigrations();
-    } else {
-      setSeedMessage(`❌ Seeding failed: ${res.message}`);
     }
   };
 
@@ -234,35 +195,7 @@ export const DashboardView: React.FC<Props> = ({
         </div>
       )}
 
-      {/* Seed Initial Data Banner */}
-      <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-lg">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-purple-900/40 border border-purple-500/30 flex items-center justify-center text-lg">
-            💾
-          </div>
-          <div>
-            <h4 className="text-sm font-bold text-white">Initial Database Setup</h4>
-            <p className="text-xs text-slate-400">
-              Initialize Firestore with the 4 default news articles and 10 job listings.
-            </p>
-          </div>
-        </div>
 
-        <button
-          onClick={handleSeedDatabase}
-          disabled={isSeeding}
-          className="px-4 py-2 bg-slate-800 hover:bg-slate-700 disabled:opacity-50 text-xs font-semibold text-purple-300 border border-purple-500/30 rounded-xl transition shadow flex items-center gap-2 shrink-0"
-        >
-          {isSeeding ? "Seeding Firestore..." : "📥 Seed / Reset Initial Content"}
-        </button>
-      </div>
-
-      {seedMessage && (
-        <div className="p-4 bg-emerald-950/40 border border-emerald-500/40 rounded-2xl text-xs text-emerald-300 flex items-center justify-between">
-          <span>{seedMessage}</span>
-          <button onClick={() => setSeedMessage(null)} className="text-emerald-400 hover:text-white">✕</button>
-        </div>
-      )}
 
       {/* Active Draft Workspace Card */}
       {pendingChanges.length > 0 && (
