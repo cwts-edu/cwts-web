@@ -227,7 +227,7 @@ export const BackupRestoreView: React.FC<Props> = ({ onRefreshData }) => {
 
     if (
       !confirm(
-        `This will restore ${documents.length} document(s) and upload bundled media assets into Firestore collection '${manifest.collection}' and Firebase Storage. Continue?`
+        `⚠️ Warning: This will completely REPLACE the entire '${manifest.collection}' collection in Firestore with the ${documents.length} document(s) from this package and upload bundled media assets. All existing '${manifest.collection}' records will be cleared. Continue?`
       )
     ) {
       return;
@@ -238,7 +238,30 @@ export const BackupRestoreView: React.FC<Props> = ({ onRefreshData }) => {
     const audit = getAudit();
 
     try {
-      // Step A: Upload all bundled assets to Firebase Storage
+      // Step A: Purge all existing documents in the target collection to ensure complete replacement
+      setImportProgress({
+        current: 0,
+        total: documents.length,
+        status: `Purging existing '${manifest.collection}' documents for clean replacement...`,
+      });
+
+      const existingSnap = await getDocs(collection(db, manifest.collection));
+      const existingDocs = existingSnap.docs;
+
+      if (existingDocs.length > 0) {
+        const DELETE_BATCH_SIZE = 50;
+        for (let i = 0; i < existingDocs.length; i += DELETE_BATCH_SIZE) {
+          const chunk = existingDocs.slice(i, i + DELETE_BATCH_SIZE);
+          const delBatch = writeBatch(db);
+          for (const d of chunk) {
+            delBatch.delete(d.ref);
+          }
+          await delBatch.commit();
+          await new Promise((r) => setTimeout(r, 0));
+        }
+      }
+
+      // Step B: Upload all bundled assets to Firebase Storage
       const assetEntries: JSZip.JSZipObject[] = [];
       zip.folder("assets")?.forEach((relPath, fileObj) => {
         if (!fileObj.dir) {
@@ -319,7 +342,7 @@ export const BackupRestoreView: React.FC<Props> = ({ onRefreshData }) => {
 
       setResultMessage({
         success: true,
-        text: `🎉 Collection '${manifest.collection}' restored successfully: ${docsWritten} documents written, ${assetsUploaded} assets uploaded.`,
+        text: `🎉 Collection '${manifest.collection}' replaced successfully: ${docsWritten} documents written, ${assetsUploaded} assets uploaded.`,
       });
 
       setLoadedPackage(null);
