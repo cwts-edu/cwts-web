@@ -64,7 +64,7 @@ export const MediaPickerModal: React.FC<Props> = ({
     const file = e.target.files?.[0];
     if (!file) return;
 
-    if (collectionConfig.type === "image") {
+    if (collectionConfig.type === "image" && collectionConfig.aspectRatio) {
       setCropFile(file);
     } else {
       handleDirectFileUpload(file);
@@ -78,7 +78,7 @@ export const MediaPickerModal: React.FC<Props> = ({
     const file = e.dataTransfer.files?.[0];
     if (!file) return;
 
-    if (collectionConfig.type === "image") {
+    if (collectionConfig.type === "image" && collectionConfig.aspectRatio) {
       setCropFile(file);
     } else {
       handleDirectFileUpload(file);
@@ -327,8 +327,10 @@ export const MediaPickerModal: React.FC<Props> = ({
                   </p>
                   <p className="text-xs text-slate-400">
                     {collectionConfig.type === "image"
-                      ? `Select an image to open the crop & scale editor (${collectionConfig.aspectRatioLabel || "400×220"}).`
-                      : "Upload downloadable PDF document to Firebase Storage."}
+                      ? collectionConfig.aspectRatio
+                        ? `Select an image to open the crop & scale editor (${collectionConfig.aspectRatioLabel || "standard aspect"}).`
+                        : "Upload image in original natural dimensions (no forced crop)."
+                      : "Upload downloadable document to Firebase Storage."}
                   </p>
                 </div>
 

@@ -52,7 +52,7 @@ export const MediaLibraryView: React.FC = () => {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    if (activeConfig.type === "image") {
+    if (activeConfig.type === "image" && activeConfig.aspectRatio) {
       setCropFile(file);
     } else {
       handleDirectUpload(file);
@@ -131,7 +131,7 @@ export const MediaLibraryView: React.FC = () => {
 
         <div className="flex items-center gap-3">
           <label className="px-4 py-2 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-bold text-xs rounded-xl shadow-lg cursor-pointer transition flex items-center gap-2">
-            <span>{activeConfig.type === "image" ? "✂️ Upload & Crop" : "⬆️ Upload File"}</span>
+            <span>{activeConfig.aspectRatio ? "✂️ Upload & Crop" : "⬆️ Upload File"}</span>
             <input
               type="file"
               accept={activeConfig.allowedMimeTypes.join(",")}
