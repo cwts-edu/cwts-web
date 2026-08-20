@@ -13,11 +13,17 @@ export { HybridContentClient } from "./hybridClient";
 
 const activeDraftId = resolveActiveDraftId();
 
+const isCmsExpBranch =
+  typeof process !== "undefined" &&
+  (process.env?.GITHUB_REF_NAME === "cms-exp" ||
+    process.env?.HEAD === "cms-exp" ||
+    process.env?.BRANCH === "cms-exp");
+
 const RAW_CONTENT_BACKEND =
   (typeof process !== "undefined" && (process.env?.CONTENT_SOURCE || process.env?.CONTENT_BACKEND)) ||
   import.meta.env?.CONTENT_SOURCE ||
   import.meta.env?.CONTENT_BACKEND ||
-  (activeDraftId ? "hybrid" : "astro");
+  (activeDraftId || isCmsExpBranch ? "hybrid" : "astro");
 
 const FIREBASE_PROJECT_ID =
   (typeof process !== "undefined" &&

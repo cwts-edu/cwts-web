@@ -83,6 +83,19 @@ function isInternal(url: string): boolean {
   return true;
 }
 
+function extractFirebaseStorageRelativePath(url: string): string | null {
+  if (!url || typeof url !== "string") return null;
+  if (url.includes("firebasestorage.googleapis.com")) {
+    try {
+      const match = url.match(/\/o\/([^?]+)/);
+      if (match && match[1]) {
+        return decodeURIComponent(match[1]);
+      }
+    } catch {}
+  }
+  return null;
+}
+
 function normalizePath(sourceFile: string, target: string): string {
   const cleanTarget = target.split("#")[0].split("?")[0];
   if (cleanTarget.startsWith("/")) {
@@ -152,6 +165,18 @@ async function verify() {
   console.log(`🔍 Found ${htmlFiles.length} HTML files, ${cssFiles.length} CSS files, and ${allImages.size} assets.`);
 
   const checkLink = (sourceFile: string, target: string, type: LinkInfo["type"]) => {
+    if (!target) return;
+
+    // Check if target is a Firebase Storage URL referencing our synced assets
+    const fbStoragePath = extractFirebaseStorageRelativePath(target);
+    if (fbStoragePath) {
+      const fullPath = path.join(DIST_DIR, fbStoragePath);
+      if (fs.existsSync(fullPath)) {
+        referencedAssets.add(toSlash(fbStoragePath));
+      }
+      return;
+    }
+
     if (!isInternal(target)) return;
 
     const fullPath = normalizePath(sourceFile, target);
