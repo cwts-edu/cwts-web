@@ -85,11 +85,6 @@ export const MediaLibraryView: React.FC = () => {
   };
 
   const handleDelete = async (item: MediaItem) => {
-    if (item.isLocalFixture) {
-      alert("Built-in local repository fixtures cannot be deleted from cloud storage.");
-      return;
-    }
-
     if (confirm(`Are you sure you want to delete '${item.name}' from Firebase Storage?`)) {
       try {
         await deleteMediaFile(item.id);
@@ -259,12 +254,6 @@ export const MediaLibraryView: React.FC = () => {
                     </span>
                   </div>
                 )}
-
-                {item.isLocalFixture && (
-                  <span className="absolute top-2 left-2 px-2 py-0.5 rounded bg-slate-950/90 text-slate-300 border border-slate-700 text-[10px] font-mono">
-                    Local Fixture
-                  </span>
-                )}
               </div>
 
               {/* Details */}
@@ -304,16 +293,14 @@ export const MediaLibraryView: React.FC = () => {
                   </a>
                 </div>
 
-                {!item.isLocalFixture && (
-                  <button
-                    type="button"
-                    onClick={() => handleDelete(item)}
-                    className="p-1 text-slate-500 hover:text-red-400 hover:bg-red-950/40 rounded-lg transition"
-                    title="Delete from Storage"
-                  >
-                    🗑️
-                  </button>
-                )}
+                <button
+                  type="button"
+                  onClick={() => handleDelete(item)}
+                  className="p-1 text-slate-500 hover:text-red-400 hover:bg-red-950/40 rounded-lg transition"
+                  title="Delete from Storage"
+                >
+                  🗑️
+                </button>
               </div>
             </div>
           ))}

@@ -33,7 +33,6 @@ export interface MediaItem {
   size?: number; // in bytes
   contentType?: string;
   updatedAt?: string; // ISO string
-  isLocalFixture?: boolean;
 }
 
 export const MEDIA_COLLECTIONS: Record<string, MediaCollectionConfig> = {

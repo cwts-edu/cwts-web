@@ -282,12 +282,6 @@ export const MediaPickerModal: React.FC<Props> = ({
                                 </span>
                               </div>
                             )}
-
-                            {item.isLocalFixture && (
-                              <span className="absolute top-1.5 left-1.5 px-1.5 py-0.5 rounded bg-slate-900/90 text-slate-300 border border-slate-700 text-[9px] font-mono">
-                                Built-in
-                              </span>
-                            )}
                           </div>
 
                           {/* File info */}

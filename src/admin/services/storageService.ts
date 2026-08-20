@@ -61,36 +61,10 @@ export function resolveMediaPreviewUrl(pathOrUrl?: string | null): string {
 }
 
 /**
- * Built-in local fallback fixtures for offline local development or initial state.
- */
-const LOCAL_FIXTURES: Record<string, Array<{ name: string; path: string; size?: number }>> = {
-  "news-thumbnails": [
-    { name: "newsletter-2026A.jpg", path: "/images/news/newsletter-2026A.jpg", size: 98304 },
-    { name: "MI Bring Church Home.jpg", path: "/images/news/MI Bring Church Home.jpg", size: 112640 },
-    { name: "MI-Teach-Learn.jpg", path: "/images/news/MI-Teach-Learn.jpg", size: 104448 },
-    { name: "MI-Art-Theology.jpg", path: "/images/news/MI-Art-Theology.jpg", size: 120832 },
-  ],
-  "job-docs": [
-    {
-      name: "2022-08-23-CEC-中文牧師尋牧廣告-Andrew-Lo.pdf",
-      path: "/docs/jobs/2022-08-23-CEC-中文牧師尋牧廣告-Andrew-Lo.pdf",
-      size: 245760,
-    },
-    {
-      name: "2022-09-05-Portland-CCMA-Pastoral-Search-Andrew-Lo.pdf",
-      path: "/docs/jobs/2022-09-05-Portland-CCMA-Pastoral-Search-Andrew-Lo.pdf",
-      size: 196608,
-    },
-  ],
-};
-
-/**
  * Lists all media items stored in a given Firebase Storage collection folder.
- * Merges with local fixtures if Firebase returns empty or in dev mode.
  */
 export async function listMediaItems(collectionConfig: MediaCollectionConfig): Promise<MediaItem[]> {
   const items: MediaItem[] = [];
-  const existingNames = new Set<string>();
 
   try {
     const folderRef = ref(storage, collectionConfig.collectionPath);
@@ -104,7 +78,6 @@ export async function listMediaItems(collectionConfig: MediaCollectionConfig): P
         ]);
 
         const fileName = itemRef.name;
-        existingNames.add(fileName);
 
         const mediaItem: MediaItem = {
           id: `${collectionConfig.collectionPath}/${fileName}`,
@@ -117,7 +90,6 @@ export async function listMediaItems(collectionConfig: MediaCollectionConfig): P
           size: meta?.size,
           contentType: meta?.contentType || (collectionConfig.type === "image" ? "image/jpeg" : "application/pdf"),
           updatedAt: meta?.updated || meta?.timeCreated || new Date().toISOString(),
-          isLocalFixture: false,
         };
 
         return mediaItem;
@@ -133,26 +105,6 @@ export async function listMediaItems(collectionConfig: MediaCollectionConfig): P
     }
   } catch (err) {
     console.warn(`[Firebase Storage] listAll failed for '${collectionConfig.collectionPath}':`, err);
-  }
-
-  // Merge built-in local fixtures that haven't been overwritten in remote storage
-  const fixtures = LOCAL_FIXTURES[collectionConfig.id] || [];
-  for (const fix of fixtures) {
-    if (!existingNames.has(fix.name)) {
-      items.push({
-        id: `local:${fix.path}`,
-        name: fix.name,
-        collectionId: collectionConfig.id,
-        collectionPath: collectionConfig.collectionPath,
-        filePath: fix.name,
-        siteRelativePath: fix.path,
-        downloadUrl: fix.path, // Direct local path fallback
-        size: fix.size,
-        contentType: collectionConfig.type === "image" ? "image/jpeg" : "application/pdf",
-        updatedAt: "2026-08-01T00:00:00.000Z",
-        isLocalFixture: true,
-      });
-    }
   }
 
   // Sort newest first
@@ -220,7 +172,6 @@ export async function uploadMediaFile(
             size: meta?.size || fileOrBlob.size,
             contentType: meta?.contentType || metadata.contentType,
             updatedAt: meta?.updated || meta?.timeCreated || new Date().toISOString(),
-            isLocalFixture: false,
           };
 
           resolve(item);
