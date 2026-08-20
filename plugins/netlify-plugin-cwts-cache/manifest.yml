@@ -1,2 +1,1 @@
 name: netlify-plugin-cwts-cache
-description: Persists CWTS Firebase Storage media asset cache across Netlify builds.
