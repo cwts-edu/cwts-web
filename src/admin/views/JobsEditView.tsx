@@ -4,6 +4,7 @@ import type { JobItem } from "./JobsListView";
 import { db } from "../config/firebase";
 import { collection, getDocs, query, orderBy } from "firebase/firestore";
 import { MediaField } from "../components/media/MediaField";
+import { RichTextEditor } from "../components/editor/RichTextEditor";
 import { formatSafeDate } from "../utils/dateUtils";
 
 interface VersionItem {
@@ -29,6 +30,11 @@ export const JobsEditView: React.FC<Props> = ({ initialItem, onSave, onCancel })
   const [timestampSuffix] = useState(() => Date.now().toString(36));
   const [title, setTitle] = useState(currentActive?.title || "");
   const [location, setLocation] = useState(currentActive?.location || "CA");
+  
+  // Format / Delivery Mode: "pdf" vs "rich-text"
+  const [deliveryMode, setDeliveryMode] = useState<"pdf" | "rich-text">(
+    () => (currentActive?.file ? "pdf" : "rich-text")
+  );
   const [file, setFile] = useState(currentActive?.file || "");
   const [body, setBody] = useState(initialItem?.draftBody || initialItem?.body || "");
 
@@ -70,11 +76,24 @@ export const JobsEditView: React.FC<Props> = ({ initialItem, onSave, onCancel })
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
+
+    // If PDF mode, file is required
+    if (deliveryMode === "pdf" && !file.trim()) {
+      setError("Please attach a PDF document or switch to 'Rich Text Webpage' mode.");
+      return;
+    }
+
+    // If Rich Text mode, body is required
+    if (deliveryMode === "rich-text" && !body.trim()) {
+      setError("Please write the job description body or switch to 'Attached PDF' mode.");
+      return;
+    }
+
     const rawData = {
       title: title.trim(),
       location: location.trim(),
       date: new Date(dateStr),
-      ...(file.trim() ? { file: file.trim() } : {}),
+      ...(deliveryMode === "pdf" && file.trim() ? { file: file.trim() } : {}),
     };
 
     const validation = JobMetadataSchema.safeParse(rawData);
@@ -86,7 +105,11 @@ export const JobsEditView: React.FC<Props> = ({ initialItem, onSave, onCancel })
 
     try {
       setIsSaving(true);
-      await onSave({ id: targetDocId, data: validation.data, body });
+      await onSave({
+        id: targetDocId,
+        data: validation.data,
+        body: deliveryMode === "rich-text" ? body : "",
+      });
     } catch (err: any) {
       setError(err.message || "Failed to save draft");
       setIsSaving(false);
@@ -98,7 +121,13 @@ export const JobsEditView: React.FC<Props> = ({ initialItem, onSave, onCancel })
       setTitle(ver.data.title);
       setLocation(ver.data.location);
       setDateStr(formatSafeDate(ver.data.date, formatSafeDate(new Date())));
-      setFile(ver.data.file || "");
+      if (ver.data.file) {
+        setDeliveryMode("pdf");
+        setFile(ver.data.file);
+      } else {
+        setDeliveryMode("rich-text");
+        setFile("");
+      }
       setBody(ver.body || "");
       setShowHistory(false);
     }
@@ -190,6 +219,7 @@ export const JobsEditView: React.FC<Props> = ({ initialItem, onSave, onCancel })
           </div>
         )}
 
+        {/* Basic Job Details */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           <div className="sm:col-span-2">
             <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">
@@ -231,33 +261,87 @@ export const JobsEditView: React.FC<Props> = ({ initialItem, onSave, onCancel })
               className="w-full px-4 py-2.5 bg-slate-950 border border-slate-700 rounded-xl text-white text-sm focus:outline-none focus:border-blue-500 transition"
             />
           </div>
+        </div>
 
-          <div className="sm:col-span-2">
-            <MediaField
-              collectionId="job-docs"
-              label="Attached Job Description PDF (Optional)"
-              value={file}
-              onChange={setFile}
-              placeholder="/docs/jobs/example.pdf"
-              helpText="If a PDF file is provided, clicking the job posting downloads the PDF directly."
-            />
-          </div>
+        {/* Delivery Format Mode Switcher */}
+        <div className="pt-4 border-t border-slate-800 space-y-3">
+          <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider">
+            Job Description Delivery Mode *
+          </label>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {/* Option 1: PDF Document */}
+            <button
+              type="button"
+              onClick={() => setDeliveryMode("pdf")}
+              className={`p-4 rounded-xl border text-left transition relative flex flex-col justify-between gap-2 ${
+                deliveryMode === "pdf"
+                  ? "bg-blue-950/40 border-blue-500 text-white shadow-lg ring-1 ring-blue-500/50"
+                  : "bg-slate-950 border-slate-800 text-slate-400 hover:border-slate-700 hover:text-slate-300"
+              }`}
+            >
+              <div className="flex items-center gap-2">
+                <span className="text-xl">📄</span>
+                <span className="font-bold text-sm text-white">Attached PDF Document</span>
+              </div>
+              <p className="text-xs text-slate-400">
+                Clicking the job in the listing directly opens/downloads the attached PDF.
+              </p>
+              {deliveryMode === "pdf" && (
+                <span className="absolute top-3 right-3 text-blue-400 text-xs font-bold">✓ Active</span>
+              )}
+            </button>
 
-          <div className="sm:col-span-2">
-            <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">
-              Job Description Body (Markdown - Used if no PDF attached)
-            </label>
-            <textarea
-              rows={5}
-              value={body}
-              onChange={(e) => setBody(e.target.value)}
-              placeholder="Enter full job duties, requirements, and application instructions..."
-              className="w-full px-4 py-3 bg-slate-950 border border-slate-700 rounded-xl text-white text-sm focus:outline-none focus:border-blue-500 font-mono transition"
-            />
+            {/* Option 2: Rich Text Webpage */}
+            <button
+              type="button"
+              onClick={() => setDeliveryMode("rich-text")}
+              className={`p-4 rounded-xl border text-left transition relative flex flex-col justify-between gap-2 ${
+                deliveryMode === "rich-text"
+                  ? "bg-blue-950/40 border-blue-500 text-white shadow-lg ring-1 ring-blue-500/50"
+                  : "bg-slate-950 border-slate-800 text-slate-400 hover:border-slate-700 hover:text-slate-300"
+              }`}
+            >
+              <div className="flex items-center gap-2">
+                <span className="text-xl">✍️</span>
+                <span className="font-bold text-sm text-white">Rich Text Webpage</span>
+              </div>
+              <p className="text-xs text-slate-400">
+                Generates a dedicated job detail page with formatted rich text, headings, and lists.
+              </p>
+              {deliveryMode === "rich-text" && (
+                <span className="absolute top-3 right-3 text-blue-400 text-xs font-bold">✓ Active</span>
+              )}
+            </button>
           </div>
         </div>
 
-        {/* Action Button: Single Save to Draft */}
+        {/* Dynamic Content Panel based on Delivery Mode */}
+        {deliveryMode === "pdf" ? (
+          <div className="p-4 bg-slate-950/60 border border-slate-800 rounded-2xl space-y-3">
+            <MediaField
+              collectionId="job-docs"
+              label="Attached Job Description PDF *"
+              value={file}
+              onChange={setFile}
+              placeholder="/docs/jobs/example.pdf"
+              helpText="Upload or select a PDF document. Visitors will download this file directly."
+            />
+          </div>
+        ) : (
+          <div className="space-y-3">
+            <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider">
+              Job Description & Application Instructions (Rich Text Editor) *
+            </label>
+            <RichTextEditor
+              initialContentHtml={body}
+              onChange={({ html }) => setBody(html)}
+              placeholder="Enter full job duties, qualifications, church background, and how to apply..."
+              minHeight="260px"
+            />
+          </div>
+        )}
+
+        {/* Action Button: Save to Draft */}
         <div className="pt-4 border-t border-slate-800 flex items-center justify-end gap-4">
           <button
             type="button"
