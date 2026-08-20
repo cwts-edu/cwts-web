@@ -45,21 +45,9 @@ export function resolveActiveDraftId(): string | undefined {
     }
   }
 
-  // 3. Deploy previews and experimental/staging branches (e.g. cms-exp, staging, preview, dev)
-  if (typeof process !== "undefined") {
-    const context = process.env.CONTEXT;
-    const branch = process.env.BRANCH;
-    const isDeployPreview = context === "deploy-preview" || context === "branch-deploy";
-    const isStagingBranch =
-      branch === "cms-exp" ||
-      branch === "staging" ||
-      branch === "preview" ||
-      branch === "dev";
-
-    if (isDeployPreview || isStagingBranch || process.env.STAGING === "true" || process.env.CONTENT_SOURCE === "draft") {
-      console.log(`🎯 [Draft Build] Active draft overlay enabled ('main') for context='${context}', branch='${branch}'`);
-      return "main";
-    }
+  // 3. Explicit staging environment variable flag
+  if (typeof process !== "undefined" && (process.env?.STAGING === "true" || process.env?.CONTENT_SOURCE === "draft")) {
+    return "auto";
   }
 
   return undefined;
