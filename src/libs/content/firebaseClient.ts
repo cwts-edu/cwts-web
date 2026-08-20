@@ -15,6 +15,16 @@ import {
 } from "./schemas";
 import site from "../site";
 import { slug as slugify } from "github-slugger";
+import { createComponent, unescapeHTML } from "astro/runtime/server/index.js";
+import { createMarkdownProcessor } from "@astrojs/markdown-remark";
+
+let markdownProcessorPromise: Promise<any> | null = null;
+function getMarkdownProcessor() {
+  if (!markdownProcessorPromise) {
+    markdownProcessorPromise = createMarkdownProcessor();
+  }
+  return markdownProcessorPromise;
+}
 
 export function resolveActiveDraftId(): string | undefined {
   // 1. Explicit environment variable (Local dev, CI override)
@@ -182,9 +192,27 @@ export class FirebaseContentClient implements IContentClient {
     if (entry.Content) {
       return { Content: entry.Content };
     }
-    const html = entry.html || entry.body || "";
+
+    let html = entry.html;
+    let headings: any[] = [];
+    if (!html && entry.body) {
+      const processor = await getMarkdownProcessor();
+      const result = await processor.render(entry.body);
+      html = result.code;
+      headings = result.metadata?.headings || [];
+    } else if (!html) {
+      html = "";
+    }
+
+    const Content = createComponent({
+      factory(_result: any, _props: any, _slots: any) {
+        return unescapeHTML(html);
+      },
+    });
+
     return {
-      Content: () => html,
+      Content,
+      headings,
     };
   }
 

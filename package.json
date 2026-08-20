@@ -14,7 +14,9 @@
     "verify-build": "npm run build && tsx tools/verify-build.ts",
     "verify-build:update": "npm run build && tsx tools/verify-build.ts --update-exceptions",
     "sync-assembly": "tsx tools/sync-assembly.ts",
-    "seed-firestore": "tsx tools/seed-firestore.ts"
+    "sync-assets": "tsx tools/sync-assets.ts",
+    "seed-firestore": "tsx tools/seed-firestore.ts",
+    "seed-storage": "tsx tools/seed-storage.ts"
   },
   "dependencies": {
     "@astrojs/markdown-remark": "^6.1.0",

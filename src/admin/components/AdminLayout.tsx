@@ -3,7 +3,15 @@ import { useAuth } from "../context/AuthContext";
 import { useDraft } from "../context/DraftContext";
 import { DraftReviewModal } from "./DraftReviewModal";
 
-export type AdminTab = "dashboard" | "news" | "news_new" | "news_edit" | "jobs" | "jobs_new" | "jobs_edit";
+export type AdminTab =
+  | "dashboard"
+  | "news"
+  | "news_new"
+  | "news_edit"
+  | "jobs"
+  | "jobs_new"
+  | "jobs_edit"
+  | "media";
 
 interface Props {
   currentTab: AdminTab;
@@ -20,6 +28,7 @@ export const AdminLayout: React.FC<Props> = ({ currentTab, onNavigate, children 
     if (tab === "dashboard" && currentTab === "dashboard") return true;
     if (tab === "news" && (currentTab === "news" || currentTab === "news_new" || currentTab === "news_edit")) return true;
     if (tab === "jobs" && (currentTab === "jobs" || currentTab === "jobs_new" || currentTab === "jobs_edit")) return true;
+    if (tab === "media" && currentTab === "media") return true;
     return false;
   };
 
@@ -84,6 +93,22 @@ export const AdminLayout: React.FC<Props> = ({ currentTab, onNavigate, children 
             <span className="text-lg">💼</span>
             Job Postings
           </button>
+
+          <div className="pt-4 pb-1 px-3 text-[11px] font-semibold text-slate-500 uppercase tracking-wider">
+            Media & Assets
+          </div>
+
+          <button
+            onClick={() => onNavigate("media")}
+            className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition ${
+              isNavActive("media")
+                ? "bg-purple-600 text-white shadow-md"
+                : "text-slate-400 hover:bg-slate-800/80 hover:text-white"
+            }`}
+          >
+            <span className="text-lg">🖼️</span>
+            Media Library
+          </button>
         </nav>
 
         {/* User Footer */}
@@ -127,6 +152,7 @@ export const AdminLayout: React.FC<Props> = ({ currentTab, onNavigate, children 
               {currentTab === "dashboard" && "Overview Dashboard"}
               {(currentTab === "news" || currentTab === "news_new" || currentTab === "news_edit") && "News Articles"}
               {(currentTab === "jobs" || currentTab === "jobs_new" || currentTab === "jobs_edit") && "Job Postings"}
+              {currentTab === "media" && "Media Asset Library"}
             </span>
 
             {pendingChanges.length > 0 && (

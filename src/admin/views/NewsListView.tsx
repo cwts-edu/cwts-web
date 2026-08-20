@@ -1,5 +1,6 @@
 import React from "react";
 import type { NewsMetadata } from "../../libs/content/schemas";
+import { resolveMediaPreviewUrl } from "../services/storageService";
 import type { AuditUser } from "../../libs/content/types";
 
 export interface NewsItem {
@@ -93,9 +94,12 @@ export const NewsListView: React.FC<Props> = ({ items, onNew, onEdit, onDelete, 
                       <td className="py-3.5 px-6">
                         {activeData.thumbnail ? (
                           <img
-                            src={activeData.thumbnail}
+                            src={resolveMediaPreviewUrl(activeData.thumbnail)}
                             alt=""
                             className="w-16 h-10 object-cover rounded-lg border border-slate-700 bg-slate-800"
+                            onError={(e) => {
+                              (e.target as HTMLElement).style.opacity = "0.4";
+                            }}
                           />
                         ) : (
                           <div className="w-16 h-10 rounded-lg bg-slate-800 border border-slate-700 flex items-center justify-center text-xs text-slate-500">

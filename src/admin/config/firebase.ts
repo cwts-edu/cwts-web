@@ -3,13 +3,23 @@ import { getAuth, GoogleAuthProvider } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 
-const apiKey = (import.meta.env.PUBLIC_FIREBASE_API_KEY || "").trim();
-const authDomain = (import.meta.env.PUBLIC_FIREBASE_AUTH_DOMAIN || "").trim();
-const projectId = (import.meta.env.PUBLIC_FIREBASE_PROJECT_ID || "").trim();
-const storageBucket = (import.meta.env.PUBLIC_FIREBASE_STORAGE_BUCKET || "").trim();
-const messagingSenderId = (import.meta.env.PUBLIC_FIREBASE_MESSAGING_SENDER_ID || "").trim();
-const appId = (import.meta.env.PUBLIC_FIREBASE_APP_ID || "").trim();
-const measurementId = (import.meta.env.PUBLIC_FIREBASE_MEASUREMENT_ID || "").trim() || undefined;
+function getEnvVar(key: string): string {
+  if (typeof import.meta !== "undefined" && import.meta.env && import.meta.env[key]) {
+    return String(import.meta.env[key]).trim();
+  }
+  if (typeof process !== "undefined" && process.env && process.env[key]) {
+    return String(process.env[key]).trim();
+  }
+  return "";
+}
+
+const apiKey = getEnvVar("PUBLIC_FIREBASE_API_KEY");
+const authDomain = getEnvVar("PUBLIC_FIREBASE_AUTH_DOMAIN");
+const projectId = getEnvVar("PUBLIC_FIREBASE_PROJECT_ID");
+const storageBucket = getEnvVar("PUBLIC_FIREBASE_STORAGE_BUCKET");
+const messagingSenderId = getEnvVar("PUBLIC_FIREBASE_MESSAGING_SENDER_ID");
+const appId = getEnvVar("PUBLIC_FIREBASE_APP_ID");
+const measurementId = getEnvVar("PUBLIC_FIREBASE_MEASUREMENT_ID") || undefined;
 
 export const isFirebaseConfigured = Boolean(
   apiKey && !apiKey.includes("Dummy") && projectId && authDomain

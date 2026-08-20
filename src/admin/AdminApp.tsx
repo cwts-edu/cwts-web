@@ -8,6 +8,7 @@ import { NewsListView, type NewsItem } from "./views/NewsListView";
 import { NewsEditView } from "./views/NewsEditView";
 import { JobsListView, type JobItem } from "./views/JobsListView";
 import { JobsEditView } from "./views/JobsEditView";
+import { MediaLibraryView } from "./views/MediaLibraryView";
 import { db } from "./config/firebase";
 import { collection, getDocs } from "firebase/firestore";
 import type { NewsMetadata, JobMetadata } from "../libs/content/schemas";
@@ -47,6 +48,9 @@ export function parseAdminLocation(): AdminRouteState {
   if (path === "/admin/jobs") {
     return { tab: "jobs" };
   }
+  if (path === "/admin/media") {
+    return { tab: "media" };
+  }
 
   return { tab: "dashboard" };
 }
@@ -67,6 +71,8 @@ export function buildAdminUrl(tab: AdminTab, param?: string): string {
       return "/admin/jobs/new";
     case "jobs_edit":
       return param ? `/admin/jobs/edit?id=${encodeURIComponent(param)}` : "/admin/jobs/edit";
+    case "media":
+      return "/admin/media";
     default:
       return "/admin";
   }
@@ -362,6 +368,8 @@ const AdminDashboard: React.FC = () => {
           onCancel={() => handleNavigate("jobs")}
         />
       )}
+
+      {currentTab === "media" && <MediaLibraryView />}
     </AdminLayout>
   );
 };

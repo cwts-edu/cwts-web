@@ -29,7 +29,11 @@ export const DashboardView: React.FC<Props> = ({ onNavigate, newsCount, jobsCoun
   const [seedMessage, setSeedMessage] = useState<string | null>(null);
 
   const handleSeedDatabase = async () => {
-    if (!confirm("This will upload all 4 initial News articles and 10 Job postings into live Firestore under your admin account. Proceed?")) {
+    if (
+      !confirm(
+        "This will upload all 4 initial News articles, 10 Job postings, and their media assets (images & PDFs) into live Firestore & Firebase Storage under your admin account. Proceed?"
+      )
+    ) {
       return;
     }
 
@@ -47,7 +51,9 @@ export const DashboardView: React.FC<Props> = ({ onNavigate, newsCount, jobsCoun
     setIsSeeding(false);
 
     if (res.success) {
-      setSeedMessage(`✅ Database seeded successfully: ${res.newsCount} news articles, ${res.jobsCount} job postings.`);
+      setSeedMessage(
+        `✅ Database seeded successfully: ${res.newsCount} news articles, ${res.jobsCount} job postings, and ${res.assetsCount} media assets.`
+      );
       if (onRefreshData) {
         await onRefreshData();
       }

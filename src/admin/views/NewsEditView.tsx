@@ -3,6 +3,7 @@ import { NewsMetadataSchema, type NewsMetadata } from "../../libs/content/schema
 import type { NewsItem } from "./NewsListView";
 import { db } from "../config/firebase";
 import { collection, getDocs, query, orderBy } from "firebase/firestore";
+import { MediaField } from "../components/media/MediaField";
 
 interface VersionItem {
   version: number;
@@ -234,16 +235,14 @@ export const NewsEditView: React.FC<Props> = ({ initialItem, onSave, onCancel })
           </div>
 
           <div className="sm:col-span-2">
-            <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">
-              Thumbnail Image Path *
-            </label>
-            <input
-              type="text"
-              required
+            <MediaField
+              collectionId="news-thumbnails"
+              label="Thumbnail Image"
               value={thumbnail}
-              onChange={(e) => setThumbnail(e.target.value)}
+              onChange={setThumbnail}
+              required
               placeholder="/images/news/example.jpg"
-              className="w-full px-4 py-2.5 bg-slate-950 border border-slate-700 rounded-xl text-white text-sm focus:outline-none focus:border-purple-500 transition"
+              helpText="Standard 400 × 220 px thumbnail shown on the homepage and news listing."
             />
           </div>
 
