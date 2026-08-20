@@ -3,23 +3,39 @@ import { getAuth, GoogleAuthProvider } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 
-function getEnvVar(key: string): string {
-  if (typeof import.meta !== "undefined" && import.meta.env && import.meta.env[key]) {
-    return String(import.meta.env[key]).trim();
+function getEnvVar(key: string, aliases: string[] = []): string {
+  const allKeys = [key, ...aliases];
+
+  // 1. Vite import.meta.env
+  if (typeof import.meta !== "undefined" && import.meta.env) {
+    for (const k of allKeys) {
+      if (import.meta.env[k]) {
+        return String(import.meta.env[k]).trim();
+      }
+    }
   }
-  if (typeof process !== "undefined" && process.env && process.env[key]) {
-    return String(process.env[key]).trim();
+
+  // 2. Node process.env
+  if (typeof process !== "undefined" && process.env) {
+    for (const k of allKeys) {
+      if (process.env[k]) {
+        return String(process.env[k]).trim();
+      }
+    }
   }
+
   return "";
 }
 
-const apiKey = getEnvVar("PUBLIC_FIREBASE_API_KEY");
-const authDomain = getEnvVar("PUBLIC_FIREBASE_AUTH_DOMAIN");
-const projectId = getEnvVar("PUBLIC_FIREBASE_PROJECT_ID");
-const storageBucket = getEnvVar("PUBLIC_FIREBASE_STORAGE_BUCKET");
-const messagingSenderId = getEnvVar("PUBLIC_FIREBASE_MESSAGING_SENDER_ID");
-const appId = getEnvVar("PUBLIC_FIREBASE_APP_ID");
-const measurementId = getEnvVar("PUBLIC_FIREBASE_MEASUREMENT_ID") || undefined;
+const apiKey = getEnvVar("PUBLIC_FIREBASE_API_KEY", ["FIREBASE_API_KEY"]);
+const authDomain = getEnvVar("PUBLIC_FIREBASE_AUTH_DOMAIN", ["FIREBASE_AUTH_DOMAIN"]);
+const projectId = getEnvVar("PUBLIC_FIREBASE_PROJECT_ID", ["FIREBASE_PROJECT_ID"]) || "cwts-cms";
+const storageBucket =
+  getEnvVar("PUBLIC_FIREBASE_STORAGE_BUCKET", ["FIREBASE_STORAGE_BUCKET", "PUBLIC_STORAGE_BUCKET"]) ||
+  `${projectId}.firebasestorage.app`;
+const messagingSenderId = getEnvVar("PUBLIC_FIREBASE_MESSAGING_SENDER_ID", ["FIREBASE_MESSAGING_SENDER_ID"]);
+const appId = getEnvVar("PUBLIC_FIREBASE_APP_ID", ["FIREBASE_APP_ID"]);
+const measurementId = getEnvVar("PUBLIC_FIREBASE_MEASUREMENT_ID", ["FIREBASE_MEASUREMENT_ID"]) || undefined;
 
 export const isFirebaseConfigured = Boolean(
   apiKey && !apiKey.includes("Dummy") && projectId && authDomain
@@ -27,17 +43,19 @@ export const isFirebaseConfigured = Boolean(
 
 if (!isFirebaseConfigured) {
   console.warn(
-    "⚠️ [Firebase] Missing or invalid PUBLIC_FIREBASE_API_KEY in .env. Please check your .env file and restart the dev server ('npm run dev')."
+    "⚠️ [Firebase] Missing or invalid PUBLIC_FIREBASE_API_KEY in environment. Please check your environment variables (.env locally or Netlify Dashboard)."
   );
+} else {
+  console.log(`🔥 [Firebase] Initialized with project '${projectId}', bucket '${storageBucket}'`);
 }
 
 const firebaseConfig = {
   apiKey: apiKey || "AIzaSyDummyKeyForLocalDev",
-  authDomain: authDomain || "cwts-cms.firebaseapp.com",
-  projectId: projectId || "cwts-cms",
-  storageBucket: storageBucket || "cwts-cms.appspot.com",
-  messagingSenderId: messagingSenderId || "1234567890",
-  appId: appId || "1:1234567890:web:abcdef",
+  authDomain: authDomain || `${projectId}.firebaseapp.com`,
+  projectId: projectId,
+  storageBucket: storageBucket,
+  messagingSenderId: messagingSenderId || "135739619802",
+  appId: appId || "1:135739619802:web:607833ea752671e070a8e3",
   ...(measurementId ? { measurementId } : {}),
 };
 

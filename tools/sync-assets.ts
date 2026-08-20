@@ -3,7 +3,7 @@ import fs from "fs";
 import path from "path";
 import { ref, getMetadata, getBytes } from "firebase/storage";
 import { collection, getDocs, terminate } from "firebase/firestore";
-import { storage, db } from "../src/admin/config/firebase";
+import { storage, db, isFirebaseConfigured } from "../src/admin/config/firebase";
 
 interface ManifestRecord {
   md5?: string;
@@ -113,8 +113,8 @@ async function* walkFiles(dir: string): AsyncGenerator<string> {
 }
 
 /**
- * Scans active news and jobs entries across local content files and Cloud Firestore
- * to discover all referenced news thumbnail images and job PDF documents.
+ * Scans active news and jobs entries across local content files, Cloud Firestore,
+ * and active Draft overlays to discover all referenced news thumbnails and job PDFs.
  */
 async function collectReferencedNewsAndJobsAssets(): Promise<Set<string>> {
   const referenced = new Set<string>();
@@ -135,9 +135,12 @@ async function collectReferencedNewsAndJobsAssets(): Promise<Set<string>> {
     }
   }
 
-  // 2. Scan live Firestore collections (news and jobs)
+  // 2. Scan live Firestore canonical collections (news and jobs)
   try {
-    const newsSnap = await getDocs(collection(db, "news")).catch(() => null);
+    const newsSnap = await getDocs(collection(db, "news")).catch((e) => {
+      console.warn("Could not query 'news' collection from Firestore:", e.message);
+      return null;
+    });
     if (newsSnap && !newsSnap.empty) {
       newsSnap.forEach((d) => {
         const data = d.data();
@@ -150,7 +153,10 @@ async function collectReferencedNewsAndJobsAssets(): Promise<Set<string>> {
       });
     }
 
-    const jobsSnap = await getDocs(collection(db, "jobs")).catch(() => null);
+    const jobsSnap = await getDocs(collection(db, "jobs")).catch((e) => {
+      console.warn("Could not query 'jobs' collection from Firestore:", e.message);
+      return null;
+    });
     if (jobsSnap && !jobsSnap.empty) {
       jobsSnap.forEach((d) => {
         const data = d.data();
@@ -162,8 +168,56 @@ async function collectReferencedNewsAndJobsAssets(): Promise<Set<string>> {
         if (data.body) scanTextForNewsOrJobPaths(data.body, referenced);
       });
     }
-  } catch (err) {
-    // Firestore offline in local fallback mode
+
+    // 3. Scan Draft overlay changes in Firestore (/drafts/{draftId}/changes)
+    const activeDraftId = process.env.DRAFT_ID || "main";
+    const draftChangesSnap = await getDocs(collection(db, "drafts", activeDraftId, "changes")).catch(() => null);
+    if (draftChangesSnap && !draftChangesSnap.empty) {
+      console.log(`📝 Scanning ${draftChangesSnap.size} draft changes from draft '${activeDraftId}'...`);
+      draftChangesSnap.forEach((d) => {
+        const change = d.data();
+        if (change.action === "delete") return;
+        if (change.data) {
+          if (change.data.thumbnail) {
+            const sp = extractNewsOrJobStoragePath(change.data.thumbnail);
+            if (sp) referenced.add(sp);
+          }
+          if (change.data.file) {
+            const sp = extractNewsOrJobStoragePath(change.data.file);
+            if (sp) referenced.add(sp);
+          }
+        }
+        if (change.body) scanTextForNewsOrJobPaths(change.body, referenced);
+      });
+    }
+
+    // Also scan any other active drafts in Firestore
+    const allDraftsSnap = await getDocs(collection(db, "drafts")).catch(() => null);
+    if (allDraftsSnap && !allDraftsSnap.empty) {
+      for (const draftDoc of allDraftsSnap.docs) {
+        if (draftDoc.id === activeDraftId) continue;
+        const otherChanges = await getDocs(collection(db, "drafts", draftDoc.id, "changes")).catch(() => null);
+        if (otherChanges && !otherChanges.empty) {
+          otherChanges.forEach((d) => {
+            const change = d.data();
+            if (change.action === "delete") return;
+            if (change.data) {
+              if (change.data.thumbnail) {
+                const sp = extractNewsOrJobStoragePath(change.data.thumbnail);
+                if (sp) referenced.add(sp);
+              }
+              if (change.data.file) {
+                const sp = extractNewsOrJobStoragePath(change.data.file);
+                if (sp) referenced.add(sp);
+              }
+            }
+            if (change.body) scanTextForNewsOrJobPaths(change.body, referenced);
+          });
+        }
+      }
+    }
+  } catch (err: any) {
+    console.warn("⚠️ Warning during Firestore asset reference scanning:", err.message || err);
   }
 
   return referenced;
@@ -171,11 +225,12 @@ async function collectReferencedNewsAndJobsAssets(): Promise<Set<string>> {
 
 /**
  * Main Asset Synchronization Pipeline:
- * Strictly syncs referenced news and jobs media from Firebase Storage,
- * completely ignoring local public/ files and skipping unreferenced assets.
+ * Strictly syncs referenced news and jobs media from Firebase Storage.
+ * Outputs detailed error diagnostics and fails the build if any referenced asset cannot be fetched.
  */
 export async function syncAssets() {
-  console.log("⚡ Starting Firebase Storage Media Sync (News & Jobs Only)...");
+  const bucketName = storage.app.options.storageBucket || "unknown-bucket";
+  console.log(`⚡ Starting Firebase Storage Media Sync (News & Jobs Only) [Bucket: ${bucketName}]...`);
 
   if (!fs.existsSync(DIST_DIR)) {
     fs.mkdirSync(DIST_DIR, { recursive: true });
@@ -184,24 +239,37 @@ export async function syncAssets() {
   const manifest = loadManifest();
   const referencedPaths = await collectReferencedNewsAndJobsAssets();
 
-  console.log(`📋 Found ${referencedPaths.size} referenced news & job media assets.`);
+  console.log(`📋 Found ${referencedPaths.size} referenced news & job media assets:`);
+  for (const p of referencedPaths) {
+    console.log(`   - ${p}`);
+  }
 
   let downloadedCount = 0;
   let cachedCount = 0;
-  let skippedCount = 0;
+  const failedAssets: Array<{ path: string; error: string; code?: string }> = [];
 
   for (const storagePath of referencedPaths) {
     const distPath = path.join(DIST_DIR, storagePath);
     const cachedFilePath = path.join(CACHE_DIR, storagePath);
 
-    // Strictly fetch from Firebase Storage (ignoring local files)
     try {
       const fileRef = ref(storage, storagePath);
-      const meta = await getMetadata(fileRef).catch(() => null);
 
-      if (!meta) {
-        // Not in Firebase Storage (e.g. storage not yet seeded or offline)
-        skippedCount++;
+      // Fetch metadata with explicit error diagnostics
+      let meta;
+      try {
+        meta = await getMetadata(fileRef);
+      } catch (metaErr: any) {
+        console.error(
+          `❌ [Firebase Storage] Failed to fetch metadata for '${storagePath}' from bucket '${bucketName}':\n` +
+          `   Error Code: ${metaErr.code || "unknown"}\n` +
+          `   Error Message: ${metaErr.message || String(metaErr)}`
+        );
+        failedAssets.push({
+          path: storagePath,
+          error: metaErr.message || String(metaErr),
+          code: metaErr.code,
+        });
         continue;
       }
 
@@ -237,8 +305,15 @@ export async function syncAssets() {
         downloadedCount++;
       }
     } catch (err: any) {
-      console.warn(`⚠️ Could not sync '${storagePath}' from Firebase Storage:`, err.message || err);
-      skippedCount++;
+      console.error(
+        `❌ [Download Error] Failed to download '${storagePath}' from Firebase Storage:\n` +
+        `   Error: ${err.message || String(err)}`
+      );
+      failedAssets.push({
+        path: storagePath,
+        error: err.message || String(err),
+        code: err.code,
+      });
     }
   }
 
@@ -250,9 +325,18 @@ export async function syncAssets() {
   console.log("\n📊 Firebase Media Sync Summary (News & Jobs):");
   console.log(`   - ⚡ Served from cross-build cache (0 network egress): ${cachedCount}`);
   console.log(`   - ⬇️ Downloaded new/updated from Firebase Storage: ${downloadedCount}`);
-  if (skippedCount > 0) {
-    console.log(`   - ⚠️ Not found in Firebase Storage (skipped): ${skippedCount}`);
+
+  if (failedAssets.length > 0) {
+    console.error(`\n💥 [BUILD FAILED] ${failedAssets.length} referenced media asset(s) failed to sync from Firebase Storage:`);
+    for (const f of failedAssets) {
+      console.error(`   ❌ ${f.path} -> ${f.error} (${f.code || "unknown"})`);
+    }
+    throw new Error(
+      `Firebase Storage media sync failed for ${failedAssets.length} referenced asset(s). ` +
+      `Ensure Firebase Storage is seeded and PUBLIC_FIREBASE_STORAGE_BUCKET ('${bucketName}') is accessible.`
+    );
   }
+
   console.log("✅ Media sync complete!\n");
 }
 
