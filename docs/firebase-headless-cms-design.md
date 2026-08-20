@@ -26,6 +26,7 @@ This document details the architectural design for the CWTS website's **Firebase
 11. **Full HTML5 Browser History & Deep-Linking:** The Admin SPA utilizes the HTML5 History API (`pushState`, `popstate`) and maps to static Astro subroutes (`/admin/news`, `/admin/jobs/new`, `/admin/media`, `/admin/news/edit?id=...`), supporting browser Back/Forward navigation and bookmarked URLs.
 12. **Cross-Build Asset Caching & Netlify Plugin:** Persistent ETag/MD5 metadata cache (`.cache/cwts-assets/`) restored across builds via a custom Netlify Build Plugin (`plugins/netlify-plugin-cwts-cache`), guaranteeing **sub-second builds and near-zero Firebase Storage egress (100% within the Blaze Plan no-cost quota).**
 13. **Zero-Compute Architecture (Blaze Plan No-Cost Quota):** Firebase Cloud Storage requires a linked billing account (Blaze Plan). By performing all image resizing and cropping directly in-browser using HTML5 Canvas & Web Workers and leveraging Netlify build caching, the application operates entirely within Firebase's included free quotas ($0.00/month).
+14. **Universal Backup & Clean Replacement Framework (ZIP Packages):** Decoupled from hard-coded seed files. Content collections (`news`, `jobs`, `faculty`, and `pages`) are exported and restored via standardized, self-contained ZIP packages containing `manifest.json`, `documents.json`, and all bundled `assets/`. Restoring a package performs an atomic collection purge and complete replacement, ensuring zero stale or orphaned documents remain.
 
 ---
 
@@ -163,14 +164,18 @@ cwts-web/
 ### 3.2 URL Routing & History Sync
 | URL Path | CMS View | Description |
 | :--- | :--- | :--- |
-| `/admin` or `/admin/dashboard` | `DashboardView` | Overview statistics, active draft summary, and database/storage seeding |
-| `/admin/media` | `MediaLibraryView` | Standalone Media Library explorer with collection tabs, crop upload, and preview |
+| `/admin` or `/admin/dashboard` | `DashboardView` | Overview statistics, active draft summary, and quick navigation |
+| `/admin/faculty` | `FacultyListView` | Faculty management with tabbed categories and real-time drag-and-drop reordering |
+| `/admin/faculty/new` | `FacultyEditView` | Create faculty member with bilingual side-by-side editing and TipTap rich text |
+| `/admin/faculty/edit?id={id}` | `FacultyEditView` | Edit faculty profile with version history snapshots and rollback |
 | `/admin/news` | `NewsListView` | News articles table sorted newest first with thumbnail preview images |
 | `/admin/news/new` | `NewsEditView` | Create news article (auto-generates `YYYY-MM-DD-timestamp` ID, 400×220 cropper) |
-| `/admin/news/edit?id={id}` | `NewsEditView` | Edit existing news article (locks permanent document ID, crop/picker) |
+| `/admin/news/edit?id={id}` | `NewsEditView` | Edit existing news article (natural line-break text editor, crop/picker) |
 | `/admin/jobs` | `JobsListView` | Church job board postings with PDF badges and soft delete support |
 | `/admin/jobs/new` | `JobsEditView` | Create job posting (auto-generates `YYYY-MM-DD-timestamp` ID, PDF picker) |
 | `/admin/jobs/edit?id={id}` | `JobsEditView` | Edit existing job posting (locks permanent document ID, PDF picker) |
+| `/admin/media` | `MediaLibraryView` | Standalone Media Library explorer with collection tabs, crop upload, and preview |
+| `/admin/backup` | `BackupRestoreView` | Universal ZIP package exporter and atomic collection restore manager |
 
 ---
 
@@ -538,3 +543,98 @@ Firebase requires upgrading to the **Blaze (Pay-as-you-go) Plan** to provision a
 3. **Recommended Google Cloud Budget Alerts**:
    - In the [Google Cloud Console Billing Dashboard](https://console.cloud.google.com/billing), set up an automated budget alert with a threshold of **$1.00** and **$5.00**.
    - Sends instant email alerts to administrators in the event of unexpected usage spikes before any material cost is incurred.
+
+---
+
+## 10. Universal Backup & Restore Architecture (ZIP Packages)
+
+To eliminate brittle hard-coded code seeders and provide complete data ownership, the system uses a **Universal ZIP Package Architecture**. Any content collection (`news`, `jobs`, `faculty`, and `pages`) can be bundled into a self-contained `.zip` archive, transferred across environments, and restored with atomic collection replacement.
+
+```mermaid
+flowchart TD
+    subgraph EXPORT_SOURCES ["Package Sources (Zero Dependency)"]
+        CLI["CLI Tool Export<br/>npm run export-*-package<br/>(Git Astro Content + public/)"]
+        LIVE["Live Admin Backup<br/>/admin/backup Export<br/>(Firestore Collection + Cloud Storage)"]
+    end
+
+    subgraph ZIP_PACKAGE ["Universal CWTS Package (*.zip)"]
+        MANIFEST["manifest.json<br/>(collection, count, referencedAssets, timestamp)"]
+        DOCS["documents.json<br/>(Complete normalized Firestore JSON records)"]
+        ASSETS["assets/<br/>(Self-contained photos, thumbnails, PDFs)"]
+    end
+
+    subgraph RESTORE_PIPELINE ["Restore / Replacement Pipeline (/admin/backup)"]
+        VALIDATE["1. Validate Manifest & JSON Documents"]
+        PURGE["2. Atomic Collection Purge<br/>(Delete all existing documents in collection)"]
+        UPLOAD_MEDIA["3. Firebase Storage Sync<br/>(Upload bundled assets from zip)"]
+        WRITE_FIRESTORE["4. Firestore Write & Snapshot<br/>(Write documents + v1 snapshot)"]
+    end
+
+    CLI --> ZIP_PACKAGE
+    LIVE --> ZIP_PACKAGE
+    ZIP_PACKAGE --> VALIDATE
+    VALIDATE --> PURGE
+    PURGE --> UPLOAD_MEDIA
+    UPLOAD_MEDIA --> WRITE_FIRESTORE
+    WRITE_FIRESTORE -->|Live Parity| CANONICAL_DB[(Canonical Firestore)]
+```
+
+### 10.1 Package Archive Specification
+Every CWTS content package is a standard ZIP archive with the following internal layout:
+```
+cwts-faculty-package-2026-08-20.zip
+├── manifest.json       # Metadata: collection, exporter, version, timestamps, asset manifest
+├── documents.json      # Array of all Firestore documents with frontmatter & body
+└── assets/             # Bundled binary assets referenced by the documents
+    ├── images/faculty/dr-lau.jpg
+    └── images/faculty/rev-ip.jpg
+```
+
+#### `manifest.json` Structure:
+```json
+{
+  "version": "1.0.0",
+  "collection": "faculty",
+  "exportedAt": "2026-08-20T21:40:00.000Z",
+  "exportedBy": "admin@cwts.edu",
+  "documentCount": 29,
+  "referencedAssetsCount": 11,
+  "referencedAssets": [
+    "images/faculty/dr-lau.jpg",
+    "images/faculty/rev-ip.jpg"
+  ]
+}
+```
+
+### 10.2 Dual-Engine Exporters
+
+1. **CLI Exporters (`tools/export-*-package.ts` / `npm run export-all-packages`)**:
+   - Parses local Git repository content files (`src/content/news`, `src/content/jobs`, `src/content/faculty`) and extracts referenced binaries from `public/`.
+   - Normalizes data into canonical JSON structures (e.g. stripping markdown line breaks, converting MDX tables).
+   - Generates zero-dependency production packages into `packages/*.zip`.
+2. **In-Browser Portal (`/admin/backup` - `BackupRestoreView.tsx`)**:
+   - Queries live Firestore documents and fetches corresponding binary files from Firebase Storage.
+   - Utilizes dual download fallback (`getBytes` with a direct CORS `getDownloadURL + fetch` fallback) to stream binaries into memory.
+   - Assembles the archive dynamically via `JSZip` and triggers a browser download.
+
+### 10.3 Complete Collection Replacement on Restore
+To prevent orphaned documents, stale entries, or slug conflicts, the restore workflow guarantees **complete replacement** rather than merging:
+1. **Pre-Restore Purge**: Fetches and deletes all existing documents in `manifest.collection` in batch chunks before writing new entries.
+2. **Storage Upload**: Extracts each file from `assets/` and writes it to Firebase Storage under its canonical path.
+3. **Firestore Ingestion**: Writes all imported documents from `documents.json` with `status: "published"`, `version: 1`, and creates an immutable snapshot under `/{collection}/{id}/versions/1`.
+4. **State Refresh**: Automatically invokes `onRefreshData()` to re-sync active React state across the Admin portal.
+
+### 10.4 Plain-Text Line Break News Pipeline
+To simplify news editing and prevent markdown formatting errors:
+- **Markdown Stripping on Export**: In `export-news-package.ts`, trailing markdown backslashes (`\`) are stripped so that `body` contains natural multi-line text (`line1\nline2\n\nline3`).
+- **Formatting Transformation (`textUtils.ts`)**:
+  - **Single Return (`\n`)** $\rightarrow$ Rendered as a line break (`<br/>`).
+  - **Double Return (`\n\n`)** $\rightarrow$ Rendered as a paragraph break (`<p>...</p>`).
+- **Admin Experience**: News editors enter plain text directly with Enter keys in `NewsEditView` without needing backslashes.
+- **Repository Integrity**: Local Astro content files (`src/content/news/*.md`) remain untouched.
+
+### 10.5 Unified Faculty Model & Drag-and-Drop Reordering
+Faculty records combine core faculty and adjunct professors into a single unified schema:
+- **Bilingual Structure**: Each profile stores synchronized `zh` and `en` data alongside shared fields (`category`, `photo`, `email`, `order`).
+- **Drag-and-Drop Category Reordering**: The Faculty view features live drag-and-drop handles across categories (`faculty`, `senior-adjunct`, `adjunct`). Reordering updates a single `_order` draft change document containing `orderMap: Record<id, order>`, enabling instant category reordering without updating dozens of individual documents.
+
