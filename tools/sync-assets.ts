@@ -2,8 +2,9 @@ import "./loadEnv";
 import fs from "fs";
 import path from "path";
 import { ref, getMetadata, getBytes } from "firebase/storage";
-import { collection, getDocs, terminate } from "firebase/firestore";
-import { storage, db, isFirebaseConfigured } from "../src/admin/config/firebase";
+import { terminate } from "firebase/firestore";
+import { storage, db } from "../src/admin/config/firebase";
+import { FirebaseContentClient, resolveActiveDraftId } from "../src/libs/content/firebaseClient";
 
 interface ManifestRecord {
   md5?: string;
@@ -103,105 +104,47 @@ function scanTextForNewsOrJobPaths(text: string, outputSet: Set<string>) {
   }
 }
 
-async function* walkFiles(dir: string): AsyncGenerator<string> {
-  if (!fs.existsSync(dir)) return;
-  for await (const d of await fs.promises.opendir(dir)) {
-    const entry = path.join(dir, d.name);
-    if (d.isDirectory()) yield* walkFiles(entry);
-    else if (d.isFile()) yield entry;
-  }
-}
-
 /**
- * Scans active news and jobs entries across local content files, Cloud Firestore,
- * and active Draft overlays to discover all referenced news thumbnails and job PDFs.
+ * Discovers referenced news and jobs media assets directly using the FirebaseContentClient API.
+ * This guarantees 100% parity between what Astro renders and what sync-assets downloads.
  */
 async function collectReferencedNewsAndJobsAssets(): Promise<Set<string>> {
   const referenced = new Set<string>();
 
-  // 1. Scan local content files for news and jobs
-  const contentDirs = [path.resolve("src/content/news"), path.resolve("src/content/jobs")];
-  for (const dir of contentDirs) {
-    if (!fs.existsSync(dir)) continue;
-    for await (const file of walkFiles(dir)) {
-      if (file.endsWith(".md") || file.endsWith(".mdx") || file.endsWith(".json")) {
-        try {
-          const text = await fs.promises.readFile(file, "utf-8");
-          scanTextForNewsOrJobPaths(text, referenced);
-        } catch (err) {
-          console.warn(`Could not read ${file}:`, err);
-        }
+  const client = new FirebaseContentClient({
+    projectId: process.env.PUBLIC_FIREBASE_PROJECT_ID || process.env.FIREBASE_PROJECT_ID || "cwts-cms",
+    draftId: resolveActiveDraftId(),
+  });
+
+  try {
+    // 1. Query news collection using content client
+    const newsEntries = await client.getCollection("news");
+    console.log(`📰 Loaded ${newsEntries.length} news entries from Firebase content client.`);
+    for (const entry of newsEntries) {
+      if (entry.data?.thumbnail) {
+        const sp = extractNewsOrJobStoragePath(entry.data.thumbnail);
+        if (sp) referenced.add(sp);
+      }
+      if (entry.body) {
+        scanTextForNewsOrJobPaths(entry.body, referenced);
       }
     }
-  }
 
-  // 2. Scan live Firestore canonical collections (news and jobs)
-  try {
-    const newsSnap = await getDocs(collection(db, "news")).catch((e) => {
-      console.warn("Could not query 'news' collection from Firestore:", e.message);
-      return null;
-    });
-    if (newsSnap && !newsSnap.empty) {
-      newsSnap.forEach((d) => {
-        const data = d.data();
-        if (data.status === "deleted") return;
-        if (data.thumbnail) {
-          const sp = extractNewsOrJobStoragePath(data.thumbnail);
-          if (sp) referenced.add(sp);
-        }
-        if (data.body) scanTextForNewsOrJobPaths(data.body, referenced);
-      });
-    }
-
-    const jobsSnap = await getDocs(collection(db, "jobs")).catch((e) => {
-      console.warn("Could not query 'jobs' collection from Firestore:", e.message);
-      return null;
-    });
-    if (jobsSnap && !jobsSnap.empty) {
-      jobsSnap.forEach((d) => {
-        const data = d.data();
-        if (data.status === "deleted") return;
-        if (data.file) {
-          const sp = extractNewsOrJobStoragePath(data.file);
-          if (sp) referenced.add(sp);
-        }
-        if (data.body) scanTextForNewsOrJobPaths(data.body, referenced);
-      });
-    }
-
-    // 3. Scan Draft overlay changes in Firestore (/drafts/{draftId}/changes) when in draft/staging build mode
-    const contentSource = process.env.CONTENT_SOURCE;
-    const isDraftMode =
-      contentSource === "draft" ||
-      contentSource === "hybrid" ||
-      Boolean(process.env.DRAFT_ID) ||
-      process.env.CONTEXT === "deploy-preview" ||
-      process.env.CONTEXT === "branch-deploy";
-
-    if (isDraftMode) {
-      const activeDraftId = process.env.DRAFT_ID || "main";
-      const draftChangesSnap = await getDocs(collection(db, "drafts", activeDraftId, "changes")).catch(() => null);
-      if (draftChangesSnap && !draftChangesSnap.empty) {
-        console.log(`📝 [Draft Mode] Scanning ${draftChangesSnap.size} draft changes from draft '${activeDraftId}'...`);
-        draftChangesSnap.forEach((d) => {
-          const change = d.data();
-          if (change.action === "delete") return;
-          if (change.data) {
-            if (change.data.thumbnail) {
-              const sp = extractNewsOrJobStoragePath(change.data.thumbnail);
-              if (sp) referenced.add(sp);
-            }
-            if (change.data.file) {
-              const sp = extractNewsOrJobStoragePath(change.data.file);
-              if (sp) referenced.add(sp);
-            }
-          }
-          if (change.body) scanTextForNewsOrJobPaths(change.body, referenced);
-        });
+    // 2. Query jobs collection using content client
+    const jobEntries = await client.getCollection("jobs");
+    console.log(`💼 Loaded ${jobEntries.length} job entries from Firebase content client.`);
+    for (const entry of jobEntries) {
+      if (entry.data?.file) {
+        const sp = extractNewsOrJobStoragePath(entry.data.file);
+        if (sp) referenced.add(sp);
+      }
+      if (entry.body) {
+        scanTextForNewsOrJobPaths(entry.body, referenced);
       }
     }
   } catch (err: any) {
-    console.warn("⚠️ Warning during Firestore asset reference scanning:", err.message || err);
+    console.error("❌ Error querying collections via Firebase content client:", err.message || err);
+    throw err;
   }
 
   return referenced;

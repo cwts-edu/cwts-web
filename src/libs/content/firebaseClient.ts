@@ -45,6 +45,23 @@ export function resolveActiveDraftId(): string | undefined {
     }
   }
 
+  // 3. Deploy previews and experimental/staging branches (e.g. cms-exp, staging, preview, dev)
+  if (typeof process !== "undefined") {
+    const context = process.env.CONTEXT;
+    const branch = process.env.BRANCH;
+    const isDeployPreview = context === "deploy-preview" || context === "branch-deploy";
+    const isStagingBranch =
+      branch === "cms-exp" ||
+      branch === "staging" ||
+      branch === "preview" ||
+      branch === "dev";
+
+    if (isDeployPreview || isStagingBranch || process.env.STAGING === "true" || process.env.CONTENT_SOURCE === "draft") {
+      console.log(`🎯 [Draft Build] Active draft overlay enabled ('main') for context='${context}', branch='${branch}'`);
+      return "main";
+    }
+  }
+
   return undefined;
 }
 
@@ -433,15 +450,43 @@ export class FirebaseContentClient implements IContentClient {
 
   private async fetchDraftChanges(draftId: string, targetCollection: string): Promise<any[]> {
     try {
-      const url = `${this.baseUrl}/drafts/${draftId}/changes`;
-      const response = await fetch(url);
-      if (!response.ok) return [];
-      const { documents } = await response.json();
-      if (!documents) return [];
+      const allChanges: any[] = [];
+      const draftIdsToQuery = new Set<string>();
 
-      return documents
-        .map((doc: any) => this.decodeFirestoreFields(doc.fields))
-        .filter((c: any) => c.collection === targetCollection);
+      if (draftId && draftId !== "all" && draftId !== "auto") {
+        draftIdsToQuery.add(draftId);
+      }
+
+      // Query all draft documents from Firestore to discover active drafts
+      const draftsUrl = `${this.baseUrl}/drafts`;
+      const draftsRes = await fetch(draftsUrl).catch(() => null);
+      if (draftsRes && draftsRes.ok) {
+        const data = await draftsRes.json();
+        if (data.documents && Array.isArray(data.documents)) {
+          for (const doc of data.documents) {
+            const id = doc.name.split("/").pop();
+            if (id) draftIdsToQuery.add(id);
+          }
+        }
+      }
+
+      for (const dId of draftIdsToQuery) {
+        const url = `${this.baseUrl}/drafts/${dId}/changes`;
+        const response = await fetch(url).catch(() => null);
+        if (response && response.ok) {
+          const { documents } = await response.json();
+          if (documents && Array.isArray(documents)) {
+            for (const doc of documents) {
+              const decoded = this.decodeFirestoreFields(doc.fields);
+              if (decoded.collection === targetCollection) {
+                allChanges.push(decoded);
+              }
+            }
+          }
+        }
+      }
+
+      return allChanges;
     } catch {
       return [];
     }
@@ -449,20 +494,42 @@ export class FirebaseContentClient implements IContentClient {
 
   private async fetchDraftChangeDoc(draftId: string, targetCollection: string, docId: string): Promise<any | null> {
     try {
-      // 1. Try formatted doc name: e.g. news_2026-04-24-newsletter
-      const prefixedUrl = `${this.baseUrl}/drafts/${draftId}/changes/${targetCollection}_${docId}`;
-      let response = await fetch(prefixedUrl);
-      
-      // 2. Fallback to raw docId
-      if (!response.ok) {
-        const rawUrl = `${this.baseUrl}/drafts/${draftId}/changes/${docId}`;
-        response = await fetch(rawUrl);
+      const draftIdsToQuery = new Set<string>();
+      if (draftId && draftId !== "all" && draftId !== "auto") {
+        draftIdsToQuery.add(draftId);
       }
 
-      if (!response.ok) return null;
-      const doc = await response.json();
-      const fields = this.decodeFirestoreFields(doc.fields);
-      return fields.collection === targetCollection ? fields : null;
+      const draftsUrl = `${this.baseUrl}/drafts`;
+      const draftsRes = await fetch(draftsUrl).catch(() => null);
+      if (draftsRes && draftsRes.ok) {
+        const data = await draftsRes.json();
+        if (data.documents && Array.isArray(data.documents)) {
+          for (const doc of data.documents) {
+            const id = doc.name.split("/").pop();
+            if (id) draftIdsToQuery.add(id);
+          }
+        }
+      }
+
+      for (const dId of draftIdsToQuery) {
+        // 1. Try formatted doc name: e.g. news_2026-04-24-newsletter
+        const prefixedUrl = `${this.baseUrl}/drafts/${dId}/changes/${targetCollection}_${docId}`;
+        let response = await fetch(prefixedUrl).catch(() => null);
+
+        // 2. Fallback to raw docId
+        if (!response || !response.ok) {
+          const rawUrl = `${this.baseUrl}/drafts/${dId}/changes/${docId}`;
+          response = await fetch(rawUrl).catch(() => null);
+        }
+
+        if (response && response.ok) {
+          const doc = await response.json();
+          const fields = this.decodeFirestoreFields(doc.fields);
+          if (fields.collection === targetCollection) return fields;
+        }
+      }
+
+      return null;
     } catch {
       return null;
     }
