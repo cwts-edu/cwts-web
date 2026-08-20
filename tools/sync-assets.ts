@@ -44,9 +44,9 @@ function saveManifest(manifest: Manifest) {
 }
 
 /**
- * Normalizes a raw URL or path into a storage path strictly within images/news/ or docs/jobs/.
+ * Normalizes a raw URL or path into a canonical relative storage path (e.g. images/... or docs/...).
  */
-function extractNewsOrJobStoragePath(rawUrlOrPath: string): string | null {
+function normalizeStoragePath(rawUrlOrPath: string): string | null {
   if (!rawUrlOrPath || typeof rawUrlOrPath !== "string") return null;
 
   const trimmed = rawUrlOrPath.trim();
@@ -77,38 +77,38 @@ function extractNewsOrJobStoragePath(rawUrlOrPath: string): string | null {
   return null;
 }
 
-function scanTextForNewsOrJobPaths(text: string, outputSet: Set<string>) {
+function scanTextForStoragePaths(text: string, outputSet: Set<string>) {
   if (!text) return;
-  // Match markdown images: ![...](/images/news/...)
+  // Match markdown images: ![...](/images/...)
   const mdMatches = text.matchAll(/!\[.*?\]\(([^)]+)\)/g);
   for (const m of mdMatches) {
-    const sp = extractNewsOrJobStoragePath(m[1]);
+    const sp = normalizeStoragePath(m[1]);
     if (sp) outputSet.add(sp);
   }
 
   // Match HTML src and href
   const htmlMatches = text.matchAll(/(?:src|href)=["']([^"']+)["']/g);
   for (const m of htmlMatches) {
-    const sp = extractNewsOrJobStoragePath(m[1]);
+    const sp = normalizeStoragePath(m[1]);
     if (sp) outputSet.add(sp);
   }
 
-  // Match frontmatter fields: thumbnail: ... or file: ...
+  // Match frontmatter fields: thumbnail: ..., file: ..., photo: ..., coverImage: ...
   const lines = text.split(/\r?\n/);
   for (const line of lines) {
-    const match = line.match(/^\s*(?:thumbnail|file)\s*:\s*["']?([^"'\r\n]+)["']?/);
+    const match = line.match(/^\s*(?:thumbnail|file|photo|coverImage)\s*:\s*["']?([^"'\r\n]+)["']?/);
     if (match && match[1]) {
-      const sp = extractNewsOrJobStoragePath(match[1]);
+      const sp = normalizeStoragePath(match[1]);
       if (sp) outputSet.add(sp);
     }
   }
 }
 
 /**
- * Discovers referenced news and jobs media assets directly using the FirebaseContentClient API.
+ * Discovers referenced media assets directly using the FirebaseContentClient API.
  * This guarantees 100% parity between what Astro renders and what sync-assets downloads.
  */
-async function collectReferencedNewsAndJobsAssets(): Promise<Set<string>> {
+async function collectReferencedMediaAssets(): Promise<Set<string>> {
   const referenced = new Set<string>();
 
   const activeDraftId = resolveActiveDraftId();
@@ -143,12 +143,19 @@ async function collectReferencedNewsAndJobsAssets(): Promise<Set<string>> {
 
     console.log(`📰 Loaded ${allNews.length} active news entries from Firebase content client.`);
     for (const entry of allNews) {
-      if (entry.data?.thumbnail) {
-        const sp = extractNewsOrJobStoragePath(entry.data.thumbnail);
-        if (sp) referenced.add(sp);
-      }
-      if (entry.body) {
-        scanTextForNewsOrJobPaths(entry.body, referenced);
+      if (entry.data?.referencedAssets && Array.isArray(entry.data.referencedAssets)) {
+        for (const assetPath of entry.data.referencedAssets) {
+          const sp = normalizeStoragePath(assetPath);
+          if (sp) referenced.add(sp);
+        }
+      } else {
+        if (entry.data?.thumbnail) {
+          const sp = normalizeStoragePath(entry.data.thumbnail);
+          if (sp) referenced.add(sp);
+        }
+        if (entry.body) {
+          scanTextForStoragePaths(entry.body, referenced);
+        }
       }
     }
 
@@ -156,12 +163,19 @@ async function collectReferencedNewsAndJobsAssets(): Promise<Set<string>> {
     const jobEntries = await client.getCollection("jobs");
     console.log(`💼 Loaded ${jobEntries.length} job entries from Firebase content client.`);
     for (const entry of jobEntries) {
-      if (entry.data?.file) {
-        const sp = extractNewsOrJobStoragePath(entry.data.file);
-        if (sp) referenced.add(sp);
-      }
-      if (entry.body) {
-        scanTextForNewsOrJobPaths(entry.body, referenced);
+      if (entry.data?.referencedAssets && Array.isArray(entry.data.referencedAssets)) {
+        for (const assetPath of entry.data.referencedAssets) {
+          const sp = normalizeStoragePath(assetPath);
+          if (sp) referenced.add(sp);
+        }
+      } else {
+        if (entry.data?.file) {
+          const sp = normalizeStoragePath(entry.data.file);
+          if (sp) referenced.add(sp);
+        }
+        if (entry.body) {
+          scanTextForStoragePaths(entry.body, referenced);
+        }
       }
     }
   } catch (err: any) {
@@ -186,9 +200,9 @@ export async function syncAssets() {
   }
 
   const manifest = loadManifest();
-  const referencedPaths = await collectReferencedNewsAndJobsAssets();
+  const referencedPaths = await collectReferencedMediaAssets();
 
-  console.log(`📋 Found ${referencedPaths.size} referenced news & job media assets:`);
+  console.log(`📋 Found ${referencedPaths.size} referenced media assets:`);
   for (const p of referencedPaths) {
     console.log(`   - ${p}`);
   }

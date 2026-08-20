@@ -6,6 +6,7 @@ import { collection, getDocs, query, orderBy } from "firebase/firestore";
 import { MediaField } from "../components/media/MediaField";
 import { RichTextEditor } from "../components/editor/RichTextEditor";
 import { formatSafeDate } from "../utils/dateUtils";
+import { extractReferencedMediaForCollection } from "../utils/extractMedia";
 
 interface VersionItem {
   version: number;
@@ -89,11 +90,20 @@ export const JobsEditView: React.FC<Props> = ({ initialItem, onSave, onCancel })
       return;
     }
 
+    const effectiveBody = deliveryMode === "rich-text" ? body : "";
+    const effectiveFile = deliveryMode === "pdf" && file.trim() ? file.trim() : undefined;
+
     const rawData = {
       title: title.trim(),
       location: location.trim(),
       date: new Date(dateStr),
-      ...(deliveryMode === "pdf" && file.trim() ? { file: file.trim() } : {}),
+      ...(effectiveFile ? { file: effectiveFile } : {}),
+      referencedAssets: extractReferencedMediaForCollection(
+        "jobs",
+        { file: effectiveFile },
+        undefined,
+        effectiveBody
+      ),
     };
 
     const validation = JobMetadataSchema.safeParse(rawData);
@@ -108,7 +118,7 @@ export const JobsEditView: React.FC<Props> = ({ initialItem, onSave, onCancel })
       await onSave({
         id: targetDocId,
         data: validation.data,
-        body: deliveryMode === "rich-text" ? body : "",
+        body: effectiveBody,
       });
     } catch (err: any) {
       setError(err.message || "Failed to save draft");

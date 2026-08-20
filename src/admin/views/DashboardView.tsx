@@ -1,8 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import type { AdminTab } from "../components/AdminLayout";
 import { useDraft } from "../context/DraftContext";
 import { useAuth } from "../context/AuthContext";
 import { seedFirestoreDatabase } from "../services/seedDatabase";
+import { db } from "../config/firebase";
+import {
+  checkPendingMigrations,
+  runAllPendingMigrations,
+  type PendingMigrationSummary,
+  type MigrationProgress,
+} from "../migrations";
 
 interface Props {
   onNavigate: (tab: AdminTab, param?: string) => void;
@@ -27,6 +34,65 @@ export const DashboardView: React.FC<Props> = ({ onNavigate, newsCount, jobsCoun
 
   const [isSeeding, setIsSeeding] = useState(false);
   const [seedMessage, setSeedMessage] = useState<string | null>(null);
+
+  // Migration State (Async & Non-Blocking)
+  const [pendingMigrations, setPendingMigrations] = useState<PendingMigrationSummary[]>([]);
+  const [isCheckingMigrations, setIsCheckingMigrations] = useState(true);
+  const [isMigrating, setIsMigrating] = useState(false);
+  const [migrationProgress, setMigrationProgress] = useState<MigrationProgress | null>(null);
+  const [migrationMessage, setMigrationMessage] = useState<{ success: boolean; text: string } | null>(null);
+
+  const checkMigrations = useCallback(async () => {
+    try {
+      setIsCheckingMigrations(true);
+      const pending = await checkPendingMigrations(db);
+      setPendingMigrations(pending);
+    } catch (e) {
+      console.warn("Could not check pending migrations:", e);
+    } finally {
+      setIsCheckingMigrations(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    checkMigrations();
+  }, [checkMigrations]);
+
+  const handleRunMigrations = async () => {
+    setIsMigrating(true);
+    setMigrationMessage(null);
+    setMigrationProgress({ current: 0, total: 100, status: "Starting migration..." });
+
+    try {
+      const res = await runAllPendingMigrations(db, (p) => {
+        setMigrationProgress(p);
+      });
+
+      if (res.success) {
+        setMigrationMessage({
+          success: true,
+          text: `✅ Migration completed successfully: ${res.message}`,
+        });
+        if (onRefreshData) {
+          await onRefreshData();
+        }
+        await checkMigrations();
+      } else {
+        setMigrationMessage({
+          success: false,
+          text: `❌ Migration failed: ${res.message}`,
+        });
+      }
+    } catch (err: any) {
+      setMigrationMessage({
+        success: false,
+        text: `❌ Migration error: ${err.message || String(err)}`,
+      });
+    } finally {
+      setIsMigrating(false);
+      setMigrationProgress(null);
+    }
+  };
 
   const handleSeedDatabase = async () => {
     if (
@@ -57,13 +123,110 @@ export const DashboardView: React.FC<Props> = ({ onNavigate, newsCount, jobsCoun
       if (onRefreshData) {
         await onRefreshData();
       }
+      await checkMigrations();
     } else {
       setSeedMessage(`❌ Seeding failed: ${res.message}`);
     }
   };
 
+  const totalPendingDocs = pendingMigrations.reduce((acc, m) => acc + m.pendingCount, 0);
+
   return (
     <div className="space-y-8">
+      {/* 🚀 1-Click Database Migration Banner */}
+      {pendingMigrations.length > 0 && (
+        <div className="relative overflow-hidden bg-gradient-to-br from-indigo-950/70 via-slate-900 to-purple-950/70 border border-indigo-500/40 rounded-3xl p-6 shadow-2xl space-y-4">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div className="flex items-start gap-3.5">
+              <div className="w-12 h-12 rounded-2xl bg-indigo-500/20 border border-indigo-400/40 flex items-center justify-center text-2xl shrink-0 shadow-inner">
+                ⚡
+              </div>
+              <div className="space-y-1">
+                <div className="flex items-center gap-2 flex-wrap">
+                  <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold tracking-wider uppercase bg-indigo-500/20 text-indigo-300 border border-indigo-500/40">
+                    Migration Required
+                  </span>
+                  <span className="text-xs text-slate-400">
+                    {pendingMigrations.length} pending schema upgrade{pendingMigrations.length > 1 ? "s" : ""}
+                  </span>
+                </div>
+                <h3 className="text-base font-bold text-white tracking-tight">
+                  {pendingMigrations[0].title}
+                  {pendingMigrations.length > 1 && ` (+${pendingMigrations.length - 1} more)`}
+                </h3>
+                <p className="text-xs text-slate-300 max-w-2xl leading-relaxed">
+                  {pendingMigrations[0].description}{" "}
+                  <span className="text-indigo-300 font-semibold font-mono">
+                    ({totalPendingDocs} document{totalPendingDocs > 1 ? "s" : ""} to index)
+                  </span>
+                </p>
+              </div>
+            </div>
+
+            <button
+              onClick={handleRunMigrations}
+              disabled={isMigrating}
+              className="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-500 active:scale-95 disabled:opacity-50 text-xs font-bold text-white rounded-xl shadow-lg shadow-indigo-600/30 transition flex items-center gap-2 shrink-0 border border-indigo-400/30"
+            >
+              {isMigrating ? (
+                <>
+                  <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                  </svg>
+                  <span>Migrating Database...</span>
+                </>
+              ) : (
+                <>
+                  <span>🚀 Run Migration (1-Click)</span>
+                </>
+              )}
+            </button>
+          </div>
+
+          {/* Real-time Progress Bar */}
+          {isMigrating && migrationProgress && (
+            <div className="pt-2 space-y-2 border-t border-indigo-500/20">
+              <div className="flex justify-between text-xs text-indigo-300 font-medium">
+                <span>{migrationProgress.status}</span>
+                <span>
+                  {migrationProgress.total > 0
+                    ? `${Math.round((migrationProgress.current / migrationProgress.total) * 100)}%`
+                    : "0%"}
+                </span>
+              </div>
+              <div className="w-full bg-slate-800 rounded-full h-2 overflow-hidden">
+                <div
+                  className="bg-indigo-500 h-2 rounded-full transition-all duration-300"
+                  style={{
+                    width: `${
+                      migrationProgress.total > 0
+                        ? Math.round((migrationProgress.current / migrationProgress.total) * 100)
+                        : 0
+                    }%`,
+                  }}
+                />
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+
+      {migrationMessage && (
+        <div
+          className={`p-4 rounded-2xl text-xs flex items-center justify-between shadow-lg ${
+            migrationMessage.success
+              ? "bg-emerald-950/40 border border-emerald-500/40 text-emerald-300"
+              : "bg-rose-950/40 border border-rose-500/40 text-rose-300"
+          }`}
+        >
+          <span>{migrationMessage.text}</span>
+          <button onClick={() => setMigrationMessage(null)} className="opacity-60 hover:opacity-100 font-bold ml-4">
+            ✕
+          </button>
+        </div>
+      )}
+
       {/* Seed Initial Data Banner */}
       <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-lg">
         <div className="flex items-center gap-3">

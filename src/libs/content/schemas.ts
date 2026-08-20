@@ -11,6 +11,7 @@ export const PageMetadataSchema = z.object({
   coverImage: z.string().optional(),
   thumbnail: z.string().optional(),
   showChildren: z.boolean().optional(),
+  referencedAssets: z.array(z.string()).optional(),
 });
 export type PageMetadata = z.infer<typeof PageMetadataSchema>;
 
@@ -20,6 +21,7 @@ export const NewsMetadataSchema = z.object({
   date: z.coerce.date(),
   thumbnail: z.string(),
   url: z.string(),
+  referencedAssets: z.array(z.string()).optional(),
 });
 export type NewsMetadata = z.infer<typeof NewsMetadataSchema>;
 
@@ -35,6 +37,7 @@ export const FacultyMetadataSchema = z.object({
   degrees: z.array(z.string()),
   moreDegrees: z.array(z.string()).optional(),
   former: z.array(z.string()).optional(),
+  referencedAssets: z.array(z.string()).optional(),
 });
 export type FacultyMetadata = z.infer<typeof FacultyMetadataSchema>;
 
@@ -47,6 +50,7 @@ export const DegreeProgramMetadataSchema = z.object({
   credits: z.number(),
   category: z.enum(["doctor", "master", "diploma", "certificate"]),
   redirect: z.string().optional(),
+  referencedAssets: z.array(z.string()).optional(),
 });
 export type DegreeProgramMetadata = z.infer<typeof DegreeProgramMetadataSchema>;
 
@@ -73,6 +77,7 @@ export const JobMetadataSchema = z.object({
   location: z.string(),
   date: z.coerce.date(),
   file: z.string().optional(),
+  referencedAssets: z.array(z.string()).optional(),
 });
 export type JobMetadata = z.infer<typeof JobMetadataSchema>;
 

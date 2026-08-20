@@ -5,6 +5,7 @@ import { db } from "../config/firebase";
 import { collection, getDocs, query, orderBy } from "firebase/firestore";
 import { MediaField } from "../components/media/MediaField";
 import { formatSafeDate } from "../utils/dateUtils";
+import { extractReferencedMediaForCollection } from "../utils/extractMedia";
 
 interface VersionItem {
   version: number;
@@ -76,6 +77,12 @@ export const NewsEditView: React.FC<Props> = ({ initialItem, onSave, onCancel })
       date: new Date(dateStr),
       thumbnail: thumbnail.trim(),
       url: url.trim(),
+      referencedAssets: extractReferencedMediaForCollection(
+        "news",
+        { thumbnail: thumbnail.trim() },
+        undefined,
+        body
+      ),
     };
 
     const validation = NewsMetadataSchema.safeParse(rawData);
@@ -87,7 +94,7 @@ export const NewsEditView: React.FC<Props> = ({ initialItem, onSave, onCancel })
 
     try {
       setIsSaving(true);
-      await onSave({ id: targetDocId, data: validation.data, body });
+      await onSave(targetDocId, validation.data, body);
     } catch (err: any) {
       setError(err.message || "Failed to save draft");
       setIsSaving(false);

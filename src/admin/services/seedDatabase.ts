@@ -3,6 +3,7 @@ import { doc, writeBatch } from "firebase/firestore";
 import { ref, uploadBytes } from "firebase/storage";
 import type { AuditUser } from "../../libs/content/types";
 import { INITIAL_NEWS_FIXTURES, INITIAL_JOBS_FIXTURES } from "../fixtures/initialContent";
+import { extractReferencedMediaForCollection } from "../utils/extractMedia";
 
 export interface SeedResult {
   success: boolean;
@@ -26,12 +27,20 @@ export async function seedFirestoreDatabase(
     // 1. Seed News Documents
     if (onProgress) onProgress("Writing news articles to Firestore...");
     for (const item of INITIAL_NEWS_FIXTURES) {
+      const referencedAssets = extractReferencedMediaForCollection(
+        "news",
+        item.data,
+        undefined,
+        item.bodyHtml || item.body
+      );
+
       const docRef = doc(db, "news", item.id);
       batch.set(docRef, {
         ...item.data,
         date: item.data.date,
         body: item.body,
         bodyHtml: item.bodyHtml,
+        referencedAssets,
         status: "published",
         version: 1,
         publishedVersion: 1,
@@ -47,7 +56,7 @@ export async function seedFirestoreDatabase(
       batch.set(verRef, {
         version: 1,
         status: "published",
-        data: item.data,
+        data: { ...item.data, referencedAssets },
         body: item.body,
         bodyHtml: item.bodyHtml,
         publishedBy: author,
@@ -58,12 +67,20 @@ export async function seedFirestoreDatabase(
     // 2. Seed Jobs Documents
     if (onProgress) onProgress("Writing job postings to Firestore...");
     for (const item of INITIAL_JOBS_FIXTURES) {
+      const referencedAssets = extractReferencedMediaForCollection(
+        "jobs",
+        item.data,
+        undefined,
+        item.bodyHtml || item.body
+      );
+
       const docRef = doc(db, "jobs", item.id);
       batch.set(docRef, {
         ...item.data,
         date: item.data.date,
         body: item.body,
         bodyHtml: item.bodyHtml,
+        referencedAssets,
         status: "published",
         version: 1,
         publishedVersion: 1,
@@ -79,7 +96,7 @@ export async function seedFirestoreDatabase(
       batch.set(verRef, {
         version: 1,
         status: "published",
-        data: item.data,
+        data: { ...item.data, referencedAssets },
         body: item.body,
         bodyHtml: item.bodyHtml,
         publishedBy: author,
