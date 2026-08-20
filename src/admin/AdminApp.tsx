@@ -230,8 +230,8 @@ const AdminDashboard: React.FC = () => {
   // --------------------------------------------------------------------------
   // News Handlers (Draft Save & Soft Delete)
   // --------------------------------------------------------------------------
-  const handleSaveNewsDraft = async (item: { id: string; data: NewsMetadata; body: string }) => {
-    await saveChangeToDraft("news", item.id, "update", item.data, item.body);
+  const handleSaveNewsDraft = async (id: string, data: NewsMetadata, body: string) => {
+    await saveChangeToDraft("news", id, "update", data, body);
     handleNavigate("news");
   };
 
@@ -438,11 +438,18 @@ const AdminDashboard: React.FC = () => {
       )}
 
       {currentTab === "faculty_edit" && (
-        <FacultyEditView
-          initialItem={mergedFaculty.find((f) => f.id === editingId)}
-          onSave={handleSaveFacultyDraft}
-          onCancel={() => handleNavigate("faculty")}
-        />
+        isLoadingData && !mergedFaculty.find((f) => f.id === editingId) ? (
+          <div className="p-16 text-center text-slate-400 text-sm animate-pulse">
+            Loading faculty profile...
+          </div>
+        ) : (
+          <FacultyEditView
+            key={editingId ? `faculty-edit-${editingId}` : "faculty-new"}
+            initialItem={mergedFaculty.find((f) => f.id === editingId)}
+            onSave={handleSaveFacultyDraft}
+            onCancel={() => handleNavigate("faculty")}
+          />
+        )
       )}
 
       {currentTab === "news" && (
@@ -463,11 +470,18 @@ const AdminDashboard: React.FC = () => {
       )}
 
       {currentTab === "news_edit" && (
-        <NewsEditView
-          initialItem={mergedNews.find((n) => n.id === editingId)}
-          onSave={handleSaveNewsDraft}
-          onCancel={() => handleNavigate("news")}
-        />
+        isLoadingData && !mergedNews.find((n) => n.id === editingId) ? (
+          <div className="p-16 text-center text-slate-400 text-sm animate-pulse">
+            Loading news entry...
+          </div>
+        ) : (
+          <NewsEditView
+            key={editingId ? `news-edit-${editingId}` : "news-new"}
+            initialItem={mergedNews.find((n) => n.id === editingId)}
+            onSave={handleSaveNewsDraft}
+            onCancel={() => handleNavigate("news")}
+          />
+        )
       )}
 
       {currentTab === "jobs" && (
@@ -488,11 +502,18 @@ const AdminDashboard: React.FC = () => {
       )}
 
       {currentTab === "jobs_edit" && (
-        <JobsEditView
-          initialItem={mergedJobs.find((j) => j.id === editingId)}
-          onSave={handleSaveJobDraft}
-          onCancel={() => handleNavigate("jobs")}
-        />
+        isLoadingData && !mergedJobs.find((j) => j.id === editingId) ? (
+          <div className="p-16 text-center text-slate-400 text-sm animate-pulse">
+            Loading job posting...
+          </div>
+        ) : (
+          <JobsEditView
+            key={editingId ? `jobs-edit-${editingId}` : "jobs-new"}
+            initialItem={mergedJobs.find((j) => j.id === editingId)}
+            onSave={handleSaveJobDraft}
+            onCancel={() => handleNavigate("jobs")}
+          />
+        )
       )}
 
       {currentTab === "media" && <MediaLibraryView />}

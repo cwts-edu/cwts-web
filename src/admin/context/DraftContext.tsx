@@ -109,6 +109,7 @@ export const DraftProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       const items: DraftChangeItem[] = [];
       snap.forEach((d) => {
         const val = d.data();
+        if (!val.collection || !val.documentId || val.documentId === "undefined") return;
         items.push({
           id: d.id,
           collection: val.collection,
@@ -153,7 +154,7 @@ export const DraftProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       action,
       data,
       body: body || "",
-      bodyHtml: body || "",
+      bodyHtml: body ? (coll === "news" ? textLinesToHtml(body) : body) : "",
       updatedBy: audit,
       updatedAt: new Date().toISOString(),
     };
