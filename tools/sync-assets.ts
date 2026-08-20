@@ -124,10 +124,25 @@ async function collectReferencedNewsAndJobsAssets(): Promise<Set<string>> {
   });
 
   try {
-    // 1. Query news collection using content client (homepage renders the top 4 latest news)
-    const newsEntries = await client.news.list(undefined, 4);
-    console.log(`📰 Loaded ${newsEntries.length} active news entries from Firebase content client.`);
-    for (const entry of newsEntries) {
+    // 1. Query news collection and enforce maximum 4 news articles rule
+    const allNews = await client.getCollection("news");
+    if (allNews.length > 4) {
+      console.error(
+        `\n💥 [NEWS LIMIT EXCEEDED] Found ${allNews.length} active news articles (maximum allowed is 4).\n` +
+        `   The homepage only displays the 4 latest news articles.\n` +
+        `   Older news articles must be soft-deleted in the Admin CMS (/admin/news) or removed from content/news/.\n` +
+        `   Active articles found:\n` +
+        allNews.map((n, i) => `     ${i + 1}. "${n.data?.title || n.id}" (ID: ${n.id})`).join("\n") +
+        `\n`
+      );
+      throw new Error(
+        `News collection limit exceeded: found ${allNews.length} articles (max 4). ` +
+        `The homepage only displays 4 news articles; older ones should be deleted.`
+      );
+    }
+
+    console.log(`📰 Loaded ${allNews.length} active news entries from Firebase content client.`);
+    for (const entry of allNews) {
       if (entry.data?.thumbnail) {
         const sp = extractNewsOrJobStoragePath(entry.data.thumbnail);
         if (sp) referenced.add(sp);

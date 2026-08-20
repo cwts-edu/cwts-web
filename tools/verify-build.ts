@@ -1,6 +1,8 @@
+import "./loadEnv";
 import fs from "fs";
 import path from "path";
 import { parse } from "node-html-parser";
+import { FirebaseContentClient, resolveActiveDraftId } from "../src/libs/content/firebaseClient";
 
 const DIST_DIR = path.resolve("dist");
 const ASSET_EXTENSIONS = [".jpg", ".jpeg", ".png", ".gif", ".svg", ".webp", ".pdf"];
@@ -101,6 +103,29 @@ async function verify() {
   if (!fs.existsSync(DIST_DIR)) {
     console.error(`❌ ${DIST_DIR} directory not found. Please run 'npm run build' first.`);
     process.exit(1);
+  }
+
+  // 1. Enforce Maximum 4 News Articles Constraint
+  const client = new FirebaseContentClient({
+    projectId: process.env.PUBLIC_FIREBASE_PROJECT_ID || process.env.FIREBASE_PROJECT_ID || "cwts-cms",
+    draftId: resolveActiveDraftId(),
+  });
+
+  try {
+    const allNews = await client.getCollection("news");
+    if (allNews.length > 4) {
+      console.error(
+        `\n💥 [VERIFY FAILED] Found ${allNews.length} active news articles (maximum allowed is 4).\n` +
+        `   The homepage only displays the 4 latest news articles.\n` +
+        `   Older news articles must be soft-deleted in the Admin CMS (/admin/news) or removed from content/news/.\n` +
+        `   Active articles found:\n` +
+        allNews.map((n, i) => `     ${i + 1}. "${n.data?.title || n.id}" (ID: ${n.id})`).join("\n") +
+        `\n`
+      );
+      process.exit(1);
+    }
+  } catch (err: any) {
+    console.warn("⚠️ Could not verify news collection limit:", err.message || err);
   }
 
   const htmlFiles: string[] = [];
