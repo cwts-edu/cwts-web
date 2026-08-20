@@ -169,51 +169,35 @@ async function collectReferencedNewsAndJobsAssets(): Promise<Set<string>> {
       });
     }
 
-    // 3. Scan Draft overlay changes in Firestore (/drafts/{draftId}/changes)
-    const activeDraftId = process.env.DRAFT_ID || "main";
-    const draftChangesSnap = await getDocs(collection(db, "drafts", activeDraftId, "changes")).catch(() => null);
-    if (draftChangesSnap && !draftChangesSnap.empty) {
-      console.log(`📝 Scanning ${draftChangesSnap.size} draft changes from draft '${activeDraftId}'...`);
-      draftChangesSnap.forEach((d) => {
-        const change = d.data();
-        if (change.action === "delete") return;
-        if (change.data) {
-          if (change.data.thumbnail) {
-            const sp = extractNewsOrJobStoragePath(change.data.thumbnail);
-            if (sp) referenced.add(sp);
-          }
-          if (change.data.file) {
-            const sp = extractNewsOrJobStoragePath(change.data.file);
-            if (sp) referenced.add(sp);
-          }
-        }
-        if (change.body) scanTextForNewsOrJobPaths(change.body, referenced);
-      });
-    }
+    // 3. Scan Draft overlay changes in Firestore (/drafts/{draftId}/changes) when in draft/staging build mode
+    const contentSource = process.env.CONTENT_SOURCE;
+    const isDraftMode =
+      contentSource === "draft" ||
+      contentSource === "hybrid" ||
+      Boolean(process.env.DRAFT_ID) ||
+      process.env.CONTEXT === "deploy-preview" ||
+      process.env.CONTEXT === "branch-deploy";
 
-    // Also scan any other active drafts in Firestore
-    const allDraftsSnap = await getDocs(collection(db, "drafts")).catch(() => null);
-    if (allDraftsSnap && !allDraftsSnap.empty) {
-      for (const draftDoc of allDraftsSnap.docs) {
-        if (draftDoc.id === activeDraftId) continue;
-        const otherChanges = await getDocs(collection(db, "drafts", draftDoc.id, "changes")).catch(() => null);
-        if (otherChanges && !otherChanges.empty) {
-          otherChanges.forEach((d) => {
-            const change = d.data();
-            if (change.action === "delete") return;
-            if (change.data) {
-              if (change.data.thumbnail) {
-                const sp = extractNewsOrJobStoragePath(change.data.thumbnail);
-                if (sp) referenced.add(sp);
-              }
-              if (change.data.file) {
-                const sp = extractNewsOrJobStoragePath(change.data.file);
-                if (sp) referenced.add(sp);
-              }
+    if (isDraftMode) {
+      const activeDraftId = process.env.DRAFT_ID || "main";
+      const draftChangesSnap = await getDocs(collection(db, "drafts", activeDraftId, "changes")).catch(() => null);
+      if (draftChangesSnap && !draftChangesSnap.empty) {
+        console.log(`📝 [Draft Mode] Scanning ${draftChangesSnap.size} draft changes from draft '${activeDraftId}'...`);
+        draftChangesSnap.forEach((d) => {
+          const change = d.data();
+          if (change.action === "delete") return;
+          if (change.data) {
+            if (change.data.thumbnail) {
+              const sp = extractNewsOrJobStoragePath(change.data.thumbnail);
+              if (sp) referenced.add(sp);
             }
-            if (change.body) scanTextForNewsOrJobPaths(change.body, referenced);
-          });
-        }
+            if (change.data.file) {
+              const sp = extractNewsOrJobStoragePath(change.data.file);
+              if (sp) referenced.add(sp);
+            }
+          }
+          if (change.body) scanTextForNewsOrJobPaths(change.body, referenced);
+        });
       }
     }
   } catch (err: any) {

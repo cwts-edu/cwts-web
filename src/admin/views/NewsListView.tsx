@@ -1,6 +1,7 @@
 import React from "react";
 import type { NewsMetadata } from "../../libs/content/schemas";
 import { resolveMediaPreviewUrl } from "../services/storageService";
+import { formatSafeDate } from "../utils/dateUtils";
 import type { AuditUser } from "../../libs/content/types";
 
 export interface NewsItem {
@@ -113,7 +114,7 @@ export const NewsListView: React.FC<Props> = ({ items, onNew, onEdit, onDelete, 
                         </div>
                       </td>
                       <td className="py-3.5 px-6 text-xs text-slate-300 whitespace-nowrap font-mono">
-                        {new Date(activeData.date).toISOString().split("T")[0]}
+                        {formatSafeDate(activeData.date, "—")}
                       </td>
                       <td className="py-3.5 px-6 whitespace-nowrap">
                         {isDeleted ? (

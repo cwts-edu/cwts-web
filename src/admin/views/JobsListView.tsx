@@ -1,5 +1,6 @@
 import React from "react";
 import type { JobMetadata } from "../../libs/content/schemas";
+import { formatSafeDate } from "../utils/dateUtils";
 import type { AuditUser } from "../../libs/content/types";
 
 export interface JobItem {
@@ -98,7 +99,7 @@ export const JobsListView: React.FC<Props> = ({ items, onNew, onEdit, onDelete, 
                       </td>
                       <td className="py-3.5 px-6 text-xs text-slate-300 whitespace-nowrap">{activeData.location}</td>
                       <td className="py-3.5 px-6 text-xs text-slate-300 whitespace-nowrap font-mono">
-                        {new Date(activeData.date).toISOString().split("T")[0]}
+                        {formatSafeDate(activeData.date, "—")}
                       </td>
                       <td className="py-3.5 px-6 whitespace-nowrap">
                         {isDeleted ? (

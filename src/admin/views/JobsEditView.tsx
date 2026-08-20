@@ -4,6 +4,7 @@ import type { JobItem } from "./JobsListView";
 import { db } from "../config/firebase";
 import { collection, getDocs, query, orderBy } from "firebase/firestore";
 import { MediaField } from "../components/media/MediaField";
+import { formatSafeDate } from "../utils/dateUtils";
 
 interface VersionItem {
   version: number;
@@ -22,9 +23,7 @@ interface Props {
 
 export const JobsEditView: React.FC<Props> = ({ initialItem, onSave, onCancel }) => {
   const currentActive = initialItem?.draftData || initialItem?.data;
-  const initialDateStr = currentActive?.date
-    ? new Date(currentActive.date).toISOString().split("T")[0]
-    : new Date().toISOString().split("T")[0];
+  const initialDateStr = formatSafeDate(currentActive?.date, formatSafeDate(new Date()));
 
   const [dateStr, setDateStr] = useState(initialDateStr);
   const [timestampSuffix] = useState(() => Date.now().toString(36));
@@ -98,7 +97,7 @@ export const JobsEditView: React.FC<Props> = ({ initialItem, onSave, onCancel })
     if (confirm(`Restore form inputs to version ${ver.version}?`)) {
       setTitle(ver.data.title);
       setLocation(ver.data.location);
-      setDateStr(new Date(ver.data.date).toISOString().split("T")[0]);
+      setDateStr(formatSafeDate(ver.data.date, formatSafeDate(new Date())));
       setFile(ver.data.file || "");
       setBody(ver.body || "");
       setShowHistory(false);

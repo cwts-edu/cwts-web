@@ -4,6 +4,7 @@ import type { NewsItem } from "./NewsListView";
 import { db } from "../config/firebase";
 import { collection, getDocs, query, orderBy } from "firebase/firestore";
 import { MediaField } from "../components/media/MediaField";
+import { formatSafeDate } from "../utils/dateUtils";
 
 interface VersionItem {
   version: number;
@@ -15,16 +16,14 @@ interface VersionItem {
 }
 
 interface Props {
-  initialItem?: NewsItem;
-  onSave: (item: { id: string; data: NewsMetadata; body: string }) => Promise<void>;
+  initialItem?: NewsItem | null;
+  onSave: (docId: string, data: NewsMetadata, body: string) => Promise<void>;
   onCancel: () => void;
 }
 
 export const NewsEditView: React.FC<Props> = ({ initialItem, onSave, onCancel }) => {
   const currentActive = initialItem?.draftData || initialItem?.data;
-  const initialDateStr = currentActive?.date
-    ? new Date(currentActive.date).toISOString().split("T")[0]
-    : new Date().toISOString().split("T")[0];
+  const initialDateStr = formatSafeDate(currentActive?.date, formatSafeDate(new Date()));
 
   const [dateStr, setDateStr] = useState(initialDateStr);
   const [timestampSuffix] = useState(() => Date.now().toString(36));
@@ -98,7 +97,7 @@ export const NewsEditView: React.FC<Props> = ({ initialItem, onSave, onCancel })
   const restoreVersion = (ver: VersionItem) => {
     if (confirm(`Restore form inputs to snapshot version ${ver.version}?`)) {
       setTitle(ver.data.title);
-      setDateStr(new Date(ver.data.date).toISOString().split("T")[0]);
+      setDateStr(formatSafeDate(ver.data.date, formatSafeDate(new Date())));
       setThumbnail(ver.data.thumbnail);
       setUrl(ver.data.url);
       setBody(ver.body || "");
