@@ -264,10 +264,22 @@ const AdminDashboard: React.FC = () => {
         });
       }
     } else {
+      const rawDraftDate = draft.data?.date;
+      const normalizedDate = rawDraftDate?.toDate
+        ? rawDraftDate.toDate()
+        : rawDraftDate
+        ? new Date(rawDraftDate)
+        : new Date();
+
+      const normalizedData = {
+        ...draft.data,
+        date: isNaN(normalizedDate.getTime()) ? new Date() : normalizedDate,
+      } as NewsMetadata;
+
       newsMap.set(draft.documentId, {
         id: draft.documentId,
-        data: draft.data as NewsMetadata,
-        draftData: draft.data as NewsMetadata,
+        data: normalizedData,
+        draftData: normalizedData,
         body: draft.body,
         draftBody: draft.body,
         status: "draft",
@@ -293,10 +305,22 @@ const AdminDashboard: React.FC = () => {
         });
       }
     } else {
+      const rawDraftDate = draft.data?.date;
+      const normalizedDate = rawDraftDate?.toDate
+        ? rawDraftDate.toDate()
+        : rawDraftDate
+        ? new Date(rawDraftDate)
+        : new Date();
+
+      const normalizedData = {
+        ...draft.data,
+        date: isNaN(normalizedDate.getTime()) ? new Date() : normalizedDate,
+      } as JobMetadata;
+
       jobsMap.set(draft.documentId, {
         id: draft.documentId,
-        data: draft.data as JobMetadata,
-        draftData: draft.data as JobMetadata,
+        data: normalizedData,
+        draftData: normalizedData,
         body: draft.body,
         draftBody: draft.body,
         status: "draft",
