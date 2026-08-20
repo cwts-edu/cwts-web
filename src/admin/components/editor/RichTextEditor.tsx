@@ -14,14 +14,16 @@ interface Props {
   onChange: (output: { html: string; json: Record<string, any>; text: string }) => void;
   placeholder?: string;
   minHeight?: string;
+  maxHeight?: string;
 }
 
 export const RichTextEditor: React.FC<Props> = ({
   initialContentHtml = "",
   initialContentJson,
   onChange,
-  placeholder = "Write job description, responsibilities, qualifications, and instructions...",
-  minHeight = "280px",
+  placeholder = "Write content...",
+  minHeight = "220px",
+  maxHeight = "50vh",
 }) => {
   const [showMediaPicker, setShowMediaPicker] = useState<boolean>(false);
   const [showLinkModal, setShowLinkModal] = useState<boolean>(false);
@@ -54,8 +56,7 @@ export const RichTextEditor: React.FC<Props> = ({
     content: initialContentJson || initialContentHtml,
     editorProps: {
       attributes: {
-        class: `prose prose-invert max-w-none focus:outline-none p-4 text-slate-100 text-sm leading-relaxed`,
-        style: `min-height: ${minHeight};`,
+        class: `prose prose-invert max-w-none focus:outline-none p-4 text-slate-100 text-sm leading-relaxed min-h-full`,
       },
     },
     onUpdate: ({ editor }) => {
@@ -114,9 +115,9 @@ export const RichTextEditor: React.FC<Props> = ({
   };
 
   return (
-    <div className="w-full bg-slate-950 border border-slate-700 rounded-2xl overflow-hidden shadow-inner focus-within:border-blue-500 transition-colors">
-      {/* Editor Toolbar */}
-      <div className="flex flex-wrap items-center gap-1.5 p-2 bg-slate-900 border-b border-slate-800 text-xs">
+    <div className="w-full bg-slate-950 border border-slate-700 rounded-2xl overflow-hidden shadow-inner focus-within:border-blue-500 transition-colors flex flex-col">
+      {/* Editor Toolbar - Sticky at top of editor */}
+      <div className="sticky top-0 z-10 flex flex-wrap items-center gap-1.5 p-2 bg-slate-900/95 backdrop-blur-sm border-b border-slate-800 text-xs shrink-0">
         {/* Headings */}
         <button
           type="button"
@@ -285,8 +286,15 @@ export const RichTextEditor: React.FC<Props> = ({
         </button>
       </div>
 
-      {/* Editor Content Area */}
-      <div className="cursor-text">
+      {/* Editor Content Area - Scrollable with bounded height */}
+      <div
+        className="cursor-text overflow-y-auto overflow-x-hidden flex-1 focus:outline-none scrollbar-thin scrollbar-thumb-slate-700 scrollbar-track-slate-900"
+        style={{
+          minHeight,
+          maxHeight,
+        }}
+        onClick={() => editor.chain().focus().run()}
+      >
         <EditorContent editor={editor} />
       </div>
 

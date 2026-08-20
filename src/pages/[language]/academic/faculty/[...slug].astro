@@ -6,7 +6,8 @@ import { ObfuscatedEmail } from "astro-obfuscate/components";
 
 export async function getStaticPaths() {
   const pages = await content.faculty.list();
-  return pages.map((page) => ({
+  const individualProfiles = pages.filter((page) => page.data.category !== "adjunct");
+  return individualProfiles.map((page) => ({
     params: {
       language: page.language,
       slug: page.slug,

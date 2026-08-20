@@ -11,7 +11,11 @@ export type AdminTab =
   | "jobs"
   | "jobs_new"
   | "jobs_edit"
-  | "media";
+  | "faculty"
+  | "faculty_new"
+  | "faculty_edit"
+  | "media"
+  | "backup";
 
 interface Props {
   currentTab: AdminTab;
@@ -28,13 +32,16 @@ export const AdminLayout: React.FC<Props> = ({ currentTab, onNavigate, children 
     if (tab === "dashboard" && currentTab === "dashboard") return true;
     if (tab === "news" && (currentTab === "news" || currentTab === "news_new" || currentTab === "news_edit")) return true;
     if (tab === "jobs" && (currentTab === "jobs" || currentTab === "jobs_new" || currentTab === "jobs_edit")) return true;
+    if (tab === "faculty" && (currentTab === "faculty" || currentTab === "faculty_new" || currentTab === "faculty_edit")) return true;
     if (tab === "media" && currentTab === "media") return true;
+    if (tab === "backup" && currentTab === "backup") return true;
     return false;
   };
 
   const handleNavigateToEdit = (collection: string, docId: string) => {
     if (collection === "news") onNavigate("news_edit", docId);
     if (collection === "jobs") onNavigate("jobs_edit", docId);
+    if (collection === "faculty") onNavigate("faculty_edit", docId);
   };
 
   return (
@@ -71,6 +78,18 @@ export const AdminLayout: React.FC<Props> = ({ currentTab, onNavigate, children 
           </div>
 
           <button
+            onClick={() => onNavigate("faculty")}
+            className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition ${
+              isNavActive("faculty")
+                ? "bg-purple-600 text-white shadow-md"
+                : "text-slate-400 hover:bg-slate-800/80 hover:text-white"
+            }`}
+          >
+            <span className="text-lg">🎓</span>
+            Faculty & Adjuncts
+          </button>
+
+          <button
             onClick={() => onNavigate("news")}
             className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition ${
               isNavActive("news")
@@ -95,7 +114,7 @@ export const AdminLayout: React.FC<Props> = ({ currentTab, onNavigate, children 
           </button>
 
           <div className="pt-4 pb-1 px-3 text-[11px] font-semibold text-slate-500 uppercase tracking-wider">
-            Media & Assets
+            Tools & System
           </div>
 
           <button
@@ -108,6 +127,18 @@ export const AdminLayout: React.FC<Props> = ({ currentTab, onNavigate, children 
           >
             <span className="text-lg">🖼️</span>
             Media Library
+          </button>
+
+          <button
+            onClick={() => onNavigate("backup")}
+            className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition ${
+              isNavActive("backup")
+                ? "bg-purple-600 text-white shadow-md"
+                : "text-slate-400 hover:bg-slate-800/80 hover:text-white"
+            }`}
+          >
+            <span className="text-lg">💾</span>
+            Backup & Restore
           </button>
         </nav>
 

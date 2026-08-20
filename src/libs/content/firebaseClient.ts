@@ -8,6 +8,7 @@ import type {
 import {
   type ContentSchemaMap,
   SchemaValidators,
+  FacultyMetadataSchema,
   type Language,
   type FacultyCategory,
   type FacultyMetadata,
@@ -95,8 +96,61 @@ export class FirebaseContentClient implements IContentClient {
     const validator = SchemaValidators[collection];
 
     for (const change of draftChanges) {
+      if (collection === "faculty" && change.documentId === "_order" && change.data?.orderMap) {
+        for (const [docId, newOrder] of Object.entries(change.data.orderMap)) {
+          const zh = map.get(`zh/${docId}`);
+          if (zh) zh.data.order = Number(newOrder);
+          const en = map.get(`en/${docId}`);
+          if (en) en.data.order = Number(newOrder);
+        }
+        continue;
+      }
+
       if (change.action === "delete") {
         map.delete(change.documentId);
+        map.delete(`zh/${change.documentId}`);
+        map.delete(`en/${change.documentId}`);
+      } else if (collection === "faculty" && (change.data?.zh || change.data?.en)) {
+        if (change.data.zh) {
+          const zhParsed = FacultyMetadataSchema.parse({
+            photo: change.data.photo,
+            category: change.data.category,
+            email: change.data.email,
+            order: change.data.order,
+            referencedAssets: change.data.referencedAssets,
+            ...change.data.zh,
+          });
+          map.set(`zh/${change.documentId}`, {
+            id: `zh/${change.documentId}`,
+            slug: change.documentId,
+            language: "zh",
+            status: "draft",
+            data: zhParsed as any,
+            body: change.data.zh.body || "",
+            html: change.data.zh.bodyHtml || change.data.zh.body || "",
+            updatedAt: new Date(change.updatedAt || Date.now()),
+          });
+        }
+        if (change.data.en) {
+          const enParsed = FacultyMetadataSchema.parse({
+            photo: change.data.photo,
+            category: change.data.category,
+            email: change.data.email,
+            order: change.data.order,
+            referencedAssets: change.data.referencedAssets,
+            ...change.data.en,
+          });
+          map.set(`en/${change.documentId}`, {
+            id: `en/${change.documentId}`,
+            slug: change.documentId,
+            language: "en",
+            status: "draft",
+            data: enParsed as any,
+            body: change.data.en.body || "",
+            html: change.data.en.bodyHtml || change.data.en.body || "",
+            updatedAt: new Date(change.updatedAt || Date.now()),
+          });
+        }
       } else {
         const parsedData = validator.parse(change.data);
         map.set(change.documentId, {
@@ -292,9 +346,21 @@ export class FirebaseContentClient implements IContentClient {
         .sort((a, b) => (a.data.order || 0) - (b.data.order || 0));
     },
     getBySlug: async (slug: string, language: Language) => {
+      const all = await this.faculty.list(language);
+      const found = all.find(
+        (p) => p.slug === slug || p.id === `${language}/${slug}` || p.id === slug
+      );
+      if (found) return found;
       return this.getEntry("faculty", `${language}_${slug}`);
     },
     getAdjunctList: async (language: Language) => {
+      const items = await this.getCollection("faculty");
+      const adjuncts = items
+        .filter((i) => i.language === language && i.data.category === "adjunct")
+        .sort((a, b) => (a.data.order || 0) - (b.data.order || 0));
+      if (adjuncts.length > 0) {
+        return adjuncts.map((a) => a.data);
+      }
       const entry = await this.getEntry("adjunct-prof", `${language}_adjunct`);
       return entry ? entry.data : [];
     },
@@ -423,20 +489,67 @@ export class FirebaseContentClient implements IContentClient {
       const id = doc.name.split("/").pop()!;
       const fields = this.decodeFirestoreFields(doc.fields);
       if (fields.status === "deleted") continue;
-      const parsedData = validator.parse(fields);
 
-      entries.push({
-        id,
-        slug: fields.slug || id,
-        language: (fields.language as Language) || "zh",
-        status: fields.status || "published",
-        version: fields.version || 1,
-        publishedVersion: fields.publishedVersion || 1,
-        data: parsedData,
-        body: fields.body || "",
-        html: fields.bodyHtml || fields.html || fields.body || "",
-        updatedAt: new Date(doc.updateTime),
-      });
+      if (collection === "faculty" && (fields.zh || fields.en)) {
+        if (fields.zh) {
+          const zhParsed = FacultyMetadataSchema.parse({
+            photo: fields.photo,
+            category: fields.category,
+            email: fields.email,
+            order: fields.order,
+            referencedAssets: fields.referencedAssets,
+            ...fields.zh,
+          });
+          entries.push({
+            id: `zh/${id}`,
+            slug: id,
+            language: "zh",
+            status: fields.status || "published",
+            version: fields.version || 1,
+            publishedVersion: fields.publishedVersion || 1,
+            data: zhParsed as any,
+            body: fields.zh.body || "",
+            html: fields.zh.bodyHtml || fields.zh.body || "",
+            updatedAt: new Date(doc.updateTime),
+          });
+        }
+        if (fields.en) {
+          const enParsed = FacultyMetadataSchema.parse({
+            photo: fields.photo,
+            category: fields.category,
+            email: fields.email,
+            order: fields.order,
+            referencedAssets: fields.referencedAssets,
+            ...fields.en,
+          });
+          entries.push({
+            id: `en/${id}`,
+            slug: id,
+            language: "en",
+            status: fields.status || "published",
+            version: fields.version || 1,
+            publishedVersion: fields.publishedVersion || 1,
+            data: enParsed as any,
+            body: fields.en.body || "",
+            html: fields.en.bodyHtml || fields.en.body || "",
+            updatedAt: new Date(doc.updateTime),
+          });
+        }
+      } else {
+        const parsedData = validator.parse(fields);
+        entries.push({
+          id,
+          slug: fields.slug || id,
+          language: (fields.language as Language) || "zh",
+          status: fields.status || "published",
+          version: fields.version || 1,
+          publishedVersion: fields.publishedVersion || 1,
+          data: parsedData,
+          body: fields.body || "",
+          html: fields.bodyHtml || fields.html || fields.body || "",
+          updatedAt: new Date(doc.updateTime),
+        });
+      }
     }
 
     return entries;

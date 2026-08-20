@@ -28,3 +28,6 @@ assets-original/
 
 # Generated fixtures
 data-fixtures/
+
+# Generated backup packages
+packages/

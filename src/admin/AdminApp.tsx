@@ -8,6 +8,9 @@ import { NewsListView, type NewsItem } from "./views/NewsListView";
 import { NewsEditView } from "./views/NewsEditView";
 import { JobsListView, type JobItem } from "./views/JobsListView";
 import { JobsEditView } from "./views/JobsEditView";
+import { FacultyListView, type UnifiedFacultyItem } from "./views/FacultyListView";
+import { FacultyEditView } from "./views/FacultyEditView";
+import { BackupRestoreView } from "./views/BackupRestoreView";
 import { MediaLibraryView } from "./views/MediaLibraryView";
 import { db } from "./config/firebase";
 import { collection, getDocs } from "firebase/firestore";
@@ -27,8 +30,14 @@ export function parseAdminLocation(): AdminRouteState {
   const searchParams = new URLSearchParams(window.location.search);
   const idParam = searchParams.get("id") || undefined;
 
-  if (path === "/admin" || path === "/admin/dashboard" || path === "") {
-    return { tab: "dashboard" };
+  if (path === "/admin/faculty/new") {
+    return { tab: "faculty_new" };
+  }
+  if (path === "/admin/faculty/edit") {
+    return { tab: "faculty_edit", param: idParam };
+  }
+  if (path === "/admin/faculty") {
+    return { tab: "faculty" };
   }
   if (path === "/admin/news/new") {
     return { tab: "news_new" };
@@ -51,6 +60,9 @@ export function parseAdminLocation(): AdminRouteState {
   if (path === "/admin/media") {
     return { tab: "media" };
   }
+  if (path === "/admin/backup") {
+    return { tab: "backup" };
+  }
 
   return { tab: "dashboard" };
 }
@@ -59,6 +71,12 @@ export function buildAdminUrl(tab: AdminTab, param?: string): string {
   switch (tab) {
     case "dashboard":
       return "/admin";
+    case "faculty":
+      return "/admin/faculty";
+    case "faculty_new":
+      return "/admin/faculty/new";
+    case "faculty_edit":
+      return param ? `/admin/faculty/edit?id=${encodeURIComponent(param)}` : "/admin/faculty/edit";
     case "news":
       return "/admin/news";
     case "news_new":
@@ -73,6 +91,8 @@ export function buildAdminUrl(tab: AdminTab, param?: string): string {
       return param ? `/admin/jobs/edit?id=${encodeURIComponent(param)}` : "/admin/jobs/edit";
     case "media":
       return "/admin/media";
+    case "backup":
+      return "/admin/backup";
     default:
       return "/admin";
   }
@@ -115,6 +135,7 @@ const AdminDashboard: React.FC = () => {
 
   const [news, setNews] = useState<NewsItem[]>(INITIAL_NEWS);
   const [jobs, setJobs] = useState<JobItem[]>(INITIAL_JOBS);
+  const [faculty, setFaculty] = useState<UnifiedFacultyItem[]>([]);
   const [isLoadingData, setIsLoadingData] = useState<boolean>(true);
 
   // Sync state when user presses browser Back/Forward buttons
@@ -182,6 +203,30 @@ const AdminDashboard: React.FC = () => {
         });
         setJobs(loadedJobs);
       }
+
+      // 3. Fetch Faculty
+      const facultySnap = await getDocs(collection(db, "faculty"));
+      if (!facultySnap.empty) {
+        const loadedFaculty: UnifiedFacultyItem[] = [];
+        facultySnap.forEach((d) => {
+          const val = d.data();
+          if (val.status === "deleted") return;
+          loadedFaculty.push({
+            id: d.id,
+            category: val.category || "faculty",
+            photo: val.photo,
+            email: val.email,
+            order: val.order || 999,
+            inCategoryOrder: val.inCategoryOrder,
+            referencedAssets: val.referencedAssets,
+            zh: val.zh || { name: val.name || d.id },
+            en: val.en || { name: val.name || d.id },
+            status: val.status || "published",
+            updatedAt: val.updatedAt,
+          });
+        });
+        setFaculty(loadedFaculty);
+      }
     } catch (err) {
       console.warn("Could not connect to live Firestore (using initial state):", err);
     } finally {
@@ -247,6 +292,21 @@ const AdminDashboard: React.FC = () => {
 
   const handleUndoDeleteJob = async (id: string) => {
     await discardDraftChange("jobs", id);
+  };
+
+  // --------------------------------------------------------------------------
+  // Faculty Handlers (Draft Save & Soft Delete)
+  // --------------------------------------------------------------------------
+  const handleSaveFacultyDraft = async (id: string, data: any) => {
+    await saveChangeToDraft("faculty", id, "update", data);
+    handleNavigate("faculty");
+  };
+
+  const handleDeleteFaculty = async (id: string) => {
+    const target = faculty.find((f) => f.id === id);
+    if (target) {
+      await saveChangeToDraft("faculty", id, "delete", target);
+    }
   };
 
   // Overlay active draft items into the view list for the editor
@@ -332,6 +392,51 @@ const AdminDashboard: React.FC = () => {
   }
   const mergedJobs = Array.from(jobsMap.values());
 
+  const facultyMap = new Map<string, UnifiedFacultyItem>(faculty.map((item) => [item.id, { ...item }]));
+  const facultyDraftChanges = pendingChanges.filter((p) => p.collection === "faculty");
+
+  // First apply general doc changes
+  for (const draft of facultyDraftChanges) {
+    if (draft.documentId === "_order") continue; // Handled separately below
+
+    const existing = facultyMap.get(draft.documentId);
+    if (draft.action === "delete") {
+      if (existing) {
+        facultyMap.set(draft.documentId, {
+          ...existing,
+          status: "deleted",
+        });
+      }
+    } else {
+      facultyMap.set(draft.documentId, {
+        id: draft.documentId,
+        category: draft.data?.category || existing?.category || "faculty",
+        photo: draft.data?.photo || existing?.photo,
+        email: draft.data?.email || existing?.email,
+        order: draft.data?.order || existing?.order || 999,
+        inCategoryOrder: draft.data?.inCategoryOrder || existing?.inCategoryOrder,
+        referencedAssets: draft.data?.referencedAssets || existing?.referencedAssets,
+        zh: draft.data?.zh || existing?.zh || { name: draft.documentId },
+        en: draft.data?.en || existing?.en || { name: draft.documentId },
+        status: "draft",
+        draftData: draft.data,
+      });
+    }
+  }
+
+  // Second apply the single _order draft item if present
+  const orderDraft = facultyDraftChanges.find((p) => p.documentId === "_order");
+  if (orderDraft?.data?.orderMap) {
+    for (const [id, newOrder] of Object.entries(orderDraft.data.orderMap)) {
+      const item = facultyMap.get(id);
+      if (item) {
+        facultyMap.set(id, { ...item, order: Number(newOrder) });
+      }
+    }
+  }
+
+  const mergedFaculty = Array.from(facultyMap.values()).filter((f) => f.id !== "_order");
+
   return (
     <AdminLayout currentTab={currentTab} onNavigate={handleNavigate}>
       {currentTab === "dashboard" && (
@@ -339,7 +444,33 @@ const AdminDashboard: React.FC = () => {
           onNavigate={handleNavigate}
           newsCount={mergedNews.filter((n) => n.status !== "deleted").length}
           jobsCount={mergedJobs.filter((j) => j.status !== "deleted").length}
+          facultyCount={mergedFaculty.filter((f) => f.status !== "deleted").length}
           onRefreshData={loadData}
+        />
+      )}
+
+      {currentTab === "faculty" && (
+        <FacultyListView
+          items={mergedFaculty.filter((f) => f.status !== "deleted")}
+          onNew={() => handleNavigate("faculty_new")}
+          onEdit={(item) => handleNavigate("faculty_edit", item.id)}
+          onDelete={handleDeleteFaculty}
+          isLoading={isLoadingData}
+        />
+      )}
+
+      {currentTab === "faculty_new" && (
+        <FacultyEditView
+          onSave={handleSaveFacultyDraft}
+          onCancel={() => handleNavigate("faculty")}
+        />
+      )}
+
+      {currentTab === "faculty_edit" && (
+        <FacultyEditView
+          initialItem={mergedFaculty.find((f) => f.id === editingId)}
+          onSave={handleSaveFacultyDraft}
+          onCancel={() => handleNavigate("faculty")}
         />
       )}
 
@@ -394,6 +525,8 @@ const AdminDashboard: React.FC = () => {
       )}
 
       {currentTab === "media" && <MediaLibraryView />}
+
+      {currentTab === "backup" && <BackupRestoreView onRefreshData={loadData} />}
     </AdminLayout>
   );
 };

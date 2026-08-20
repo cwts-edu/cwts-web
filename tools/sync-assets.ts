@@ -178,6 +178,29 @@ async function collectReferencedMediaAssets(): Promise<Set<string>> {
         }
       }
     }
+
+    // 3. Query faculty collection using content client
+    const facultyEntries = await client.getCollection("faculty");
+    console.log(`🎓 Loaded ${facultyEntries.length} faculty entries from Firebase content client.`);
+    for (const entry of facultyEntries) {
+      if (entry.data?.referencedAssets && Array.isArray(entry.data.referencedAssets)) {
+        for (const assetPath of entry.data.referencedAssets) {
+          const sp = normalizeStoragePath(assetPath);
+          if (sp) referenced.add(sp);
+        }
+      } else {
+        if (entry.data?.photo) {
+          const sp = normalizeStoragePath(entry.data.photo);
+          if (sp) referenced.add(sp);
+        }
+        if (entry.body) {
+          scanTextForStoragePaths(entry.body, referenced);
+        }
+        if (entry.html) {
+          scanTextForStoragePaths(entry.html, referenced);
+        }
+      }
+    }
   } catch (err: any) {
     console.error("❌ Error querying collections via Firebase content client:", err.message || err);
     throw err;

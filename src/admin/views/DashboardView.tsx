@@ -15,10 +15,17 @@ interface Props {
   onNavigate: (tab: AdminTab, param?: string) => void;
   newsCount: number;
   jobsCount: number;
+  facultyCount?: number;
   onRefreshData?: () => Promise<void>;
 }
 
-export const DashboardView: React.FC<Props> = ({ onNavigate, newsCount, jobsCount, onRefreshData }) => {
+export const DashboardView: React.FC<Props> = ({
+  onNavigate,
+  newsCount,
+  jobsCount,
+  facultyCount = 0,
+  onRefreshData,
+}) => {
   const { user } = useAuth();
   const {
     pendingChanges,
@@ -391,7 +398,7 @@ export const DashboardView: React.FC<Props> = ({ onNavigate, newsCount, jobsCoun
                       change.action === "delete" ? "line-through text-red-300" : "text-white"
                     }`}
                   >
-                    {change.data?.title || "Untitled Entry"}
+                    {change.data?.title || change.data?.zh?.name || change.data?.en?.name || change.documentId}
                   </span>
                 </div>
 
@@ -404,6 +411,7 @@ export const DashboardView: React.FC<Props> = ({ onNavigate, newsCount, jobsCoun
                       onClick={() => {
                         if (change.collection === "news") onNavigate("news_edit", change.documentId);
                         if (change.collection === "jobs") onNavigate("jobs_edit", change.documentId);
+                        if (change.collection === "faculty") onNavigate("faculty_edit", change.documentId);
                       }}
                       className="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-lg text-xs"
                     >
@@ -425,7 +433,21 @@ export const DashboardView: React.FC<Props> = ({ onNavigate, newsCount, jobsCoun
       )}
 
       {/* Collection Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div
+          onClick={() => onNavigate("faculty")}
+          className="bg-slate-900 border border-slate-800 hover:border-purple-500/40 rounded-2xl p-6 cursor-pointer transition shadow-xl group"
+        >
+          <div className="flex items-center justify-between">
+            <div className="w-12 h-12 rounded-xl bg-purple-900/30 border border-purple-500/30 flex items-center justify-center text-2xl group-hover:scale-110 transition">
+              🎓
+            </div>
+            <span className="text-2xl font-black text-white">{facultyCount}</span>
+          </div>
+          <h3 className="text-base font-bold text-white mt-4 group-hover:text-purple-300 transition">Faculty & Adjuncts</h3>
+          <p className="text-xs text-slate-400 mt-1">Core professors, senior adjuncts, and adjunct list.</p>
+        </div>
+
         <div
           onClick={() => onNavigate("news")}
           className="bg-slate-900 border border-slate-800 hover:border-purple-500/40 rounded-2xl p-6 cursor-pointer transition shadow-xl group"

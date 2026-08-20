@@ -270,6 +270,18 @@ export const DraftProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
       // 1. Merge each draft change into canonical collection and archive version snapshot
       for (const change of pendingChanges) {
+        if (change.collection === "faculty" && change.documentId === "_order" && change.data?.orderMap) {
+          for (const [id, newOrder] of Object.entries(change.data.orderMap)) {
+            const facultyRef = doc(db, "faculty", id);
+            batch.set(
+              facultyRef,
+              { order: Number(newOrder), updatedAt: new Date().toISOString() },
+              { merge: true }
+            );
+          }
+          continue;
+        }
+
         const canonicalRef = doc(db, change.collection, change.documentId);
         
         let currentVer = 1;
