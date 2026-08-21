@@ -81,9 +81,12 @@ export const AdminLayout: React.FC<Props> = ({ currentTab, onNavigate, children 
             Dashboard
           </button>
 
+          {/* Separator */}
+          <div className="my-3 border-t border-slate-800/80 mx-2" />
+
           {/* 1. Homepage Data Group */}
-          <div className="pt-4 pb-1 px-3 text-[11px] font-semibold text-purple-400/90 uppercase tracking-wider flex items-center gap-1.5">
-            <span>🏠</span> Homepage Data
+          <div className="px-3 pb-1 pt-1 text-[11px] font-semibold text-slate-500 uppercase tracking-wider">
+            Homepage Data
           </div>
 
           <button
@@ -146,9 +149,12 @@ export const AdminLayout: React.FC<Props> = ({ currentTab, onNavigate, children 
             Shortcuts
           </button>
 
+          {/* Separator */}
+          <div className="my-3 border-t border-slate-800/80 mx-2" />
+
           {/* 2. Site Collections */}
-          <div className="pt-4 pb-1 px-3 text-[11px] font-semibold text-slate-500 uppercase tracking-wider flex items-center gap-1.5">
-            <span>📚</span> Collections
+          <div className="px-3 pb-1 pt-1 text-[11px] font-semibold text-slate-500 uppercase tracking-wider">
+            Collections
           </div>
 
           <button
@@ -175,9 +181,12 @@ export const AdminLayout: React.FC<Props> = ({ currentTab, onNavigate, children 
             Job Postings
           </button>
 
+          {/* Separator */}
+          <div className="my-3 border-t border-slate-800/80 mx-2" />
+
           {/* 3. Tools & System */}
-          <div className="pt-4 pb-1 px-3 text-[11px] font-semibold text-slate-500 uppercase tracking-wider flex items-center gap-1.5">
-            <span>⚙️</span> Tools & System
+          <div className="px-3 pb-1 pt-1 text-[11px] font-semibold text-slate-500 uppercase tracking-wider">
+            Tools & System
           </div>
 
           <button
