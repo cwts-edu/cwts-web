@@ -72,7 +72,9 @@ const AdminDashboard: React.FC = () => {
   const [jobs, setJobs] = useState<JobItem[]>([]);
   const [faculty, setFaculty] = useState<UnifiedFacultyItem[]>([]);
   const [carousel, setCarousel] = useState<CarouselSlideItem[]>([]);
-  const [isLoadingData, setIsLoadingData] = useState<boolean>(true);
+
+  const [loadingCollections, setLoadingCollections] = useState<Record<string, boolean>>({});
+  const [loadedCollections, setLoadedCollections] = useState<Record<string, boolean>>({});
 
   // Sync state when user presses browser Back/Forward buttons
   useEffect(() => {
@@ -86,120 +88,162 @@ const AdminDashboard: React.FC = () => {
     return () => window.removeEventListener("popstate", handlePopState);
   }, []);
 
-  const loadData = useCallback(async () => {
+  // 1. Fetch News on-demand
+  const loadNews = useCallback(async () => {
+    setLoadingCollections((prev) => ({ ...prev, news: true }));
     try {
-      // 1. Fetch News (filter out soft-deleted items)
       const newsSnap = await getDocs(collection(db, "news"));
-      if (!newsSnap.empty) {
-        const loadedNews: NewsItem[] = [];
-        newsSnap.forEach((d) => {
-          const val = d.data();
-          if (val.status === "deleted") return; // Ignore soft-deleted documents
-          loadedNews.push({
-            id: d.id,
-            data: {
-              title: val.title,
-              date: val.date?.toDate ? val.date.toDate() : new Date(val.date),
-              thumbnail: val.thumbnail,
-              url: val.url,
-            },
-            body: val.body || "",
-            status: val.status || "published",
-            version: val.version || 1,
-            publishedVersion: val.publishedVersion || 1,
-            updatedBy: val.updatedBy,
-            publishedBy: val.publishedBy,
-          });
-        });
-        setNews(loadedNews);
-      }
-
-      // 2. Fetch Jobs (filter out soft-deleted items)
-      const jobsSnap = await getDocs(collection(db, "jobs"));
-      if (!jobsSnap.empty) {
-        const loadedJobs: JobItem[] = [];
-        jobsSnap.forEach((d) => {
-          const val = d.data();
-          if (val.status === "deleted") return; // Ignore soft-deleted documents
-          loadedJobs.push({
-            id: d.id,
-            data: {
-              title: val.title,
-              location: val.location,
-              date: val.date?.toDate ? val.date.toDate() : new Date(val.date),
-              ...(val.file ? { file: val.file } : {}),
-            },
-            body: val.body || "",
-            status: val.status || "published",
-            version: val.version || 1,
-            publishedVersion: val.publishedVersion || 1,
-            updatedBy: val.updatedBy,
-            publishedBy: val.publishedBy,
-          });
-        });
-        setJobs(loadedJobs);
-      }
-
-      // 3. Fetch Faculty
-      const facultySnap = await getDocs(collection(db, "faculty"));
-      if (!facultySnap.empty) {
-        const loadedFaculty: UnifiedFacultyItem[] = [];
-        facultySnap.forEach((d) => {
-          const val = d.data();
-          if (val.status === "deleted") return;
-          loadedFaculty.push({
-            id: d.id,
-            category: val.category || "faculty",
-            photo: val.photo,
-            email: val.email,
-            order: val.order || 999,
-            inCategoryOrder: val.inCategoryOrder,
-            referencedAssets: val.referencedAssets,
-            zh: val.zh || { name: val.name || d.id },
-            en: val.en || { name: val.name || d.id },
-            status: val.status || "published",
-            updatedAt: val.updatedAt,
-          });
-        });
-        setFaculty(loadedFaculty);
-      }
-
-      // 4. Fetch Carousel
-      const carouselSnap = await getDocs(collection(db, "carousel"));
-      if (!carouselSnap.empty) {
-        const loadedCarousel: CarouselSlideItem[] = [];
-        carouselSnap.forEach((d) => {
-          const val = d.data();
-          if (val.status === "deleted") return;
-          loadedCarousel.push({
-            id: d.id,
-            order: val.order ?? 999,
-            image: val.image || "",
-            link: val.link,
-            newWindow: Boolean(val.newWindow),
+      const loadedNews: NewsItem[] = [];
+      newsSnap.forEach((d) => {
+        const val = d.data();
+        if (val.status === "deleted") return;
+        loadedNews.push({
+          id: d.id,
+          data: {
             title: val.title,
-            referencedAssets: val.referencedAssets || [],
-            status: val.status || "published",
-            version: val.version || 1,
-            publishedVersion: val.publishedVersion || 1,
-            updatedBy: val.updatedBy,
-            publishedBy: val.publishedBy,
-            createdAt: val.createdAt,
-            updatedAt: val.updatedAt,
-          });
+            date: val.date?.toDate ? val.date.toDate() : new Date(val.date),
+            thumbnail: val.thumbnail,
+            url: val.url,
+          },
+          body: val.body || "",
+          status: val.status || "published",
+          version: val.version || 1,
+          publishedVersion: val.publishedVersion || 1,
+          updatedBy: val.updatedBy,
+          publishedBy: val.publishedBy,
         });
-        setCarousel(loadedCarousel);
-      }
+      });
+      setNews(loadedNews);
+      setLoadedCollections((prev) => ({ ...prev, news: true }));
     } catch (err) {
-      console.warn("Could not connect to live Firestore (using initial state):", err);
+      console.warn("Could not load news from Firestore:", err);
     } finally {
-      setIsLoadingData(false);
+      setLoadingCollections((prev) => ({ ...prev, news: false }));
     }
   }, []);
 
+  // 2. Fetch Jobs on-demand
+  const loadJobs = useCallback(async () => {
+    setLoadingCollections((prev) => ({ ...prev, jobs: true }));
+    try {
+      const jobsSnap = await getDocs(collection(db, "jobs"));
+      const loadedJobs: JobItem[] = [];
+      jobsSnap.forEach((d) => {
+        const val = d.data();
+        if (val.status === "deleted") return;
+        loadedJobs.push({
+          id: d.id,
+          data: {
+            title: val.title,
+            location: val.location,
+            date: val.date?.toDate ? val.date.toDate() : new Date(val.date),
+            ...(val.file ? { file: val.file } : {}),
+          },
+          body: val.body || "",
+          status: val.status || "published",
+          version: val.version || 1,
+          publishedVersion: val.publishedVersion || 1,
+          updatedBy: val.updatedBy,
+          publishedBy: val.publishedBy,
+        });
+      });
+      setJobs(loadedJobs);
+      setLoadedCollections((prev) => ({ ...prev, jobs: true }));
+    } catch (err) {
+      console.warn("Could not load jobs from Firestore:", err);
+    } finally {
+      setLoadingCollections((prev) => ({ ...prev, jobs: false }));
+    }
+  }, []);
+
+  // 3. Fetch Faculty on-demand
+  const loadFaculty = useCallback(async () => {
+    setLoadingCollections((prev) => ({ ...prev, faculty: true }));
+    try {
+      const facultySnap = await getDocs(collection(db, "faculty"));
+      const loadedFaculty: UnifiedFacultyItem[] = [];
+      facultySnap.forEach((d) => {
+        const val = d.data();
+        if (val.status === "deleted") return;
+        loadedFaculty.push({
+          id: d.id,
+          category: val.category || "faculty",
+          photo: val.photo,
+          email: val.email,
+          order: val.order || 999,
+          inCategoryOrder: val.inCategoryOrder,
+          referencedAssets: val.referencedAssets,
+          zh: val.zh || { name: val.name || d.id },
+          en: val.en || { name: val.name || d.id },
+          status: val.status || "published",
+          updatedAt: val.updatedAt,
+        });
+      });
+      setFaculty(loadedFaculty);
+      setLoadedCollections((prev) => ({ ...prev, faculty: true }));
+    } catch (err) {
+      console.warn("Could not load faculty from Firestore:", err);
+    } finally {
+      setLoadingCollections((prev) => ({ ...prev, faculty: false }));
+    }
+  }, []);
+
+  // 4. Fetch Carousel on-demand
+  const loadCarousel = useCallback(async () => {
+    setLoadingCollections((prev) => ({ ...prev, carousel: true }));
+    try {
+      const carouselSnap = await getDocs(collection(db, "carousel"));
+      const loadedCarousel: CarouselSlideItem[] = [];
+      carouselSnap.forEach((d) => {
+        const val = d.data();
+        if (val.status === "deleted") return;
+        loadedCarousel.push({
+          id: d.id,
+          order: val.order ?? 999,
+          image: val.image || "",
+          link: val.link,
+          newWindow: Boolean(val.newWindow),
+          title: val.title,
+          referencedAssets: val.referencedAssets || [],
+          status: val.status || "published",
+          version: val.version || 1,
+          publishedVersion: val.publishedVersion || 1,
+          updatedBy: val.updatedBy,
+          publishedBy: val.publishedBy,
+          createdAt: val.createdAt,
+          updatedAt: val.updatedAt,
+        });
+      });
+      setCarousel(loadedCarousel);
+      setLoadedCollections((prev) => ({ ...prev, carousel: true }));
+    } catch (err) {
+      console.warn("Could not load carousel from Firestore:", err);
+    } finally {
+      setLoadingCollections((prev) => ({ ...prev, carousel: false }));
+    }
+  }, []);
+
+  // Trigger on-demand loading when a relevant tab is opened
   useEffect(() => {
-    loadData();
-  }, [loadData]);
+    if (currentTab.startsWith("news") && !loadedCollections.news && !loadingCollections.news) {
+      loadNews();
+    } else if (currentTab.startsWith("jobs") && !loadedCollections.jobs && !loadingCollections.jobs) {
+      loadJobs();
+    } else if (currentTab.startsWith("faculty") && !loadedCollections.faculty && !loadingCollections.faculty) {
+      loadFaculty();
+    } else if (currentTab.startsWith("homepage_carousel") && !loadedCollections.carousel && !loadingCollections.carousel) {
+      loadCarousel();
+    }
+  }, [currentTab, loadedCollections, loadingCollections, loadNews, loadJobs, loadFaculty, loadCarousel]);
+
+  // Global reload (e.g. after restoring backup)
+  const reloadAll = useCallback(async () => {
+    setLoadedCollections({});
+    if (currentTab.startsWith("news")) await loadNews();
+    else if (currentTab.startsWith("jobs")) await loadJobs();
+    else if (currentTab.startsWith("faculty")) await loadFaculty();
+    else if (currentTab.startsWith("homepage_carousel")) await loadCarousel();
+  }, [currentTab, loadNews, loadJobs, loadFaculty, loadCarousel]);
 
   const handleNavigate = (tab: AdminTab, param?: string, replace = false) => {
     if (param) setEditingId(param);
@@ -473,11 +517,7 @@ const AdminDashboard: React.FC = () => {
       {currentTab === "dashboard" && (
         <DashboardView
           onNavigate={handleNavigate}
-          newsCount={mergedNews.filter((n) => n.status !== "deleted").length}
-          jobsCount={mergedJobs.filter((j) => j.status !== "deleted").length}
-          facultyCount={mergedFaculty.filter((f) => f.status !== "deleted").length}
-          carouselCount={mergedCarousel.filter((c) => c.status !== "deleted").length}
-          onRefreshData={loadData}
+          onRefreshData={reloadAll}
         />
       )}
 
@@ -487,7 +527,7 @@ const AdminDashboard: React.FC = () => {
           onNew={() => handleNavigate("faculty_new")}
           onEdit={(item) => handleNavigate("faculty_edit", item.id)}
           onDelete={handleDeleteFaculty}
-          isLoading={isLoadingData}
+          isLoading={Boolean(loadingCollections.faculty)}
         />
       )}
 
@@ -520,6 +560,7 @@ const AdminDashboard: React.FC = () => {
           onEdit={(id) => handleNavigate("news_edit", id)}
           onDelete={handleDeleteNews}
           onUndoDelete={handleUndoDeleteNews}
+          isLoading={Boolean(loadingCollections.news)}
         />
       )}
 
@@ -531,7 +572,7 @@ const AdminDashboard: React.FC = () => {
       )}
 
       {currentTab === "news_edit" && (
-        isLoadingData && !mergedNews.find((n) => n.id === editingId) ? (
+        loadingCollections.news && !mergedNews.find((n) => n.id === editingId) ? (
           <div className="p-16 text-center text-slate-400 text-sm animate-pulse">
             Loading news entry...
           </div>
@@ -552,6 +593,7 @@ const AdminDashboard: React.FC = () => {
           onEdit={(id) => handleNavigate("jobs_edit", id)}
           onDelete={handleDeleteJob}
           onUndoDelete={handleUndoDeleteJob}
+          isLoading={Boolean(loadingCollections.jobs)}
         />
       )}
 
@@ -563,7 +605,7 @@ const AdminDashboard: React.FC = () => {
       )}
 
       {currentTab === "jobs_edit" && (
-        isLoadingData && !mergedJobs.find((j) => j.id === editingId) ? (
+        loadingCollections.jobs && !mergedJobs.find((j) => j.id === editingId) ? (
           <div className="p-16 text-center text-slate-400 text-sm animate-pulse">
             Loading job posting...
           </div>
@@ -585,7 +627,7 @@ const AdminDashboard: React.FC = () => {
           onDelete={handleDeleteCarousel}
           onUndoDelete={handleUndoDeleteCarousel}
           onReorder={handleReorderCarousel}
-          isLoading={isLoadingData}
+          isLoading={Boolean(loadingCollections.carousel)}
         />
       )}
 
@@ -598,7 +640,7 @@ const AdminDashboard: React.FC = () => {
       )}
 
       {currentTab === "homepage_carousel_edit" && (
-        isLoadingData && !mergedCarousel.find((c) => c.id === editingId) ? (
+        loadingCollections.carousel && !mergedCarousel.find((c) => c.id === editingId) ? (
           <div className="p-16 text-center text-slate-400 text-sm animate-pulse">
             Loading carousel slide...
           </div>
@@ -668,7 +710,7 @@ const AdminDashboard: React.FC = () => {
 
       {currentTab === "media" && <MediaLibraryView />}
 
-      {currentTab === "backup" && <BackupRestoreView onRefreshData={loadData} />}
+      {currentTab === "backup" && <BackupRestoreView onRefreshData={reloadAll} />}
     </AdminLayout>
   );
 };

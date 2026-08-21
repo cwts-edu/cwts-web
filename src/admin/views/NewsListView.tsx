@@ -23,9 +23,17 @@ interface Props {
   onEdit: (id: string) => void;
   onDelete: (id: string) => Promise<void>;
   onUndoDelete?: (id: string) => Promise<void>;
+  isLoading?: boolean;
 }
 
-export const NewsListView: React.FC<Props> = ({ items, onNew, onEdit, onDelete, onUndoDelete }) => {
+export const NewsListView: React.FC<Props> = ({
+  items,
+  onNew,
+  onEdit,
+  onDelete,
+  onUndoDelete,
+  isLoading = false,
+}) => {
   // Always sort newest first by publish date
   const sortedItems = React.useMemo(() => {
     return [...items].sort((a, b) => {
@@ -55,7 +63,11 @@ export const NewsListView: React.FC<Props> = ({ items, onNew, onEdit, onDelete, 
       </div>
 
       <div className="bg-slate-900 border border-slate-800 rounded-2xl shadow-xl overflow-hidden">
-        {sortedItems.length === 0 ? (
+        {isLoading ? (
+          <div className="p-16 text-center text-slate-400 text-sm animate-pulse">
+            Loading news articles...
+          </div>
+        ) : sortedItems.length === 0 ? (
           <div className="p-12 text-center text-slate-400 space-y-3">
             <div className="text-4xl">📰</div>
             <p className="text-sm font-medium">No news articles found.</p>

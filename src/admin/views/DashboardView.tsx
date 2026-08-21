@@ -12,19 +12,11 @@ import {
 
 interface Props {
   onNavigate: (tab: AdminTab, param?: string) => void;
-  newsCount: number;
-  jobsCount: number;
-  facultyCount?: number;
-  carouselCount?: number;
   onRefreshData?: () => Promise<void>;
 }
 
 export const DashboardView: React.FC<Props> = ({
   onNavigate,
-  newsCount,
-  jobsCount,
-  facultyCount = 0,
-  carouselCount = 0,
   onRefreshData,
 }) => {
   const { user } = useAuth();
@@ -368,7 +360,7 @@ export const DashboardView: React.FC<Props> = ({
         </div>
       )}
 
-      {/* Collection Stats Grid */}
+      {/* Collection Quick Navigation Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         <div
           onClick={() => onNavigate("homepage_carousel")}
@@ -378,10 +370,12 @@ export const DashboardView: React.FC<Props> = ({
             <div className="w-12 h-12 rounded-xl bg-purple-900/30 border border-purple-500/30 flex items-center justify-center text-2xl group-hover:scale-110 transition">
               🎠
             </div>
-            <span className="text-2xl font-black text-white">{carouselCount}</span>
+            <span className="text-xs text-purple-400 group-hover:text-purple-300 font-semibold flex items-center gap-1">
+              Manage <span>→</span>
+            </span>
           </div>
           <h3 className="text-base font-bold text-white mt-4 group-hover:text-purple-300 transition">Hero Carousel</h3>
-          <p className="text-xs text-slate-400 mt-1">Homepage hero banners, links, and order.</p>
+          <p className="text-xs text-slate-400 mt-1">Homepage hero banners, links, and display order.</p>
         </div>
 
         <div
@@ -392,7 +386,9 @@ export const DashboardView: React.FC<Props> = ({
             <div className="w-12 h-12 rounded-xl bg-purple-900/30 border border-purple-500/30 flex items-center justify-center text-2xl group-hover:scale-110 transition">
               📰
             </div>
-            <span className="text-2xl font-black text-white">{newsCount}</span>
+            <span className="text-xs text-purple-400 group-hover:text-purple-300 font-semibold flex items-center gap-1">
+              Manage <span>→</span>
+            </span>
           </div>
           <h3 className="text-base font-bold text-white mt-4 group-hover:text-purple-300 transition">News Articles</h3>
           <p className="text-xs text-slate-400 mt-1">Homepage news items and newsletter highlights.</p>
@@ -406,7 +402,9 @@ export const DashboardView: React.FC<Props> = ({
             <div className="w-12 h-12 rounded-xl bg-purple-900/30 border border-purple-500/30 flex items-center justify-center text-2xl group-hover:scale-110 transition">
               👤
             </div>
-            <span className="text-2xl font-black text-white">{facultyCount}</span>
+            <span className="text-xs text-purple-400 group-hover:text-purple-300 font-semibold flex items-center gap-1">
+              Manage <span>→</span>
+            </span>
           </div>
           <h3 className="text-base font-bold text-white mt-4 group-hover:text-purple-300 transition">Faculty & Adjuncts</h3>
           <p className="text-xs text-slate-400 mt-1">Core professors, senior adjuncts, and adjunct list.</p>
@@ -420,7 +418,9 @@ export const DashboardView: React.FC<Props> = ({
             <div className="w-12 h-12 rounded-xl bg-blue-900/30 border border-blue-500/30 flex items-center justify-center text-2xl group-hover:scale-110 transition">
               💼
             </div>
-            <span className="text-2xl font-black text-white">{jobsCount}</span>
+            <span className="text-xs text-blue-400 group-hover:text-blue-300 font-semibold flex items-center gap-1">
+              Manage <span>→</span>
+            </span>
           </div>
           <h3 className="text-base font-bold text-white mt-4 group-hover:text-blue-300 transition">Job Postings</h3>
           <p className="text-xs text-slate-400 mt-1">Seminary job board for pastors and ministry workers.</p>
