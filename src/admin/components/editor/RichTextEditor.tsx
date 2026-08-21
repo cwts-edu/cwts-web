@@ -17,6 +17,16 @@ interface Props {
   maxHeight?: string;
 }
 
+function isValidTipTapDoc(val: any): boolean {
+  return Boolean(
+    val &&
+    typeof val === "object" &&
+    !Array.isArray(val) &&
+    val.type === "doc" &&
+    Array.isArray(val.content)
+  );
+}
+
 export const RichTextEditor: React.FC<Props> = ({
   initialContentHtml = "",
   initialContentJson,
@@ -28,6 +38,10 @@ export const RichTextEditor: React.FC<Props> = ({
   const [showMediaPicker, setShowMediaPicker] = useState<boolean>(false);
   const [showLinkModal, setShowLinkModal] = useState<boolean>(false);
   const [linkUrl, setLinkUrl] = useState<string>("");
+
+  const initialContent = isValidTipTapDoc(initialContentJson)
+    ? initialContentJson
+    : initialContentHtml || "";
 
   const editor = useEditor({
     extensions: [
@@ -53,7 +67,7 @@ export const RichTextEditor: React.FC<Props> = ({
         placeholder,
       }),
     ],
-    content: initialContentJson || initialContentHtml,
+    content: initialContent,
     editorProps: {
       attributes: {
         class: `prose prose-invert max-w-none focus:outline-none p-4 text-slate-100 text-sm leading-relaxed min-h-full`,
@@ -70,9 +84,9 @@ export const RichTextEditor: React.FC<Props> = ({
   // Re-sync if initial content changes externally (e.g. version restore)
   useEffect(() => {
     if (!editor) return;
-    if (initialContentJson) {
+    if (isValidTipTapDoc(initialContentJson)) {
       editor.commands.setContent(initialContentJson);
-    } else if (initialContentHtml !== editor.getHTML()) {
+    } else if (initialContentHtml && initialContentHtml !== editor.getHTML()) {
       editor.commands.setContent(initialContentHtml);
     }
   }, [initialContentHtml, initialContentJson, editor]);

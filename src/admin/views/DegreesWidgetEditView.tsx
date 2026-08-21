@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { marked } from "marked";
 import {
   DegreesWidgetMetadataSchema,
@@ -8,6 +8,7 @@ import {
 } from "../../libs/content/schemas";
 import type { DegreesWidgetItem } from "./DegreesWidgetListView";
 import { RichTextEditor } from "../components/editor/RichTextEditor";
+import { parseDegreesWidgetBody } from "../../libs/content/degreeWidgetUtils";
 
 interface Props {
   initialItem?: DegreesWidgetItem | null;
@@ -31,6 +32,15 @@ export const DegreesWidgetEditView: React.FC<Props> = ({
   nextOrder = 1,
 }) => {
   const currentActive = initialItem?.draftData || initialItem?.data;
+  const rawBody = initialItem?.draftBody || initialItem?.body || "";
+
+  // Fallback parsing for legacy unmigrated Firestore documents
+  const parsedFallback = useMemo(() => {
+    if ((!currentActive?.programs || currentActive.programs.length === 0) && rawBody) {
+      return parseDegreesWidgetBody(rawBody);
+    }
+    return null;
+  }, [currentActive?.programs, rawBody]);
 
   const [language, setLanguage] = useState<Language>(initialItem?.language || "zh");
   const [type, setType] = useState<string>(initialItem?.type || "master");
@@ -42,14 +52,33 @@ export const DegreesWidgetEditView: React.FC<Props> = ({
   // Structured program accordions
   const [programs, setPrograms] = useState<DegreeProgramItem[]>(() => {
     if (currentActive?.programs && currentActive.programs.length > 0) {
-      return currentActive.programs.map((p) => ({ ...p }));
+      return currentActive.programs.map((p) => ({
+        ...p,
+        bodyHtml: p.bodyHtml || (p.body ? (marked.parse(p.body) as string) : ""),
+      }));
+    }
+    if (parsedFallback && parsedFallback.programs.length > 0) {
+      return parsedFallback.programs;
     }
     return [];
   });
 
   // Card general/intro body
-  const [body, setBody] = useState<string>(initialItem?.draftBody || initialItem?.body || "");
-  const [bodyHtml, setBodyHtml] = useState<string>(initialItem?.bodyHtml || "");
+  const [body, setBody] = useState<string>(() => {
+    if (parsedFallback && parsedFallback.programs.length > 0) {
+      return parsedFallback.cleanBody;
+    }
+    return rawBody;
+  });
+
+  const [bodyHtml, setBodyHtml] = useState<string>(() => {
+    if (initialItem?.bodyHtml) return initialItem.bodyHtml;
+    if (parsedFallback && parsedFallback.programs.length > 0) {
+      return parsedFallback.cleanBodyHtml;
+    }
+    return rawBody ? (marked.parse(rawBody) as string) : "";
+  });
+
   const [bodyJson, setBodyJson] = useState<any>(initialItem?.bodyJson);
 
   const [error, setError] = useState<string | null>(null);
@@ -98,7 +127,7 @@ export const DegreesWidgetEditView: React.FC<Props> = ({
     e.preventDefault();
     setError(null);
 
-    // Ensure programs have valid body, bodyHtml, and bodyJson
+    // Ensure all programs have valid body, bodyHtml, and bodyJson
     const processedPrograms: DegreeProgramItem[] = programs.map((p) => {
       const pBody = p.body?.trim() || "";
       const pHtml = p.bodyHtml || (pBody ? (marked.parse(pBody) as string) : "");
@@ -281,7 +310,7 @@ export const DegreesWidgetEditView: React.FC<Props> = ({
                 2. Program Accordions ({programs.length})
               </h3>
               <p className="text-xs text-slate-400 mt-0.5">
-                Each program renders as a collapsible accordion item on the homepage card.
+                Each program renders as an interactive collapsible accordion item on the card.
               </p>
             </div>
 
@@ -297,10 +326,10 @@ export const DegreesWidgetEditView: React.FC<Props> = ({
 
           {programs.length === 0 ? (
             <div className="p-6 rounded-2xl bg-slate-950/60 border border-dashed border-slate-800 text-center text-xs text-slate-500">
-              No individual program accordions added. (The card will display the general Markdown body below).
+              No individual program accordions added. (The card will display the general rich text body below).
             </div>
           ) : (
-            <div className="space-y-4">
+            <div className="space-y-6">
               {programs.map((prog, idx) => (
                 <div
                   key={idx}
@@ -365,7 +394,7 @@ export const DegreesWidgetEditView: React.FC<Props> = ({
                       Program Overview & Objectives (Rich Text Editor)
                     </label>
                     <RichTextEditor
-                      initialContentHtml={prog.bodyHtml || prog.body}
+                      initialContentHtml={prog.bodyHtml || (prog.body ? (marked.parse(prog.body) as string) : "")}
                       initialContentJson={prog.bodyJson}
                       onChange={({ html, json, text }) => {
                         handleUpdateProgram(idx, {
@@ -407,7 +436,7 @@ export const DegreesWidgetEditView: React.FC<Props> = ({
             Used for non-accordion cards (e.g. Certificate description) or extra card notes.
           </p>
           <RichTextEditor
-            initialContentHtml={bodyHtml || body}
+            initialContentHtml={bodyHtml || (body ? (marked.parse(body) as string) : "")}
             initialContentJson={bodyJson}
             onChange={({ html, json, text }) => {
               setBodyHtml(html);
