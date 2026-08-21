@@ -26,14 +26,25 @@ const FIREBASE_PROJECT_ID =
   import.meta.env?.FIREBASE_PROJECT_ID ||
   "cwts-cms";
 
+const ALL_MIGRATED_COLLECTIONS: Array<keyof ContentSchemaMap> = [
+  "news",
+  "jobs",
+  "faculty",
+  "carousel",
+  "degrees-widget",
+  "study-mode-widget",
+  "shortcuts",
+];
+
 const MIGRATED_RAW =
   (typeof process !== "undefined" && process.env?.MIGRATED_COLLECTIONS) ||
   import.meta.env?.MIGRATED_COLLECTIONS ||
-  "news,jobs";
+  "all";
 
-const MIGRATED_COLLECTIONS: Array<keyof ContentSchemaMap> = MIGRATED_RAW
-  ? (MIGRATED_RAW.split(",").map((s) => s.trim()).filter(Boolean) as Array<keyof ContentSchemaMap>)
-  : ["news", "jobs"];
+const MIGRATED_COLLECTIONS: Array<keyof ContentSchemaMap> =
+  MIGRATED_RAW.trim() === "all"
+    ? ALL_MIGRATED_COLLECTIONS
+    : (MIGRATED_RAW.split(",").map((s) => s.trim()).filter(Boolean) as Array<keyof ContentSchemaMap>);
 
 const astroClient = new AstroContentClient();
 
