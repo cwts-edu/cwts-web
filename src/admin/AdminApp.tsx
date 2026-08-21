@@ -12,11 +12,13 @@ import { FacultyListView, type UnifiedFacultyItem } from "./views/FacultyListVie
 import { FacultyEditView } from "./views/FacultyEditView";
 import { CarouselListView, type CarouselSlideItem } from "./views/CarouselListView";
 import { CarouselEditView } from "./views/CarouselEditView";
+import { DegreesWidgetListView, type DegreesWidgetItem } from "./views/DegreesWidgetListView";
+import { DegreesWidgetEditView } from "./views/DegreesWidgetEditView";
 import { BackupRestoreView } from "./views/BackupRestoreView";
 import { MediaLibraryView } from "./views/MediaLibraryView";
 import { db } from "./config/firebase";
 import { collection, getDocs } from "firebase/firestore";
-import type { NewsMetadata, JobMetadata, CarouselItem } from "../libs/content/schemas";
+import type { NewsMetadata, JobMetadata, CarouselItem, DegreesWidgetMetadata, Language } from "../libs/content/schemas";
 
 import { PAGE_TYPES } from "./config/pageTypes";
 
@@ -72,6 +74,7 @@ const AdminDashboard: React.FC = () => {
   const [jobs, setJobs] = useState<JobItem[]>([]);
   const [faculty, setFaculty] = useState<UnifiedFacultyItem[]>([]);
   const [carousel, setCarousel] = useState<CarouselSlideItem[]>([]);
+  const [degreesWidget, setDegreesWidget] = useState<DegreesWidgetItem[]>([]);
 
   const [loadingCollections, setLoadingCollections] = useState<Record<string, boolean>>({});
   const [loadedCollections, setLoadedCollections] = useState<Record<string, boolean>>({});
@@ -222,6 +225,46 @@ const AdminDashboard: React.FC = () => {
     }
   }, []);
 
+  // 5. Fetch Degrees Widget on-demand
+  const loadDegreesWidget = useCallback(async () => {
+    setLoadingCollections((prev) => ({ ...prev, "degrees-widget": true }));
+    try {
+      const snap = await getDocs(collection(db, "degrees-widget"));
+      const loaded: DegreesWidgetItem[] = [];
+      snap.forEach((d) => {
+        const val = d.data();
+        if (val.status === "deleted") return;
+        const lang = (val.language || d.id.split("_")[0] || "zh") as Language;
+        const cardType = val.type || d.id.split("_")[1] || "master";
+        loaded.push({
+          id: d.id,
+          language: lang,
+          type: cardType,
+          data: {
+            title: val.title || d.id,
+            shortTitle: val.shortTitle,
+            order: val.order ?? 0,
+            url: val.url,
+          },
+          body: val.body || "",
+          status: val.status || "published",
+          version: val.version || 1,
+          publishedVersion: val.publishedVersion || 1,
+          updatedBy: val.updatedBy,
+          publishedBy: val.publishedBy,
+          createdAt: val.createdAt,
+          updatedAt: val.updatedAt,
+        });
+      });
+      setDegreesWidget(loaded);
+      setLoadedCollections((prev) => ({ ...prev, "degrees-widget": true }));
+    } catch (err) {
+      console.warn("Could not load degrees-widget from Firestore:", err);
+    } finally {
+      setLoadingCollections((prev) => ({ ...prev, "degrees-widget": false }));
+    }
+  }, []);
+
   // Trigger on-demand loading when a relevant tab is opened
   useEffect(() => {
     if (currentTab.startsWith("news") && !loadedCollections.news && !loadingCollections.news) {
@@ -232,8 +275,10 @@ const AdminDashboard: React.FC = () => {
       loadFaculty();
     } else if (currentTab.startsWith("homepage_carousel") && !loadedCollections.carousel && !loadingCollections.carousel) {
       loadCarousel();
+    } else if (currentTab.startsWith("homepage_degrees") && !loadedCollections["degrees-widget"] && !loadingCollections["degrees-widget"]) {
+      loadDegreesWidget();
     }
-  }, [currentTab, loadedCollections, loadingCollections, loadNews, loadJobs, loadFaculty, loadCarousel]);
+  }, [currentTab, loadedCollections, loadingCollections, loadNews, loadJobs, loadFaculty, loadCarousel, loadDegreesWidget]);
 
   // Global reload (e.g. after restoring backup)
   const reloadAll = useCallback(async () => {
@@ -242,7 +287,8 @@ const AdminDashboard: React.FC = () => {
     else if (currentTab.startsWith("jobs")) await loadJobs();
     else if (currentTab.startsWith("faculty")) await loadFaculty();
     else if (currentTab.startsWith("homepage_carousel")) await loadCarousel();
-  }, [currentTab, loadNews, loadJobs, loadFaculty, loadCarousel]);
+    else if (currentTab.startsWith("homepage_degrees")) await loadDegreesWidget();
+  }, [currentTab, loadNews, loadJobs, loadFaculty, loadCarousel, loadDegreesWidget]);
 
   const handleNavigate = (tab: AdminTab, param?: string, replace = false) => {
     if (param) setEditingId(param);
@@ -333,6 +379,36 @@ const AdminDashboard: React.FC = () => {
       orderMap[id] = index + 1;
     });
     await saveChangeToDraft("carousel", "_order", "update", { orderMap });
+  };
+
+  const handleSaveDegreesWidgetDraft = async (
+    id: string,
+    language: Language,
+    type: string,
+    data: DegreesWidgetMetadata,
+    body: string
+  ) => {
+    await saveChangeToDraft("degrees-widget", id, "update", { ...data, language, type }, body);
+    handleNavigate("homepage_degrees");
+  };
+
+  const handleDeleteDegreesWidget = async (id: string) => {
+    const target = degreesWidget.find((d) => d.id === id);
+    if (target) {
+      await saveChangeToDraft("degrees-widget", id, "delete", target.data, target.body);
+    }
+  };
+
+  const handleUndoDeleteDegreesWidget = async (id: string) => {
+    await discardDraftChange("degrees-widget", id);
+  };
+
+  const handleReorderDegreesWidget = async (reorderedIds: string[]) => {
+    const orderMap: Record<string, number> = {};
+    reorderedIds.forEach((id, index) => {
+      orderMap[id] = index + 1;
+    });
+    await saveChangeToDraft("degrees-widget", "_order", "update", { orderMap });
   };
 
   // Overlay active draft items into the view list for the editor
@@ -510,6 +586,67 @@ const AdminDashboard: React.FC = () => {
 
   const mergedCarousel = Array.from(carouselMap.values()).filter((c) => c.id !== "_order");
 
+  // Degrees Widget Draft Overlay
+  const degreesWidgetMap = new Map<string, DegreesWidgetItem>(
+    degreesWidget.map((item) => [item.id, { ...item }])
+  );
+  const degreesWidgetDraftChanges = pendingChanges.filter((p) => p.collection === "degrees-widget");
+
+  for (const draft of degreesWidgetDraftChanges) {
+    if (draft.documentId === "_order") continue;
+
+    const existing = degreesWidgetMap.get(draft.documentId);
+    if (draft.action === "delete") {
+      if (existing) {
+        degreesWidgetMap.set(draft.documentId, {
+          ...existing,
+          status: "deleted",
+          updatedBy: draft.updatedBy,
+        });
+      }
+    } else {
+      const rawData = draft.data as any;
+      const lang = (rawData?.language || existing?.language || draft.documentId.split("_")[0] || "zh") as Language;
+      const cardType = rawData?.type || existing?.type || draft.documentId.split("_")[1] || "master";
+      const normalizedData: DegreesWidgetMetadata = {
+        title: rawData?.title || existing?.data?.title || draft.documentId,
+        shortTitle: rawData?.shortTitle ?? existing?.data?.shortTitle,
+        order: rawData?.order ?? existing?.data?.order ?? 0,
+        url: rawData?.url ?? existing?.data?.url,
+      };
+
+      degreesWidgetMap.set(draft.documentId, {
+        id: draft.documentId,
+        language: lang,
+        type: cardType,
+        data: normalizedData,
+        draftData: normalizedData,
+        body: draft.body ?? existing?.body ?? "",
+        draftBody: draft.body,
+        status: "draft",
+        updatedBy: draft.updatedBy,
+        version: existing ? (existing.version || 1) + 1 : 1,
+        publishedVersion: existing?.publishedVersion,
+      });
+    }
+  }
+
+  const degreesOrderDraft = degreesWidgetDraftChanges.find((p) => p.documentId === "_order");
+  if (degreesOrderDraft?.data?.orderMap) {
+    for (const [id, newOrder] of Object.entries(degreesOrderDraft.data.orderMap)) {
+      const item = degreesWidgetMap.get(id);
+      if (item) {
+        degreesWidgetMap.set(id, {
+          ...item,
+          data: { ...item.data, order: Number(newOrder) },
+          draftData: item.draftData ? { ...item.draftData, order: Number(newOrder) } : undefined,
+        });
+      }
+    }
+  }
+
+  const mergedDegreesWidget = Array.from(degreesWidgetMap.values()).filter((d) => d.id !== "_order");
+
   return (
     <AdminLayout currentTab={currentTab} onNavigate={handleNavigate}>
       {currentTab === "dashboard" && (
@@ -653,21 +790,38 @@ const AdminDashboard: React.FC = () => {
       )}
 
       {currentTab === "homepage_degrees" && (
-        <div className="space-y-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <h2 className="text-2xl font-bold text-white tracking-tight">Degrees Widget</h2>
-              <p className="text-xs text-slate-400 mt-1">
-                Manage homepage degree program tabs and category highlights.
-              </p>
-            </div>
+        <DegreesWidgetListView
+          items={mergedDegreesWidget.filter((d) => d.status !== "deleted")}
+          onNew={() => handleNavigate("homepage_degrees_new")}
+          onEdit={(item) => handleNavigate("homepage_degrees_edit", item.id)}
+          onDelete={handleDeleteDegreesWidget}
+          onUndoDelete={handleUndoDeleteDegreesWidget}
+          onReorder={handleReorderDegreesWidget}
+          isLoading={Boolean(loadingCollections["degrees-widget"])}
+        />
+      )}
+
+      {currentTab === "homepage_degrees_new" && (
+        <DegreesWidgetEditView
+          nextOrder={mergedDegreesWidget.length + 1}
+          onSave={handleSaveDegreesWidgetDraft}
+          onCancel={() => handleNavigate("homepage_degrees")}
+        />
+      )}
+
+      {currentTab === "homepage_degrees_edit" && (
+        loadingCollections["degrees-widget"] && !mergedDegreesWidget.find((d) => d.id === editingId) ? (
+          <div className="p-16 text-center text-slate-400 text-sm animate-pulse">
+            Loading degree card...
           </div>
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl p-12 text-center text-slate-400 space-y-3">
-            <div className="text-4xl">🎓</div>
-            <p className="text-sm font-medium">Degrees Widget Management</p>
-            <p className="text-xs text-slate-500">Ready for Firestore integration and tab content editing.</p>
-          </div>
-        </div>
+        ) : (
+          <DegreesWidgetEditView
+            key={editingId ? `degrees-edit-${editingId}` : "degrees-new"}
+            initialItem={mergedDegreesWidget.find((d) => d.id === editingId)}
+            onSave={handleSaveDegreesWidgetDraft}
+            onCancel={() => handleNavigate("homepage_degrees")}
+          />
+        )
       )}
 
       {currentTab === "homepage_studymodes" && (

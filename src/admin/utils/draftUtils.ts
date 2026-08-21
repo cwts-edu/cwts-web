@@ -15,9 +15,18 @@ export function formatDraftChangeTitle(change: DraftChangeItem | {
         return "Carousel Slide Order Updated";
       case "faculty":
         return "Faculty Display Order Updated";
+      case "degrees-widget":
+        return "Degrees Widget Order Updated";
       default:
         return `${change.collection} Order Updated`;
     }
+  }
+
+  // 2. Degrees widget card
+  if (change.collection === "degrees-widget") {
+    const langLabel = change.data?.language === "zh" ? "中文" : change.data?.language === "en" ? "EN" : "";
+    const title = change.data?.title || change.documentId;
+    return langLabel ? `[${langLabel}] ${title}` : title;
   }
 
   // 2. Carousel slide

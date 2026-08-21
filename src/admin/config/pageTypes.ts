@@ -66,6 +66,8 @@ export const PAGE_TYPES: PageTypeConfig[] = [
     icon: "🎓",
     group: "homepage",
     collectionName: "degrees-widget",
+    hasNew: true,
+    hasEdit: true,
     description: "Homepage degree program tabs and category highlights",
   },
   {

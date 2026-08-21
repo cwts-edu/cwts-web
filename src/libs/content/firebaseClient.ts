@@ -97,12 +97,14 @@ export class FirebaseContentClient implements IContentClient {
     const validator = SchemaValidators[collection];
 
     for (const change of draftChanges) {
-      if (collection === "faculty" && change.documentId === "_order" && change.data?.orderMap) {
+      if (change.documentId === "_order" && change.data?.orderMap) {
         for (const [docId, newOrder] of Object.entries(change.data.orderMap)) {
+          const direct = map.get(docId);
+          if (direct && direct.data) (direct.data as any).order = Number(newOrder);
           const zh = map.get(`zh/${docId}`);
-          if (zh) zh.data.order = Number(newOrder);
+          if (zh && zh.data) (zh.data as any).order = Number(newOrder);
           const en = map.get(`en/${docId}`);
-          if (en) en.data.order = Number(newOrder);
+          if (en && en.data) (en.data as any).order = Number(newOrder);
         }
         continue;
       }
