@@ -409,9 +409,17 @@ export const BackupRestoreView: React.FC<Props> = ({ onRefreshData }) => {
                 disabled={isExporting}
                 className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-purple-500 font-medium"
               >
-                <option value="faculty">🎓 Faculty & Adjunct Professors</option>
-                <option value="news">📰 News Articles</option>
-                <option value="jobs">💼 Job Postings</option>
+                <optgroup label="Homepage Data">
+                  <option value="carousel">🎠 Hero Carousel</option>
+                  <option value="news">📰 Latest News</option>
+                  <option value="degrees-widget">🎓 Degrees Widget</option>
+                  <option value="study-mode-widget">📖 Study Modes</option>
+                  <option value="shortcuts">⚡ Shortcuts</option>
+                </optgroup>
+                <optgroup label="Collections">
+                  <option value="faculty">👤 Faculty & Adjunct Professors</option>
+                  <option value="jobs">💼 Job Postings</option>
+                </optgroup>
               </select>
             </div>
 

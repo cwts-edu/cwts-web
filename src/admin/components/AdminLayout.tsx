@@ -14,9 +14,6 @@ export type AdminTab =
   | "homepage_degrees"
   | "homepage_studymodes"
   | "homepage_shortcuts"
-  | "pages"
-  | "pages_new"
-  | "pages_edit"
   | "faculty"
   | "faculty_new"
   | "faculty_edit"
@@ -47,7 +44,6 @@ export const AdminLayout: React.FC<Props> = ({ currentTab, onNavigate, children 
     if (collection === "news") onNavigate("news_edit", docId);
     if (collection === "jobs") onNavigate("jobs_edit", docId);
     if (collection === "faculty") onNavigate("faculty_edit", docId);
-    if (collection === "pages") onNavigate("pages_edit", docId);
   };
 
   return (

@@ -20,7 +20,8 @@
     "export-news-package": "tsx tools/export-news-package.ts",
     "export-jobs-package": "tsx tools/export-jobs-package.ts",
     "export-faculty-package": "tsx tools/export-faculty-package.ts",
-    "export-all-packages": "tsx tools/export-news-package.ts && tsx tools/export-jobs-package.ts && tsx tools/export-faculty-package.ts"
+    "export-homepage-package": "tsx tools/export-homepage-package.ts",
+    "export-all-packages": "tsx tools/export-news-package.ts && tsx tools/export-jobs-package.ts && tsx tools/export-faculty-package.ts && tsx tools/export-homepage-package.ts"
   },
   "dependencies": {
     "@astrojs/markdown-remark": "^6.1.0",

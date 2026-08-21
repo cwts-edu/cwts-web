@@ -550,24 +550,6 @@ const AdminDashboard: React.FC = () => {
         </div>
       )}
 
-      {currentTab === "pages" && (
-        <div className="space-y-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <h2 className="text-2xl font-bold text-white tracking-tight">Site Pages</h2>
-              <p className="text-xs text-slate-400 mt-1">
-                Manage website core content pages and markdown articles.
-              </p>
-            </div>
-          </div>
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl p-12 text-center text-slate-400 space-y-3">
-            <div className="text-4xl">📄</div>
-            <p className="text-sm font-medium">Site Pages Management</p>
-            <p className="text-xs text-slate-500">Ready for Firestore integration and MDX / TipTap rich text editing.</p>
-          </div>
-        </div>
-      )}
-
       {currentTab === "media" && <MediaLibraryView />}
 
       {currentTab === "backup" && <BackupRestoreView onRefreshData={loadData} />}

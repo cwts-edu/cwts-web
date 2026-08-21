@@ -86,17 +86,6 @@ export const PAGE_TYPES: PageTypeConfig[] = [
   },
   // 2. Site Collections
   {
-    id: "pages",
-    title: "Site Pages",
-    path: "/admin/pages",
-    icon: "📄",
-    group: "collections",
-    collectionName: "pages",
-    hasNew: true,
-    hasEdit: true,
-    description: "Core website content pages and markdown articles",
-  },
-  {
     id: "faculty",
     title: "Faculty & Adjuncts",
     path: "/admin/faculty",
