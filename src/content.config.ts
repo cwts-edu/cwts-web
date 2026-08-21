@@ -26,7 +26,6 @@ const degreesWidget = defineCollection({
   loader: glob({ pattern: ['**/*.md', '**/*.mdx'], base: 'src/content/degrees-widget' }),
   schema: z.object({
     title: z.string(),
-    shortTitle: z.optional(z.string()),
     order: z.number(),
     url: z.optional(z.string()),
   }),

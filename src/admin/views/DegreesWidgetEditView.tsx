@@ -36,17 +36,16 @@ export const DegreesWidgetEditView: React.FC<Props> = ({
 
   // Fallback parsing for legacy unmigrated Firestore documents
   const parsedFallback = useMemo(() => {
-    if ((!currentActive?.programs || currentActive.programs.length === 0) && rawBody) {
+    if (initialItem && (!currentActive?.programs || currentActive.programs.length === 0) && rawBody) {
       return parseDegreesWidgetBody(rawBody);
     }
     return null;
-  }, [currentActive?.programs, rawBody]);
+  }, [initialItem, currentActive?.programs, rawBody]);
 
   const [language, setLanguage] = useState<Language>(initialItem?.language || "zh");
-  const [type, setType] = useState<string>(initialItem?.type || "master");
+  const [type, setType] = useState<string>(initialItem?.type || "");
   const [title, setTitle] = useState<string>(currentActive?.title || "");
-  const [shortTitle, setShortTitle] = useState<string>(currentActive?.shortTitle || "");
-  const [url, setUrl] = useState<string>(currentActive?.url || `/zh/academic/degrees-programs#${type}`);
+  const [url, setUrl] = useState<string>(currentActive?.url || "");
   const [order] = useState<number>(currentActive?.order ?? nextOrder);
 
   // Structured program accordions
@@ -127,6 +126,12 @@ export const DegreesWidgetEditView: React.FC<Props> = ({
     e.preventDefault();
     setError(null);
 
+    const cleanType = type.trim().toLowerCase();
+    if (!cleanType) {
+      setError("Category Identifier (e.g. master, doctor, certificate) is required.");
+      return;
+    }
+
     // Ensure all programs have valid body, bodyHtml, and bodyJson
     const processedPrograms: DegreeProgramItem[] = programs.map((p) => {
       const pBody = p.body?.trim() || "";
@@ -143,7 +148,6 @@ export const DegreesWidgetEditView: React.FC<Props> = ({
 
     const rawData = {
       title: title.trim(),
-      shortTitle: shortTitle.trim() || undefined,
       url: url.trim() || undefined,
       order: Number(order) || 1,
       programs: processedPrograms,
@@ -167,7 +171,7 @@ export const DegreesWidgetEditView: React.FC<Props> = ({
       await onSave(
         targetDocId,
         language,
-        type.trim().toLowerCase(),
+        cleanType,
         validation.data,
         cleanBody,
         cleanBodyJson,
@@ -223,13 +227,7 @@ export const DegreesWidgetEditView: React.FC<Props> = ({
               <select
                 value={language}
                 disabled={Boolean(initialItem)}
-                onChange={(e) => {
-                  const newLang = e.target.value as Language;
-                  setLanguage(newLang);
-                  if (!initialItem) {
-                    setUrl(`/${newLang}/academic/degrees-programs#${type}`);
-                  }
-                }}
+                onChange={(e) => setLanguage(e.target.value as Language)}
                 className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-purple-500 disabled:opacity-50"
               >
                 <option value="zh">Traditional Chinese (中文)</option>
@@ -239,19 +237,13 @@ export const DegreesWidgetEditView: React.FC<Props> = ({
 
             <div>
               <label className="block text-xs font-semibold text-slate-300 mb-1">
-                Category Slug / Identifier <span className="text-rose-400">*</span>
+                Category Identifier / Slug <span className="text-rose-400">*</span>
               </label>
               <input
                 type="text"
                 value={type}
                 disabled={Boolean(initialItem)}
-                onChange={(e) => {
-                  const newType = e.target.value;
-                  setType(newType);
-                  if (!initialItem) {
-                    setUrl(`/${language}/academic/degrees-programs#${newType}`);
-                  }
-                }}
+                onChange={(e) => setType(e.target.value)}
                 placeholder="e.g. master, doctor, certificate"
                 className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-purple-500 font-mono disabled:opacity-50"
                 required
@@ -259,38 +251,23 @@ export const DegreesWidgetEditView: React.FC<Props> = ({
             </div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-1">
-                Card Title <span className="text-rose-400">*</span>
-              </label>
-              <input
-                type="text"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                placeholder="e.g. 碩士學位 or Master Degrees"
-                className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-purple-500"
-                required
-              />
-            </div>
-
-            <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-1">
-                Short Title <span className="text-slate-500 font-normal">(Optional)</span>
-              </label>
-              <input
-                type="text"
-                value={shortTitle}
-                onChange={(e) => setShortTitle(e.target.value)}
-                placeholder="e.g. 碩士"
-                className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-purple-500"
-              />
-            </div>
+          <div>
+            <label className="block text-xs font-semibold text-slate-300 mb-1">
+              Card Title <span className="text-rose-400">*</span>
+            </label>
+            <input
+              type="text"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              placeholder="e.g. 碩士學位 or Master Degrees"
+              className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-purple-500"
+              required
+            />
           </div>
 
           <div>
             <label className="block text-xs font-semibold text-slate-300 mb-1">
-              "Learn More" Target URL
+              "Learn More" Target URL <span className="text-slate-500 font-normal">(Optional)</span>
             </label>
             <input
               type="text"
@@ -461,7 +438,7 @@ export const DegreesWidgetEditView: React.FC<Props> = ({
           </button>
           <button
             type="submit"
-            disabled={isSaving || !title.trim()}
+            disabled={isSaving || !title.trim() || !type.trim()}
             className="px-6 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white text-xs font-bold shadow-lg shadow-purple-600/30 transition disabled:opacity-50 active:scale-95"
           >
             {isSaving ? "Saving to Draft..." : "Save Card Draft"}

@@ -242,7 +242,6 @@ const AdminDashboard: React.FC = () => {
           type: cardType,
           data: {
             title: val.title || d.id,
-            shortTitle: val.shortTitle,
             order: val.order ?? 0,
             url: val.url,
             programs: val.programs || [],
@@ -615,7 +614,6 @@ const AdminDashboard: React.FC = () => {
       const cardType = rawData?.type || existing?.type || draft.documentId.split("_")[1] || "master";
       const normalizedData: DegreesWidgetMetadata = {
         title: rawData?.title || existing?.data?.title || draft.documentId,
-        shortTitle: rawData?.shortTitle ?? existing?.data?.shortTitle,
         order: rawData?.order ?? existing?.data?.order ?? 0,
         url: rawData?.url ?? existing?.data?.url,
         programs: rawData?.programs ?? existing?.data?.programs ?? [],

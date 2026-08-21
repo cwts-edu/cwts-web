@@ -408,7 +408,6 @@ async function exportDegreesWidgetPackage(baseDir: string) {
         language: lang,
         type,
         title: parsed.frontmatter.title || type,
-        shortTitle: parsed.frontmatter.shortTitle || "",
         order: Number(parsed.frontmatter.order) || 0,
         url: parsed.frontmatter.url || "",
         programs: parsed.programs,

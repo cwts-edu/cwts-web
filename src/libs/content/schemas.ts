@@ -74,7 +74,6 @@ export type DegreeProgramItem = z.infer<typeof DegreeProgramItemSchema>;
 
 export const DegreesWidgetMetadataSchema = z.object({
   title: z.string(),
-  shortTitle: z.string().optional(),
   order: z.number().default(0),
   url: z.string().optional(),
   programs: z.array(DegreeProgramItemSchema).default([]),
