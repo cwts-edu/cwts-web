@@ -38,6 +38,7 @@ export const RichTextEditor: React.FC<Props> = ({
   const [showMediaPicker, setShowMediaPicker] = useState<boolean>(false);
   const [showLinkModal, setShowLinkModal] = useState<boolean>(false);
   const [linkUrl, setLinkUrl] = useState<string>("");
+  const [, setSelectionTick] = useState(0);
 
   const initialContent = isValidTipTapDoc(initialContentJson)
     ? initialContentJson
@@ -73,11 +74,18 @@ export const RichTextEditor: React.FC<Props> = ({
         class: `prose prose-invert max-w-none focus:outline-none p-4 text-slate-100 text-sm leading-relaxed min-h-full`,
       },
     },
+    onSelectionUpdate: () => {
+      setSelectionTick((t) => t + 1);
+    },
+    onTransaction: () => {
+      setSelectionTick((t) => t + 1);
+    },
     onUpdate: ({ editor }) => {
       const html = editor.getHTML();
       const json = editor.getJSON();
       const text = editor.getText();
       onChange({ html, json, text });
+      setSelectionTick((t) => t + 1);
     },
   });
 
