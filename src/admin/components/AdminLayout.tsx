@@ -43,6 +43,11 @@ export const AdminLayout: React.FC<Props> = ({ currentTab, onNavigate, children 
   };
 
   const handleNavigateToEdit = (collection: string, docId: string) => {
+    if (docId === "_order") {
+      if (collection === "carousel") onNavigate("homepage_carousel");
+      if (collection === "faculty") onNavigate("faculty");
+      return;
+    }
     if (collection === "carousel") onNavigate("homepage_carousel_edit", docId);
     if (collection === "news") onNavigate("news_edit", docId);
     if (collection === "jobs") onNavigate("jobs_edit", docId);

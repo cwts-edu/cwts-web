@@ -9,6 +9,7 @@ import {
   type PendingMigrationSummary,
   type MigrationProgress,
 } from "../migrations";
+import { formatDraftChangeTitle } from "../utils/draftUtils";
 
 interface Props {
   onNavigate: (tab: AdminTab, param?: string) => void;
@@ -325,7 +326,7 @@ export const DashboardView: React.FC<Props> = ({
                       change.action === "delete" ? "line-through text-red-300" : "text-white"
                     }`}
                   >
-                    {change.data?.title || change.data?.zh?.name || change.data?.en?.name || change.documentId}
+                    {formatDraftChangeTitle(change)}
                   </span>
                 </div>
 
@@ -336,6 +337,11 @@ export const DashboardView: React.FC<Props> = ({
                   {change.action !== "delete" && (
                     <button
                       onClick={() => {
+                        if (change.documentId === "_order") {
+                          if (change.collection === "carousel") onNavigate("homepage_carousel");
+                          if (change.collection === "faculty") onNavigate("faculty");
+                          return;
+                        }
                         if (change.collection === "carousel") onNavigate("homepage_carousel_edit", change.documentId);
                         if (change.collection === "news") onNavigate("news_edit", change.documentId);
                         if (change.collection === "jobs") onNavigate("jobs_edit", change.documentId);
@@ -343,7 +349,7 @@ export const DashboardView: React.FC<Props> = ({
                       }}
                       className="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-lg text-xs"
                     >
-                      Edit
+                      {change.documentId === "_order" ? "View" : "Edit"}
                     </button>
                   )}
                   <button

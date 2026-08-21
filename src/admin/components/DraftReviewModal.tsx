@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useDraft } from "../context/DraftContext";
+import { formatDraftChangeTitle } from "../utils/draftUtils";
 
 interface Props {
   isOpen: boolean;
@@ -230,7 +231,7 @@ export const DraftReviewModal: React.FC<Props> = ({ isOpen, onClose, onNavigateT
                             change.action === "delete" ? "line-through text-red-300" : "text-white"
                           }`}
                         >
-                          {change.data?.title || change.data?.zh?.name || change.data?.en?.name || change.documentId}
+                          {formatDraftChangeTitle(change)}
                         </span>
                       </div>
                       <div className="text-[11px] text-slate-400 truncate">
