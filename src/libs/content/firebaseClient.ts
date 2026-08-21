@@ -508,7 +508,7 @@ export class FirebaseContentClient implements IContentClient {
 
       if (collection === "faculty" && (fields.zh || fields.en)) {
         if (fields.zh) {
-          const zhParsed = FacultyMetadataSchema.parse({
+          const result = FacultyMetadataSchema.safeParse({
             photo: fields.photo,
             category: fields.category,
             email: fields.email,
@@ -516,21 +516,25 @@ export class FirebaseContentClient implements IContentClient {
             referencedAssets: fields.referencedAssets,
             ...fields.zh,
           });
-          entries.push({
-            id: `zh/${id}`,
-            slug: id,
-            language: "zh",
-            status: fields.status || "published",
-            version: fields.version || 1,
-            publishedVersion: fields.publishedVersion || 1,
-            data: zhParsed as any,
-            body: fields.zh.body || "",
-            html: fields.zh.bodyHtml || fields.zh.body || "",
-            updatedAt: new Date(doc.updateTime),
-          });
+          if (!result.success) {
+            console.warn(`[Firebase] Skipping invalid faculty doc ${id}/zh:`, result.error.flatten().fieldErrors);
+          } else {
+            entries.push({
+              id: `zh/${id}`,
+              slug: id,
+              language: "zh",
+              status: fields.status || "published",
+              version: fields.version || 1,
+              publishedVersion: fields.publishedVersion || 1,
+              data: result.data as any,
+              body: fields.zh.body || "",
+              html: fields.zh.bodyHtml || fields.zh.body || "",
+              updatedAt: new Date(doc.updateTime),
+            });
+          }
         }
         if (fields.en) {
-          const enParsed = FacultyMetadataSchema.parse({
+          const result = FacultyMetadataSchema.safeParse({
             photo: fields.photo,
             category: fields.category,
             email: fields.email,
@@ -538,21 +542,29 @@ export class FirebaseContentClient implements IContentClient {
             referencedAssets: fields.referencedAssets,
             ...fields.en,
           });
-          entries.push({
-            id: `en/${id}`,
-            slug: id,
-            language: "en",
-            status: fields.status || "published",
-            version: fields.version || 1,
-            publishedVersion: fields.publishedVersion || 1,
-            data: enParsed as any,
-            body: fields.en.body || "",
-            html: fields.en.bodyHtml || fields.en.body || "",
-            updatedAt: new Date(doc.updateTime),
-          });
+          if (!result.success) {
+            console.warn(`[Firebase] Skipping invalid faculty doc ${id}/en:`, result.error.flatten().fieldErrors);
+          } else {
+            entries.push({
+              id: `en/${id}`,
+              slug: id,
+              language: "en",
+              status: fields.status || "published",
+              version: fields.version || 1,
+              publishedVersion: fields.publishedVersion || 1,
+              data: result.data as any,
+              body: fields.en.body || "",
+              html: fields.en.bodyHtml || fields.en.body || "",
+              updatedAt: new Date(doc.updateTime),
+            });
+          }
         }
       } else {
-        const parsedData = validator.parse(fields);
+        const result = validator.safeParse(fields);
+        if (!result.success) {
+          console.warn(`[Firebase] Skipping invalid ${String(collection)} doc ${id}:`, result.error.flatten().fieldErrors);
+          continue;
+        }
         entries.push({
           id,
           slug: fields.slug || id,
@@ -560,7 +572,7 @@ export class FirebaseContentClient implements IContentClient {
           status: fields.status || "published",
           version: fields.version || 1,
           publishedVersion: fields.publishedVersion || 1,
-          data: parsedData,
+          data: result.data as any,
           body: fields.body || "",
           html: fields.bodyHtml || fields.html || fields.body || "",
           updatedAt: new Date(doc.updateTime),
@@ -569,6 +581,7 @@ export class FirebaseContentClient implements IContentClient {
     }
 
     return entries;
+
   }
 
   private async fetchDraftChanges(draftId: string, targetCollection: string): Promise<any[]> {
