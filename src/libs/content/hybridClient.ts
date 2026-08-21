@@ -121,12 +121,6 @@ export class HybridContentClient implements IContentClient {
     return this.isMigrated("shortcuts") ? this.firebase.shortcuts : this.astro.shortcuts;
   }
 
-  get translation() {
-    return this.isMigrated("translation")
-      ? this.firebase.translation
-      : this.astro.translation;
-  }
-
   get menu() {
     return this.isMigrated("menu") ? this.firebase.menu : this.astro.menu;
   }

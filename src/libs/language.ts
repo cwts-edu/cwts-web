@@ -1,4 +1,4 @@
-import { content } from "./content";
+import { getEntry } from "astro:content";
 
 export type Language = "zh" | "en";
 
@@ -18,7 +18,8 @@ export function getLanguageBySlug(slug: string): {
   throw new Error("Unable to get language from slug: " + slug);
 }
 
-const translation = await content.translation.getAll();
+const translationEntry = await getEntry("translation", "translation");
+const translation = (translationEntry?.data || {}) as Record<string, { zh: string; en: string }>;
 
 export function T(msg: string, language: Language): string {
   if (!(msg in translation)) throw new Error("Unknown message: " + msg);

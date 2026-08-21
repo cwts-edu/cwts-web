@@ -135,11 +135,6 @@ export interface IContentClient {
     get(language: Language): Promise<ShortcutItem[]>;
   };
 
-  translation: {
-    get(key: string, language: Language): Promise<string>;
-    getAll(): Promise<Record<string, { zh: string; en: string }>>;
-  };
-
   menu: {
     get(language: Language): Promise<MenuItem[]>;
   };

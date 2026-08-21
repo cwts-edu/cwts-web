@@ -307,18 +307,6 @@ export class AstroContentClient implements IContentClient {
     },
   };
 
-  translation = {
-    get: async (key: string, language: Language) => {
-      const entry = await getEntry("translation", "translation");
-      if (!entry || !(key in entry.data)) throw new Error(`Unknown translation message: ${key}`);
-      return (entry.data as any)[key][language];
-    },
-    getAll: async () => {
-      const entry = await getEntry("translation", "translation");
-      return (entry?.data || {}) as Record<string, { zh: string; en: string }>;
-    },
-  };
-
   menu = {
     get: async (language: Language): Promise<MenuItem[]> => {
       const entry = await getEntry("menu", language);

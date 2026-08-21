@@ -473,18 +473,6 @@ export class FirebaseContentClient implements IContentClient {
     },
   };
 
-  translation = {
-    get: async (key: string, language: Language) => {
-      const entry = await this.getEntry("translation", "translation");
-      if (!entry || !entry.data[key]) throw new Error(`Missing translation key: ${key}`);
-      return entry.data[key][language];
-    },
-    getAll: async () => {
-      const entry = await this.getEntry("translation", "translation");
-      return entry ? entry.data : {};
-    },
-  };
-
   menu = {
     get: async (language: Language): Promise<MenuItem[]> => {
       const entry = await this.getEntry("menu", language);

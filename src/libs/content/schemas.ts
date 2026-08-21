@@ -131,16 +131,7 @@ export const ShortcutsSchema = z.object({
 });
 export type ShortcutsData = z.infer<typeof ShortcutsSchema>;
 
-// 10. Translation Schema
-export const TranslationDictionarySchema = z.record(
-  z.object({
-    en: z.string(),
-    zh: z.string(),
-  })
-);
-export type TranslationDictionary = z.infer<typeof TranslationDictionarySchema>;
-
-// 11. Menu Schema
+// 10. Menu Schema
 export const MenuItemSchema: z.ZodType<any> = z.lazy(() =>
   z.object({
     name: z.string().optional(),
@@ -165,7 +156,6 @@ export interface ContentSchemaMap {
   jobs: JobMetadata;
   carousel: CarouselItem;
   shortcuts: ShortcutsData;
-  translation: TranslationDictionary;
   menu: MenuItem[];
 }
 
@@ -180,6 +170,5 @@ export const SchemaValidators: { [K in keyof ContentSchemaMap]: z.ZodType<any> }
   jobs: JobMetadataSchema,
   carousel: CarouselItemSchema,
   shortcuts: ShortcutsSchema,
-  translation: TranslationDictionarySchema,
   menu: z.array(MenuItemSchema),
 };
