@@ -28,10 +28,10 @@ export const CarouselEditView: React.FC<Props> = ({
   const [error, setError] = useState<string | null>(null);
   const [isSaving, setIsSaving] = useState(false);
 
-  // Generate target document ID
-  const [customId] = useState(() => {
+  // Internal Firestore document ID (timestamp for new slides)
+  const [internalDocId] = useState(() => {
     if (initialItem) return initialItem.id;
-    return `slide-${String(nextOrder).padStart(2, "0")}`;
+    return `slide_${Date.now()}`;
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -63,7 +63,7 @@ export const CarouselEditView: React.FC<Props> = ({
 
     try {
       setIsSaving(true);
-      await onSave(customId, validation.data);
+      await onSave(internalDocId, validation.data);
     } catch (err: any) {
       setError(err.message || "Failed to save carousel slide draft");
       setIsSaving(false);
@@ -81,7 +81,7 @@ export const CarouselEditView: React.FC<Props> = ({
             {initialItem ? "Edit Carousel Slide" : "Add New Carousel Slide"}
           </h2>
           <p className="text-xs text-slate-400 mt-1">
-            Slide ID: <span className="font-mono text-purple-300">{customId}</span>
+            {initialItem ? `Position #${order}` : `New Slide (Position #${order})`}
           </p>
         </div>
 

@@ -215,10 +215,9 @@ export const CarouselListView: React.FC<Props> = ({
                   {/* Slide Metadata */}
                   <div className="min-w-0 flex-1 space-y-1.5">
                     <div className="flex items-center gap-2 flex-wrap">
-                      <span className="text-xs font-mono text-slate-400 font-medium">{item.id}</span>
-                      {activeData.title && (
-                        <span className="text-sm font-semibold text-white truncate">{activeData.title}</span>
-                      )}
+                      <span className="text-sm font-semibold text-white truncate">
+                        {activeData.title || `Slide #${slideOrder}`}
+                      </span>
 
                       {/* Badges */}
                       {isPendingCreate && (
