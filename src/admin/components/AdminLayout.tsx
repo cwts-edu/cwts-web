@@ -23,6 +23,9 @@ export type AdminTab =
   | "faculty"
   | "faculty_new"
   | "faculty_edit"
+  | "degrees_programs"
+  | "degrees_programs_new"
+  | "degrees_programs_edit"
   | "jobs"
   | "jobs_new"
   | "jobs_edit"
@@ -51,12 +54,14 @@ export const AdminLayout: React.FC<Props> = ({ currentTab, onNavigate, children 
       if (collection === "carousel") onNavigate("homepage_carousel");
       if (collection === "faculty") onNavigate("faculty");
       if (collection === "degrees-widget") onNavigate("homepage_degrees");
+      if (collection === "degrees-programs") onNavigate("degrees_programs");
       return;
     }
     if (collection === "carousel") onNavigate("homepage_carousel_edit", docId);
     if (collection === "news") onNavigate("news_edit", docId);
     if (collection === "jobs") onNavigate("jobs_edit", docId);
     if (collection === "faculty") onNavigate("faculty_edit", docId);
+    if (collection === "degrees-programs") onNavigate("degrees_programs_edit", docId);
     if (collection === "degrees-widget") onNavigate("homepage_degrees_edit", docId);
   };
 

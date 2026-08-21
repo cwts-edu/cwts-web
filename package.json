@@ -21,7 +21,8 @@
     "export-faculty-package": "tsx tools/export-faculty-package.ts",
     "export-jobs-package": "tsx tools/export-jobs-package.ts",
     "export-news-package": "tsx tools/export-news-package.ts",
-    "export-all-packages": "tsx tools/export-homepage-package.ts && tsx tools/export-faculty-package.ts && tsx tools/export-jobs-package.ts"
+    "export-degrees-programs-package": "tsx tools/export-degrees-programs-package.ts",
+    "export-all-packages": "tsx tools/export-homepage-package.ts && tsx tools/export-faculty-package.ts && tsx tools/export-jobs-package.ts && tsx tools/export-degrees-programs-package.ts"
   },
   "dependencies": {
     "@astrojs/markdown-remark": "^6.1.0",
@@ -33,6 +34,10 @@
     "@tiptap/extension-image": "^3.30.2",
     "@tiptap/extension-link": "^3.30.2",
     "@tiptap/extension-placeholder": "^3.30.2",
+    "@tiptap/extension-table": "^3.30.2",
+    "@tiptap/extension-table-cell": "^3.30.2",
+    "@tiptap/extension-table-header": "^3.30.2",
+    "@tiptap/extension-table-row": "^3.30.2",
     "@tiptap/html": "^3.30.2",
     "@tiptap/pm": "^3.30.2",
     "@tiptap/react": "^3.30.2",

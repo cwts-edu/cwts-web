@@ -103,6 +103,17 @@ export const PAGE_TYPES: PageTypeConfig[] = [
     description: "Faculty biographies, courses, and adjunct listings",
   },
   {
+    id: "degrees_programs",
+    title: "Degrees & Programs",
+    path: "/admin/degrees-programs",
+    icon: "🎓",
+    group: "collections",
+    collectionName: "degrees-programs",
+    hasNew: true,
+    hasEdit: true,
+    description: "Academic degree programs, certificates, credits, and requirements",
+  },
+  {
     id: "jobs",
     title: "Job Postings",
     path: "/admin/jobs",

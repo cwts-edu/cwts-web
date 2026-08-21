@@ -407,9 +407,16 @@ export class FirebaseContentClient implements IContentClient {
     list: async (language?: Language) => {
       const items = await this.getCollection("degrees-programs");
       const filtered = language ? items.filter((d) => d.language === language) : items;
-      return filtered.sort((a, b) => a.data.order - b.data.order);
+      return filtered.sort((a, b) => (a.data.order || 0) - (b.data.order || 0));
     },
     getBySlug: async (slug: string, language: Language) => {
+      const all = await this.degreesPrograms.list(language);
+      const found = all.find(
+        (d) => d.slug === slug || d.id === `${language}/${slug}` || d.id === `${language}_${slug}` || d.id === slug
+      );
+      if (found) return found;
+      const direct = await this.getEntry("degrees-programs", slug);
+      if (direct && direct.language === language) return direct;
       return this.getEntry("degrees-programs", `${language}_${slug}`);
     },
   };

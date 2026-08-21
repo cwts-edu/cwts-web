@@ -52,13 +52,18 @@ export type FacultyMetadata = z.infer<typeof FacultyMetadataSchema>;
 // 4. Degrees Programs Schema
 export const DegreeProgramMetadataSchema = z.object({
   title: z.string(),
+  subTitle: z.string().optional(),
   order: z.number(),
-  thumbnail: z.string().optional(),
+  inCategoryOrder: z.number().optional(),
+  thumbnail: z.string().optional().transform((v) => (v ? normalizeSiteUrl(v) : v)),
   length: z.string().optional(),
   credits: z.number(),
   category: z.enum(["doctor", "master", "diploma", "certificate"]),
   redirect: z.string().optional(),
   referencedAssets: z.array(z.string()).optional(),
+  body: z.string().optional(),
+  bodyHtml: z.string().optional(),
+  bodyJson: z.any().optional(),
 });
 export type DegreeProgramMetadata = z.infer<typeof DegreeProgramMetadataSchema>;
 

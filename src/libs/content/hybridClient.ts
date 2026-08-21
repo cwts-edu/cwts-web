@@ -37,22 +37,28 @@ export class HybridContentClient implements IContentClient {
     return this.migratedCollections.has(collection);
   }
 
-  getEntry<K extends keyof ContentSchemaMap>(
+  async getEntry<K extends keyof ContentSchemaMap>(
     collection: K,
     id: string
   ): Promise<ContentEntry<ContentSchemaMap[K]> | null> {
-    return this.isMigrated(collection)
-      ? this.firebase.getEntry(collection, id)
-      : this.astro.getEntry(collection, id);
+    if (!this.isMigrated(collection)) {
+      return this.astro.getEntry(collection, id);
+    }
+    const entry = await this.firebase.getEntry(collection, id);
+    if (entry) return entry;
+    return this.astro.getEntry(collection, id);
   }
 
-  getCollection<K extends keyof ContentSchemaMap>(
+  async getCollection<K extends keyof ContentSchemaMap>(
     collection: K,
     filter?: (entry: ContentEntry<ContentSchemaMap[K]>) => boolean
   ): Promise<ContentEntry<ContentSchemaMap[K]>[]> {
-    return this.isMigrated(collection)
-      ? this.firebase.getCollection(collection, filter)
-      : this.astro.getCollection(collection, filter);
+    if (!this.isMigrated(collection)) {
+      return this.astro.getCollection(collection, filter);
+    }
+    const entries = await this.firebase.getCollection(collection, filter);
+    if (entries.length > 0) return entries;
+    return this.astro.getCollection(collection, filter);
   }
 
   render<T = any>(
@@ -76,9 +82,19 @@ export class HybridContentClient implements IContentClient {
   }
 
   get degreesPrograms() {
-    return this.isMigrated("degrees-programs")
-      ? this.firebase.degreesPrograms
-      : this.astro.degreesPrograms;
+    if (!this.isMigrated("degrees-programs")) return this.astro.degreesPrograms;
+    return {
+      list: async (language?: Language) => {
+        const fbItems = await this.firebase.degreesPrograms.list(language);
+        if (fbItems.length > 0) return fbItems;
+        return this.astro.degreesPrograms.list(language);
+      },
+      getBySlug: async (slug: string, language: Language) => {
+        const fbItem = await this.firebase.degreesPrograms.getBySlug(slug, language);
+        if (fbItem) return fbItem;
+        return this.astro.degreesPrograms.getBySlug(slug, language);
+      },
+    };
   }
 
   get degreesWidget() {

@@ -220,6 +220,33 @@ async function collectReferencedMediaAssets(): Promise<Set<string>> {
     } catch (e) {
       console.warn("⚠️ Could not query carousel entries during asset sync:", e);
     }
+
+    // 5. Query degrees-programs collection using content client
+    try {
+      const degreeEntries = await client.getCollection("degrees-programs");
+      console.log(`🎓 Loaded ${degreeEntries.length} degree entries from Firebase content client.`);
+      for (const entry of degreeEntries) {
+        if (entry.data?.referencedAssets && Array.isArray(entry.data.referencedAssets)) {
+          for (const assetPath of entry.data.referencedAssets) {
+            const sp = normalizeStoragePath(assetPath);
+            if (sp) referenced.add(sp);
+          }
+        } else {
+          if (entry.data?.thumbnail) {
+            const sp = normalizeStoragePath(entry.data.thumbnail);
+            if (sp) referenced.add(sp);
+          }
+          if (entry.body) {
+            scanTextForStoragePaths(entry.body, referenced);
+          }
+          if (entry.html) {
+            scanTextForStoragePaths(entry.html, referenced);
+          }
+        }
+      }
+    } catch (e) {
+      console.warn("⚠️ Could not query degrees-programs entries during asset sync:", e);
+    }
   } catch (err: any) {
     console.error("❌ Error querying collections via Firebase content client:", err.message || err);
     throw err;

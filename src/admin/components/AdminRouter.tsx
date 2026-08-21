@@ -9,6 +9,8 @@ import { JobsListView } from "../views/JobsListView";
 import { JobsEditView } from "../views/JobsEditView";
 import { FacultyListView } from "../views/FacultyListView";
 import { FacultyEditView } from "../views/FacultyEditView";
+import { DegreesProgramsListView } from "../views/DegreesProgramsListView";
+import { DegreesProgramsEditView } from "../views/DegreesProgramsEditView";
 import { CarouselListView } from "../views/CarouselListView";
 import { CarouselEditView } from "../views/CarouselEditView";
 import { DegreesWidgetListView } from "../views/DegreesWidgetListView";
@@ -20,6 +22,7 @@ import { ShortcutsManagerView } from "../views/ShortcutsManagerView";
 import { useNewsController } from "../hooks/collections/useNewsController";
 import { useJobsController } from "../hooks/collections/useJobsController";
 import { useFacultyController } from "../hooks/collections/useFacultyController";
+import { useDegreesProgramsController } from "../hooks/collections/useDegreesProgramsController";
 import { useCarouselController } from "../hooks/collections/useCarouselController";
 import { useDegreesWidgetController } from "../hooks/collections/useDegreesWidgetController";
 import { useStudyModesController } from "../hooks/collections/useStudyModesController";
@@ -42,6 +45,7 @@ export const AdminRouter: React.FC<Props> = ({
   const news = useNewsController(currentTab.startsWith("news"), onNavigate);
   const jobs = useJobsController(currentTab.startsWith("jobs"), onNavigate);
   const faculty = useFacultyController(currentTab.startsWith("faculty"), onNavigate);
+  const degreesPrograms = useDegreesProgramsController(currentTab.startsWith("degrees_programs"), onNavigate);
   const carousel = useCarouselController(currentTab.startsWith("homepage_carousel"), onNavigate);
   const degreesWidget = useDegreesWidgetController(currentTab.startsWith("homepage_degrees"), onNavigate);
   const studyModes = useStudyModesController(currentTab.startsWith("homepage_studymodes"), onNavigate);
@@ -53,6 +57,7 @@ export const AdminRouter: React.FC<Props> = ({
       news.reload(),
       jobs.reload(),
       faculty.reload(),
+      degreesPrograms.reload(),
       carousel.reload(),
       degreesWidget.reload(),
       studyModes.reload(),
@@ -173,6 +178,41 @@ export const AdminRouter: React.FC<Props> = ({
         initialItem={faculty.items.find((f) => f.id === editingId)}
         onSave={faculty.saveDraft}
         onCancel={() => onNavigate("faculty")}
+      />
+    );
+  }
+
+  // ---- Degrees & Programs ----
+  if (currentTab === "degrees_programs") {
+    return (
+      <DegreesProgramsListView
+        items={degreesPrograms.items}
+        onNew={() => onNavigate("degrees_programs_new")}
+        onEdit={(id) => onNavigate("degrees_programs_edit", id)}
+        onDelete={degreesPrograms.deleteItem}
+        onUndoDelete={degreesPrograms.undoDelete}
+        onReorder={degreesPrograms.reorderItems}
+        isLoading={degreesPrograms.isLoading}
+      />
+    );
+  }
+
+  if (currentTab === "degrees_programs_new") {
+    return (
+      <DegreesProgramsEditView
+        onSave={degreesPrograms.saveDraft}
+        onCancel={() => onNavigate("degrees_programs")}
+      />
+    );
+  }
+
+  if (currentTab === "degrees_programs_edit") {
+    return (
+      <DegreesProgramsEditView
+        key={editingId ? `degree-edit-${editingId}` : "degree-new"}
+        initialItem={degreesPrograms.items.find((d) => d.id === editingId)}
+        onSave={degreesPrograms.saveDraft}
+        onCancel={() => onNavigate("degrees_programs")}
       />
     );
   }
