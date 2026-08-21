@@ -124,6 +124,17 @@ export const PAGE_TYPES: PageTypeConfig[] = [
     hasEdit: true,
     description: "Church and ministry job postings",
   },
+  {
+    id: "assembly",
+    title: "Assembly (早會)",
+    path: "/admin/assembly",
+    icon: "⛪",
+    group: "collections",
+    collectionName: "assembly",
+    hasNew: true,
+    hasEdit: true,
+    description: "Weekly chapel assembly schedules, speakers, topics, and recordings",
+  },
   // 3. Tools & System
   {
     id: "media",

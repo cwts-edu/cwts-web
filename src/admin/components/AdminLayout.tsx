@@ -29,6 +29,9 @@ export type AdminTab =
   | "jobs"
   | "jobs_new"
   | "jobs_edit"
+  | "assembly"
+  | "assembly_new"
+  | "assembly_edit"
   | "media"
   | "backup";
 
@@ -55,6 +58,7 @@ export const AdminLayout: React.FC<Props> = ({ currentTab, onNavigate, children 
       if (collection === "faculty") onNavigate("faculty");
       if (collection === "degrees-widget") onNavigate("homepage_degrees");
       if (collection === "degrees-programs") onNavigate("degrees_programs");
+      if (collection === "assembly") onNavigate("assembly");
       return;
     }
     if (collection === "carousel") onNavigate("homepage_carousel_edit", docId);
@@ -63,6 +67,7 @@ export const AdminLayout: React.FC<Props> = ({ currentTab, onNavigate, children 
     if (collection === "faculty") onNavigate("faculty_edit", docId);
     if (collection === "degrees-programs") onNavigate("degrees_programs_edit", docId);
     if (collection === "degrees-widget") onNavigate("homepage_degrees_edit", docId);
+    if (collection === "assembly") onNavigate("assembly_edit", docId);
   };
 
   return (
@@ -171,6 +176,7 @@ export const AdminLayout: React.FC<Props> = ({ currentTab, onNavigate, children 
               {currentTab === "dashboard" && "Overview Dashboard"}
               {(currentTab === "news" || currentTab === "news_new" || currentTab === "news_edit") && "News Articles"}
               {(currentTab === "jobs" || currentTab === "jobs_new" || currentTab === "jobs_edit") && "Job Postings"}
+              {(currentTab === "assembly" || currentTab === "assembly_new" || currentTab === "assembly_edit") && "Assembly (早會) Schedules"}
               {currentTab === "media" && "Media Asset Library"}
             </span>
 

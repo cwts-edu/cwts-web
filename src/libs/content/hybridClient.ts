@@ -124,4 +124,20 @@ export class HybridContentClient implements IContentClient {
   get menu() {
     return this.isMigrated("menu") ? this.firebase.menu : this.astro.menu;
   }
+
+  get assembly() {
+    if (!this.isMigrated("assembly")) return this.astro.assembly;
+    return {
+      list: async (language?: Language) => {
+        const fbItems = await this.firebase.assembly.list(language);
+        if (fbItems.length > 0) return fbItems;
+        return this.astro.assembly.list(language);
+      },
+      getBySemester: async (semester: string, language?: Language) => {
+        const fbItem = await this.firebase.assembly.getBySemester(semester, language);
+        if (fbItem) return fbItem;
+        return this.astro.assembly.getBySemester(semester, language);
+      },
+    };
+  }
 }

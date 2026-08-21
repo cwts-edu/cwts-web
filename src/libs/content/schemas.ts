@@ -144,6 +144,31 @@ export const MenuItemSchema: z.ZodType<any> = z.lazy(() =>
 );
 export type MenuItem = z.infer<typeof MenuItemSchema>;
 
+// 11. Assembly Table Schema
+export const AssemblyColumnSchema = z.object({
+  id: z.string(),
+  name: z.string(),
+  type: z.enum(["text", "video", "audio"]).default("text"),
+});
+export type AssemblyColumn = z.infer<typeof AssemblyColumnSchema>;
+
+export const AssemblyRowSchema = z.record(z.string(), z.string().default(""));
+export type AssemblyRow = z.infer<typeof AssemblyRowSchema>;
+
+export const AssemblyTableMetadataSchema = z.object({
+  title: z.string(),
+  semester: z.string(),
+  order: z.number().default(0),
+  isUpcoming: z.boolean().default(false),
+  columns: z.array(AssemblyColumnSchema).default([]),
+  rows: z.array(AssemblyRowSchema).default([]),
+  body: z.string().optional(),
+  bodyJson: z.any().optional(),
+  bodyHtml: z.string().optional(),
+  referencedAssets: z.array(z.string()).optional(),
+});
+export type AssemblyTableMetadata = z.infer<typeof AssemblyTableMetadataSchema>;
+
 // Central Collection Schema Registry
 export interface ContentSchemaMap {
   pages: PageMetadata;
@@ -157,6 +182,7 @@ export interface ContentSchemaMap {
   carousel: CarouselItem;
   shortcuts: ShortcutsData;
   menu: MenuItem[];
+  assembly: AssemblyTableMetadata;
 }
 
 export const SchemaValidators: { [K in keyof ContentSchemaMap]: z.ZodType<any> } = {
@@ -171,4 +197,6 @@ export const SchemaValidators: { [K in keyof ContentSchemaMap]: z.ZodType<any> }
   carousel: CarouselItemSchema,
   shortcuts: ShortcutsSchema,
   menu: z.array(MenuItemSchema),
+  assembly: AssemblyTableMetadataSchema,
 };
+

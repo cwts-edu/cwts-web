@@ -35,6 +35,7 @@ const ALL_MIGRATED_COLLECTIONS: Array<keyof ContentSchemaMap> = [
   "study-mode-widget",
   "shortcuts",
   "degrees-programs",
+  "assembly",
 ];
 
 const MIGRATED_RAW =

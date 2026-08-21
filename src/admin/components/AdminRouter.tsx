@@ -18,6 +18,8 @@ import { DegreesWidgetEditView } from "../views/DegreesWidgetEditView";
 import { StudyModeWidgetListView } from "../views/StudyModeWidgetListView";
 import { StudyModeWidgetEditView } from "../views/StudyModeWidgetEditView";
 import { ShortcutsManagerView } from "../views/ShortcutsManagerView";
+import { AssemblyListView } from "../views/AssemblyListView";
+import { AssemblyEditView } from "../views/AssemblyEditView";
 
 import { useNewsController } from "../hooks/collections/useNewsController";
 import { useJobsController } from "../hooks/collections/useJobsController";
@@ -27,6 +29,7 @@ import { useCarouselController } from "../hooks/collections/useCarouselControlle
 import { useDegreesWidgetController } from "../hooks/collections/useDegreesWidgetController";
 import { useStudyModesController } from "../hooks/collections/useStudyModesController";
 import { useShortcutsController } from "../hooks/collections/useShortcutsController";
+import { useAssemblyController } from "../hooks/collections/useAssemblyController";
 
 interface Props {
   currentTab: AdminTab;
@@ -50,6 +53,7 @@ export const AdminRouter: React.FC<Props> = ({
   const degreesWidget = useDegreesWidgetController(currentTab.startsWith("homepage_degrees"), onNavigate);
   const studyModes = useStudyModesController(currentTab.startsWith("homepage_studymodes"), onNavigate);
   const shortcuts = useShortcutsController(currentTab.startsWith("homepage_shortcuts"));
+  const assembly = useAssemblyController(currentTab.startsWith("assembly"), onNavigate);
 
   // ---- Global reload (used by BackupRestoreView) ----
   const reloadAll = async () => {
@@ -62,6 +66,7 @@ export const AdminRouter: React.FC<Props> = ({
       degreesWidget.reload(),
       studyModes.reload(),
       shortcuts.reload(),
+      assembly.reload(),
     ]);
     onRefreshAll();
   };
@@ -331,6 +336,53 @@ export const AdminRouter: React.FC<Props> = ({
       <ShortcutsManagerView
         initialData={shortcuts.data}
         isLoading={shortcuts.isLoading}
+      />
+    );
+  }
+
+  // ---- Assembly ----
+  if (currentTab === "assembly") {
+    return (
+      <AssemblyListView
+        items={assembly.items}
+        onNew={() => onNavigate("assembly_new")}
+        onEdit={(id) => onNavigate("assembly_edit", id)}
+        onDelete={assembly.deleteItem}
+        onUndoDelete={assembly.undoDelete}
+        onReorder={assembly.reorderItems}
+        isLoading={assembly.isLoading}
+      />
+    );
+  }
+
+  if (currentTab === "assembly_new") {
+    const pastOrders = assembly.items
+      .filter(
+        (i) =>
+          !(
+            (i.draftData?.isUpcoming ?? i.data.isUpcoming) ||
+            (i.draftData?.semester ?? i.data.semester)?.toLowerCase() === "upcoming"
+          )
+      )
+      .map((i) => (i.draftData?.order ?? i.data.order) || 0);
+    const nextOrder = (pastOrders.length > 0 ? Math.max(...pastOrders) : 0) + 1;
+
+    return (
+      <AssemblyEditView
+        nextOrder={nextOrder}
+        onSave={assembly.saveDraft}
+        onCancel={() => onNavigate("assembly")}
+      />
+    );
+  }
+
+  if (currentTab === "assembly_edit") {
+    return (
+      <AssemblyEditView
+        key={editingId ? `assembly-edit-${editingId}` : "assembly-new"}
+        initialItem={assembly.items.find((a) => a.id === editingId)}
+        onSave={assembly.saveDraft}
+        onCancel={() => onNavigate("assembly")}
       />
     );
   }

@@ -11,10 +11,21 @@ import type {
   FacultyCategory,
   FacultyMetadata,
   MenuItem,
+  AssemblyTableMetadata,
 } from "./schemas";
 import { getLanguageBySlug } from "../language";
 import site from "../site";
 import { slug as slugify } from "github-slugger";
+import {
+  parseAssemblyCsv,
+  renderAssemblyTableHtml,
+  getDefaultSemesterTitle,
+  calculateSemesterOrder,
+  sortAssemblyTables,
+} from "./assemblyUtils";
+
+const allAssemblyCsv = import.meta.glob("/src/content/csv/assembly/*.csv", { as: "raw" });
+
 
 export class AstroContentClient implements IContentClient {
   async getEntry<K extends keyof ContentSchemaMap>(
@@ -344,4 +355,57 @@ export class AstroContentClient implements IContentClient {
       return await Promise.all((entry.data as any[]).map(convertMenuItem));
     },
   };
+
+  assembly = {
+    list: async (language: Language = "zh"): Promise<ContentEntry<AssemblyTableMetadata>[]> => {
+      const keys = Object.keys(allAssemblyCsv);
+      const entries: ContentEntry<AssemblyTableMetadata>[] = [];
+
+      for (const key of keys) {
+        const rawLoader = allAssemblyCsv[key];
+        if (!rawLoader) continue;
+        const rawContent = await rawLoader();
+        const filename = key.split("/").pop()?.replace(/\.csv$/, "") || "";
+        if (!filename) continue;
+
+        const isUpcoming = filename.toLowerCase() === "upcoming";
+        const { columns, rows } = parseAssemblyCsv(rawContent);
+        const title = getDefaultSemesterTitle(filename, isUpcoming);
+        const order = calculateSemesterOrder(filename);
+        const bodyHtml = renderAssemblyTableHtml(columns, rows);
+
+        const data: AssemblyTableMetadata = {
+          title,
+          semester: filename,
+          order,
+          isUpcoming,
+          columns,
+          rows,
+          bodyHtml,
+        };
+
+        entries.push({
+          id: filename,
+          slug: filename,
+          language,
+          status: "published",
+          data,
+          body: rawContent,
+          html: bodyHtml,
+          updatedAt: new Date(),
+        });
+      }
+
+      return sortAssemblyTables(entries);
+    },
+
+    getBySemester: async (
+      semester: string,
+      language: Language = "zh"
+    ): Promise<ContentEntry<AssemblyTableMetadata> | null> => {
+      const list = await this.assembly.list(language);
+      return list.find((item) => item.data.semester === semester || item.id === semester) || null;
+    },
+  };
 }
+

@@ -420,6 +420,7 @@ export const BackupRestoreView: React.FC<Props> = ({ onRefreshData }) => {
                   <option value="degrees-programs">🎓 Degrees & Programs</option>
                   <option value="faculty">👤 Faculty & Adjunct Professors</option>
                   <option value="jobs">💼 Job Postings</option>
+                  <option value="assembly">⛪ Assembly (早會) Schedules</option>
                 </optgroup>
               </select>
             </div>

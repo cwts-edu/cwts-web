@@ -12,6 +12,7 @@ import type {
   MenuItem,
   DegreesWidgetMetadata,
   StudyModeWidgetMetadata,
+  AssemblyTableMetadata,
 } from "./schemas";
 
 export type ContentStatus = "draft" | "published" | "deleted";
@@ -137,5 +138,10 @@ export interface IContentClient {
 
   menu: {
     get(language: Language): Promise<MenuItem[]>;
+  };
+
+  assembly: {
+    list(language?: Language): Promise<ContentEntry<AssemblyTableMetadata>[]>;
+    getBySemester(semester: string, language?: Language): Promise<ContentEntry<AssemblyTableMetadata> | null>;
   };
 }

@@ -13,12 +13,14 @@ import {
   type FacultyCategory,
   type FacultyMetadata,
   type MenuItem,
+  type AssemblyTableMetadata,
 } from "./schemas";
 import site from "../site";
 import { slug as slugify } from "github-slugger";
 import { createComponent, unescapeHTML } from "astro/runtime/server/index.js";
 import { createMarkdownProcessor } from "@astrojs/markdown-remark";
 import { textLinesToHtml } from "./textUtils";
+import { sortAssemblyTables } from "./assemblyUtils";
 
 let markdownProcessorPromise: Promise<any> | null = null;
 function getMarkdownProcessor() {
@@ -479,6 +481,26 @@ export class FirebaseContentClient implements IContentClient {
       return entry ? entry.data : [];
     },
   };
+
+  assembly = {
+    list: async (language: Language = "zh"): Promise<ContentEntry<AssemblyTableMetadata>[]> => {
+      const items = await this.getCollection("assembly");
+      const filtered = language ? items.filter((d) => !d.language || d.language === language) : items;
+      return sortAssemblyTables(filtered);
+    },
+    getBySemester: async (
+      semester: string,
+      language: Language = "zh"
+    ): Promise<ContentEntry<AssemblyTableMetadata> | null> => {
+      const all = await this.assembly.list(language);
+      const found = all.find(
+        (d) => d.data.semester === semester || d.slug === semester || d.id === semester
+      );
+      if (found) return found;
+      return this.getEntry("assembly", semester);
+    },
+  };
+
 
   private async fetchCanonicalCollection<K extends keyof ContentSchemaMap>(
     collection: K
