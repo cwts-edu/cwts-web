@@ -638,3 +638,151 @@ Faculty records combine core faculty and adjunct professors into a single unifie
 - **Bilingual Structure**: Each profile stores synchronized `zh` and `en` data alongside shared fields (`category`, `photo`, `email`, `order`).
 - **Drag-and-Drop Category Reordering**: The Faculty view features live drag-and-drop handles across categories (`faculty`, `senior-adjunct`, `adjunct`). Reordering updates a single `_order` draft change document containing `orderMap: Record<id, order>`, enabling instant category reordering without updating dozens of individual documents.
 
+---
+
+## 11. Structured Content Pipeline: Markdown to JSON AST & HTML Serialization
+
+To bridge static Markdown/MDX content collections and dynamic rich-text editing in the Admin portal without runtime compile overhead, the CMS implements a **Tri-Format Representation Architecture** (`body`, `bodyJson`, `bodyHtml`).
+
+```mermaid
+flowchart LR
+    subgraph SOURCE ["Content Sources"]
+        MD["Markdown / MDX Files<br/>(Git / src/content/)"]
+        EDITOR["Admin RichTextEditor<br/>(TipTap / ProseMirror)"]
+    end
+
+    subgraph PIPELINE ["Parsing & Serialization Pipeline"]
+        LEXER["marked.lexer(rawMarkdown)<br/>or TipTap JSON Serializer"]
+        PARSER["marked.parse(rawMarkdown)<br/>or TipTap HTML Serializer"]
+    end
+
+    subgraph DOCUMENT ["Firestore Canonical Document"]
+        BODY["body: string<br/>(Raw Markdown / Plain Text)"]
+        BODY_JSON["bodyJson: any<br/>(Structured AST Tokens / TipTap Doc)"]
+        BODY_HTML["bodyHtml: string<br/>(Sanitized Pre-rendered HTML)"]
+    end
+
+    subgraph FRONTEND ["Astro SSG Rendering"]
+        HTML_RENDER["<Fragment set:html={data.bodyHtml} /><br/>(Zero client JS / Zero runtime parsing)"]
+    end
+
+    MD --> LEXER & PARSER
+    EDITOR --> LEXER & PARSER
+    LEXER --> BODY_JSON
+    PARSER --> BODY_HTML
+    MD --> BODY
+    EDITOR --> BODY
+    BODY_HTML --> HTML_RENDER
+```
+
+### 11.1 The Tri-Format Content Strategy
+
+Every content document containing rich or formatted text stores three synchronized representations:
+
+| Field | Type | Purpose | Primary Consumer |
+| :--- | :--- | :--- | :--- |
+| **`body`** | `string` | Human-readable markdown or plain text source. Used for backwards-compatibility, raw text search indexing, and plain-text fallback editors. | Search indexer, legacy fallbacks, plain text inputs |
+| **`bodyJson`** | `any` (JSON) | Structured Abstract Syntax Tree (AST) token array (via `marked.lexer`) or TipTap document node tree (`{ type: "doc", content: [...] }`). Enables programmatic manipulation, structured field extractions, and robust round-trip editing without regex or string slicing. | TipTap `RichTextEditor`, custom schema transforms |
+| **`bodyHtml`** | `string` | Pre-rendered, semantic HTML string. Stored directly in Firestore. | Astro components (`<Fragment set:html={...} />`) |
+
+### 11.2 Key Design & Implementation Patterns
+
+1. **Zero-Overhead Frontend SSG Rendering**:
+   - Astro templates (e.g. `StudyModes.astro`, `Degrees.astro`) render `item.page.data.bodyHtml` directly using Astro's built-in `<Fragment set:html={...} />`.
+   - Eliminates client-side markdown parsers, heavy JS bundles, and runtime compilation during static page generation.
+
+2. **TipTap ProseMirror Stability & Schema Safety**:
+   - When loading documents into the visual editor, `isValidTipTapDoc(bodyJson)` validates the JSON structure against the ProseMirror schema. If a document contains legacy raw markdown AST tokens or is null, the editor gracefully falls back to initializing from `bodyHtml` / `initialContentHtml`, preventing `Cannot read properties of undefined (reading 'schema')` crashes.
+
+3. **Real-Time Cursor & Selection Tracking**:
+   - `RichTextEditor` listens to `onSelectionUpdate` and `onTransaction` events, allowing toolbar buttons (Bold, Italic, Headings, Ordered/Bullet Lists, Links) to update their active/highlight states instantly as the user moves the keyboard cursor or navigates through list items.
+
+4. **Clean Form Initial States**:
+   - New forms start in a clean blank state (`""` / `[]`) with descriptive placeholder text only, avoiding accidental submission of hardcoded placeholder strings.
+
+5. **URL Parameter Filter Persistence**:
+   - Language filters (`?lang=zh`, `?lang=en`, `?lang=all`) and category filters (`?category=faculty`) synchronize directly with the browser URL using `URLSearchParams` and `window.history.replaceState`.
+   - Filter state survives modal opens/closes, route transitions, and browser refreshes without relying on ephemeral `localStorage`.
+
+---
+
+## 12. Standard Operating Procedure (SOP): Migrating a Content Collection
+
+This section outlines the repeatable, standard 8-step methodology for migrating any existing Astro content collection (e.g., `news`, `jobs`, `faculty`, `degrees-widget`, `study-mode-widget`, `shortcuts`, or future ones like `degrees-programs`, `pages`, `assembly`) to the Headless CMS.
+
+```mermaid
+flowchart TD
+    S1["Step 1: Schema Definition<br/>(schemas.ts & content.config.ts)"]
+    S2["Step 2: Content Client Interface<br/>(IContentClient & HybridClient)"]
+    S3["Step 3: CLI Package Exporter<br/>(tools/export-*-package.ts)"]
+    S4["Step 4: Admin Views<br/>(ListView with URL params & EditView with RichText)"]
+    S5["Step 5: Router & Navigation<br/>(pageTypes.ts & AdminLayout.tsx)"]
+    S6["Step 6: AdminApp Wiring<br/>(Firestore Loaders, Draft Merging, CRUD)"]
+    S7["Step 7: Astro Frontend Integration<br/>(content.collection API & bodyHtml Fragment)"]
+    S8["Step 8: Export & Verification<br/>(npm run export-*-package & npm run verify-build)"]
+
+    S1 --> S2 --> S3 --> S4 --> S5 --> S6 --> S7 --> S8
+```
+
+### Step 1: Define Validation Schemas (`src/libs/content/schemas.ts`)
+1. Create or update the Zod metadata schema (`{Collection}MetadataSchema`) and optional item schemas.
+2. Include fields for `body` (`z.string().optional()`), `bodyHtml` (`z.string().optional()`), and `bodyJson` (`z.any().optional()`) if rich content is supported.
+3. Register the schema in `ContentSchemaMap` and export relevant TypeScript types.
+4. Align with `src/content.config.ts` if Astro content collections share the same definitions.
+
+### Step 2: Implement Content Client Layer (`src/libs/content/`)
+1. Add domain methods to `IContentClient` in `types.ts` (e.g., `get(language)`, `list()`, `getBySlug(slug)`).
+2. Implement corresponding methods in:
+   - `astroClient.ts` (queries local Git Astro collections)
+   - `firebaseClient.ts` (queries Firestore collections, transforms Timestamps, overlays draft data)
+   - `hybridClient.ts` (routes to Firebase if collection is migrated, else Astro)
+3. Add collection name to `ALL_MIGRATED_COLLECTIONS` in `src/libs/content/index.ts`.
+
+### Step 3: Create CLI Package Exporter (`tools/export-*-package.ts`)
+1. Write an export script that reads repository files (Markdown/MDX/YAML) and binary assets from `public/`.
+2. Convert markdown bodies into structured `body`, `bodyJson` (`marked.lexer(...)`), and `bodyHtml` (`marked.parse(...)`).
+3. Bundle normalized Firestore JSON records into `documents.json` along with `manifest.json` and `assets/` into `packages/{collection}-package.zip`.
+4. Add npm script to `package.json` (e.g., `"export-{collection}-package": "tsx tools/export-{collection}-package.ts"`).
+
+### Step 4: Build Admin Management Views (`src/admin/views/`)
+1. **List View (`{Collection}ListView.tsx`)**:
+   - Filter bar with search and language/category switcher reading/writing URL parameters (`?lang=...`, `?category=...`).
+   - Unified card design with sequence reorder badges (`#1`, `#2`), status pill tags, and action buttons (`Edit`, `Delete`, `Undo Delete`).
+   - Draft indicators (`Draft Modified`, `Pending Delete`).
+2. **Edit View (`{Collection}EditView.tsx`)**:
+   - Clean initial form state with descriptive placeholders for new items.
+   - `RichTextEditor` integration with real-time sync for `body`, `bodyHtml`, and `bodyJson`.
+   - Validation and save/cancel callbacks.
+
+### Step 5: Register Routes & Navigation (`src/admin/`)
+1. Add page type definition in `src/admin/config/pageTypes.ts`:
+   ```typescript
+   {
+     id: "homepage_studymodes",
+     label: "Study Modes",
+     icon: "📖",
+     path: "/admin/homepage/study-modes",
+     hasNew: true,
+     hasEdit: true,
+   }
+   ```
+2. Add corresponding tabs (`{id}_new`, `{id}_edit`) to `AdminTab` type in `src/admin/components/AdminLayout.tsx`.
+
+### Step 6: Wire Admin State & Handlers (`src/admin/AdminApp.tsx`)
+1. Add React state (`useState`) and on-demand loader (`load{Collection}`) querying Firestore on tab activation.
+2. Merge draft changes from `pendingChanges` (supporting updates, soft-deletes, and `_order` maps).
+3. Implement draft action handlers (`handleSaveDraft`, `handleDelete`, `handleUndoDelete`, `handleReorder`).
+4. Render List View and Edit View based on `currentTab`.
+5. Ensure `buildAdminUrl` preserves URL parameters (`lang`, `category`) during tab transitions.
+
+### Step 7: Integrate Frontend Astro Components (`src/components/` or `src/pages/`)
+1. Replace legacy `astro:content` imports with `import { content } from "@/libs/content"`.
+2. Fetch data via `await content.{collection}.list()` or `await content.{collection}.get(...)`.
+3. Render pre-compiled HTML directly via `<Fragment set:html={item.data.bodyHtml} />`.
+
+### Step 8: Build Verification & Testing
+1. Run package export: `npm run export-{collection}-package`.
+2. Run build verification: `npm run verify-build` (must build all static pages with 0 broken links and 0 asset errors).
+3. Test Admin portal locally (`/admin`) for adding, editing, reordering, deleting, and draft previewing.
+
+
