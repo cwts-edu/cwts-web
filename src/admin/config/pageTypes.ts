@@ -44,6 +44,8 @@ export const PAGE_TYPES: PageTypeConfig[] = [
     icon: "🎠",
     group: "homepage",
     collectionName: "carousel",
+    hasNew: true,
+    hasEdit: true,
     description: "Homepage hero banner carousel slides and links",
   },
   {

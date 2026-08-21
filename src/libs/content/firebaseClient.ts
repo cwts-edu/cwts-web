@@ -443,9 +443,17 @@ export class FirebaseContentClient implements IContentClient {
   };
 
   carousel = {
-    get: async () => {
+    get: async (): Promise<CarouselItem[]> => {
+      try {
+        const items = await this.getCollection("carousel");
+        if (items && items.length > 0) {
+          return items
+            .map((i) => i.data)
+            .sort((a: any, b: any) => (a.order || 0) - (b.order || 0));
+        }
+      } catch {}
       const entry = await this.getEntry("carousel", "carousel");
-      return entry ? entry.data : [];
+      return (entry ? (Array.isArray(entry.data) ? entry.data : [entry.data]) : []) as CarouselItem[];
     },
   };
 

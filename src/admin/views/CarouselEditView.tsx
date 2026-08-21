@@ -1,0 +1,222 @@
+import React, { useState } from "react";
+import { CarouselItemSchema, type CarouselItem } from "../../libs/content/schemas";
+import type { CarouselSlideItem } from "./CarouselListView";
+import { MediaField } from "../components/media/MediaField";
+import { resolveMediaPreviewUrl } from "../services/storageService";
+
+interface Props {
+  initialItem?: CarouselSlideItem | null;
+  onSave: (docId: string, data: CarouselItem) => Promise<void>;
+  onCancel: () => void;
+  nextOrder?: number;
+}
+
+export const CarouselEditView: React.FC<Props> = ({
+  initialItem,
+  onSave,
+  onCancel,
+  nextOrder = 1,
+}) => {
+  const currentActive = initialItem?.draftData || initialItem;
+
+  const [order, setOrder] = useState<number>(currentActive?.order ?? nextOrder);
+  const [title, setTitle] = useState<string>(currentActive?.title || "");
+  const [image, setImage] = useState<string>(currentActive?.image || "");
+  const [link, setLink] = useState<string>(currentActive?.link || "");
+  const [newWindow, setNewWindow] = useState<boolean>(Boolean(currentActive?.newWindow));
+
+  const [error, setError] = useState<string | null>(null);
+  const [isSaving, setIsSaving] = useState(false);
+
+  // Generate target document ID
+  const [customId] = useState(() => {
+    if (initialItem) return initialItem.id;
+    return `slide-${String(nextOrder).padStart(2, "0")}`;
+  });
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError(null);
+
+    const referencedAssets: string[] = [];
+    if (image) {
+      referencedAssets.push(image.replace(/^\/+/, ""));
+    }
+
+    const rawData = {
+      order: Number(order) || 1,
+      title: title.trim() || undefined,
+      image: image.trim(),
+      link: link.trim() || undefined,
+      newWindow: Boolean(newWindow),
+      referencedAssets,
+    };
+
+    const validation = CarouselItemSchema.safeParse(rawData);
+    if (!validation.success) {
+      const msg = validation.error.errors
+        .map((err) => `${err.path.join(".")}: ${err.message}`)
+        .join(", ");
+      setError(msg);
+      return;
+    }
+
+    try {
+      setIsSaving(true);
+      await onSave(customId, validation.data);
+    } catch (err: any) {
+      setError(err.message || "Failed to save carousel slide draft");
+      setIsSaving(false);
+    }
+  };
+
+  const previewBannerUrl = resolveMediaPreviewUrl(image);
+
+  return (
+    <div className="max-w-3xl mx-auto space-y-6">
+      {/* Header */}
+      <div className="flex items-center justify-between">
+        <div>
+          <h2 className="text-2xl font-bold text-white tracking-tight">
+            {initialItem ? "Edit Carousel Slide" : "Add New Carousel Slide"}
+          </h2>
+          <p className="text-xs text-slate-400 mt-1">
+            Slide ID: <span className="font-mono text-purple-300">{customId}</span>
+          </p>
+        </div>
+
+        <button
+          type="button"
+          onClick={onCancel}
+          className="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-semibold text-slate-300 transition"
+        >
+          Cancel
+        </button>
+      </div>
+
+      {error && (
+        <div className="p-4 rounded-2xl bg-rose-950/40 border border-rose-500/40 text-xs text-rose-300">
+          ❌ {error}
+        </div>
+      )}
+
+      {/* Form */}
+      <form onSubmit={handleSubmit} className="bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-xl space-y-6">
+        {/* Banner Live Preview */}
+        <div>
+          <label className="block text-xs font-semibold text-slate-300 mb-2">
+            Banner Preview (2.4:1 / 16:9 Hero Aspect)
+          </label>
+          <div className="w-full aspect-[21/9] sm:aspect-[2.4/1] rounded-2xl overflow-hidden bg-slate-950 border border-slate-800 flex items-center justify-center relative shadow-inner">
+            {previewBannerUrl ? (
+              <img
+                src={previewBannerUrl}
+                alt="Banner preview"
+                className="w-full h-full object-cover"
+                onError={(e) => {
+                  (e.target as HTMLElement).style.display = "none";
+                }}
+              />
+            ) : (
+              <div className="text-center text-slate-600 space-y-1 p-6">
+                <div className="text-3xl">🖼️</div>
+                <div className="text-xs font-medium">No banner image selected</div>
+                <div className="text-[11px] text-slate-600">Select or upload an image below</div>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* MediaField: Hero Banner Image */}
+        <MediaField
+          collectionId="carousel-images"
+          label="Hero Banner Image"
+          value={image}
+          onChange={(newVal) => setImage(newVal)}
+          required
+          placeholder="/images/carousel/banner.jpg"
+          helpText="Select an existing carousel image or upload & crop a new 2.4:1 banner."
+        />
+
+        {/* Slide Title / Caption (Optional) */}
+        <div>
+          <label className="block text-xs font-semibold text-slate-300 mb-1">
+            Slide Title / Label <span className="text-slate-500 font-normal">(Optional identification label)</span>
+          </label>
+          <input
+            type="text"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            placeholder="e.g. 2026 Fall Recruitment Banner"
+            className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-purple-500"
+          />
+        </div>
+
+        {/* Target Link & New Window */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div className="sm:col-span-2">
+            <label className="block text-xs font-semibold text-slate-300 mb-1">
+              Target Link URL <span className="text-slate-500 font-normal">(Internal route or external URL)</span>
+            </label>
+            <input
+              type="text"
+              value={link}
+              onChange={(e) => setLink(e.target.value)}
+              placeholder="e.g. /zh/news-events/tan-lectureship/ or https://..."
+              className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-purple-500 font-mono"
+            />
+          </div>
+
+          <div>
+            <label className="block text-xs font-semibold text-slate-300 mb-1">
+              Display Order
+            </label>
+            <input
+              type="number"
+              min={1}
+              value={order}
+              onChange={(e) => setOrder(Number(e.target.value))}
+              className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-purple-500 font-mono"
+            />
+          </div>
+        </div>
+
+        {/* Checkbox: Open in new window */}
+        <div className="flex items-center gap-3 p-4 rounded-xl bg-slate-950/60 border border-slate-800">
+          <input
+            type="checkbox"
+            id="newWindow"
+            checked={newWindow}
+            onChange={(e) => setNewWindow(e.target.checked)}
+            className="w-4 h-4 rounded text-purple-600 bg-slate-900 border-slate-700 focus:ring-purple-500 cursor-pointer"
+          />
+          <label htmlFor="newWindow" className="text-xs text-slate-300 cursor-pointer">
+            <span className="font-semibold text-white">Open in New Tab / Window</span>
+            <span className="block text-slate-500 text-[11px]">
+              Recommended for external links (Jotform, Eventbrite, Google Forms, etc.)
+            </span>
+          </label>
+        </div>
+
+        {/* Submit Actions */}
+        <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-800">
+          <button
+            type="button"
+            onClick={onCancel}
+            disabled={isSaving}
+            className="px-5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-semibold text-slate-300 transition"
+          >
+            Cancel
+          </button>
+          <button
+            type="submit"
+            disabled={isSaving || !image}
+            className="px-6 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white text-xs font-bold shadow-lg shadow-purple-600/30 transition disabled:opacity-50 active:scale-95"
+          >
+            {isSaving ? "Saving to Draft..." : "Save Slide Draft"}
+          </button>
+        </div>
+      </form>
+    </div>
+  );
+};

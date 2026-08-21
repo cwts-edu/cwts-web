@@ -10,11 +10,13 @@ import { JobsListView, type JobItem } from "./views/JobsListView";
 import { JobsEditView } from "./views/JobsEditView";
 import { FacultyListView, type UnifiedFacultyItem } from "./views/FacultyListView";
 import { FacultyEditView } from "./views/FacultyEditView";
+import { CarouselListView, type CarouselSlideItem } from "./views/CarouselListView";
+import { CarouselEditView } from "./views/CarouselEditView";
 import { BackupRestoreView } from "./views/BackupRestoreView";
 import { MediaLibraryView } from "./views/MediaLibraryView";
 import { db } from "./config/firebase";
 import { collection, getDocs } from "firebase/firestore";
-import type { NewsMetadata, JobMetadata } from "../libs/content/schemas";
+import type { NewsMetadata, JobMetadata, CarouselItem } from "../libs/content/schemas";
 
 import { PAGE_TYPES } from "./config/pageTypes";
 
@@ -69,6 +71,7 @@ const AdminDashboard: React.FC = () => {
   const [news, setNews] = useState<NewsItem[]>([]);
   const [jobs, setJobs] = useState<JobItem[]>([]);
   const [faculty, setFaculty] = useState<UnifiedFacultyItem[]>([]);
+  const [carousel, setCarousel] = useState<CarouselSlideItem[]>([]);
   const [isLoadingData, setIsLoadingData] = useState<boolean>(true);
 
   // Sync state when user presses browser Back/Forward buttons
@@ -160,6 +163,33 @@ const AdminDashboard: React.FC = () => {
         });
         setFaculty(loadedFaculty);
       }
+
+      // 4. Fetch Carousel
+      const carouselSnap = await getDocs(collection(db, "carousel"));
+      if (!carouselSnap.empty) {
+        const loadedCarousel: CarouselSlideItem[] = [];
+        carouselSnap.forEach((d) => {
+          const val = d.data();
+          if (val.status === "deleted") return;
+          loadedCarousel.push({
+            id: d.id,
+            order: val.order ?? 999,
+            image: val.image || "",
+            link: val.link,
+            newWindow: Boolean(val.newWindow),
+            title: val.title,
+            referencedAssets: val.referencedAssets || [],
+            status: val.status || "published",
+            version: val.version || 1,
+            publishedVersion: val.publishedVersion || 1,
+            updatedBy: val.updatedBy,
+            publishedBy: val.publishedBy,
+            createdAt: val.createdAt,
+            updatedAt: val.updatedAt,
+          });
+        });
+        setCarousel(loadedCarousel);
+      }
     } catch (err) {
       console.warn("Could not connect to live Firestore (using initial state):", err);
     } finally {
@@ -235,11 +265,31 @@ const AdminDashboard: React.FC = () => {
     handleNavigate("faculty");
   };
 
-  const handleDeleteFaculty = async (id: string) => {
-    const target = faculty.find((f) => f.id === id);
+  // --------------------------------------------------------------------------
+  // Carousel Handlers (Draft Save, Reorder, & Soft Delete)
+  // --------------------------------------------------------------------------
+  const handleSaveCarouselDraft = async (id: string, data: CarouselItem) => {
+    await saveChangeToDraft("carousel", id, "update", data);
+    handleNavigate("homepage_carousel");
+  };
+
+  const handleDeleteCarousel = async (id: string) => {
+    const target = carousel.find((c) => c.id === id);
     if (target) {
-      await saveChangeToDraft("faculty", id, "delete", target);
+      await saveChangeToDraft("carousel", id, "delete", target);
     }
+  };
+
+  const handleUndoDeleteCarousel = async (id: string) => {
+    await discardDraftChange("carousel", id);
+  };
+
+  const handleReorderCarousel = async (reorderedIds: string[]) => {
+    const orderMap: Record<string, number> = {};
+    reorderedIds.forEach((id, index) => {
+      orderMap[id] = index + 1;
+    });
+    await saveChangeToDraft("carousel", "_order", "update", { orderMap });
   };
 
   // Overlay active draft items into the view list for the editor
@@ -370,6 +420,54 @@ const AdminDashboard: React.FC = () => {
 
   const mergedFaculty = Array.from(facultyMap.values()).filter((f) => f.id !== "_order");
 
+  // Carousel Draft Overlay
+  const carouselMap = new Map<string, CarouselSlideItem>(carousel.map((item) => [item.id, { ...item }]));
+  const carouselDraftChanges = pendingChanges.filter((p) => p.collection === "carousel");
+
+  for (const draft of carouselDraftChanges) {
+    if (draft.documentId === "_order") continue;
+
+    const existing = carouselMap.get(draft.documentId);
+    if (draft.action === "delete") {
+      if (existing) {
+        carouselMap.set(draft.documentId, {
+          ...existing,
+          status: "deleted",
+          draftAction: "delete",
+        });
+      }
+    } else {
+      const rawData = draft.data as CarouselItem;
+      carouselMap.set(draft.documentId, {
+        id: draft.documentId,
+        order: rawData?.order ?? existing?.order ?? 999,
+        image: rawData?.image || existing?.image || "",
+        link: rawData?.link ?? existing?.link,
+        newWindow: rawData?.newWindow ?? existing?.newWindow,
+        title: rawData?.title ?? existing?.title,
+        referencedAssets: rawData?.referencedAssets ?? existing?.referencedAssets,
+        status: "draft",
+        draftData: rawData,
+        draftAction: existing ? "update" : "create",
+        version: existing ? (existing.version || 1) + 1 : 1,
+        publishedVersion: existing?.publishedVersion,
+        updatedBy: draft.updatedBy,
+      });
+    }
+  }
+
+  const carouselOrderDraft = carouselDraftChanges.find((p) => p.documentId === "_order");
+  if (carouselOrderDraft?.data?.orderMap) {
+    for (const [id, newOrder] of Object.entries(carouselOrderDraft.data.orderMap)) {
+      const item = carouselMap.get(id);
+      if (item) {
+        carouselMap.set(id, { ...item, order: Number(newOrder) });
+      }
+    }
+  }
+
+  const mergedCarousel = Array.from(carouselMap.values()).filter((c) => c.id !== "_order");
+
   return (
     <AdminLayout currentTab={currentTab} onNavigate={handleNavigate}>
       {currentTab === "dashboard" && (
@@ -378,6 +476,7 @@ const AdminDashboard: React.FC = () => {
           newsCount={mergedNews.filter((n) => n.status !== "deleted").length}
           jobsCount={mergedJobs.filter((j) => j.status !== "deleted").length}
           facultyCount={mergedFaculty.filter((f) => f.status !== "deleted").length}
+          carouselCount={mergedCarousel.filter((c) => c.status !== "deleted").length}
           onRefreshData={loadData}
         />
       )}
@@ -479,21 +578,38 @@ const AdminDashboard: React.FC = () => {
       )}
 
       {currentTab === "homepage_carousel" && (
-        <div className="space-y-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <h2 className="text-2xl font-bold text-white tracking-tight">Hero Carousel</h2>
-              <p className="text-xs text-slate-400 mt-1">
-                Manage homepage hero banner carousel slides and links.
-              </p>
-            </div>
+        <CarouselListView
+          items={mergedCarousel.filter((c) => c.status !== "deleted")}
+          onNew={() => handleNavigate("homepage_carousel_new")}
+          onEdit={(item) => handleNavigate("homepage_carousel_edit", item.id)}
+          onDelete={handleDeleteCarousel}
+          onUndoDelete={handleUndoDeleteCarousel}
+          onReorder={handleReorderCarousel}
+          isLoading={isLoadingData}
+        />
+      )}
+
+      {currentTab === "homepage_carousel_new" && (
+        <CarouselEditView
+          nextOrder={mergedCarousel.length + 1}
+          onSave={handleSaveCarouselDraft}
+          onCancel={() => handleNavigate("homepage_carousel")}
+        />
+      )}
+
+      {currentTab === "homepage_carousel_edit" && (
+        isLoadingData && !mergedCarousel.find((c) => c.id === editingId) ? (
+          <div className="p-16 text-center text-slate-400 text-sm animate-pulse">
+            Loading carousel slide...
           </div>
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl p-12 text-center text-slate-400 space-y-3">
-            <div className="text-4xl">🎠</div>
-            <p className="text-sm font-medium">Hero Carousel Management</p>
-            <p className="text-xs text-slate-500">Ready for Firestore integration and drag-and-drop slide management.</p>
-          </div>
-        </div>
+        ) : (
+          <CarouselEditView
+            key={editingId ? `carousel-edit-${editingId}` : "carousel-new"}
+            initialItem={mergedCarousel.find((c) => c.id === editingId)}
+            onSave={handleSaveCarouselDraft}
+            onCancel={() => handleNavigate("homepage_carousel")}
+          />
+        )
       )}
 
       {currentTab === "homepage_degrees" && (

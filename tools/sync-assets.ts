@@ -201,6 +201,25 @@ async function collectReferencedMediaAssets(): Promise<Set<string>> {
         }
       }
     }
+
+    // 4. Query carousel collection using content client
+    try {
+      const carouselEntries = await client.getCollection("carousel");
+      console.log(`🎠 Loaded ${carouselEntries.length} carousel entries from Firebase content client.`);
+      for (const entry of carouselEntries) {
+        if (entry.data?.referencedAssets && Array.isArray(entry.data.referencedAssets)) {
+          for (const assetPath of entry.data.referencedAssets) {
+            const sp = normalizeStoragePath(assetPath);
+            if (sp) referenced.add(sp);
+          }
+        } else if (entry.data?.image) {
+          const sp = normalizeStoragePath(entry.data.image);
+          if (sp) referenced.add(sp);
+        }
+      }
+    } catch (e) {
+      console.warn("⚠️ Could not query carousel entries during asset sync:", e);
+    }
   } catch (err: any) {
     console.error("❌ Error querying collections via Firebase content client:", err.message || err);
     throw err;

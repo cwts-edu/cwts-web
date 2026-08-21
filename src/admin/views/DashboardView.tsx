@@ -15,6 +15,7 @@ interface Props {
   newsCount: number;
   jobsCount: number;
   facultyCount?: number;
+  carouselCount?: number;
   onRefreshData?: () => Promise<void>;
 }
 
@@ -23,6 +24,7 @@ export const DashboardView: React.FC<Props> = ({
   newsCount,
   jobsCount,
   facultyCount = 0,
+  carouselCount = 0,
   onRefreshData,
 }) => {
   const { user } = useAuth();
@@ -342,6 +344,7 @@ export const DashboardView: React.FC<Props> = ({
                   {change.action !== "delete" && (
                     <button
                       onClick={() => {
+                        if (change.collection === "carousel") onNavigate("homepage_carousel_edit", change.documentId);
                         if (change.collection === "news") onNavigate("news_edit", change.documentId);
                         if (change.collection === "jobs") onNavigate("jobs_edit", change.documentId);
                         if (change.collection === "faculty") onNavigate("faculty_edit", change.documentId);
@@ -366,19 +369,19 @@ export const DashboardView: React.FC<Props> = ({
       )}
 
       {/* Collection Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         <div
-          onClick={() => onNavigate("faculty")}
+          onClick={() => onNavigate("homepage_carousel")}
           className="bg-slate-900 border border-slate-800 hover:border-purple-500/40 rounded-2xl p-6 cursor-pointer transition shadow-xl group"
         >
           <div className="flex items-center justify-between">
             <div className="w-12 h-12 rounded-xl bg-purple-900/30 border border-purple-500/30 flex items-center justify-center text-2xl group-hover:scale-110 transition">
-              🎓
+              🎠
             </div>
-            <span className="text-2xl font-black text-white">{facultyCount}</span>
+            <span className="text-2xl font-black text-white">{carouselCount}</span>
           </div>
-          <h3 className="text-base font-bold text-white mt-4 group-hover:text-purple-300 transition">Faculty & Adjuncts</h3>
-          <p className="text-xs text-slate-400 mt-1">Core professors, senior adjuncts, and adjunct list.</p>
+          <h3 className="text-base font-bold text-white mt-4 group-hover:text-purple-300 transition">Hero Carousel</h3>
+          <p className="text-xs text-slate-400 mt-1">Homepage hero banners, links, and order.</p>
         </div>
 
         <div
@@ -393,6 +396,20 @@ export const DashboardView: React.FC<Props> = ({
           </div>
           <h3 className="text-base font-bold text-white mt-4 group-hover:text-purple-300 transition">News Articles</h3>
           <p className="text-xs text-slate-400 mt-1">Homepage news items and newsletter highlights.</p>
+        </div>
+
+        <div
+          onClick={() => onNavigate("faculty")}
+          className="bg-slate-900 border border-slate-800 hover:border-purple-500/40 rounded-2xl p-6 cursor-pointer transition shadow-xl group"
+        >
+          <div className="flex items-center justify-between">
+            <div className="w-12 h-12 rounded-xl bg-purple-900/30 border border-purple-500/30 flex items-center justify-center text-2xl group-hover:scale-110 transition">
+              👤
+            </div>
+            <span className="text-2xl font-black text-white">{facultyCount}</span>
+          </div>
+          <h3 className="text-base font-bold text-white mt-4 group-hover:text-purple-300 transition">Faculty & Adjuncts</h3>
+          <p className="text-xs text-slate-400 mt-1">Core professors, senior adjuncts, and adjunct list.</p>
         </div>
 
         <div

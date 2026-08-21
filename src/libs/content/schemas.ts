@@ -91,9 +91,12 @@ export type JobMetadata = z.infer<typeof JobMetadataSchema>;
 
 // 8. Carousel Schema
 export const CarouselItemSchema = z.object({
+  order: z.number().optional(),
+  title: z.string().optional(),
   link: z.string().optional(),
-  image: z.string(),
+  image: z.string().transform(normalizeSiteUrl),
   newWindow: z.boolean().optional(),
+  referencedAssets: z.array(z.string()).optional(),
 });
 export type CarouselItem = z.infer<typeof CarouselItemSchema>;
 
@@ -144,13 +147,13 @@ export interface ContentSchemaMap {
   "degrees-widget": DegreesWidgetMetadata;
   "study-mode-widget": StudyModeWidgetMetadata;
   jobs: JobMetadata;
-  carousel: CarouselItem[];
+  carousel: CarouselItem;
   shortcuts: ShortcutsData;
   translation: TranslationDictionary;
   menu: MenuItem[];
 }
 
-export const SchemaValidators: { [K in keyof ContentSchemaMap]: z.ZodType<ContentSchemaMap[K]> } = {
+export const SchemaValidators: { [K in keyof ContentSchemaMap]: z.ZodType<any> } = {
   pages: PageMetadataSchema,
   news: NewsMetadataSchema,
   faculty: FacultyMetadataSchema,
@@ -159,7 +162,7 @@ export const SchemaValidators: { [K in keyof ContentSchemaMap]: z.ZodType<Conten
   "degrees-widget": DegreesWidgetMetadataSchema,
   "study-mode-widget": StudyModeWidgetMetadataSchema,
   jobs: JobMetadataSchema,
-  carousel: z.array(CarouselItemSchema),
+  carousel: CarouselItemSchema,
   shortcuts: ShortcutsSchema,
   translation: TranslationDictionarySchema,
   menu: z.array(MenuItemSchema),

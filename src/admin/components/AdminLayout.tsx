@@ -8,6 +8,8 @@ import { PAGE_TYPES, NAV_GROUPS } from "../config/pageTypes";
 export type AdminTab =
   | "dashboard"
   | "homepage_carousel"
+  | "homepage_carousel_new"
+  | "homepage_carousel_edit"
   | "news"
   | "news_new"
   | "news_edit"
@@ -41,6 +43,7 @@ export const AdminLayout: React.FC<Props> = ({ currentTab, onNavigate, children 
   };
 
   const handleNavigateToEdit = (collection: string, docId: string) => {
+    if (collection === "carousel") onNavigate("homepage_carousel_edit", docId);
     if (collection === "news") onNavigate("news_edit", docId);
     if (collection === "jobs") onNavigate("jobs_edit", docId);
     if (collection === "faculty") onNavigate("faculty_edit", docId);
