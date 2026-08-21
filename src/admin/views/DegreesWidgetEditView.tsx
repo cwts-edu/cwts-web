@@ -7,6 +7,7 @@ import {
   type Language,
 } from "../../libs/content/schemas";
 import type { DegreesWidgetItem } from "./DegreesWidgetListView";
+import { RichTextEditor } from "../components/editor/RichTextEditor";
 
 interface Props {
   initialItem?: DegreesWidgetItem | null;
@@ -46,8 +47,10 @@ export const DegreesWidgetEditView: React.FC<Props> = ({
     return [];
   });
 
-  // Card general/intro body markdown
+  // Card general/intro body
   const [body, setBody] = useState<string>(initialItem?.draftBody || initialItem?.body || "");
+  const [bodyHtml, setBodyHtml] = useState<string>(initialItem?.bodyHtml || "");
+  const [bodyJson, setBodyJson] = useState<any>(initialItem?.bodyJson);
 
   const [error, setError] = useState<string | null>(null);
   const [isSaving, setIsSaving] = useState(false);
@@ -60,6 +63,8 @@ export const DegreesWidgetEditView: React.FC<Props> = ({
       {
         title: "",
         body: "",
+        bodyHtml: "",
+        bodyJson: null,
         open: prev.length === 0,
       },
     ]);
@@ -93,14 +98,16 @@ export const DegreesWidgetEditView: React.FC<Props> = ({
     e.preventDefault();
     setError(null);
 
-    // Build programs with rendered AST and HTML
+    // Ensure programs have valid body, bodyHtml, and bodyJson
     const processedPrograms: DegreeProgramItem[] = programs.map((p) => {
-      const pBody = p.body.trim();
+      const pBody = p.body?.trim() || "";
+      const pHtml = p.bodyHtml || (pBody ? (marked.parse(pBody) as string) : "");
+      const pJson = p.bodyJson || (pBody ? marked.lexer(pBody) : null);
       return {
         title: p.title.trim(),
         body: pBody,
-        bodyJson: pBody ? marked.lexer(pBody) : null,
-        bodyHtml: pBody ? (marked.parse(pBody) as string) : "",
+        bodyJson: pJson,
+        bodyHtml: pHtml,
         open: Boolean(p.open),
       };
     });
@@ -123,8 +130,8 @@ export const DegreesWidgetEditView: React.FC<Props> = ({
     }
 
     const cleanBody = body.trim();
-    const cleanBodyJson = cleanBody ? marked.lexer(cleanBody) : null;
-    const cleanBodyHtml = cleanBody ? (marked.parse(cleanBody) as string) : "";
+    const cleanBodyHtml = bodyHtml || (cleanBody ? (marked.parse(cleanBody) as string) : "");
+    const cleanBodyJson = bodyJson || (cleanBody ? marked.lexer(cleanBody) : null);
 
     try {
       setIsSaving(true);
@@ -355,14 +362,21 @@ export const DegreesWidgetEditView: React.FC<Props> = ({
 
                   <div>
                     <label className="block text-xs font-semibold text-slate-300 mb-1">
-                      Program Overview & Objectives (Markdown / Bullet Points)
+                      Program Overview & Objectives (Rich Text Editor)
                     </label>
-                    <textarea
-                      rows={4}
-                      value={prog.body}
-                      onChange={(e) => handleUpdateProgram(idx, { body: e.target.value })}
-                      placeholder="Program description, curriculum details, admission notes, etc..."
-                      className="w-full bg-slate-900 border border-slate-800 rounded-xl p-3 text-xs font-mono text-slate-200 focus:outline-none focus:border-purple-500 leading-relaxed"
+                    <RichTextEditor
+                      initialContentHtml={prog.bodyHtml || prog.body}
+                      initialContentJson={prog.bodyJson}
+                      onChange={({ html, json, text }) => {
+                        handleUpdateProgram(idx, {
+                          bodyHtml: html,
+                          bodyJson: json,
+                          body: text,
+                        });
+                      }}
+                      placeholder="Program description, curriculum details, bullet points..."
+                      minHeight="140px"
+                      maxHeight="35vh"
                     />
                   </div>
 
@@ -384,20 +398,25 @@ export const DegreesWidgetEditView: React.FC<Props> = ({
           )}
         </div>
 
-        {/* Section 3: Optional Card General Markdown */}
+        {/* Section 3: Optional Card General Rich Text Body */}
         <div className="space-y-3 pt-6 border-t border-slate-800">
           <h3 className="text-sm font-bold text-white uppercase tracking-wider text-purple-400">
-            3. Card Overview / Body (Markdown)
+            3. Card Overview / Body (Rich Text Editor)
           </h3>
           <p className="text-xs text-slate-400">
             Used for non-accordion cards (e.g. Certificate description) or extra card notes.
           </p>
-          <textarea
-            rows={6}
-            value={body}
-            onChange={(e) => setBody(e.target.value)}
+          <RichTextEditor
+            initialContentHtml={bodyHtml || body}
+            initialContentJson={bodyJson}
+            onChange={({ html, json, text }) => {
+              setBodyHtml(html);
+              setBodyJson(json);
+              setBody(text);
+            }}
             placeholder="Optional general description or notes..."
-            className="w-full bg-slate-950 border border-slate-800 rounded-2xl p-4 text-xs font-mono text-slate-200 focus:outline-none focus:border-purple-500 leading-relaxed"
+            minHeight="160px"
+            maxHeight="35vh"
           />
         </div>
 
