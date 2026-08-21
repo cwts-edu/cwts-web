@@ -62,13 +62,13 @@ const layoutSwitchClass =
                   item.page.data.programs.map((prog, idx) => (
                     <AccordionItem name={`${item.slug}-degrees-${language}`} open={prog.open ?? (idx === 0)}>
                       <h1 slot="summary">{prog.title}</h1>
-                      <Fragment set:html={prog.bodyHtml || prog.body} />
+                      <Fragment set:html={prog.bodyHtml} />
                     </AccordionItem>
                   ))
                 ) : item.Content ? (
                   <item.Content />
                 ) : (
-                  <Fragment set:html={item.page.html || item.page.body} />
+                  <Fragment set:html={item.page.html || item.page.data.bodyHtml} />
                 )}
               </div>
             </div>
