@@ -193,21 +193,25 @@ export const StudyModeWidgetListView: React.FC<Props> = ({
           Loading study mode cards...
         </div>
       ) : filteredItems.length === 0 ? (
-        <div className="p-12 text-center text-slate-500 bg-slate-900 border border-slate-800 rounded-3xl space-y-3">
+        <div className="bg-slate-900 border border-slate-800 rounded-2xl p-12 text-center text-slate-400 space-y-3">
           <div className="text-4xl">📖</div>
-          <p className="text-sm font-medium">No study mode cards found.</p>
-          <p className="text-xs text-slate-600">Click "Add Study Mode" above to create a new format card.</p>
+          <p className="text-sm font-medium">No study mode cards found</p>
+          <p className="text-xs text-slate-500">
+            {search ? "No cards match your filter criteria." : "Click 'Add Study Mode' or restore a backup package."}
+          </p>
         </div>
       ) : (
         <div className="space-y-3">
-          {filteredItems.map((item, idx) => {
-            const isPendingDraft = item.draftData !== undefined || item.draftBody !== undefined;
-            const isPendingDelete = item.status === "deleted";
+          {filteredItems.map((item, index) => {
             const activeData = item.draftData || item.data;
             const activeBody = item.draftBody || item.body || "";
+            const isPendingDelete = item.status === "deleted";
+            const isPendingDraft = Boolean(item.draftData || item.draftBody);
+            const cardOrder = activeData?.order ?? index + 1;
 
             const cleanSnippet = activeBody
               .replace(/<[^>]*>/g, " ")
+              .replace(/^import\s+.*?;?\s*$/gm, "")
               .replace(/^#+\s+/gm, "")
               .replace(/\s+/g, " ")
               .trim();
@@ -215,51 +219,61 @@ export const StudyModeWidgetListView: React.FC<Props> = ({
             return (
               <div
                 key={item.id}
-                className={`bg-slate-900 border rounded-2xl p-4 sm:p-5 transition flex flex-col md:flex-row md:items-center justify-between gap-4 ${
+                className={`bg-slate-900 border rounded-2xl p-4 sm:p-5 transition flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-sm hover:border-slate-700 ${
                   isPendingDelete
-                    ? "border-rose-500/30 opacity-60 bg-rose-950/10"
+                    ? "opacity-50 border-rose-900/50 bg-rose-950/20"
                     : isPendingDraft
                     ? "border-amber-500/40 bg-amber-950/10"
-                    : "border-slate-800 hover:border-slate-700"
+                    : "border-slate-800"
                 }`}
               >
-                {/* Left: Move handles & details */}
-                <div className="flex items-start gap-4 flex-1 min-w-0">
+                {/* Left: Sequence & Metadata */}
+                <div className="flex items-start gap-4 min-w-0 flex-1">
+                  {/* Sequence Reorder Controls */}
                   {onReorder && langFilter !== "all" && !search && (
-                    <div className="flex flex-col gap-1 items-center justify-center shrink-0 pt-0.5">
+                    <div className="flex flex-col items-center gap-1 shrink-0 pt-0.5">
                       <button
-                        onClick={() => handleMove(idx, "up")}
-                        disabled={idx === 0}
+                        onClick={() => handleMove(index, "up")}
+                        disabled={index === 0}
                         title="Move Up"
-                        className="p-1 rounded text-xs text-slate-400 hover:text-white disabled:opacity-20 hover:bg-slate-800 transition"
+                        className="p-1 rounded text-xs text-slate-400 hover:text-white hover:bg-slate-800 disabled:opacity-20 disabled:hover:bg-transparent"
                       >
                         ▲
                       </button>
-                      <span className="text-[10px] font-mono font-bold text-slate-500">
-                        {idx + 1}
+                      <span className="text-xs font-mono font-bold text-purple-400 px-1.5 py-0.5 rounded bg-purple-950/50 border border-purple-800/40">
+                        #{cardOrder}
                       </span>
                       <button
-                        onClick={() => handleMove(idx, "down")}
-                        disabled={idx === filteredItems.length - 1}
+                        onClick={() => handleMove(index, "down")}
+                        disabled={index === filteredItems.length - 1}
                         title="Move Down"
-                        className="p-1 rounded text-xs text-slate-400 hover:text-white disabled:opacity-20 hover:bg-slate-800 transition"
+                        className="p-1 rounded text-xs text-slate-400 hover:text-white hover:bg-slate-800 disabled:opacity-20 disabled:hover:bg-transparent"
                       >
                         ▼
                       </button>
                     </div>
                   )}
 
-                  <div className="space-y-1.5 flex-1 min-w-0">
+                  {/* Info */}
+                  <div className="min-w-0 flex-1 space-y-2">
                     <div className="flex items-center gap-2 flex-wrap">
-                      <span className="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-slate-800 text-slate-300">
-                        {item.language}
+                      <span
+                        className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider ${
+                          item.language === "zh"
+                            ? "bg-amber-950/60 text-amber-300 border border-amber-800/40"
+                            : "bg-sky-950/60 text-sky-300 border border-sky-800/40"
+                        }`}
+                      >
+                        {item.language === "zh" ? "中文" : "English"}
                       </span>
-                      <span className="text-base font-bold text-white tracking-tight">
-                        {activeData?.title || item.type}
+
+                      <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-slate-800 text-slate-300 border border-slate-700">
+                        {item.type}
                       </span>
-                      <span className="text-xs font-mono text-slate-500">
-                        ({item.type})
-                      </span>
+
+                      <h3 className="text-base font-bold text-white tracking-tight">
+                        {activeData?.title || item.id}
+                      </h3>
 
                       {/* Status Badges */}
                       {isPendingDraft && (
