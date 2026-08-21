@@ -256,19 +256,9 @@ async function exportShortcutsPackage(baseDir: string) {
 
   const documents = [
     {
-      id: "zh",
-      language: "zh",
-      items: shortcutsData.zh || [],
-      status: "published",
-      version: 1,
-      publishedVersion: 1,
-      createdAt: now,
-      updatedAt: now,
-    },
-    {
-      id: "en",
-      language: "en",
-      items: shortcutsData.en || [],
+      id: "shortcuts",
+      zh: shortcutsData.zh || [],
+      en: shortcutsData.en || [],
       status: "published",
       version: 1,
       publishedVersion: 1,

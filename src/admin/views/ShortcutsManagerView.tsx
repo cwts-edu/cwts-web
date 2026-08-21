@@ -2,6 +2,19 @@ import React, { useState, useMemo } from "react";
 import { useDraft } from "../context/DraftContext";
 import type { ShortcutItem, ShortcutsData, Language } from "../../libs/content/schemas";
 
+const DEFAULT_SHORTCUTS: ShortcutsData = {
+  zh: [
+    { name: "奉獻支持", url: "/zh/donation" },
+    { name: "聯絡我們", url: "/zh/contact" },
+    { name: "申請入學", url: "/zh/admissions/application-procedure", type: "button", breakBefore: true },
+  ],
+  en: [
+    { name: "Give", url: "/en/donation" },
+    { name: "Contact", url: "/en/contact" },
+    { name: "Apply", url: "/en/academic/degrees-programs", type: "button", breakBefore: true },
+  ],
+};
+
 interface Props {
   initialData?: ShortcutsData;
   isLoading?: boolean;
@@ -40,13 +53,13 @@ export const ShortcutsManagerView: React.FC<Props> = ({
     );
     if (draft && draft.data) {
       return {
-        zh: draft.data.zh || initialData?.zh || [],
-        en: draft.data.en || initialData?.en || [],
+        zh: draft.data.zh || (initialData?.zh && initialData.zh.length > 0 ? initialData.zh : DEFAULT_SHORTCUTS.zh),
+        en: draft.data.en || (initialData?.en && initialData.en.length > 0 ? initialData.en : DEFAULT_SHORTCUTS.en),
       };
     }
     return {
-      zh: initialData?.zh || [],
-      en: initialData?.en || [],
+      zh: initialData?.zh && initialData.zh.length > 0 ? initialData.zh : DEFAULT_SHORTCUTS.zh,
+      en: initialData?.en && initialData.en.length > 0 ? initialData.en : DEFAULT_SHORTCUTS.en,
     };
   }, [initialData, pendingChanges]);
 

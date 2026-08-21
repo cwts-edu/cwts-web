@@ -351,14 +351,33 @@ const AdminDashboard: React.FC = () => {
       const snap = await getDocs(collection(db, "shortcuts"));
       let loaded: ShortcutsData = { zh: [], en: [] };
       snap.forEach((d) => {
+        const val = d.data();
         if (d.id === "shortcuts") {
-          const val = d.data();
-          loaded = {
-            zh: val.zh || [],
-            en: val.en || [],
-          };
+          loaded.zh = val.zh || loaded.zh;
+          loaded.en = val.en || loaded.en;
+        } else if (d.id === "zh") {
+          loaded.zh = val.items || val.zh || (Array.isArray(val) ? val : loaded.zh);
+        } else if (d.id === "en") {
+          loaded.en = val.items || val.en || (Array.isArray(val) ? val : loaded.en);
         }
       });
+
+      // Default fallback if Firestore collection has no documents yet
+      if (loaded.zh.length === 0 && loaded.en.length === 0) {
+        loaded = {
+          zh: [
+            { name: "奉獻支持", url: "/zh/donation" },
+            { name: "聯絡我們", url: "/zh/contact" },
+            { name: "申請入學", url: "/zh/admissions/application-procedure", type: "button", breakBefore: true },
+          ],
+          en: [
+            { name: "Give", url: "/en/donation" },
+            { name: "Contact", url: "/en/contact" },
+            { name: "Apply", url: "/en/academic/degrees-programs", type: "button", breakBefore: true },
+          ],
+        };
+      }
+
       setShortcuts(loaded);
       setLoadedCollections((prev) => ({ ...prev, shortcuts: true }));
     } catch (err) {
