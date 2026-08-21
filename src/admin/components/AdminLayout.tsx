@@ -3,6 +3,8 @@ import { useAuth } from "../context/AuthContext";
 import { useDraft } from "../context/DraftContext";
 import { DraftReviewModal } from "./DraftReviewModal";
 
+import { PAGE_TYPES, NAV_GROUPS } from "../config/pageTypes";
+
 export type AdminTab =
   | "dashboard"
   | "homepage_carousel"
@@ -12,12 +14,15 @@ export type AdminTab =
   | "homepage_degrees"
   | "homepage_studymodes"
   | "homepage_shortcuts"
-  | "jobs"
-  | "jobs_new"
-  | "jobs_edit"
+  | "pages"
+  | "pages_new"
+  | "pages_edit"
   | "faculty"
   | "faculty_new"
   | "faculty_edit"
+  | "jobs"
+  | "jobs_new"
+  | "jobs_edit"
   | "media"
   | "backup";
 
@@ -32,17 +37,9 @@ export const AdminLayout: React.FC<Props> = ({ currentTab, onNavigate, children 
   const { pendingChanges, isStagingBuilding, stagingUrl } = useDraft();
   const [showReviewModal, setShowReviewModal] = useState(false);
 
-  const isNavActive = (tab: string) => {
-    if (tab === "dashboard" && currentTab === "dashboard") return true;
-    if (tab === "homepage_carousel" && currentTab === "homepage_carousel") return true;
-    if (tab === "news" && (currentTab === "news" || currentTab === "news_new" || currentTab === "news_edit")) return true;
-    if (tab === "homepage_degrees" && currentTab === "homepage_degrees") return true;
-    if (tab === "homepage_studymodes" && currentTab === "homepage_studymodes") return true;
-    if (tab === "homepage_shortcuts" && currentTab === "homepage_shortcuts") return true;
-    if (tab === "jobs" && (currentTab === "jobs" || currentTab === "jobs_new" || currentTab === "jobs_edit")) return true;
-    if (tab === "faculty" && (currentTab === "faculty" || currentTab === "faculty_new" || currentTab === "faculty_edit")) return true;
-    if (tab === "media" && currentTab === "media") return true;
-    if (tab === "backup" && currentTab === "backup") return true;
+  const isNavActive = (tabId: string) => {
+    if (currentTab === tabId) return true;
+    if (currentTab === `${tabId}_new` || currentTab === `${tabId}_edit`) return true;
     return false;
   };
 
@@ -50,6 +47,7 @@ export const AdminLayout: React.FC<Props> = ({ currentTab, onNavigate, children 
     if (collection === "news") onNavigate("news_edit", docId);
     if (collection === "jobs") onNavigate("jobs_edit", docId);
     if (collection === "faculty") onNavigate("faculty_edit", docId);
+    if (collection === "pages") onNavigate("pages_edit", docId);
   };
 
   return (
@@ -69,6 +67,7 @@ export const AdminLayout: React.FC<Props> = ({ currentTab, onNavigate, children 
 
         {/* Navigation */}
         <nav className="flex-1 px-3 py-6 space-y-1 overflow-y-auto">
+          {/* Overview Section (Dashboard) */}
           <button
             onClick={() => onNavigate("dashboard")}
             className={`w-full flex items-center gap-3 px-3 py-2 rounded-xl text-sm font-medium transition ${
@@ -81,137 +80,39 @@ export const AdminLayout: React.FC<Props> = ({ currentTab, onNavigate, children 
             Dashboard
           </button>
 
-          {/* Separator */}
-          <div className="my-3 border-t border-slate-800/80 mx-2" />
+          {/* Grouped Page Types & Collections */}
+          {NAV_GROUPS.filter((g) => g.id !== "overview").map((group) => {
+            const groupItems = PAGE_TYPES.filter((pt) => pt.group === group.id);
+            if (groupItems.length === 0) return null;
 
-          {/* 1. Homepage Data Group */}
-          <div className="px-3 pb-1 pt-1 text-[11px] font-semibold text-slate-500 uppercase tracking-wider">
-            Homepage Data
-          </div>
+            return (
+              <React.Fragment key={group.id}>
+                {/* Separator */}
+                <div className="my-3 border-t border-slate-800/80 mx-2" />
 
-          <button
-            onClick={() => onNavigate("homepage_carousel")}
-            className={`w-full flex items-center gap-3 px-3 py-2 rounded-xl text-sm font-medium transition ${
-              isNavActive("homepage_carousel")
-                ? "bg-purple-600 text-white shadow-md"
-                : "text-slate-400 hover:bg-slate-800/80 hover:text-white"
-            }`}
-          >
-            <span className="text-base">🎠</span>
-            Hero Carousel
-          </button>
+                {/* Section Title */}
+                <div className="px-3 pb-1 pt-1 text-[11px] font-semibold text-slate-500 uppercase tracking-wider">
+                  {group.title}
+                </div>
 
-          <button
-            onClick={() => onNavigate("news")}
-            className={`w-full flex items-center gap-3 px-3 py-2 rounded-xl text-sm font-medium transition ${
-              isNavActive("news")
-                ? "bg-purple-600 text-white shadow-md"
-                : "text-slate-400 hover:bg-slate-800/80 hover:text-white"
-            }`}
-          >
-            <span className="text-base">📰</span>
-            Latest News
-          </button>
-
-          <button
-            onClick={() => onNavigate("homepage_degrees")}
-            className={`w-full flex items-center gap-3 px-3 py-2 rounded-xl text-sm font-medium transition ${
-              isNavActive("homepage_degrees")
-                ? "bg-purple-600 text-white shadow-md"
-                : "text-slate-400 hover:bg-slate-800/80 hover:text-white"
-            }`}
-          >
-            <span className="text-base">🎓</span>
-            Degrees Widget
-          </button>
-
-          <button
-            onClick={() => onNavigate("homepage_studymodes")}
-            className={`w-full flex items-center gap-3 px-3 py-2 rounded-xl text-sm font-medium transition ${
-              isNavActive("homepage_studymodes")
-                ? "bg-purple-600 text-white shadow-md"
-                : "text-slate-400 hover:bg-slate-800/80 hover:text-white"
-            }`}
-          >
-            <span className="text-base">📖</span>
-            Study Modes
-          </button>
-
-          <button
-            onClick={() => onNavigate("homepage_shortcuts")}
-            className={`w-full flex items-center gap-3 px-3 py-2 rounded-xl text-sm font-medium transition ${
-              isNavActive("homepage_shortcuts")
-                ? "bg-purple-600 text-white shadow-md"
-                : "text-slate-400 hover:bg-slate-800/80 hover:text-white"
-            }`}
-          >
-            <span className="text-base">⚡</span>
-            Shortcuts
-          </button>
-
-          {/* Separator */}
-          <div className="my-3 border-t border-slate-800/80 mx-2" />
-
-          {/* 2. Site Collections */}
-          <div className="px-3 pb-1 pt-1 text-[11px] font-semibold text-slate-500 uppercase tracking-wider">
-            Collections
-          </div>
-
-          <button
-            onClick={() => onNavigate("faculty")}
-            className={`w-full flex items-center gap-3 px-3 py-2 rounded-xl text-sm font-medium transition ${
-              isNavActive("faculty")
-                ? "bg-purple-600 text-white shadow-md"
-                : "text-slate-400 hover:bg-slate-800/80 hover:text-white"
-            }`}
-          >
-            <span className="text-base">👤</span>
-            Faculty & Adjuncts
-          </button>
-
-          <button
-            onClick={() => onNavigate("jobs")}
-            className={`w-full flex items-center gap-3 px-3 py-2 rounded-xl text-sm font-medium transition ${
-              isNavActive("jobs")
-                ? "bg-purple-600 text-white shadow-md"
-                : "text-slate-400 hover:bg-slate-800/80 hover:text-white"
-            }`}
-          >
-            <span className="text-base">💼</span>
-            Job Postings
-          </button>
-
-          {/* Separator */}
-          <div className="my-3 border-t border-slate-800/80 mx-2" />
-
-          {/* 3. Tools & System */}
-          <div className="px-3 pb-1 pt-1 text-[11px] font-semibold text-slate-500 uppercase tracking-wider">
-            Tools & System
-          </div>
-
-          <button
-            onClick={() => onNavigate("media")}
-            className={`w-full flex items-center gap-3 px-3 py-2 rounded-xl text-sm font-medium transition ${
-              isNavActive("media")
-                ? "bg-purple-600 text-white shadow-md"
-                : "text-slate-400 hover:bg-slate-800/80 hover:text-white"
-            }`}
-          >
-            <span className="text-base">🖼️</span>
-            Media Library
-          </button>
-
-          <button
-            onClick={() => onNavigate("backup")}
-            className={`w-full flex items-center gap-3 px-3 py-2 rounded-xl text-sm font-medium transition ${
-              isNavActive("backup")
-                ? "bg-purple-600 text-white shadow-md"
-                : "text-slate-400 hover:bg-slate-800/80 hover:text-white"
-            }`}
-          >
-            <span className="text-base">💾</span>
-            Backup & Restore
-          </button>
+                {/* Group Nav Items */}
+                {groupItems.map((item) => (
+                  <button
+                    key={item.id}
+                    onClick={() => onNavigate(item.id as AdminTab)}
+                    className={`w-full flex items-center gap-3 px-3 py-2 rounded-xl text-sm font-medium transition ${
+                      isNavActive(item.id)
+                        ? "bg-purple-600 text-white shadow-md"
+                        : "text-slate-400 hover:bg-slate-800/80 hover:text-white"
+                    }`}
+                  >
+                    {item.icon && <span className="text-base">{item.icon}</span>}
+                    {item.title}
+                  </button>
+                ))}
+              </React.Fragment>
+            );
+          })}
         </nav>
 
         {/* User Footer */}

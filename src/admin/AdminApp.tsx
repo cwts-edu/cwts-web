@@ -16,6 +16,8 @@ import { db } from "./config/firebase";
 import { collection, getDocs } from "firebase/firestore";
 import type { NewsMetadata, JobMetadata } from "../libs/content/schemas";
 
+import { PAGE_TYPES } from "./config/pageTypes";
+
 export interface AdminRouteState {
   tab: AdminTab;
   param?: string;
@@ -25,96 +27,36 @@ export function parseAdminLocation(): AdminRouteState {
   if (typeof window === "undefined") {
     return { tab: "dashboard" };
   }
-  const path = window.location.pathname.replace(/\/+$/, "");
+  const pathname = window.location.pathname.replace(/\/+$/, "") || "/admin";
   const searchParams = new URLSearchParams(window.location.search);
   const idParam = searchParams.get("id") || undefined;
 
-  if (path === "/admin/homepage/carousel") {
-    return { tab: "homepage_carousel" };
-  }
-  if (path === "/admin/homepage/degrees") {
-    return { tab: "homepage_degrees" };
-  }
-  if (path === "/admin/homepage/study-modes") {
-    return { tab: "homepage_studymodes" };
-  }
-  if (path === "/admin/homepage/shortcuts") {
-    return { tab: "homepage_shortcuts" };
-  }
-  if (path === "/admin/faculty/new") {
-    return { tab: "faculty_new" };
-  }
-  if (path === "/admin/faculty/edit") {
-    return { tab: "faculty_edit", param: idParam };
-  }
-  if (path === "/admin/faculty") {
-    return { tab: "faculty" };
-  }
-  if (path === "/admin/news/new") {
-    return { tab: "news_new" };
-  }
-  if (path === "/admin/news/edit") {
-    return { tab: "news_edit", param: idParam };
-  }
-  if (path === "/admin/news") {
-    return { tab: "news" };
-  }
-  if (path === "/admin/jobs/new") {
-    return { tab: "jobs_new" };
-  }
-  if (path === "/admin/jobs/edit") {
-    return { tab: "jobs_edit", param: idParam };
-  }
-  if (path === "/admin/jobs") {
-    return { tab: "jobs" };
-  }
-  if (path === "/admin/media") {
-    return { tab: "media" };
-  }
-  if (path === "/admin/backup") {
-    return { tab: "backup" };
+  for (const pt of PAGE_TYPES) {
+    if (pt.hasNew && pathname === `${pt.path}/new`) {
+      return { tab: `${pt.id}_new` as AdminTab };
+    }
+    if (pt.hasEdit && pathname === `${pt.path}/edit`) {
+      return { tab: `${pt.id}_edit` as AdminTab, param: idParam };
+    }
+    if (pathname === pt.path) {
+      return { tab: pt.id as AdminTab };
+    }
   }
 
   return { tab: "dashboard" };
 }
 
 export function buildAdminUrl(tab: AdminTab, param?: string): string {
-  switch (tab) {
-    case "dashboard":
-      return "/admin";
-    case "homepage_carousel":
-      return "/admin/homepage/carousel";
-    case "homepage_degrees":
-      return "/admin/homepage/degrees";
-    case "homepage_studymodes":
-      return "/admin/homepage/study-modes";
-    case "homepage_shortcuts":
-      return "/admin/homepage/shortcuts";
-    case "faculty":
-      return "/admin/faculty";
-    case "faculty_new":
-      return "/admin/faculty/new";
-    case "faculty_edit":
-      return param ? `/admin/faculty/edit?id=${encodeURIComponent(param)}` : "/admin/faculty/edit";
-    case "news":
-      return "/admin/news";
-    case "news_new":
-      return "/admin/news/new";
-    case "news_edit":
-      return param ? `/admin/news/edit?id=${encodeURIComponent(param)}` : "/admin/news/edit";
-    case "jobs":
-      return "/admin/jobs";
-    case "jobs_new":
-      return "/admin/jobs/new";
-    case "jobs_edit":
-      return param ? `/admin/jobs/edit?id=${encodeURIComponent(param)}` : "/admin/jobs/edit";
-    case "media":
-      return "/admin/media";
-    case "backup":
-      return "/admin/backup";
-    default:
-      return "/admin";
+  if (tab === "dashboard") return "/admin";
+
+  for (const pt of PAGE_TYPES) {
+    if (tab === pt.id) return pt.path;
+    if (pt.hasNew && tab === `${pt.id}_new`) return `${pt.path}/new`;
+    if (pt.hasEdit && tab === `${pt.id}_edit`) {
+      return param ? `${pt.path}/edit?id=${encodeURIComponent(param)}` : `${pt.path}/edit`;
+    }
   }
+  return "/admin";
 }
 
 const AdminDashboard: React.FC = () => {
@@ -604,6 +546,24 @@ const AdminDashboard: React.FC = () => {
             <div className="text-4xl">⚡</div>
             <p className="text-sm font-medium">Shortcuts Management</p>
             <p className="text-xs text-slate-500">Ready for Firestore integration and quick link buttons.</p>
+          </div>
+        </div>
+      )}
+
+      {currentTab === "pages" && (
+        <div className="space-y-6">
+          <div className="flex items-center justify-between">
+            <div>
+              <h2 className="text-2xl font-bold text-white tracking-tight">Site Pages</h2>
+              <p className="text-xs text-slate-400 mt-1">
+                Manage website core content pages and markdown articles.
+              </p>
+            </div>
+          </div>
+          <div className="bg-slate-900 border border-slate-800 rounded-2xl p-12 text-center text-slate-400 space-y-3">
+            <div className="text-4xl">📄</div>
+            <p className="text-sm font-medium">Site Pages Management</p>
+            <p className="text-xs text-slate-500">Ready for Firestore integration and MDX / TipTap rich text editing.</p>
           </div>
         </div>
       )}

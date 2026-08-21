@@ -1,23 +1,10 @@
 ---
 import AdminApp from "../../admin/AdminApp";
+import { ADMIN_STATIC_PATHS } from "../../admin/config/pageTypes";
 import "@assets/base.css";
 
 export function getStaticPaths() {
-  return [
-    { params: { app: undefined } },
-    { params: { app: "dashboard" } },
-    { params: { app: "news" } },
-    { params: { app: "news/new" } },
-    { params: { app: "news/edit" } },
-    { params: { app: "jobs" } },
-    { params: { app: "jobs/new" } },
-    { params: { app: "jobs/edit" } },
-    { params: { app: "faculty" } },
-    { params: { app: "faculty/new" } },
-    { params: { app: "faculty/edit" } },
-    { params: { app: "media" } },
-    { params: { app: "backup" } },
-  ];
+  return ADMIN_STATIC_PATHS;
 }
 ---
 
