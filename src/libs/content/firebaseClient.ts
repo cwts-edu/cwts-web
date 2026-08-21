@@ -680,7 +680,11 @@ export class FirebaseContentClient implements IContentClient {
       else if ("booleanValue" in value) result[key] = value.booleanValue;
       else if ("timestampValue" in value) result[key] = new Date(value.timestampValue);
       else if ("arrayValue" in value) {
-        result[key] = (value.arrayValue.values || []).map((v: any) => Object.values(v)[0]);
+        result[key] = (value.arrayValue.values || []).map((v: any) => {
+          if ("mapValue" in v) return this.decodeFirestoreFields(v.mapValue.fields);
+          // scalar: stringValue, integerValue, etc.
+          return Object.values(v)[0];
+        });
       } else if ("mapValue" in value) {
         result[key] = this.decodeFirestoreFields(value.mapValue.fields);
       }
