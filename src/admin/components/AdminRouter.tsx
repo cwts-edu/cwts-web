@@ -20,6 +20,8 @@ import { StudyModeWidgetEditView } from "../views/StudyModeWidgetEditView";
 import { ShortcutsManagerView } from "../views/ShortcutsManagerView";
 import { AssemblyListView } from "../views/AssemblyListView";
 import { AssemblyEditView } from "../views/AssemblyEditView";
+import { NewsletterListView } from "../views/NewsletterListView";
+import { NewsletterEditView } from "../views/NewsletterEditView";
 
 import { useNewsController } from "../hooks/collections/useNewsController";
 import { useJobsController } from "../hooks/collections/useJobsController";
@@ -30,6 +32,7 @@ import { useDegreesWidgetController } from "../hooks/collections/useDegreesWidge
 import { useStudyModesController } from "../hooks/collections/useStudyModesController";
 import { useShortcutsController } from "../hooks/collections/useShortcutsController";
 import { useAssemblyController } from "../hooks/collections/useAssemblyController";
+import { useNewsletterController } from "../hooks/collections/useNewsletterController";
 
 interface Props {
   currentTab: AdminTab;
@@ -54,6 +57,7 @@ export const AdminRouter: React.FC<Props> = ({
   const studyModes = useStudyModesController(currentTab.startsWith("homepage_studymodes"), onNavigate);
   const shortcuts = useShortcutsController(currentTab.startsWith("homepage_shortcuts"));
   const assembly = useAssemblyController(currentTab.startsWith("assembly"), onNavigate);
+  const newsletter = useNewsletterController(currentTab.startsWith("newsletter"), onNavigate);
 
   // ---- Global reload (used by BackupRestoreView) ----
   const reloadAll = async () => {
@@ -67,6 +71,7 @@ export const AdminRouter: React.FC<Props> = ({
       studyModes.reload(),
       shortcuts.reload(),
       assembly.reload(),
+      newsletter.reload(),
     ]);
     onRefreshAll();
   };
@@ -383,6 +388,40 @@ export const AdminRouter: React.FC<Props> = ({
         initialItem={assembly.items.find((a) => a.id === editingId)}
         onSave={assembly.saveDraft}
         onCancel={() => onNavigate("assembly")}
+      />
+    );
+  }
+
+  // Newsletter
+  if (currentTab === "newsletter") {
+    return (
+      <NewsletterListView
+        items={newsletter.items}
+        onNew={() => onNavigate("newsletter_new")}
+        onEdit={(id) => onNavigate("newsletter_edit", id)}
+        onDelete={newsletter.deleteItem}
+        onUndoDelete={newsletter.undoDelete}
+        isLoading={newsletter.isLoading}
+      />
+    );
+  }
+
+  if (currentTab === "newsletter_new") {
+    return (
+      <NewsletterEditView
+        onSave={newsletter.saveDraft}
+        onCancel={() => onNavigate("newsletter")}
+      />
+    );
+  }
+
+  if (currentTab === "newsletter_edit") {
+    return (
+      <NewsletterEditView
+        key={editingId ? `newsletter-edit-${editingId}` : "newsletter-new"}
+        initialItem={newsletter.items.find((a) => a.id === editingId)}
+        onSave={newsletter.saveDraft}
+        onCancel={() => onNavigate("newsletter")}
       />
     );
   }

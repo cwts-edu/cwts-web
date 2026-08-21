@@ -36,6 +36,7 @@ const ALL_MIGRATED_COLLECTIONS: Array<keyof ContentSchemaMap> = [
   "shortcuts",
   "degrees-programs",
   "assembly",
+  "newsletter",
 ];
 
 const MIGRATED_RAW =

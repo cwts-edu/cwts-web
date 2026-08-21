@@ -32,6 +32,9 @@ export type AdminTab =
   | "assembly"
   | "assembly_new"
   | "assembly_edit"
+  | "newsletter"
+  | "newsletter_new"
+  | "newsletter_edit"
   | "media"
   | "backup";
 
@@ -68,6 +71,7 @@ export const AdminLayout: React.FC<Props> = ({ currentTab, onNavigate, children 
     if (collection === "degrees-programs") onNavigate("degrees_programs_edit", docId);
     if (collection === "degrees-widget") onNavigate("homepage_degrees_edit", docId);
     if (collection === "assembly") onNavigate("assembly_edit", docId);
+    if (collection === "newsletter") onNavigate("newsletter_edit", docId);
   };
 
   return (
@@ -177,6 +181,7 @@ export const AdminLayout: React.FC<Props> = ({ currentTab, onNavigate, children 
               {(currentTab === "news" || currentTab === "news_new" || currentTab === "news_edit") && "News Articles"}
               {(currentTab === "jobs" || currentTab === "jobs_new" || currentTab === "jobs_edit") && "Job Postings"}
               {(currentTab === "assembly" || currentTab === "assembly_new" || currentTab === "assembly_edit") && "Assembly (早會) Schedules"}
+              {(currentTab === "newsletter" || currentTab === "newsletter_new" || currentTab === "newsletter_edit") && "Seminary Newsletters (基神院訊)"}
               {currentTab === "media" && "Media Asset Library"}
             </span>
 

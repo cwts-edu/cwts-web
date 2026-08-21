@@ -169,6 +169,18 @@ export const AssemblyTableMetadataSchema = z.object({
 });
 export type AssemblyTableMetadata = z.infer<typeof AssemblyTableMetadataSchema>;
 
+export const NewsletterMetadataSchema = z.object({
+  title: z.string(),
+  year: z.number().int(),
+  issue: z.number().int().min(1).max(10),
+  issueLetter: z.enum(["A", "B", "C", "D", "E", "F"]).optional(),
+  pdfPath: z.string(),
+  coverImage: z.string(),
+  publishDate: z.string().optional(),
+  referencedAssets: z.array(z.string()).default([]),
+});
+export type NewsletterMetadata = z.infer<typeof NewsletterMetadataSchema>;
+
 // Central Collection Schema Registry
 export interface ContentSchemaMap {
   pages: PageMetadata;
@@ -183,6 +195,7 @@ export interface ContentSchemaMap {
   shortcuts: ShortcutsData;
   menu: MenuItem[];
   assembly: AssemblyTableMetadata;
+  newsletter: NewsletterMetadata;
 }
 
 export const SchemaValidators: { [K in keyof ContentSchemaMap]: z.ZodType<any> } = {
@@ -198,5 +211,6 @@ export const SchemaValidators: { [K in keyof ContentSchemaMap]: z.ZodType<any> }
   shortcuts: ShortcutsSchema,
   menu: z.array(MenuItemSchema),
   assembly: AssemblyTableMetadataSchema,
+  newsletter: NewsletterMetadataSchema,
 };
 

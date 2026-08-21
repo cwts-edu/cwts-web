@@ -421,6 +421,7 @@ export const BackupRestoreView: React.FC<Props> = ({ onRefreshData }) => {
                   <option value="faculty">👤 Faculty & Adjunct Professors</option>
                   <option value="jobs">💼 Job Postings</option>
                   <option value="assembly">⛪ Assembly (早會) Schedules</option>
+                  <option value="newsletter">📰 Newsletter (院訊)</option>
                 </optgroup>
               </select>
             </div>

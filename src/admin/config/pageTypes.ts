@@ -135,6 +135,17 @@ export const PAGE_TYPES: PageTypeConfig[] = [
     hasEdit: true,
     description: "Weekly chapel assembly schedules, speakers, topics, and recordings",
   },
+  {
+    id: "newsletter",
+    title: "Newsletter (院訊)",
+    path: "/admin/newsletter",
+    icon: "📰",
+    group: "collections",
+    collectionName: "newsletter",
+    hasNew: true,
+    hasEdit: true,
+    description: "Seminary quarterly newsletter PDF documents and cover image assets",
+  },
   // 3. Tools & System
   {
     id: "media",

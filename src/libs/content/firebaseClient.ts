@@ -14,6 +14,7 @@ import {
   type FacultyMetadata,
   type MenuItem,
   type AssemblyTableMetadata,
+  type NewsletterMetadata,
 } from "./schemas";
 import site from "../site";
 import { slug as slugify } from "github-slugger";
@@ -21,6 +22,7 @@ import { createComponent, unescapeHTML } from "astro/runtime/server/index.js";
 import { createMarkdownProcessor } from "@astrojs/markdown-remark";
 import { textLinesToHtml } from "./textUtils";
 import { sortAssemblyTables } from "./assemblyUtils";
+import { sortNewsletters } from "./newsletterUtils";
 
 let markdownProcessorPromise: Promise<any> | null = null;
 function getMarkdownProcessor() {
@@ -498,6 +500,22 @@ export class FirebaseContentClient implements IContentClient {
       );
       if (found) return found;
       return this.getEntry("assembly", semester);
+    },
+  };
+
+  newsletter = {
+    list: async (language: Language = "zh"): Promise<ContentEntry<NewsletterMetadata>[]> => {
+      const items = await this.getCollection("newsletter");
+      const filtered = language ? items.filter((d) => !d.language || d.language === language) : items;
+      return sortNewsletters(filtered, "asc");
+    },
+    getByYearAndIssue: async (
+      year: number,
+      issue: number,
+      language: Language = "zh"
+    ): Promise<ContentEntry<NewsletterMetadata> | null> => {
+      const all = await this.newsletter.list(language);
+      return all.find((item) => item.data.year === year && item.data.issue === issue) || null;
     },
   };
 

@@ -12,6 +12,7 @@ import type {
   FacultyMetadata,
   MenuItem,
   AssemblyTableMetadata,
+  NewsletterMetadata,
 } from "./schemas";
 import { getLanguageBySlug } from "../language";
 import site from "../site";
@@ -23,8 +24,16 @@ import {
   calculateSemesterOrder,
   sortAssemblyTables,
 } from "./assemblyUtils";
+import {
+  parseNewsletterFilename,
+  formatNewsletterTitle,
+  formatNewsletterPdfPath,
+  formatNewsletterCoverPath,
+  sortNewsletters,
+} from "./newsletterUtils";
 
 const allAssemblyCsv = import.meta.glob("/src/content/csv/assembly/*.csv", { as: "raw" });
+const allNewsletterPdfs = import.meta.glob("/public/docs/newsletter/*.pdf");
 
 
 export class AstroContentClient implements IContentClient {
@@ -405,6 +414,52 @@ export class AstroContentClient implements IContentClient {
     ): Promise<ContentEntry<AssemblyTableMetadata> | null> => {
       const list = await this.assembly.list(language);
       return list.find((item) => item.data.semester === semester || item.id === semester) || null;
+    },
+  };
+
+  newsletter = {
+    list: async (language: Language = "zh"): Promise<ContentEntry<NewsletterMetadata>[]> => {
+      const entries: ContentEntry<NewsletterMetadata>[] = [];
+
+      for (const [filePath] of Object.entries(allNewsletterPdfs)) {
+        const parts = filePath.split("/");
+        const fullFilename = parts[parts.length - 1] || "";
+        const parsed = parseNewsletterFilename(fullFilename);
+        if (!parsed) continue;
+
+        const data: NewsletterMetadata = {
+          title: parsed.title,
+          year: parsed.year,
+          issue: parsed.issue,
+          issueLetter: parsed.issueLetter,
+          pdfPath: parsed.pdfPath,
+          coverImage: parsed.coverImage,
+          referencedAssets: [
+            parsed.pdfPath.replace(/^\/+/, ""),
+            parsed.coverImage.replace(/^\/+/, ""),
+          ],
+        };
+
+        entries.push({
+          id: parsed.id,
+          slug: parsed.id,
+          language: "zh",
+          status: "published",
+          data,
+          updatedAt: new Date(),
+        });
+      }
+
+      return sortNewsletters(entries, "asc");
+    },
+
+    getByYearAndIssue: async (
+      year: number,
+      issue: number,
+      language: Language = "zh"
+    ): Promise<ContentEntry<NewsletterMetadata> | null> => {
+      const list = await this.newsletter.list(language);
+      return list.find((item) => item.data.year === year && item.data.issue === issue) || null;
     },
   };
 }

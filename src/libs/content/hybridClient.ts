@@ -140,4 +140,20 @@ export class HybridContentClient implements IContentClient {
       },
     };
   }
+
+  get newsletter() {
+    if (!this.isMigrated("newsletter")) return this.astro.newsletter;
+    return {
+      list: async (language?: Language) => {
+        const fbItems = await this.firebase.newsletter.list(language);
+        if (fbItems.length > 0) return fbItems;
+        return this.astro.newsletter.list(language);
+      },
+      getByYearAndIssue: async (year: number, issue: number, language?: Language) => {
+        const fbItem = await this.firebase.newsletter.getByYearAndIssue(year, issue, language);
+        if (fbItem) return fbItem;
+        return this.astro.newsletter.getByYearAndIssue(year, issue, language);
+      },
+    };
+  }
 }

@@ -21,7 +21,8 @@
     "export-news-package": "tsx tools/export-news-package.ts",
     "export-degrees-programs-package": "tsx tools/export-degrees-programs-package.ts",
     "export-assembly-package": "tsx tools/export-assembly-package.ts",
-    "export-all-packages": "tsx tools/export-homepage-package.ts && tsx tools/export-faculty-package.ts && tsx tools/export-jobs-package.ts && tsx tools/export-degrees-programs-package.ts && tsx tools/export-assembly-package.ts"
+    "export-newsletter-package": "tsx tools/export-newsletter-package.ts",
+    "export-all-packages": "tsx tools/export-homepage-package.ts && tsx tools/export-faculty-package.ts && tsx tools/export-jobs-package.ts && tsx tools/export-degrees-programs-package.ts && tsx tools/export-assembly-package.ts && tsx tools/export-newsletter-package.ts"
   },
   "dependencies": {
     "@astrojs/markdown-remark": "^6.1.0",
@@ -57,6 +58,7 @@
     "netlify-redirect-parser": "^14.2.0",
     "node-html-parser": "^7.0.1",
     "npm": "^11.1.0",
+    "pdfjs-dist": "^6.2.108",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "remark-extended-table": "^2.0.2",

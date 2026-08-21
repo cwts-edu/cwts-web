@@ -247,6 +247,31 @@ async function collectReferencedMediaAssets(): Promise<Set<string>> {
     } catch (e) {
       console.warn("⚠️ Could not query degrees-programs entries during asset sync:", e);
     }
+
+    // 6. Query newsletter collection using content client
+    try {
+      const newsletterEntries = await client.getCollection("newsletter");
+      console.log(`📰 Loaded ${newsletterEntries.length} newsletter entries from Firebase content client.`);
+      for (const entry of newsletterEntries) {
+        if (entry.data?.referencedAssets && Array.isArray(entry.data.referencedAssets)) {
+          for (const assetPath of entry.data.referencedAssets) {
+            const sp = normalizeStoragePath(assetPath);
+            if (sp) referenced.add(sp);
+          }
+        } else {
+          if (entry.data?.pdfPath) {
+            const sp = normalizeStoragePath(entry.data.pdfPath);
+            if (sp) referenced.add(sp);
+          }
+          if (entry.data?.coverImage) {
+            const sp = normalizeStoragePath(entry.data.coverImage);
+            if (sp) referenced.add(sp);
+          }
+        }
+      }
+    } catch (e) {
+      console.warn("⚠️ Could not query newsletter entries during asset sync:", e);
+    }
   } catch (err: any) {
     console.error("❌ Error querying collections via Firebase content client:", err.message || err);
     throw err;

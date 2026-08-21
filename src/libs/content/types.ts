@@ -13,6 +13,7 @@ import type {
   DegreesWidgetMetadata,
   StudyModeWidgetMetadata,
   AssemblyTableMetadata,
+  NewsletterMetadata,
 } from "./schemas";
 
 export type ContentStatus = "draft" | "published" | "deleted";
@@ -143,5 +144,10 @@ export interface IContentClient {
   assembly: {
     list(language?: Language): Promise<ContentEntry<AssemblyTableMetadata>[]>;
     getBySemester(semester: string, language?: Language): Promise<ContentEntry<AssemblyTableMetadata> | null>;
+  };
+
+  newsletter: {
+    list(language?: Language): Promise<ContentEntry<NewsletterMetadata>[]>;
+    getByYearAndIssue(year: number, issue: number, language?: Language): Promise<ContentEntry<NewsletterMetadata> | null>;
   };
 }

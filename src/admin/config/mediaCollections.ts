@@ -120,6 +120,15 @@ export const MEDIA_COLLECTIONS: Record<string, MediaCollectionConfig> = {
     maxFileSizeMB: 50,
     description: "General PDF forms, catalogs, and downloadable materials.",
   },
+  "newsletter-docs": {
+    id: "newsletter-docs",
+    title: "Newsletter Documents & Covers",
+    collectionPath: "docs/newsletter",
+    type: "file",
+    allowedMimeTypes: ["application/pdf", "image/png", "image/jpeg"],
+    maxFileSizeMB: 50,
+    description: "Seminary quarterly newsletter PDF documents and cover image assets.",
+  },
 };
 
 export function getMediaCollectionConfig(collectionId: string): MediaCollectionConfig {
