@@ -17,6 +17,8 @@ export type AdminTab =
   | "homepage_degrees_new"
   | "homepage_degrees_edit"
   | "homepage_studymodes"
+  | "homepage_studymodes_new"
+  | "homepage_studymodes_edit"
   | "homepage_shortcuts"
   | "faculty"
   | "faculty_new"

@@ -1,14 +1,12 @@
 import React, { useState, useMemo } from "react";
-import type { DegreesWidgetMetadata } from "../../libs/content/schemas";
-import type { Language } from "../../libs/content/schemas";
-import { parseDegreesWidgetBody } from "../../libs/content/degreeWidgetUtils";
+import type { StudyModeWidgetMetadata, Language } from "../../libs/content/schemas";
 
-export interface DegreesWidgetItem {
+export interface StudyModeWidgetItem {
   id: string;
   language: Language;
   type: string;
-  data: DegreesWidgetMetadata;
-  draftData?: DegreesWidgetMetadata;
+  data: StudyModeWidgetMetadata;
+  draftData?: StudyModeWidgetMetadata;
   body?: string;
   draftBody?: string;
   bodyJson?: any;
@@ -23,16 +21,16 @@ export interface DegreesWidgetItem {
 }
 
 interface Props {
-  items: DegreesWidgetItem[];
+  items: StudyModeWidgetItem[];
   onNew: () => void;
-  onEdit: (item: DegreesWidgetItem) => void;
+  onEdit: (item: StudyModeWidgetItem) => void;
   onDelete: (id: string) => Promise<void>;
   onUndoDelete?: (id: string) => Promise<void>;
   onReorder?: (reorderedIds: string[]) => Promise<void>;
   isLoading?: boolean;
 }
 
-export const DegreesWidgetListView: React.FC<Props> = ({
+export const StudyModeWidgetListView: React.FC<Props> = ({
   items,
   onNew,
   onEdit,
@@ -107,7 +105,7 @@ export const DegreesWidgetListView: React.FC<Props> = ({
   };
 
   const handleDelete = async (id: string) => {
-    if (window.confirm("Are you sure you want to delete this degree widget card?")) {
+    if (window.confirm("Are you sure you want to remove this study mode?")) {
       setDeletingId(id);
       try {
         await onDelete(id);
@@ -120,16 +118,11 @@ export const DegreesWidgetListView: React.FC<Props> = ({
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <div className="flex items-center gap-3">
-            <h2 className="text-2xl font-bold text-white tracking-tight">Degrees Widget</h2>
-            <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-purple-900/50 text-purple-300 border border-purple-500/30">
-              {items.length} {items.length === 1 ? "Card" : "Cards"}
-            </span>
-          </div>
+          <h2 className="text-2xl font-bold text-white tracking-tight">Study Modes Widget</h2>
           <p className="text-xs text-slate-400 mt-1">
-            Manage homepage degree program category cards (Master, Doctor, Certificate).
+            Manage homepage learning format cards (Full-time, Part-time, Online learning).
           </p>
         </div>
 
@@ -138,7 +131,7 @@ export const DegreesWidgetListView: React.FC<Props> = ({
           className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white text-sm font-semibold shadow-lg shadow-purple-600/30 transition active:scale-95"
         >
           <span>➕</span>
-          <span>Add Degree Card</span>
+          <span>Add Study Mode</span>
         </button>
       </div>
 
@@ -194,82 +187,79 @@ export const DegreesWidgetListView: React.FC<Props> = ({
         </div>
       </div>
 
-      {/* Content List */}
+      {/* List Container */}
       {isLoading ? (
-        <div className="p-16 text-center text-slate-400 text-sm animate-pulse bg-slate-900/40 rounded-2xl border border-slate-800">
-          Loading degrees widget cards...
+        <div className="p-12 text-center text-slate-500 bg-slate-900 border border-slate-800 rounded-3xl animate-pulse">
+          Loading study mode cards...
         </div>
       ) : filteredItems.length === 0 ? (
-        <div className="bg-slate-900 border border-slate-800 rounded-2xl p-12 text-center text-slate-400 space-y-3">
-          <div className="text-4xl">🎓</div>
-          <p className="text-sm font-medium">No degree widget cards found</p>
-          <p className="text-xs text-slate-500">
-            {search ? "No cards match your filter criteria." : "Click 'Add Degree Card' or restore a backup package."}
-          </p>
+        <div className="p-12 text-center text-slate-500 bg-slate-900 border border-slate-800 rounded-3xl space-y-3">
+          <div className="text-4xl">📖</div>
+          <p className="text-sm font-medium">No study mode cards found.</p>
+          <p className="text-xs text-slate-600">Click "Add Study Mode" above to create a new format card.</p>
         </div>
       ) : (
         <div className="space-y-3">
-          {filteredItems.map((item, index) => {
+          {filteredItems.map((item, idx) => {
+            const isPendingDraft = item.draftData !== undefined || item.draftBody !== undefined;
+            const isPendingDelete = item.status === "deleted";
             const activeData = item.draftData || item.data;
             const activeBody = item.draftBody || item.body || "";
-            const isPendingDelete = item.status === "deleted";
-            const isPendingDraft = Boolean(item.draftData || item.draftBody);
-            const cardOrder = activeData?.order ?? index + 1;
+
+            const cleanSnippet = activeBody
+              .replace(/<[^>]*>/g, " ")
+              .replace(/^#+\s+/gm, "")
+              .replace(/\s+/g, " ")
+              .trim();
 
             return (
               <div
                 key={item.id}
-                className={`bg-slate-900 border rounded-2xl p-4 sm:p-5 transition flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-sm hover:border-slate-700 ${
+                className={`bg-slate-900 border rounded-2xl p-4 sm:p-5 transition flex flex-col md:flex-row md:items-center justify-between gap-4 ${
                   isPendingDelete
-                    ? "opacity-50 border-rose-900/50 bg-rose-950/20"
+                    ? "border-rose-500/30 opacity-60 bg-rose-950/10"
                     : isPendingDraft
                     ? "border-amber-500/40 bg-amber-950/10"
-                    : "border-slate-800"
+                    : "border-slate-800 hover:border-slate-700"
                 }`}
               >
-                {/* Left: Sequence & Metadata */}
-                <div className="flex items-start gap-4 min-w-0 flex-1">
-                  {/* Sequence Reorder Controls */}
+                {/* Left: Move handles & details */}
+                <div className="flex items-start gap-4 flex-1 min-w-0">
                   {onReorder && langFilter !== "all" && !search && (
-                    <div className="flex flex-col items-center gap-1 shrink-0 pt-0.5">
+                    <div className="flex flex-col gap-1 items-center justify-center shrink-0 pt-0.5">
                       <button
-                        onClick={() => handleMove(index, "up")}
-                        disabled={index === 0}
+                        onClick={() => handleMove(idx, "up")}
+                        disabled={idx === 0}
                         title="Move Up"
-                        className="p-1 rounded text-xs text-slate-400 hover:text-white hover:bg-slate-800 disabled:opacity-20 disabled:hover:bg-transparent"
+                        className="p-1 rounded text-xs text-slate-400 hover:text-white disabled:opacity-20 hover:bg-slate-800 transition"
                       >
                         ▲
                       </button>
-                      <span className="text-xs font-mono font-bold text-purple-400 px-1.5 py-0.5 rounded bg-purple-950/50 border border-purple-800/40">
-                        #{cardOrder}
+                      <span className="text-[10px] font-mono font-bold text-slate-500">
+                        {idx + 1}
                       </span>
                       <button
-                        onClick={() => handleMove(index, "down")}
-                        disabled={index === filteredItems.length - 1}
+                        onClick={() => handleMove(idx, "down")}
+                        disabled={idx === filteredItems.length - 1}
                         title="Move Down"
-                        className="p-1 rounded text-xs text-slate-400 hover:text-white hover:bg-slate-800 disabled:opacity-20 disabled:hover:bg-transparent"
+                        className="p-1 rounded text-xs text-slate-400 hover:text-white disabled:opacity-20 hover:bg-slate-800 transition"
                       >
                         ▼
                       </button>
                     </div>
                   )}
 
-                  {/* Info */}
-                  <div className="min-w-0 flex-1 space-y-2">
+                  <div className="space-y-1.5 flex-1 min-w-0">
                     <div className="flex items-center gap-2 flex-wrap">
-                      <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider ${
-                        item.language === "zh" ? "bg-amber-950/60 text-amber-300 border border-amber-800/40" : "bg-sky-950/60 text-sky-300 border border-sky-800/40"
-                      }`}>
-                        {item.language === "zh" ? "中文" : "English"}
+                      <span className="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-slate-800 text-slate-300">
+                        {item.language}
                       </span>
-
-                      <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-slate-800 text-slate-300 border border-slate-700">
-                        {item.type}
+                      <span className="text-base font-bold text-white tracking-tight">
+                        {activeData?.title || item.type}
                       </span>
-
-                      <h3 className="text-base font-bold text-white tracking-tight">
-                        {activeData?.title || item.id}
-                      </h3>
+                      <span className="text-xs font-mono text-slate-500">
+                        ({item.type})
+                      </span>
 
                       {/* Status Badges */}
                       {isPendingDraft && (
@@ -282,24 +272,6 @@ export const DegreesWidgetListView: React.FC<Props> = ({
                           Pending Delete
                         </span>
                       )}
-                      {/* Programs Count Badge */}
-                      {(() => {
-                        const effectivePrograms =
-                          activeData?.programs && activeData.programs.length > 0
-                            ? activeData.programs
-                            : activeBody.includes("<AccordionItem")
-                            ? parseDegreesWidgetBody(activeBody).programs
-                            : [];
-
-                        if (effectivePrograms.length > 0) {
-                          return (
-                            <span className="px-2 py-0.5 rounded text-[10px] font-semibold bg-purple-950/70 text-purple-300 border border-purple-800/40">
-                              📑 {effectivePrograms.length} {effectivePrograms.length === 1 ? "Program" : "Programs"}
-                            </span>
-                          );
-                        }
-                        return null;
-                      })()}
                     </div>
 
                     {/* URL Link */}
@@ -309,47 +281,12 @@ export const DegreesWidgetListView: React.FC<Props> = ({
                       </div>
                     )}
 
-                    {/* Programs list or Clean Markdown snippet */}
-                    {(() => {
-                      const effectivePrograms =
-                        activeData?.programs && activeData.programs.length > 0
-                          ? activeData.programs
-                          : activeBody.includes("<AccordionItem")
-                          ? parseDegreesWidgetBody(activeBody).programs
-                          : [];
-
-                      if (effectivePrograms.length > 0) {
-                        return (
-                          <div className="flex flex-wrap gap-1.5 pt-1">
-                            {effectivePrograms.map((p, pIdx) => (
-                              <span
-                                key={pIdx}
-                                className="px-2 py-0.5 rounded-lg text-[11px] bg-slate-950 text-slate-300 border border-slate-800"
-                              >
-                                {p.title}
-                              </span>
-                            ))}
-                          </div>
-                        );
-                      }
-
-                      const cleanSnippet = activeBody
-                        .replace(/<[^>]*>/g, " ")
-                        .replace(/^import\s+.*?;?\s*$/gm, "")
-                        .replace(/^#+\s+/gm, "")
-                        .replace(/\s+/g, " ")
-                        .trim();
-
-                      if (cleanSnippet) {
-                        return (
-                          <div className="text-xs text-slate-400 line-clamp-2 bg-slate-950/60 p-2.5 rounded-xl border border-slate-800/60">
-                            {cleanSnippet.slice(0, 180)}...
-                          </div>
-                        );
-                      }
-
-                      return null;
-                    })()}
+                    {/* Snippet */}
+                    {cleanSnippet && (
+                      <div className="text-xs text-slate-400 line-clamp-2 bg-slate-950/60 p-2.5 rounded-xl border border-slate-800/60">
+                        {cleanSnippet.slice(0, 180)}...
+                      </div>
+                    )}
                   </div>
                 </div>
 
@@ -368,16 +305,16 @@ export const DegreesWidgetListView: React.FC<Props> = ({
                     <>
                       <button
                         onClick={() => onEdit(item)}
-                        className="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-semibold text-slate-200 transition"
+                        className="px-3 py-1.5 rounded-xl bg-purple-600/20 hover:bg-purple-600/40 text-purple-300 border border-purple-500/30 text-xs font-semibold transition"
                       >
-                        Edit Card
+                        Edit
                       </button>
                       <button
                         onClick={() => handleDelete(item.id)}
                         disabled={deletingId === item.id}
-                        className="px-3 py-1.5 rounded-xl bg-rose-950/30 hover:bg-rose-900/50 text-xs font-semibold text-rose-400 hover:text-rose-300 border border-rose-800/30 transition disabled:opacity-50"
+                        className="px-3 py-1.5 rounded-xl bg-rose-950/30 hover:bg-rose-900/50 text-rose-300 border border-rose-800/40 text-xs font-semibold transition disabled:opacity-50"
                       >
-                        Delete
+                        {deletingId === item.id ? "Deleting..." : "Delete"}
                       </button>
                     </>
                   )}

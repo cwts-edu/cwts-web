@@ -482,6 +482,7 @@ async function exportStudyModeWidgetPackage(baseDir: string) {
         order: Number(parsed.frontmatter.order) || 0,
         url: parsed.frontmatter.url || "",
         body: parsed.rawBody,
+        bodyJson: marked.lexer(parsed.rawBody),
         bodyHtml: parsed.bodyHtml,
         status: "published",
         version: 1,

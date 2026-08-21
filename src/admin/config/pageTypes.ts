@@ -77,6 +77,8 @@ export const PAGE_TYPES: PageTypeConfig[] = [
     icon: "📖",
     group: "homepage",
     collectionName: "study-mode-widget",
+    hasNew: true,
+    hasEdit: true,
     description: "Homepage learning format descriptions",
   },
   {

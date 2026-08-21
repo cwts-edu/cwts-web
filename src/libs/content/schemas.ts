@@ -83,8 +83,11 @@ export type DegreesWidgetMetadata = z.infer<typeof DegreesWidgetMetadataSchema>;
 // 6. Study Mode Widget Schema
 export const StudyModeWidgetMetadataSchema = z.object({
   title: z.string(),
-  order: z.number(),
+  order: z.number().default(0),
   url: z.string().optional(),
+  body: z.string().optional(),
+  bodyHtml: z.string().optional(),
+  bodyJson: z.any().optional(),
 });
 export type StudyModeWidgetMetadata = z.infer<typeof StudyModeWidgetMetadataSchema>;
 

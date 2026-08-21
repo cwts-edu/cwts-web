@@ -14,11 +14,22 @@ import { CarouselListView, type CarouselSlideItem } from "./views/CarouselListVi
 import { CarouselEditView } from "./views/CarouselEditView";
 import { DegreesWidgetListView, type DegreesWidgetItem } from "./views/DegreesWidgetListView";
 import { DegreesWidgetEditView } from "./views/DegreesWidgetEditView";
+import { StudyModeWidgetListView, type StudyModeWidgetItem } from "./views/StudyModeWidgetListView";
+import { StudyModeWidgetEditView } from "./views/StudyModeWidgetEditView";
+import { ShortcutsManagerView } from "./views/ShortcutsManagerView";
 import { BackupRestoreView } from "./views/BackupRestoreView";
 import { MediaLibraryView } from "./views/MediaLibraryView";
 import { db } from "./config/firebase";
 import { collection, getDocs } from "firebase/firestore";
-import type { NewsMetadata, JobMetadata, CarouselItem, DegreesWidgetMetadata, Language } from "../libs/content/schemas";
+import type {
+  NewsMetadata,
+  JobMetadata,
+  CarouselItem,
+  DegreesWidgetMetadata,
+  StudyModeWidgetMetadata,
+  ShortcutsData,
+  Language,
+} from "../libs/content/schemas";
 
 import { PAGE_TYPES } from "./config/pageTypes";
 
@@ -53,14 +64,35 @@ export function parseAdminLocation(): AdminRouteState {
 export function buildAdminUrl(tab: AdminTab, param?: string): string {
   if (tab === "dashboard") return "/admin";
 
+  let basePath = "/admin";
   for (const pt of PAGE_TYPES) {
-    if (tab === pt.id) return pt.path;
-    if (pt.hasNew && tab === `${pt.id}_new`) return `${pt.path}/new`;
+    if (tab === pt.id) {
+      basePath = pt.path;
+      break;
+    }
+    if (pt.hasNew && tab === `${pt.id}_new`) {
+      basePath = `${pt.path}/new`;
+      break;
+    }
     if (pt.hasEdit && tab === `${pt.id}_edit`) {
-      return param ? `${pt.path}/edit?id=${encodeURIComponent(param)}` : `${pt.path}/edit`;
+      basePath = `${pt.path}/edit`;
+      break;
     }
   }
-  return "/admin";
+
+  const query = new URLSearchParams();
+  if (param) query.set("id", param);
+
+  if (typeof window !== "undefined") {
+    const curParams = new URLSearchParams(window.location.search);
+    const lang = curParams.get("lang");
+    const category = curParams.get("category");
+    if (lang && !query.has("lang")) query.set("lang", lang);
+    if (category && !query.has("category")) query.set("category", category);
+  }
+
+  const qStr = query.toString();
+  return qStr ? `${basePath}?${qStr}` : basePath;
 }
 
 const AdminDashboard: React.FC = () => {
@@ -75,6 +107,8 @@ const AdminDashboard: React.FC = () => {
   const [faculty, setFaculty] = useState<UnifiedFacultyItem[]>([]);
   const [carousel, setCarousel] = useState<CarouselSlideItem[]>([]);
   const [degreesWidget, setDegreesWidget] = useState<DegreesWidgetItem[]>([]);
+  const [studyModes, setStudyModes] = useState<StudyModeWidgetItem[]>([]);
+  const [shortcuts, setShortcuts] = useState<ShortcutsData>({ zh: [], en: [] });
 
   const [loadingCollections, setLoadingCollections] = useState<Record<string, boolean>>({});
   const [loadedCollections, setLoadedCollections] = useState<Record<string, boolean>>({});
@@ -163,22 +197,25 @@ const AdminDashboard: React.FC = () => {
   const loadFaculty = useCallback(async () => {
     setLoadingCollections((prev) => ({ ...prev, faculty: true }));
     try {
-      const facultySnap = await getDocs(collection(db, "faculty"));
+      const snap = await getDocs(collection(db, "faculty"));
       const loadedFaculty: UnifiedFacultyItem[] = [];
-      facultySnap.forEach((d) => {
+      snap.forEach((d) => {
         const val = d.data();
-        if (val.status === "deleted") return;
+        if (val.status === "deleted" || d.id === "_order") return;
         loadedFaculty.push({
           id: d.id,
           category: val.category || "faculty",
+          order: val.order ?? 0,
           photo: val.photo,
           email: val.email,
-          order: val.order || 999,
-          inCategoryOrder: val.inCategoryOrder,
-          referencedAssets: val.referencedAssets,
-          zh: val.zh || { name: val.name || d.id },
-          en: val.en || { name: val.name || d.id },
+          zh: val.zh || { name: d.id, title: "", bio: "" },
+          en: val.en || { name: d.id, title: "", bio: "" },
           status: val.status || "published",
+          version: val.version || 1,
+          publishedVersion: val.publishedVersion || 1,
+          updatedBy: val.updatedBy,
+          publishedBy: val.publishedBy,
+          createdAt: val.createdAt,
           updatedAt: val.updatedAt,
         });
       });
@@ -195,18 +232,17 @@ const AdminDashboard: React.FC = () => {
   const loadCarousel = useCallback(async () => {
     setLoadingCollections((prev) => ({ ...prev, carousel: true }));
     try {
-      const carouselSnap = await getDocs(collection(db, "carousel"));
-      const loadedCarousel: CarouselSlideItem[] = [];
-      carouselSnap.forEach((d) => {
+      const snap = await getDocs(collection(db, "carousel"));
+      const loaded: CarouselSlideItem[] = [];
+      snap.forEach((d) => {
         const val = d.data();
         if (val.status === "deleted") return;
-        loadedCarousel.push({
+        loaded.push({
           id: d.id,
           order: val.order ?? 999,
-          image: val.image || "",
           link: val.link,
-          newWindow: Boolean(val.newWindow),
-          referencedAssets: val.referencedAssets || [],
+          image: val.image,
+          newWindow: val.newWindow,
           status: val.status || "published",
           version: val.version || 1,
           publishedVersion: val.publishedVersion || 1,
@@ -216,7 +252,7 @@ const AdminDashboard: React.FC = () => {
           updatedAt: val.updatedAt,
         });
       });
-      setCarousel(loadedCarousel);
+      setCarousel(loaded);
       setLoadedCollections((prev) => ({ ...prev, carousel: true }));
     } catch (err) {
       console.warn("Could not load carousel from Firestore:", err);
@@ -267,6 +303,71 @@ const AdminDashboard: React.FC = () => {
     }
   }, []);
 
+  // 6. Fetch Study Mode Widget on-demand
+  const loadStudyModes = useCallback(async () => {
+    setLoadingCollections((prev) => ({ ...prev, "study-mode-widget": true }));
+    try {
+      const snap = await getDocs(collection(db, "study-mode-widget"));
+      const loaded: StudyModeWidgetItem[] = [];
+      snap.forEach((d) => {
+        const val = d.data();
+        if (val.status === "deleted") return;
+        const lang = (val.language || d.id.split("_")[0] || "zh") as Language;
+        const modeType = val.type || d.id.split("_")[1] || "full-time";
+        loaded.push({
+          id: d.id,
+          language: lang,
+          type: modeType,
+          data: {
+            title: val.title || d.id,
+            order: val.order ?? 0,
+            url: val.url,
+          },
+          body: val.body || "",
+          bodyHtml: val.bodyHtml || "",
+          bodyJson: val.bodyJson || null,
+          status: val.status || "published",
+          version: val.version || 1,
+          publishedVersion: val.publishedVersion || 1,
+          updatedBy: val.updatedBy,
+          publishedBy: val.publishedBy,
+          createdAt: val.createdAt,
+          updatedAt: val.updatedAt,
+        });
+      });
+      setStudyModes(loaded);
+      setLoadedCollections((prev) => ({ ...prev, "study-mode-widget": true }));
+    } catch (err) {
+      console.warn("Could not load study-mode-widget from Firestore:", err);
+    } finally {
+      setLoadingCollections((prev) => ({ ...prev, "study-mode-widget": false }));
+    }
+  }, []);
+
+  // 7. Fetch Shortcuts on-demand
+  const loadShortcuts = useCallback(async () => {
+    setLoadingCollections((prev) => ({ ...prev, shortcuts: true }));
+    try {
+      const snap = await getDocs(collection(db, "shortcuts"));
+      let loaded: ShortcutsData = { zh: [], en: [] };
+      snap.forEach((d) => {
+        if (d.id === "shortcuts") {
+          const val = d.data();
+          loaded = {
+            zh: val.zh || [],
+            en: val.en || [],
+          };
+        }
+      });
+      setShortcuts(loaded);
+      setLoadedCollections((prev) => ({ ...prev, shortcuts: true }));
+    } catch (err) {
+      console.warn("Could not load shortcuts from Firestore:", err);
+    } finally {
+      setLoadingCollections((prev) => ({ ...prev, shortcuts: false }));
+    }
+  }, []);
+
   // Trigger on-demand loading when a relevant tab is opened
   useEffect(() => {
     if (currentTab.startsWith("news") && !loadedCollections.news && !loadingCollections.news) {
@@ -279,8 +380,23 @@ const AdminDashboard: React.FC = () => {
       loadCarousel();
     } else if (currentTab.startsWith("homepage_degrees") && !loadedCollections["degrees-widget"] && !loadingCollections["degrees-widget"]) {
       loadDegreesWidget();
+    } else if (currentTab.startsWith("homepage_studymodes") && !loadedCollections["study-mode-widget"] && !loadingCollections["study-mode-widget"]) {
+      loadStudyModes();
+    } else if (currentTab.startsWith("homepage_shortcuts") && !loadedCollections.shortcuts && !loadingCollections.shortcuts) {
+      loadShortcuts();
     }
-  }, [currentTab, loadedCollections, loadingCollections, loadNews, loadJobs, loadFaculty, loadCarousel, loadDegreesWidget]);
+  }, [
+    currentTab,
+    loadedCollections,
+    loadingCollections,
+    loadNews,
+    loadJobs,
+    loadFaculty,
+    loadCarousel,
+    loadDegreesWidget,
+    loadStudyModes,
+    loadShortcuts,
+  ]);
 
   // Global reload (e.g. after restoring backup)
   const reloadAll = useCallback(async () => {
@@ -290,7 +406,18 @@ const AdminDashboard: React.FC = () => {
     else if (currentTab.startsWith("faculty")) await loadFaculty();
     else if (currentTab.startsWith("homepage_carousel")) await loadCarousel();
     else if (currentTab.startsWith("homepage_degrees")) await loadDegreesWidget();
-  }, [currentTab, loadNews, loadJobs, loadFaculty, loadCarousel, loadDegreesWidget]);
+    else if (currentTab.startsWith("homepage_studymodes")) await loadStudyModes();
+    else if (currentTab.startsWith("homepage_shortcuts")) await loadShortcuts();
+  }, [
+    currentTab,
+    loadNews,
+    loadJobs,
+    loadFaculty,
+    loadCarousel,
+    loadDegreesWidget,
+    loadStudyModes,
+    loadShortcuts,
+  ]);
 
   const handleNavigate = (tab: AdminTab, param?: string, replace = false) => {
     if (param) setEditingId(param);
@@ -298,77 +425,76 @@ const AdminDashboard: React.FC = () => {
     setCurrentTab(tab);
 
     const targetUrl = buildAdminUrl(tab, param);
-    if (typeof window !== "undefined") {
-      const currentUrl = window.location.pathname + window.location.search;
-      if (currentUrl !== targetUrl) {
-        if (replace) {
-          window.history.replaceState({ tab, param }, "", targetUrl);
-        } else {
-          window.history.pushState({ tab, param }, "", targetUrl);
-        }
-      }
+    if (replace) {
+      window.history.replaceState({}, "", targetUrl);
+    } else {
+      window.history.pushState({}, "", targetUrl);
     }
   };
 
-  // --------------------------------------------------------------------------
-  // News Handlers (Draft Save & Soft Delete)
-  // --------------------------------------------------------------------------
-  const handleSaveNewsDraft = async (id: string, data: NewsMetadata, body: string) => {
-    await saveChangeToDraft("news", id, "update", data, body);
+  // Draft Handlers - News
+  const handleSaveNewsDraft = async (
+    docId: string,
+    data: NewsMetadata,
+    body: string,
+    bodyJson?: any,
+    bodyHtml?: string
+  ) => {
+    await saveChangeToDraft("news", docId, "update", { ...data, bodyJson, bodyHtml }, body);
     handleNavigate("news");
   };
 
   const handleDeleteNews = async (id: string) => {
-    const target = news.find((n) => n.id === id);
-    if (target) {
-      await saveChangeToDraft("news", id, "delete", target.data, target.body);
-    }
+    await saveChangeToDraft("news", id, "delete");
   };
 
   const handleUndoDeleteNews = async (id: string) => {
     await discardDraftChange("news", id);
   };
 
-  // --------------------------------------------------------------------------
-  // Jobs Handlers (Draft Save & Soft Delete)
-  // --------------------------------------------------------------------------
-  const handleSaveJobDraft = async (item: { id: string; data: JobMetadata; body: string }) => {
-    await saveChangeToDraft("jobs", item.id, "update", item.data, item.body);
+  // Draft Handlers - Jobs
+  const handleSaveJobDraft = async (
+    docId: string,
+    data: JobMetadata,
+    body: string,
+    bodyJson?: any,
+    bodyHtml?: string
+  ) => {
+    await saveChangeToDraft("jobs", docId, "update", { ...data, bodyJson, bodyHtml }, body);
     handleNavigate("jobs");
   };
 
   const handleDeleteJob = async (id: string) => {
-    const target = jobs.find((j) => j.id === id);
-    if (target) {
-      await saveChangeToDraft("jobs", id, "delete", target.data, target.body);
-    }
+    await saveChangeToDraft("jobs", id, "delete");
   };
 
   const handleUndoDeleteJob = async (id: string) => {
     await discardDraftChange("jobs", id);
   };
 
-  // --------------------------------------------------------------------------
-  // Faculty Handlers (Draft Save & Soft Delete)
-  // --------------------------------------------------------------------------
-  const handleSaveFacultyDraft = async (id: string, data: any) => {
-    await saveChangeToDraft("faculty", id, "update", data);
+  // Draft Handlers - Faculty
+  const handleSaveFacultyDraft = async (
+    docId: string,
+    facultyData: Partial<UnifiedFacultyItem>,
+    bodyJson?: any,
+    bodyHtml?: string
+  ) => {
+    await saveChangeToDraft("faculty", docId, "update", { ...facultyData, bodyJson, bodyHtml });
     handleNavigate("faculty");
   };
 
-  // --------------------------------------------------------------------------
-  // Carousel Handlers (Draft Save, Reorder, & Soft Delete)
-  // --------------------------------------------------------------------------
-  const handleSaveCarouselDraft = async (id: string, data: CarouselItem) => {
-    await saveChangeToDraft("carousel", id, "update", data);
+  const handleDeleteFaculty = async (id: string) => {
+    await saveChangeToDraft("faculty", id, "delete");
+  };
+
+  // Draft Handlers - Carousel
+  const handleSaveCarouselDraft = async (docId: string, data: CarouselItem) => {
+    await saveChangeToDraft("carousel", docId, "update", data);
     handleNavigate("homepage_carousel");
   };
 
   const handleDeleteCarousel = async (id: string) => {
-    const target = carousel.find((c) => c.id === id);
-    if (target) {
-      await saveChangeToDraft("carousel", id, "delete", target);
-    }
+    await saveChangeToDraft("carousel", id, "delete");
   };
 
   const handleUndoDeleteCarousel = async (id: string) => {
@@ -376,15 +502,22 @@ const AdminDashboard: React.FC = () => {
   };
 
   const handleReorderCarousel = async (reorderedIds: string[]) => {
-    const orderMap: Record<string, number> = {};
-    reorderedIds.forEach((id, index) => {
-      orderMap[id] = index + 1;
+    const promises = reorderedIds.map((id, index) => {
+      const existing = carousel.find((c) => c.id === id);
+      const updatedData: CarouselItem = {
+        order: index + 1,
+        image: existing?.image || "",
+        link: existing?.link,
+        newWindow: existing?.newWindow,
+      };
+      return saveChangeToDraft("carousel", id, "update", updatedData);
     });
-    await saveChangeToDraft("carousel", "_order", "update", { orderMap });
+    await Promise.all(promises);
   };
 
+  // Draft Handlers - Degrees Widget
   const handleSaveDegreesWidgetDraft = async (
-    id: string,
+    docId: string,
     language: Language,
     type: string,
     data: DegreesWidgetMetadata,
@@ -392,15 +525,19 @@ const AdminDashboard: React.FC = () => {
     bodyJson?: any,
     bodyHtml?: string
   ) => {
-    await saveChangeToDraft("degrees-widget", id, "update", { ...data, language, type, bodyJson, bodyHtml }, body);
+    const payload = {
+      ...data,
+      language,
+      type,
+      bodyJson,
+      bodyHtml,
+    };
+    await saveChangeToDraft("degrees-widget", docId, "update", payload, body);
     handleNavigate("homepage_degrees");
   };
 
   const handleDeleteDegreesWidget = async (id: string) => {
-    const target = degreesWidget.find((d) => d.id === id);
-    if (target) {
-      await saveChangeToDraft("degrees-widget", id, "delete", target.data, target.body);
-    }
+    await saveChangeToDraft("degrees-widget", id, "delete");
   };
 
   const handleUndoDeleteDegreesWidget = async (id: string) => {
@@ -412,12 +549,58 @@ const AdminDashboard: React.FC = () => {
     reorderedIds.forEach((id, index) => {
       orderMap[id] = index + 1;
     });
-    await saveChangeToDraft("degrees-widget", "_order", "update", { orderMap });
+
+    await saveChangeToDraft("degrees-widget", "_order", "update", {
+      title: "Degrees Widget Ordering",
+      orderMap,
+    });
   };
 
-  // Overlay active draft items into the view list for the editor
-  const newsMap = new Map<string, NewsItem>(news.map((item) => [item.id, { ...item }]));
+  // Draft Handlers - Study Mode Widget
+  const handleSaveStudyModeDraft = async (
+    docId: string,
+    language: Language,
+    type: string,
+    data: StudyModeWidgetMetadata,
+    body: string,
+    bodyJson?: any,
+    bodyHtml?: string
+  ) => {
+    const payload = {
+      ...data,
+      language,
+      type,
+      bodyJson,
+      bodyHtml,
+    };
+    await saveChangeToDraft("study-mode-widget", docId, "update", payload, body);
+    handleNavigate("homepage_studymodes");
+  };
+
+  const handleDeleteStudyMode = async (id: string) => {
+    await saveChangeToDraft("study-mode-widget", id, "delete");
+  };
+
+  const handleUndoDeleteStudyMode = async (id: string) => {
+    await discardDraftChange("study-mode-widget", id);
+  };
+
+  const handleReorderStudyModes = async (reorderedIds: string[]) => {
+    const orderMap: Record<string, number> = {};
+    reorderedIds.forEach((id, index) => {
+      orderMap[id] = index + 1;
+    });
+
+    await saveChangeToDraft("study-mode-widget", "_order", "update", {
+      title: "Study Modes Ordering",
+      orderMap,
+    });
+  };
+
+  // --- Draft Merging Layer ---
   const newsDraftChanges = pendingChanges.filter((p) => p.collection === "news");
+  const newsMap = new Map<string, NewsItem>();
+  news.forEach((n) => newsMap.set(n.id, { ...n }));
 
   for (const draft of newsDraftChanges) {
     const existing = newsMap.get(draft.documentId);
@@ -430,23 +613,19 @@ const AdminDashboard: React.FC = () => {
         });
       }
     } else {
-      const rawDraftDate = draft.data?.date;
-      const normalizedDate = rawDraftDate?.toDate
-        ? rawDraftDate.toDate()
-        : rawDraftDate
-        ? new Date(rawDraftDate)
-        : new Date();
-
-      const normalizedData = {
-        ...draft.data,
-        date: isNaN(normalizedDate.getTime()) ? new Date() : normalizedDate,
-      } as NewsMetadata;
+      const rawData = draft.data as any;
+      const normalizedData: NewsMetadata = {
+        title: rawData?.title || existing?.data?.title || draft.documentId,
+        date: rawData?.date ? new Date(rawData.date) : existing?.data?.date || new Date(),
+        thumbnail: rawData?.thumbnail || existing?.data?.thumbnail || "",
+        url: rawData?.url || existing?.data?.url || "",
+      };
 
       newsMap.set(draft.documentId, {
         id: draft.documentId,
         data: normalizedData,
         draftData: normalizedData,
-        body: draft.body,
+        body: draft.body ?? existing?.body ?? "",
         draftBody: draft.body,
         status: "draft",
         updatedBy: draft.updatedBy,
@@ -457,8 +636,9 @@ const AdminDashboard: React.FC = () => {
   }
   const mergedNews = Array.from(newsMap.values());
 
-  const jobsMap = new Map<string, JobItem>(jobs.map((item) => [item.id, { ...item }]));
   const jobsDraftChanges = pendingChanges.filter((p) => p.collection === "jobs");
+  const jobsMap = new Map<string, JobItem>();
+  jobs.forEach((j) => jobsMap.set(j.id, { ...j }));
 
   for (const draft of jobsDraftChanges) {
     const existing = jobsMap.get(draft.documentId);
@@ -471,23 +651,19 @@ const AdminDashboard: React.FC = () => {
         });
       }
     } else {
-      const rawDraftDate = draft.data?.date;
-      const normalizedDate = rawDraftDate?.toDate
-        ? rawDraftDate.toDate()
-        : rawDraftDate
-        ? new Date(rawDraftDate)
-        : new Date();
-
-      const normalizedData = {
-        ...draft.data,
-        date: isNaN(normalizedDate.getTime()) ? new Date() : normalizedDate,
-      } as JobMetadata;
+      const rawData = draft.data as any;
+      const normalizedData: JobMetadata = {
+        title: rawData?.title || existing?.data?.title || draft.documentId,
+        location: rawData?.location || existing?.data?.location || "",
+        date: rawData?.date ? new Date(rawData.date) : existing?.data?.date || new Date(),
+        file: rawData?.file || existing?.data?.file,
+      };
 
       jobsMap.set(draft.documentId, {
         id: draft.documentId,
         data: normalizedData,
         draftData: normalizedData,
-        body: draft.body,
+        body: draft.body ?? existing?.body ?? "",
         draftBody: draft.body,
         status: "draft",
         updatedBy: draft.updatedBy,
@@ -498,12 +674,12 @@ const AdminDashboard: React.FC = () => {
   }
   const mergedJobs = Array.from(jobsMap.values());
 
-  const facultyMap = new Map<string, UnifiedFacultyItem>(faculty.map((item) => [item.id, { ...item }]));
   const facultyDraftChanges = pendingChanges.filter((p) => p.collection === "faculty");
+  const facultyMap = new Map<string, UnifiedFacultyItem>();
+  faculty.forEach((f) => facultyMap.set(f.id, { ...f }));
 
-  // First apply general doc changes
   for (const draft of facultyDraftChanges) {
-    if (draft.documentId === "_order") continue; // Handled separately below
+    if (draft.documentId === "_order") continue;
 
     const existing = facultyMap.get(draft.documentId);
     if (draft.action === "delete") {
@@ -511,26 +687,27 @@ const AdminDashboard: React.FC = () => {
         facultyMap.set(draft.documentId, {
           ...existing,
           status: "deleted",
+          updatedBy: draft.updatedBy,
         });
       }
     } else {
       facultyMap.set(draft.documentId, {
         id: draft.documentId,
         category: draft.data?.category || existing?.category || "faculty",
-        photo: draft.data?.photo || existing?.photo,
-        email: draft.data?.email || existing?.email,
-        order: draft.data?.order || existing?.order || 999,
-        inCategoryOrder: draft.data?.inCategoryOrder || existing?.inCategoryOrder,
-        referencedAssets: draft.data?.referencedAssets || existing?.referencedAssets,
-        zh: draft.data?.zh || existing?.zh || { name: draft.documentId },
-        en: draft.data?.en || existing?.en || { name: draft.documentId },
-        status: "draft",
+        order: draft.data?.order ?? existing?.order ?? 0,
+        photo: draft.data?.photo ?? existing?.photo,
+        email: draft.data?.email ?? existing?.email,
+        zh: draft.data?.zh || existing?.zh || { name: draft.documentId, title: "", bio: "" },
+        en: draft.data?.en || existing?.en || { name: draft.documentId, title: "", bio: "" },
         draftData: draft.data,
+        status: "draft",
+        updatedBy: draft.updatedBy,
+        version: existing ? (existing.version || 1) + 1 : 1,
+        publishedVersion: existing?.publishedVersion,
       });
     }
   }
 
-  // Second apply the single _order draft item if present
   const orderDraft = facultyDraftChanges.find((p) => p.documentId === "_order");
   if (orderDraft?.data?.orderMap) {
     for (const [id, newOrder] of Object.entries(orderDraft.data.orderMap)) {
@@ -540,61 +717,42 @@ const AdminDashboard: React.FC = () => {
       }
     }
   }
-
   const mergedFaculty = Array.from(facultyMap.values()).filter((f) => f.id !== "_order");
 
-  // Carousel Draft Overlay
-  const carouselMap = new Map<string, CarouselSlideItem>(carousel.map((item) => [item.id, { ...item }]));
   const carouselDraftChanges = pendingChanges.filter((p) => p.collection === "carousel");
+  const carouselMap = new Map<string, CarouselSlideItem>();
+  carousel.forEach((c) => carouselMap.set(c.id, { ...c }));
 
   for (const draft of carouselDraftChanges) {
-    if (draft.documentId === "_order") continue;
-
     const existing = carouselMap.get(draft.documentId);
     if (draft.action === "delete") {
       if (existing) {
         carouselMap.set(draft.documentId, {
           ...existing,
           status: "deleted",
-          draftAction: "delete",
+          updatedBy: draft.updatedBy,
         });
       }
     } else {
-      const rawData = draft.data as CarouselItem;
       carouselMap.set(draft.documentId, {
         id: draft.documentId,
-        order: rawData?.order ?? existing?.order ?? 999,
-        image: rawData?.image || existing?.image || "",
-        link: rawData?.link ?? existing?.link,
-        newWindow: rawData?.newWindow ?? existing?.newWindow,
-        referencedAssets: rawData?.referencedAssets ?? existing?.referencedAssets,
+        order: draft.data?.order ?? existing?.order ?? 999,
+        image: draft.data?.image ?? existing?.image ?? "",
+        link: draft.data?.link ?? existing?.link,
+        newWindow: draft.data?.newWindow ?? existing?.newWindow,
+        draftData: draft.data,
         status: "draft",
-        draftData: rawData,
-        draftAction: existing ? "update" : "create",
+        updatedBy: draft.updatedBy,
         version: existing ? (existing.version || 1) + 1 : 1,
         publishedVersion: existing?.publishedVersion,
-        updatedBy: draft.updatedBy,
       });
     }
   }
+  const mergedCarousel = Array.from(carouselMap.values());
 
-  const carouselOrderDraft = carouselDraftChanges.find((p) => p.documentId === "_order");
-  if (carouselOrderDraft?.data?.orderMap) {
-    for (const [id, newOrder] of Object.entries(carouselOrderDraft.data.orderMap)) {
-      const item = carouselMap.get(id);
-      if (item) {
-        carouselMap.set(id, { ...item, order: Number(newOrder) });
-      }
-    }
-  }
-
-  const mergedCarousel = Array.from(carouselMap.values()).filter((c) => c.id !== "_order");
-
-  // Degrees Widget Draft Overlay
-  const degreesWidgetMap = new Map<string, DegreesWidgetItem>(
-    degreesWidget.map((item) => [item.id, { ...item }])
-  );
   const degreesWidgetDraftChanges = pendingChanges.filter((p) => p.collection === "degrees-widget");
+  const degreesWidgetMap = new Map<string, DegreesWidgetItem>();
+  degreesWidget.forEach((d) => degreesWidgetMap.set(d.id, { ...d }));
 
   for (const draft of degreesWidgetDraftChanges) {
     if (draft.documentId === "_order") continue;
@@ -650,8 +808,67 @@ const AdminDashboard: React.FC = () => {
       }
     }
   }
-
   const mergedDegreesWidget = Array.from(degreesWidgetMap.values()).filter((d) => d.id !== "_order");
+
+  // Study Mode Widget Draft Merging
+  const studyModesDraftChanges = pendingChanges.filter((p) => p.collection === "study-mode-widget");
+  const studyModesMap = new Map<string, StudyModeWidgetItem>();
+  studyModes.forEach((s) => studyModesMap.set(s.id, { ...s }));
+
+  for (const draft of studyModesDraftChanges) {
+    if (draft.documentId === "_order") continue;
+
+    const existing = studyModesMap.get(draft.documentId);
+    if (draft.action === "delete") {
+      if (existing) {
+        studyModesMap.set(draft.documentId, {
+          ...existing,
+          status: "deleted",
+          updatedBy: draft.updatedBy,
+        });
+      }
+    } else {
+      const rawData = draft.data as any;
+      const lang = (rawData?.language || existing?.language || draft.documentId.split("_")[0] || "zh") as Language;
+      const modeType = rawData?.type || existing?.type || draft.documentId.split("_")[1] || "full-time";
+      const normalizedData: StudyModeWidgetMetadata = {
+        title: rawData?.title || existing?.data?.title || draft.documentId,
+        order: rawData?.order ?? existing?.data?.order ?? 0,
+        url: rawData?.url ?? existing?.data?.url,
+      };
+
+      studyModesMap.set(draft.documentId, {
+        id: draft.documentId,
+        language: lang,
+        type: modeType,
+        data: normalizedData,
+        draftData: normalizedData,
+        body: draft.body ?? existing?.body ?? "",
+        draftBody: draft.body,
+        bodyHtml: rawData?.bodyHtml ?? existing?.bodyHtml,
+        bodyJson: rawData?.bodyJson ?? existing?.bodyJson,
+        status: "draft",
+        updatedBy: draft.updatedBy,
+        version: existing ? (existing.version || 1) + 1 : 1,
+        publishedVersion: existing?.publishedVersion,
+      });
+    }
+  }
+
+  const studyModeOrderDraft = studyModesDraftChanges.find((p) => p.documentId === "_order");
+  if (studyModeOrderDraft?.data?.orderMap) {
+    for (const [id, newOrder] of Object.entries(studyModeOrderDraft.data.orderMap)) {
+      const item = studyModesMap.get(id);
+      if (item) {
+        studyModesMap.set(id, {
+          ...item,
+          data: { ...item.data, order: Number(newOrder) },
+          draftData: item.draftData ? { ...item.draftData, order: Number(newOrder) } : undefined,
+        });
+      }
+    }
+  }
+  const mergedStudyModes = Array.from(studyModesMap.values()).filter((s) => s.id !== "_order");
 
   return (
     <AdminLayout currentTab={currentTab} onNavigate={handleNavigate}>
@@ -680,7 +897,7 @@ const AdminDashboard: React.FC = () => {
       )}
 
       {currentTab === "faculty_edit" && (
-        isLoadingData && !mergedFaculty.find((f) => f.id === editingId) ? (
+        loadingCollections.faculty && !mergedFaculty.find((f) => f.id === editingId) ? (
           <div className="p-16 text-center text-slate-400 text-sm animate-pulse">
             Loading faculty profile...
           </div>
@@ -831,39 +1048,45 @@ const AdminDashboard: React.FC = () => {
       )}
 
       {currentTab === "homepage_studymodes" && (
-        <div className="space-y-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <h2 className="text-2xl font-bold text-white tracking-tight">Study Modes</h2>
-              <p className="text-xs text-slate-400 mt-1">
-                Manage homepage learning formats (Full-time, Part-time, Online).
-              </p>
-            </div>
+        <StudyModeWidgetListView
+          items={mergedStudyModes.filter((s) => s.status !== "deleted")}
+          onNew={() => handleNavigate("homepage_studymodes_new")}
+          onEdit={(item) => handleNavigate("homepage_studymodes_edit", item.id)}
+          onDelete={handleDeleteStudyMode}
+          onUndoDelete={handleUndoDeleteStudyMode}
+          onReorder={handleReorderStudyModes}
+          isLoading={Boolean(loadingCollections["study-mode-widget"])}
+        />
+      )}
+
+      {currentTab === "homepage_studymodes_new" && (
+        <StudyModeWidgetEditView
+          nextOrder={mergedStudyModes.length + 1}
+          onSave={handleSaveStudyModeDraft}
+          onCancel={() => handleNavigate("homepage_studymodes")}
+        />
+      )}
+
+      {currentTab === "homepage_studymodes_edit" && (
+        loadingCollections["study-mode-widget"] && !mergedStudyModes.find((s) => s.id === editingId) ? (
+          <div className="p-16 text-center text-slate-400 text-sm animate-pulse">
+            Loading study mode card...
           </div>
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl p-12 text-center text-slate-400 space-y-3">
-            <div className="text-4xl">📖</div>
-            <p className="text-sm font-medium">Study Modes Management</p>
-            <p className="text-xs text-slate-500">Ready for Firestore integration and study format descriptions.</p>
-          </div>
-        </div>
+        ) : (
+          <StudyModeWidgetEditView
+            key={editingId ? `studymode-edit-${editingId}` : "studymode-new"}
+            initialItem={mergedStudyModes.find((s) => s.id === editingId)}
+            onSave={handleSaveStudyModeDraft}
+            onCancel={() => handleNavigate("homepage_studymodes")}
+          />
+        )
       )}
 
       {currentTab === "homepage_shortcuts" && (
-        <div className="space-y-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <h2 className="text-2xl font-bold text-white tracking-tight">Shortcuts</h2>
-              <p className="text-xs text-slate-400 mt-1">
-                Manage homepage quick action buttons (Give, Contact, Apply).
-              </p>
-            </div>
-          </div>
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl p-12 text-center text-slate-400 space-y-3">
-            <div className="text-4xl">⚡</div>
-            <p className="text-sm font-medium">Shortcuts Management</p>
-            <p className="text-xs text-slate-500">Ready for Firestore integration and quick link buttons.</p>
-          </div>
-        </div>
+        <ShortcutsManagerView
+          initialData={shortcuts}
+          isLoading={Boolean(loadingCollections.shortcuts)}
+        />
       )}
 
       {currentTab === "media" && <MediaLibraryView />}

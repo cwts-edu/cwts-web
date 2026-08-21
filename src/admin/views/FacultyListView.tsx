@@ -60,9 +60,10 @@ export const FacultyListView: React.FC<Props> = ({
   const { pendingChanges, saveChangeToDraft } = useDraft();
   const [activeCategory, setActiveCategory] = useState<FacultyCategory>(() => {
     if (typeof window !== "undefined") {
-      const saved = localStorage.getItem("cwts_admin_faculty_category");
-      if (saved === "faculty" || saved === "senior-adjunct" || saved === "adjunct") {
-        return saved;
+      const params = new URLSearchParams(window.location.search);
+      const cat = params.get("category");
+      if (cat === "faculty" || cat === "senior-adjunct" || cat === "adjunct") {
+        return cat as FacultyCategory;
       }
     }
     return "faculty";
@@ -72,7 +73,9 @@ export const FacultyListView: React.FC<Props> = ({
   const handleSelectCategory = (cat: FacultyCategory) => {
     setActiveCategory(cat);
     if (typeof window !== "undefined") {
-      localStorage.setItem("cwts_admin_faculty_category", cat);
+      const url = new URL(window.location.href);
+      url.searchParams.set("category", cat);
+      window.history.replaceState({}, "", url.toString());
     }
   };
   const [isReorderMode, setIsReorderMode] = useState(false);
