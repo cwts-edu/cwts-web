@@ -15,8 +15,6 @@
     "verify-build:update": "CONTENT_SOURCE=hybrid DUMMY_ASSETS=true npm run build && tsx tools/verify-build.ts --update-exceptions",
     "sync-assembly": "tsx tools/sync-assembly.ts",
     "sync-assets": "tsx tools/sync-assets.ts",
-    "seed-firestore": "tsx tools/seed-firestore.ts",
-    "seed-storage": "tsx tools/seed-storage.ts",
     "export-homepage-package": "tsx tools/export-homepage-package.ts",
     "export-faculty-package": "tsx tools/export-faculty-package.ts",
     "export-jobs-package": "tsx tools/export-jobs-package.ts",
