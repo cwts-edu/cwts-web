@@ -29,6 +29,18 @@ export function parseAdminLocation(): AdminRouteState {
   const searchParams = new URLSearchParams(window.location.search);
   const idParam = searchParams.get("id") || undefined;
 
+  if (path === "/admin/homepage/carousel") {
+    return { tab: "homepage_carousel" };
+  }
+  if (path === "/admin/homepage/degrees") {
+    return { tab: "homepage_degrees" };
+  }
+  if (path === "/admin/homepage/study-modes") {
+    return { tab: "homepage_studymodes" };
+  }
+  if (path === "/admin/homepage/shortcuts") {
+    return { tab: "homepage_shortcuts" };
+  }
   if (path === "/admin/faculty/new") {
     return { tab: "faculty_new" };
   }
@@ -70,6 +82,14 @@ export function buildAdminUrl(tab: AdminTab, param?: string): string {
   switch (tab) {
     case "dashboard":
       return "/admin";
+    case "homepage_carousel":
+      return "/admin/homepage/carousel";
+    case "homepage_degrees":
+      return "/admin/homepage/degrees";
+    case "homepage_studymodes":
+      return "/admin/homepage/study-modes";
+    case "homepage_shortcuts":
+      return "/admin/homepage/shortcuts";
     case "faculty":
       return "/admin/faculty";
     case "faculty_new":
@@ -514,6 +534,78 @@ const AdminDashboard: React.FC = () => {
             onCancel={() => handleNavigate("jobs")}
           />
         )
+      )}
+
+      {currentTab === "homepage_carousel" && (
+        <div className="space-y-6">
+          <div className="flex items-center justify-between">
+            <div>
+              <h2 className="text-2xl font-bold text-white tracking-tight">Hero Carousel</h2>
+              <p className="text-xs text-slate-400 mt-1">
+                Manage homepage hero banner carousel slides and links.
+              </p>
+            </div>
+          </div>
+          <div className="bg-slate-900 border border-slate-800 rounded-2xl p-12 text-center text-slate-400 space-y-3">
+            <div className="text-4xl">🎠</div>
+            <p className="text-sm font-medium">Hero Carousel Management</p>
+            <p className="text-xs text-slate-500">Ready for Firestore integration and drag-and-drop slide management.</p>
+          </div>
+        </div>
+      )}
+
+      {currentTab === "homepage_degrees" && (
+        <div className="space-y-6">
+          <div className="flex items-center justify-between">
+            <div>
+              <h2 className="text-2xl font-bold text-white tracking-tight">Degrees Widget</h2>
+              <p className="text-xs text-slate-400 mt-1">
+                Manage homepage degree program tabs and category highlights.
+              </p>
+            </div>
+          </div>
+          <div className="bg-slate-900 border border-slate-800 rounded-2xl p-12 text-center text-slate-400 space-y-3">
+            <div className="text-4xl">🎓</div>
+            <p className="text-sm font-medium">Degrees Widget Management</p>
+            <p className="text-xs text-slate-500">Ready for Firestore integration and tab content editing.</p>
+          </div>
+        </div>
+      )}
+
+      {currentTab === "homepage_studymodes" && (
+        <div className="space-y-6">
+          <div className="flex items-center justify-between">
+            <div>
+              <h2 className="text-2xl font-bold text-white tracking-tight">Study Modes</h2>
+              <p className="text-xs text-slate-400 mt-1">
+                Manage homepage learning formats (Full-time, Part-time, Online).
+              </p>
+            </div>
+          </div>
+          <div className="bg-slate-900 border border-slate-800 rounded-2xl p-12 text-center text-slate-400 space-y-3">
+            <div className="text-4xl">📖</div>
+            <p className="text-sm font-medium">Study Modes Management</p>
+            <p className="text-xs text-slate-500">Ready for Firestore integration and study format descriptions.</p>
+          </div>
+        </div>
+      )}
+
+      {currentTab === "homepage_shortcuts" && (
+        <div className="space-y-6">
+          <div className="flex items-center justify-between">
+            <div>
+              <h2 className="text-2xl font-bold text-white tracking-tight">Shortcuts</h2>
+              <p className="text-xs text-slate-400 mt-1">
+                Manage homepage quick action buttons (Give, Contact, Apply).
+              </p>
+            </div>
+          </div>
+          <div className="bg-slate-900 border border-slate-800 rounded-2xl p-12 text-center text-slate-400 space-y-3">
+            <div className="text-4xl">⚡</div>
+            <p className="text-sm font-medium">Shortcuts Management</p>
+            <p className="text-xs text-slate-500">Ready for Firestore integration and quick link buttons.</p>
+          </div>
+        </div>
       )}
 
       {currentTab === "media" && <MediaLibraryView />}

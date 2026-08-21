@@ -5,9 +5,13 @@ import { DraftReviewModal } from "./DraftReviewModal";
 
 export type AdminTab =
   | "dashboard"
+  | "homepage_carousel"
   | "news"
   | "news_new"
   | "news_edit"
+  | "homepage_degrees"
+  | "homepage_studymodes"
+  | "homepage_shortcuts"
   | "jobs"
   | "jobs_new"
   | "jobs_edit"
@@ -30,7 +34,11 @@ export const AdminLayout: React.FC<Props> = ({ currentTab, onNavigate, children 
 
   const isNavActive = (tab: string) => {
     if (tab === "dashboard" && currentTab === "dashboard") return true;
+    if (tab === "homepage_carousel" && currentTab === "homepage_carousel") return true;
     if (tab === "news" && (currentTab === "news" || currentTab === "news_new" || currentTab === "news_edit")) return true;
+    if (tab === "homepage_degrees" && currentTab === "homepage_degrees") return true;
+    if (tab === "homepage_studymodes" && currentTab === "homepage_studymodes") return true;
+    if (tab === "homepage_shortcuts" && currentTab === "homepage_shortcuts") return true;
     if (tab === "jobs" && (currentTab === "jobs" || currentTab === "jobs_new" || currentTab === "jobs_edit")) return true;
     if (tab === "faculty" && (currentTab === "faculty" || currentTab === "faculty_new" || currentTab === "faculty_edit")) return true;
     if (tab === "media" && currentTab === "media") return true;
@@ -60,84 +68,139 @@ export const AdminLayout: React.FC<Props> = ({ currentTab, onNavigate, children 
         </div>
 
         {/* Navigation */}
-        <nav className="flex-1 px-3 py-6 space-y-1.5 overflow-y-auto">
+        <nav className="flex-1 px-3 py-6 space-y-1 overflow-y-auto">
           <button
             onClick={() => onNavigate("dashboard")}
-            className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition ${
+            className={`w-full flex items-center gap-3 px-3 py-2 rounded-xl text-sm font-medium transition ${
               isNavActive("dashboard")
                 ? "bg-purple-600 text-white shadow-md"
                 : "text-slate-400 hover:bg-slate-800/80 hover:text-white"
             }`}
           >
-            <span className="text-lg">📊</span>
+            <span className="text-base">📊</span>
             Dashboard
           </button>
 
-          <div className="pt-4 pb-1 px-3 text-[11px] font-semibold text-slate-500 uppercase tracking-wider">
-            Collections
+          {/* 1. Homepage Data Group */}
+          <div className="pt-4 pb-1 px-3 text-[11px] font-semibold text-purple-400/90 uppercase tracking-wider flex items-center gap-1.5">
+            <span>🏠</span> Homepage Data
           </div>
 
           <button
-            onClick={() => onNavigate("faculty")}
-            className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition ${
-              isNavActive("faculty")
+            onClick={() => onNavigate("homepage_carousel")}
+            className={`w-full flex items-center gap-3 px-3 py-2 rounded-xl text-sm font-medium transition ${
+              isNavActive("homepage_carousel")
                 ? "bg-purple-600 text-white shadow-md"
                 : "text-slate-400 hover:bg-slate-800/80 hover:text-white"
             }`}
           >
-            <span className="text-lg">🎓</span>
-            Faculty & Adjuncts
+            <span className="text-base">🎠</span>
+            Hero Carousel
           </button>
 
           <button
             onClick={() => onNavigate("news")}
-            className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition ${
+            className={`w-full flex items-center gap-3 px-3 py-2 rounded-xl text-sm font-medium transition ${
               isNavActive("news")
                 ? "bg-purple-600 text-white shadow-md"
                 : "text-slate-400 hover:bg-slate-800/80 hover:text-white"
             }`}
           >
-            <span className="text-lg">📰</span>
+            <span className="text-base">📰</span>
             Latest News
           </button>
 
           <button
+            onClick={() => onNavigate("homepage_degrees")}
+            className={`w-full flex items-center gap-3 px-3 py-2 rounded-xl text-sm font-medium transition ${
+              isNavActive("homepage_degrees")
+                ? "bg-purple-600 text-white shadow-md"
+                : "text-slate-400 hover:bg-slate-800/80 hover:text-white"
+            }`}
+          >
+            <span className="text-base">🎓</span>
+            Degrees Widget
+          </button>
+
+          <button
+            onClick={() => onNavigate("homepage_studymodes")}
+            className={`w-full flex items-center gap-3 px-3 py-2 rounded-xl text-sm font-medium transition ${
+              isNavActive("homepage_studymodes")
+                ? "bg-purple-600 text-white shadow-md"
+                : "text-slate-400 hover:bg-slate-800/80 hover:text-white"
+            }`}
+          >
+            <span className="text-base">📖</span>
+            Study Modes
+          </button>
+
+          <button
+            onClick={() => onNavigate("homepage_shortcuts")}
+            className={`w-full flex items-center gap-3 px-3 py-2 rounded-xl text-sm font-medium transition ${
+              isNavActive("homepage_shortcuts")
+                ? "bg-purple-600 text-white shadow-md"
+                : "text-slate-400 hover:bg-slate-800/80 hover:text-white"
+            }`}
+          >
+            <span className="text-base">⚡</span>
+            Shortcuts
+          </button>
+
+          {/* 2. Site Collections */}
+          <div className="pt-4 pb-1 px-3 text-[11px] font-semibold text-slate-500 uppercase tracking-wider flex items-center gap-1.5">
+            <span>📚</span> Collections
+          </div>
+
+          <button
+            onClick={() => onNavigate("faculty")}
+            className={`w-full flex items-center gap-3 px-3 py-2 rounded-xl text-sm font-medium transition ${
+              isNavActive("faculty")
+                ? "bg-purple-600 text-white shadow-md"
+                : "text-slate-400 hover:bg-slate-800/80 hover:text-white"
+            }`}
+          >
+            <span className="text-base">👤</span>
+            Faculty & Adjuncts
+          </button>
+
+          <button
             onClick={() => onNavigate("jobs")}
-            className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition ${
+            className={`w-full flex items-center gap-3 px-3 py-2 rounded-xl text-sm font-medium transition ${
               isNavActive("jobs")
                 ? "bg-purple-600 text-white shadow-md"
                 : "text-slate-400 hover:bg-slate-800/80 hover:text-white"
             }`}
           >
-            <span className="text-lg">💼</span>
+            <span className="text-base">💼</span>
             Job Postings
           </button>
 
-          <div className="pt-4 pb-1 px-3 text-[11px] font-semibold text-slate-500 uppercase tracking-wider">
-            Tools & System
+          {/* 3. Tools & System */}
+          <div className="pt-4 pb-1 px-3 text-[11px] font-semibold text-slate-500 uppercase tracking-wider flex items-center gap-1.5">
+            <span>⚙️</span> Tools & System
           </div>
 
           <button
             onClick={() => onNavigate("media")}
-            className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition ${
+            className={`w-full flex items-center gap-3 px-3 py-2 rounded-xl text-sm font-medium transition ${
               isNavActive("media")
                 ? "bg-purple-600 text-white shadow-md"
                 : "text-slate-400 hover:bg-slate-800/80 hover:text-white"
             }`}
           >
-            <span className="text-lg">🖼️</span>
+            <span className="text-base">🖼️</span>
             Media Library
           </button>
 
           <button
             onClick={() => onNavigate("backup")}
-            className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition ${
+            className={`w-full flex items-center gap-3 px-3 py-2 rounded-xl text-sm font-medium transition ${
               isNavActive("backup")
                 ? "bg-purple-600 text-white shadow-md"
                 : "text-slate-400 hover:bg-slate-800/80 hover:text-white"
             }`}
           >
-            <span className="text-lg">💾</span>
+            <span className="text-base">💾</span>
             Backup & Restore
           </button>
         </nav>
