@@ -63,11 +63,21 @@ export const DegreeProgramMetadataSchema = z.object({
 export type DegreeProgramMetadata = z.infer<typeof DegreeProgramMetadataSchema>;
 
 // 5. Degrees Widget Schema
+export const DegreeProgramItemSchema = z.object({
+  title: z.string(),
+  body: z.string().default(""),
+  bodyJson: z.any().optional(),
+  bodyHtml: z.string().optional(),
+  open: z.boolean().optional(),
+});
+export type DegreeProgramItem = z.infer<typeof DegreeProgramItemSchema>;
+
 export const DegreesWidgetMetadataSchema = z.object({
   title: z.string(),
   shortTitle: z.string().optional(),
-  order: z.number(),
+  order: z.number().default(0),
   url: z.string().optional(),
+  programs: z.array(DegreeProgramItemSchema).default([]),
 });
 export type DegreesWidgetMetadata = z.infer<typeof DegreesWidgetMetadataSchema>;
 

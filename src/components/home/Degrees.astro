@@ -1,6 +1,7 @@
 ---
 import Button from "@components/common/Button.astro";
 import Container from "@components/common/Container.astro";
+import AccordionItem from "@components/common/AccordionItem.astro";
 import getDegreesWidgetData from "@libs/degrees_widget";
 import { type Language, T } from "@libs/language";
 
@@ -57,7 +58,18 @@ const layoutSwitchClass =
                 )}
               </div>
               <div class="prose prose-tabs">
-                <item.Content />
+                {item.page.data.programs && item.page.data.programs.length > 0 ? (
+                  item.page.data.programs.map((prog, idx) => (
+                    <AccordionItem name={`${item.slug}-degrees-${language}`} open={prog.open ?? (idx === 0)}>
+                      <h1 slot="summary">{prog.title}</h1>
+                      <Fragment set:html={prog.bodyHtml || prog.body} />
+                    </AccordionItem>
+                  ))
+                ) : item.Content ? (
+                  <item.Content />
+                ) : (
+                  <Fragment set:html={item.page.html || item.page.body} />
+                )}
               </div>
             </div>
           ))

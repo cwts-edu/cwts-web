@@ -301,6 +301,83 @@ async function exportShortcutsPackage(baseDir: string) {
 }
 
 /**
+ * Helper to parse degree widget MD/MDX files into structured programs and markdown/HTML
+ */
+function parseDegreeWidgetFile(filePath: string): {
+  frontmatter: any;
+  programs: Array<{ title: string; body: string; bodyJson: any; bodyHtml: string; open?: boolean }>;
+  cleanBody: string;
+  cleanBodyJson: any;
+  cleanBodyHtml: string;
+} {
+  const content = fs.readFileSync(filePath, "utf-8");
+  const match = content.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n([\s\S]*)$/);
+
+  const frontmatter = match ? ((yaml.load(match[1]) as any) || {}) : {};
+  const rawBody = match ? match[2].trim() : content.trim();
+
+  // 1. If file uses <AccordionItem ...>
+  if (rawBody.includes("<AccordionItem")) {
+    const accordionRegex = /<AccordionItem([^>]*)>([\s\S]*?)<\/AccordionItem>/gi;
+    const programs: Array<{ title: string; body: string; bodyJson: any; bodyHtml: string; open?: boolean }> = [];
+    let itemMatch: RegExpExecArray | null;
+
+    while ((itemMatch = accordionRegex.exec(rawBody)) !== null) {
+      const attributes = itemMatch[1];
+      const innerContent = itemMatch[2];
+      const isOpen = /\bopen\b/i.test(attributes);
+
+      let title = "";
+      let programBody = innerContent;
+
+      const summaryMatch = innerContent.match(/<h[1-6][^>]*slot=["']summary["'][^>]*>([\s\S]*?)<\/h[1-6]>/i);
+      if (summaryMatch) {
+        title = summaryMatch[1].trim();
+        programBody = innerContent.replace(summaryMatch[0], "").trim();
+      }
+
+      if (!title) {
+        const hMatch = innerContent.match(/^#+\s*(.*)$/m);
+        if (hMatch) {
+          title = hMatch[1].trim();
+          programBody = innerContent.replace(hMatch[0], "").trim();
+        } else {
+          title = "Program Details";
+        }
+      }
+
+      const cleanedProgramBody = programBody.replace(/^import\s+.*?;?\s*$/gm, "").trim();
+      const bodyJson = marked.lexer(cleanedProgramBody);
+      const bodyHtml = marked.parse(cleanedProgramBody) as string;
+
+      programs.push({
+        title,
+        body: cleanedProgramBody,
+        bodyJson,
+        bodyHtml,
+        open: isOpen || undefined,
+      });
+    }
+
+    const cleanBody = rawBody
+      .replace(/<AccordionItem[\s\S]*?<\/AccordionItem>/gi, "")
+      .replace(/^import\s+.*?;?\s*$/gm, "")
+      .trim();
+    const cleanBodyJson = cleanBody ? marked.lexer(cleanBody) : null;
+    const cleanBodyHtml = cleanBody ? (marked.parse(cleanBody) as string) : "";
+
+    return { frontmatter, programs, cleanBody, cleanBodyJson, cleanBodyHtml };
+  }
+
+  // 2. Standard markdown file (e.g. doctor.md, certificate.md)
+  const cleanBody = rawBody.replace(/^import\s+.*?;?\s*$/gm, "").trim();
+  const cleanBodyJson = cleanBody ? marked.lexer(cleanBody) : null;
+  const cleanBodyHtml = cleanBody ? (marked.parse(cleanBody) as string) : "";
+
+  return { frontmatter, programs: [], cleanBody, cleanBodyJson, cleanBodyHtml };
+}
+
+/**
  * 3. Export Degrees Widget Package
  */
 async function exportDegreesWidgetPackage(baseDir: string) {
@@ -324,7 +401,7 @@ async function exportDegreesWidgetPackage(baseDir: string) {
     const files = fs.readdirSync(langDir).filter((f) => f.endsWith(".md") || f.endsWith(".mdx"));
     for (const f of files) {
       const type = path.basename(f, path.extname(f));
-      const parsed = parseMarkdownFile(path.join(langDir, f));
+      const parsed = parseDegreeWidgetFile(path.join(langDir, f));
 
       documents.push({
         id: `${lang}_${type}`,
@@ -334,8 +411,10 @@ async function exportDegreesWidgetPackage(baseDir: string) {
         shortTitle: parsed.frontmatter.shortTitle || "",
         order: Number(parsed.frontmatter.order) || 0,
         url: parsed.frontmatter.url || "",
-        body: parsed.rawBody,
-        bodyHtml: parsed.bodyHtml,
+        programs: parsed.programs,
+        body: parsed.cleanBody,
+        bodyJson: parsed.cleanBodyJson,
+        bodyHtml: parsed.cleanBodyHtml,
         status: "published",
         version: 1,
         publishedVersion: 1,

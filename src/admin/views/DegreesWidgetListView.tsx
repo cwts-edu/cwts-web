@@ -10,6 +10,8 @@ export interface DegreesWidgetItem {
   draftData?: DegreesWidgetMetadata;
   body?: string;
   draftBody?: string;
+  bodyJson?: any;
+  bodyHtml?: string;
   status: "published" | "draft" | "deleted";
   version?: number;
   publishedVersion?: number;
@@ -257,6 +259,12 @@ export const DegreesWidgetListView: React.FC<Props> = ({
                           Pending Delete
                         </span>
                       )}
+                      {/* Programs Count Badge */}
+                      {activeData?.programs && activeData.programs.length > 0 && (
+                        <span className="px-2 py-0.5 rounded text-[10px] font-semibold bg-purple-950/70 text-purple-300 border border-purple-800/40">
+                          📑 {activeData.programs.length} {activeData.programs.length === 1 ? "Program" : "Programs"}
+                        </span>
+                      )}
                     </div>
 
                     {/* URL Link */}
@@ -266,10 +274,23 @@ export const DegreesWidgetListView: React.FC<Props> = ({
                       </div>
                     )}
 
-                    {/* Markdown snippet */}
-                    <div className="text-xs text-slate-400 line-clamp-2 font-mono bg-slate-950/60 p-2.5 rounded-xl border border-slate-800/60">
-                      {activeBody.slice(0, 180)}...
-                    </div>
+                    {/* Programs list or Markdown snippet */}
+                    {activeData?.programs && activeData.programs.length > 0 ? (
+                      <div className="flex flex-wrap gap-1.5 pt-1">
+                        {activeData.programs.map((p, pIdx) => (
+                          <span
+                            key={pIdx}
+                            className="px-2 py-0.5 rounded-lg text-[11px] bg-slate-950 text-slate-300 border border-slate-800"
+                          >
+                            {p.title}
+                          </span>
+                        ))}
+                      </div>
+                    ) : activeBody ? (
+                      <div className="text-xs text-slate-400 line-clamp-2 font-mono bg-slate-950/60 p-2.5 rounded-xl border border-slate-800/60">
+                        {activeBody.slice(0, 180)}...
+                      </div>
+                    ) : null}
                   </div>
                 </div>
 

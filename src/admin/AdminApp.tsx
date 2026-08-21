@@ -245,6 +245,7 @@ const AdminDashboard: React.FC = () => {
             shortTitle: val.shortTitle,
             order: val.order ?? 0,
             url: val.url,
+            programs: val.programs || [],
           },
           body: val.body || "",
           status: val.status || "published",
@@ -386,9 +387,11 @@ const AdminDashboard: React.FC = () => {
     language: Language,
     type: string,
     data: DegreesWidgetMetadata,
-    body: string
+    body: string,
+    bodyJson?: any,
+    bodyHtml?: string
   ) => {
-    await saveChangeToDraft("degrees-widget", id, "update", { ...data, language, type }, body);
+    await saveChangeToDraft("degrees-widget", id, "update", { ...data, language, type, bodyJson, bodyHtml }, body);
     handleNavigate("homepage_degrees");
   };
 
@@ -613,6 +616,7 @@ const AdminDashboard: React.FC = () => {
         shortTitle: rawData?.shortTitle ?? existing?.data?.shortTitle,
         order: rawData?.order ?? existing?.data?.order ?? 0,
         url: rawData?.url ?? existing?.data?.url,
+        programs: rawData?.programs ?? existing?.data?.programs ?? [],
       };
 
       degreesWidgetMap.set(draft.documentId, {
