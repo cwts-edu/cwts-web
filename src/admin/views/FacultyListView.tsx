@@ -58,8 +58,23 @@ export const FacultyListView: React.FC<Props> = ({
   isLoading,
 }) => {
   const { pendingChanges, saveChangeToDraft } = useDraft();
-  const [activeCategory, setActiveCategory] = useState<FacultyCategory>("faculty");
+  const [activeCategory, setActiveCategory] = useState<FacultyCategory>(() => {
+    if (typeof window !== "undefined") {
+      const saved = localStorage.getItem("cwts_admin_faculty_category");
+      if (saved === "faculty" || saved === "senior-adjunct" || saved === "adjunct") {
+        return saved;
+      }
+    }
+    return "faculty";
+  });
   const [searchQuery, setSearchQuery] = useState("");
+
+  const handleSelectCategory = (cat: FacultyCategory) => {
+    setActiveCategory(cat);
+    if (typeof window !== "undefined") {
+      localStorage.setItem("cwts_admin_faculty_category", cat);
+    }
+  };
   const [isReorderMode, setIsReorderMode] = useState(false);
   const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
   const [dragOverIndex, setDragOverIndex] = useState<number | null>(null);
@@ -221,7 +236,7 @@ export const FacultyListView: React.FC<Props> = ({
             <button
               key={tab.id}
               onClick={() => {
-                setActiveCategory(tab.id);
+                handleSelectCategory(tab.id);
                 setSearchQuery("");
               }}
               className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition ${

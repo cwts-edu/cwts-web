@@ -41,9 +41,24 @@ export const DegreesWidgetListView: React.FC<Props> = ({
   onReorder,
   isLoading = false,
 }) => {
-  const [langFilter, setLangFilter] = useState<"all" | "zh" | "en">("all");
+  const [langFilter, setLangFilter] = useState<"all" | "zh" | "en">(() => {
+    if (typeof window !== "undefined") {
+      const saved = localStorage.getItem("cwts_admin_degrees_lang_filter");
+      if (saved === "zh" || saved === "en" || saved === "all") {
+        return saved;
+      }
+    }
+    return "all";
+  });
   const [search, setSearch] = useState("");
   const [deletingId, setDeletingId] = useState<string | null>(null);
+
+  const handleSelectLangFilter = (val: "all" | "zh" | "en") => {
+    setLangFilter(val);
+    if (typeof window !== "undefined") {
+      localStorage.setItem("cwts_admin_degrees_lang_filter", val);
+    }
+  };
 
   const filteredItems = useMemo(() => {
     let list = [...items].sort((a, b) => {
@@ -124,7 +139,7 @@ export const DegreesWidgetListView: React.FC<Props> = ({
       <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 bg-slate-900/80 border border-slate-800 p-3 rounded-2xl">
         <div className="flex items-center gap-1 bg-slate-950 p-1 rounded-xl border border-slate-800 self-start">
           <button
-            onClick={() => setLangFilter("all")}
+            onClick={() => handleSelectLangFilter("all")}
             className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition ${
               langFilter === "all"
                 ? "bg-purple-600 text-white shadow"
@@ -134,7 +149,7 @@ export const DegreesWidgetListView: React.FC<Props> = ({
             All ({items.length})
           </button>
           <button
-            onClick={() => setLangFilter("zh")}
+            onClick={() => handleSelectLangFilter("zh")}
             className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition ${
               langFilter === "zh"
                 ? "bg-purple-600 text-white shadow"
@@ -144,7 +159,7 @@ export const DegreesWidgetListView: React.FC<Props> = ({
             中文 ({items.filter((i) => i.language === "zh").length})
           </button>
           <button
-            onClick={() => setLangFilter("en")}
+            onClick={() => handleSelectLangFilter("en")}
             className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition ${
               langFilter === "en"
                 ? "bg-purple-600 text-white shadow"
