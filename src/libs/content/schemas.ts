@@ -92,7 +92,6 @@ export type JobMetadata = z.infer<typeof JobMetadataSchema>;
 // 8. Carousel Schema
 export const CarouselItemSchema = z.object({
   order: z.number().optional(),
-  title: z.string().optional(),
   link: z.string().optional(),
   image: z.string().transform(normalizeSiteUrl),
   newWindow: z.boolean().optional(),

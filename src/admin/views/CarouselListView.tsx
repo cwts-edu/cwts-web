@@ -8,7 +8,6 @@ export interface CarouselSlideItem {
   image: string;
   link?: string;
   newWindow?: boolean;
-  title?: string;
   referencedAssets?: string[];
   status?: "published" | "draft" | "deleted";
   version?: number;
@@ -58,8 +57,7 @@ export const CarouselListView: React.FC<Props> = ({
       (item) =>
         item.id.toLowerCase().includes(q) ||
         (item.link && item.link.toLowerCase().includes(q)) ||
-        (item.image && item.image.toLowerCase().includes(q)) ||
-        (item.title && item.title.toLowerCase().includes(q))
+        (item.image && item.image.toLowerCase().includes(q))
     );
   }, [items, search]);
 
@@ -215,8 +213,8 @@ export const CarouselListView: React.FC<Props> = ({
                   {/* Slide Metadata */}
                   <div className="min-w-0 flex-1 space-y-1.5">
                     <div className="flex items-center gap-2 flex-wrap">
-                      <span className="text-sm font-semibold text-white truncate">
-                        {activeData.title || `Slide #${slideOrder}`}
+                      <span className="text-sm font-semibold text-white">
+                        Slide #{slideOrder}
                       </span>
 
                       {/* Badges */}

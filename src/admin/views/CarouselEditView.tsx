@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { CarouselItemSchema, type CarouselItem } from "../../libs/content/schemas";
 import type { CarouselSlideItem } from "./CarouselListView";
 import { MediaField } from "../components/media/MediaField";
-import { resolveMediaPreviewUrl } from "../services/storageService";
 
 interface Props {
   initialItem?: CarouselSlideItem | null;
@@ -19,8 +18,7 @@ export const CarouselEditView: React.FC<Props> = ({
 }) => {
   const currentActive = initialItem?.draftData || initialItem;
 
-  const [order, setOrder] = useState<number>(currentActive?.order ?? nextOrder);
-  const [title, setTitle] = useState<string>(currentActive?.title || "");
+  const [order] = useState<number>(currentActive?.order ?? nextOrder);
   const [image, setImage] = useState<string>(currentActive?.image || "");
   const [link, setLink] = useState<string>(currentActive?.link || "");
   const [newWindow, setNewWindow] = useState<boolean>(Boolean(currentActive?.newWindow));
@@ -45,7 +43,6 @@ export const CarouselEditView: React.FC<Props> = ({
 
     const rawData = {
       order: Number(order) || 1,
-      title: title.trim() || undefined,
       image: image.trim(),
       link: link.trim() || undefined,
       newWindow: Boolean(newWindow),
@@ -70,10 +67,8 @@ export const CarouselEditView: React.FC<Props> = ({
     }
   };
 
-  const previewBannerUrl = resolveMediaPreviewUrl(image);
-
   return (
-    <div className="max-w-3xl mx-auto space-y-6">
+    <div className="max-w-2xl mx-auto space-y-6">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
@@ -81,7 +76,7 @@ export const CarouselEditView: React.FC<Props> = ({
             {initialItem ? "Edit Carousel Slide" : "Add New Carousel Slide"}
           </h2>
           <p className="text-xs text-slate-400 mt-1">
-            {initialItem ? `Position #${order}` : `New Slide (Position #${order})`}
+            {initialItem ? `Slide #${order}` : `New Slide #${order}`}
           </p>
         </div>
 
@@ -102,31 +97,6 @@ export const CarouselEditView: React.FC<Props> = ({
 
       {/* Form */}
       <form onSubmit={handleSubmit} className="bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-xl space-y-6">
-        {/* Banner Live Preview */}
-        <div>
-          <label className="block text-xs font-semibold text-slate-300 mb-2">
-            Banner Preview (2.4:1 / 16:9 Hero Aspect)
-          </label>
-          <div className="w-full aspect-[21/9] sm:aspect-[2.4/1] rounded-2xl overflow-hidden bg-slate-950 border border-slate-800 flex items-center justify-center relative shadow-inner">
-            {previewBannerUrl ? (
-              <img
-                src={previewBannerUrl}
-                alt="Banner preview"
-                className="w-full h-full object-cover"
-                onError={(e) => {
-                  (e.target as HTMLElement).style.display = "none";
-                }}
-              />
-            ) : (
-              <div className="text-center text-slate-600 space-y-1 p-6">
-                <div className="text-3xl">🖼️</div>
-                <div className="text-xs font-medium">No banner image selected</div>
-                <div className="text-[11px] text-slate-600">Select or upload an image below</div>
-              </div>
-            )}
-          </div>
-        </div>
-
         {/* MediaField: Hero Banner Image */}
         <MediaField
           collectionId="carousel-images"
@@ -135,50 +105,21 @@ export const CarouselEditView: React.FC<Props> = ({
           onChange={(newVal) => setImage(newVal)}
           required
           placeholder="/images/carousel/banner.jpg"
-          helpText="Select an existing carousel image or upload & crop a new 2.4:1 banner."
+          helpText="Select an existing carousel image or upload & crop a 2.4:1 banner (2560 × 1067 px)."
         />
 
-        {/* Slide Title / Caption (Optional) */}
+        {/* Target Link */}
         <div>
           <label className="block text-xs font-semibold text-slate-300 mb-1">
-            Slide Title / Label <span className="text-slate-500 font-normal">(Optional identification label)</span>
+            Target Link URL <span className="text-slate-500 font-normal">(Internal path e.g. /zh/news-events/... or external https://...)</span>
           </label>
           <input
             type="text"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            placeholder="e.g. 2026 Fall Recruitment Banner"
-            className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-purple-500"
+            value={link}
+            onChange={(e) => setLink(e.target.value)}
+            placeholder="e.g. /zh/admissions/ or https://form.jotform.com/..."
+            className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-purple-500 font-mono"
           />
-        </div>
-
-        {/* Target Link & New Window */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          <div className="sm:col-span-2">
-            <label className="block text-xs font-semibold text-slate-300 mb-1">
-              Target Link URL <span className="text-slate-500 font-normal">(Internal route or external URL)</span>
-            </label>
-            <input
-              type="text"
-              value={link}
-              onChange={(e) => setLink(e.target.value)}
-              placeholder="e.g. /zh/news-events/tan-lectureship/ or https://..."
-              className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-purple-500 font-mono"
-            />
-          </div>
-
-          <div>
-            <label className="block text-xs font-semibold text-slate-300 mb-1">
-              Display Order
-            </label>
-            <input
-              type="number"
-              min={1}
-              value={order}
-              onChange={(e) => setOrder(Number(e.target.value))}
-              className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-purple-500 font-mono"
-            />
-          </div>
         </div>
 
         {/* Checkbox: Open in new window */}
