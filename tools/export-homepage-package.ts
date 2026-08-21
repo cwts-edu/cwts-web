@@ -3,6 +3,7 @@ import path from "node:path";
 import * as yaml from "js-yaml";
 import { marked } from "marked";
 import JSZip from "jszip";
+import { textLinesToHtml, markdownToTextLines } from "../src/libs/content/textUtils";
 
 interface PackageManifest {
   format: "cwts-cms-package";
@@ -29,6 +30,129 @@ function parseMarkdownFile(filePath: string): { frontmatter: any; rawBody: strin
   const bodyHtml = marked.parse(rawBody) as string;
 
   return { frontmatter, rawBody, bodyHtml };
+}
+
+function parseNewsMarkdownFile(filePath: string): { frontmatter: any; rawBody: string; textLines: string; bodyHtml: string } {
+  const content = fs.readFileSync(filePath, "utf-8");
+  const match = content.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n([\s\S]*)$/);
+
+  if (!match) {
+    const rawBody = content.trim();
+    const textLines = markdownToTextLines(rawBody);
+    const bodyHtml = textLinesToHtml(textLines);
+    return { frontmatter: {}, rawBody, textLines, bodyHtml };
+  }
+
+  const frontmatter = (yaml.load(match[1]) as any) || {};
+  const rawBody = match[2].trim();
+  const textLines = markdownToTextLines(rawBody);
+  const bodyHtml = textLinesToHtml(textLines);
+
+  return { frontmatter, rawBody, textLines, bodyHtml };
+}
+
+/**
+ * 1. Export News Package
+ */
+async function exportNewsPackage(baseDir: string, publicDir: string) {
+  console.log("📦 [News] Exporting News Package...");
+  const newsDir = path.join(baseDir, "src/content/news");
+  const outputZipPath = path.join(baseDir, "packages/news-package.zip");
+
+  if (!fs.existsSync(newsDir)) {
+    console.warn("⚠️  src/content/news not found, skipping.");
+    return;
+  }
+
+  const zip = new JSZip();
+  const documents: any[] = [];
+  const referencedAssetPaths = new Set<string>();
+
+  const files = fs.readdirSync(newsDir).filter((f) => f.endsWith(".md") || f.endsWith(".mdx"));
+
+  for (const file of files) {
+    const filePath = path.join(newsDir, file);
+    const { frontmatter, rawBody, textLines, bodyHtml } = parseNewsMarkdownFile(filePath);
+
+    const slug = path.parse(file).name;
+    const docAssets: string[] = [];
+
+    // Thumbnail asset
+    let cleanThumbnail: string | undefined = undefined;
+    if (frontmatter.thumbnail) {
+      cleanThumbnail = frontmatter.thumbnail.replace(/^\/+/, "");
+      docAssets.push(cleanThumbnail);
+      referencedAssetPaths.add(cleanThumbnail);
+    }
+
+    // Extract any inline image assets from markdown/html
+    const imgMatches = (rawBody + " " + bodyHtml).matchAll(/(?:images|docs)\/[^"'\s)]+/g);
+    for (const match of imgMatches) {
+      const assetPath = match[0].replace(/^\/+/, "");
+      docAssets.push(assetPath);
+      referencedAssetPaths.add(assetPath);
+    }
+
+    const dateStr = frontmatter.date
+      ? (frontmatter.date instanceof Date ? frontmatter.date.toISOString().slice(0, 10) : String(frontmatter.date).slice(0, 10))
+      : new Date().toISOString().slice(0, 10);
+
+    const doc = {
+      id: slug,
+      title: frontmatter.title || slug,
+      date: dateStr,
+      ...(cleanThumbnail ? { thumbnail: `/${cleanThumbnail}` } : {}),
+      ...(frontmatter.url ? { url: frontmatter.url } : {}),
+      body: textLines,
+      bodyHtml,
+      referencedAssets: Array.from(new Set(docAssets)),
+      status: "published",
+      language: "zh",
+      version: 1,
+      publishedVersion: 1,
+      createdAt: new Date(dateStr).toISOString(),
+      updatedAt: new Date().toISOString(),
+    };
+
+    documents.push(doc);
+  }
+
+  // Sort descending by date
+  documents.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+
+  const bundledAssets: string[] = [];
+  for (const assetRelPath of referencedAssetPaths) {
+    const localAssetPath = path.join(publicDir, assetRelPath);
+    if (fs.existsSync(localAssetPath)) {
+      const fileBuffer = fs.readFileSync(localAssetPath);
+      zip.file(`assets/${assetRelPath}`, fileBuffer);
+      bundledAssets.push(assetRelPath);
+    } else {
+      console.warn(`   ⚠️ [Missing Asset] public/${assetRelPath} not found`);
+    }
+  }
+
+  const manifest: PackageManifest = {
+    format: "cwts-cms-package",
+    version: "1.0.0",
+    collection: "news",
+    exportedAt: new Date().toISOString(),
+    documentsCount: documents.length,
+    assetsCount: bundledAssets.length,
+    referencedAssets: bundledAssets,
+  };
+
+  zip.file("manifest.json", JSON.stringify(manifest, null, 2));
+  zip.file("documents.json", JSON.stringify(documents, null, 2));
+
+  const zipBuffer = await zip.generateAsync({
+    type: "nodebuffer",
+    compression: "DEFLATE",
+    compressionOptions: { level: 9 },
+  });
+
+  fs.writeFileSync(outputZipPath, zipBuffer);
+  console.log(`✅ [News] Created ${outputZipPath} (${documents.length} articles, ${bundledAssets.length} assets, ${(zipBuffer.length / 1024).toFixed(1)} KB)`);
 }
 
 /**
@@ -319,6 +443,7 @@ async function main() {
   fs.mkdirSync(path.join(baseDir, "packages"), { recursive: true });
 
   console.log("🚀 Starting Homepage Data Packages Export...");
+  await exportNewsPackage(baseDir, publicDir);
   await exportCarouselPackage(baseDir, publicDir);
   await exportShortcutsPackage(baseDir);
   await exportDegreesWidgetPackage(baseDir);
