@@ -1,6 +1,8 @@
+import "./loadEnv";
 import fs from "fs";
 import path from "path";
 import { parse } from "node-html-parser";
+import { FirebaseContentClient, resolveActiveDraftId } from "../src/libs/content/firebaseClient";
 
 const DIST_DIR = path.resolve("dist");
 const ASSET_EXTENSIONS = [".jpg", ".jpeg", ".png", ".gif", ".svg", ".webp", ".pdf"];
@@ -26,13 +28,13 @@ function matchesPattern(value: string, pattern: string): boolean {
       if (!regexStr.startsWith("^") && !regexStr.endsWith("$")) {
         regexStr = `^${regexStr}$`;
       }
-      const regex = new RegExp(regexStr);
+      const regex = new RegExp(regexStr, "i");
       return regex.test(value);
     } catch {
       return false;
     }
   }
-  return value === pattern;
+  return value.toLowerCase() === pattern.toLowerCase();
 }
 
 function loadExceptions(): Exceptions {
@@ -81,13 +83,55 @@ function isInternal(url: string): boolean {
   return true;
 }
 
-function normalizePath(sourceFile: string, target: string): string {
-  const cleanTarget = target.split("#")[0].split("?")[0];
-  if (cleanTarget.startsWith("/")) {
-    return path.join(DIST_DIR, cleanTarget);
+function extractFirebaseStorageRelativePath(url: string): string | null {
+  if (!url || typeof url !== "string") return null;
+  if (url.includes("firebasestorage.googleapis.com")) {
+    try {
+      const match = url.match(/\/o\/([^?]+)/);
+      if (match && match[1]) {
+        return decodeURIComponent(match[1]);
+      }
+    } catch {}
   }
-  const dir = path.dirname(sourceFile);
-  return path.resolve(dir, cleanTarget);
+  return null;
+}
+
+/**
+ * Resolves a target link to a file inside DIST_DIR in a case-insensitive manner.
+ */
+function resolveDistFile(
+  sourceFile: string,
+  target: string,
+  distFilesMap: Map<string, string>
+): { exists: boolean; actualRelPath?: string } {
+  let cleanTarget = target.split("#")[0].split("?")[0];
+  try {
+    cleanTarget = decodeURIComponent(cleanTarget);
+  } catch {}
+
+  let targetRel: string;
+  if (cleanTarget.startsWith("/")) {
+    targetRel = cleanTarget.replace(/^\/+/, "");
+  } else {
+    const sourceDir = path.dirname(path.relative(DIST_DIR, sourceFile));
+    targetRel = path.join(sourceDir, cleanTarget);
+  }
+  targetRel = toSlash(path.normalize(targetRel));
+
+  // 1. Direct match (case-insensitive)
+  const directMatch = distFilesMap.get(targetRel.toLowerCase());
+  if (directMatch) {
+    return { exists: true, actualRelPath: directMatch };
+  }
+
+  // 2. Directory match -> check for index.html (e.g. "zh/about" -> "zh/about/index.html")
+  const indexTarget = toSlash(path.join(targetRel, "index.html")).toLowerCase();
+  const indexMatch = distFilesMap.get(indexTarget);
+  if (indexMatch) {
+    return { exists: true, actualRelPath: indexMatch };
+  }
+
+  return { exists: false };
 }
 
 async function verify() {
@@ -95,7 +139,7 @@ async function verify() {
   const updateExceptions = args.includes("--update-exceptions");
   const exceptions = loadExceptions();
 
-  console.log("🚀 Starting build verification...");
+  console.log("🚀 Starting build verification (case-insensitive path matching enabled)...");
   if (updateExceptions) console.log("📝 Update mode: findings will be saved to exceptions list.");
 
   if (!fs.existsSync(DIST_DIR)) {
@@ -103,14 +147,41 @@ async function verify() {
     process.exit(1);
   }
 
+  // 1. Enforce Maximum 4 News Articles Constraint
+  const client = new FirebaseContentClient({
+    projectId: process.env.PUBLIC_FIREBASE_PROJECT_ID || process.env.FIREBASE_PROJECT_ID || "cwts-cms",
+    draftId: resolveActiveDraftId(),
+  });
+
+  try {
+    const allNews = await client.getCollection("news");
+    if (allNews.length > 4) {
+      console.error(
+        `\n💥 [VERIFY FAILED] Found ${allNews.length} active news articles (maximum allowed is 4).\n` +
+        `   The homepage only displays the 4 latest news articles.\n` +
+        `   Older news articles must be soft-deleted in the Admin CMS (/admin/news) or removed from content/news/.\n` +
+        `   Active articles found:\n` +
+        allNews.map((n, i) => `     ${i + 1}. "${n.data?.title || n.id}" (ID: ${n.id})`).join("\n") +
+        `\n`
+      );
+      process.exit(1);
+    }
+  } catch (err: any) {
+    console.warn("⚠️ Could not verify news collection limit:", err.message || err);
+  }
+
   const htmlFiles: string[] = [];
   const cssFiles: string[] = [];
   const allImages = new Set<string>();
+  const distFilesMap = new Map<string, string>(); // lowercase relative path -> actual disk relative path
   const referencedAssets = new Set<string>();
   const brokenLinks: LinkInfo[] = [];
 
-  // 1. Collect all files
+  // 1. Collect all files and build case-insensitive dist lookup map
   for await (const file of walk(DIST_DIR)) {
+    const relPath = toSlash(path.relative(DIST_DIR, file));
+    distFilesMap.set(relPath.toLowerCase(), relPath);
+
     if (file.endsWith(".html")) {
       htmlFiles.push(file);
     } else if (file.endsWith(".css")) {
@@ -119,36 +190,34 @@ async function verify() {
     
     const ext = path.extname(file).toLowerCase();
     if (ASSET_EXTENSIONS.includes(ext)) {
-      const relPath = path.relative(DIST_DIR, file);
-      allImages.add(toSlash(relPath));
+      allImages.add(relPath);
     }
   }
 
   console.log(`🔍 Found ${htmlFiles.length} HTML files, ${cssFiles.length} CSS files, and ${allImages.size} assets.`);
 
   const checkLink = (sourceFile: string, target: string, type: LinkInfo["type"]) => {
+    if (!target) return;
+
+    // Check if target is a Firebase Storage URL referencing our synced assets
+    const fbStoragePath = extractFirebaseStorageRelativePath(target);
+    if (fbStoragePath) {
+      const match = distFilesMap.get(toSlash(fbStoragePath).toLowerCase());
+      if (match) {
+        referencedAssets.add(match.toLowerCase());
+      }
+      return;
+    }
+
     if (!isInternal(target)) return;
 
-    const fullPath = normalizePath(sourceFile, target);
-    const isExternalResource = target.startsWith("http");
+    const isExternalResource = target.startsWith("http://") || target.startsWith("https://");
     const relSource = toSlash(path.relative(DIST_DIR, sourceFile));
 
     if (!isExternalResource) {
-      let exists = fs.existsSync(fullPath);
-      let finalPath = fullPath;
-      
-      // If it's a directory link (no extension), check for index.html
-      if (!exists && !path.extname(fullPath)) {
-        const indexPath = path.join(fullPath, "index.html");
-        if (fs.existsSync(indexPath)) {
-          exists = true;
-          finalPath = indexPath;
-        }
-      }
-
-      if (exists) {
-        const relAsset = path.relative(DIST_DIR, finalPath);
-        referencedAssets.add(toSlash(relAsset));
+      const resolved = resolveDistFile(sourceFile, target, distFilesMap);
+      if (resolved.exists && resolved.actualRelPath) {
+        referencedAssets.add(resolved.actualRelPath.toLowerCase());
       } else {
         brokenLinks.push({ source: relSource, target: toSlash(target), type });
       }
@@ -210,7 +279,7 @@ async function verify() {
       (e.target === "*" || matchesPattern(link.target, e.target))
     )
   );
-  const unusedImages = Array.from(allImages).filter(img => !referencedAssets.has(img));
+  const unusedImages = Array.from(allImages).filter(img => !referencedAssets.has(img.toLowerCase()));
   const filteredUnusedImages = unusedImages.filter(img => 
     !exceptions.ignoredAssets.some(pattern => matchesPattern(img, pattern))
   );

@@ -1,10 +1,12 @@
 ---
 import SectionNoCover from "@layouts/SectionNoCover.astro";
-import { type CollectionEntry, getCollection, render } from "astro:content";
+import { content, type ContentEntry, type JobMetadata } from "@libs/content";
 
 export async function getStaticPaths() {
-  return (await getCollection("jobs", (job) => job.data.file == null)).map(
-    (job) => ({
+  const jobs = await content.jobs.list();
+  return jobs
+    .filter((job) => !job.data.file)
+    .map((job) => ({
       params: {
         language: "zh",
         slug: job.id,
@@ -12,17 +14,16 @@ export async function getStaticPaths() {
       props: {
         job,
       },
-    })
-  );
+    }));
 }
 
 export interface Props {
-  job: CollectionEntry<"jobs">;
+  job: ContentEntry<JobMetadata>;
 }
 
 const { job } = Astro.props;
 const slug = `zh/student-life/job-posting/${job.id}`;
-const { Content } = await render(job);
+const { Content } = await content.render(job);
 ---
 
 <SectionNoCover language={"zh"} title={job.data.title} slug={slug}>

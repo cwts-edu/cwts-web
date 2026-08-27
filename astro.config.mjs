@@ -13,6 +13,19 @@ import {
 import sitemap from "@astrojs/sitemap";
 import icon from "astro-icon";
 
+import { syncAssets } from "./tools/sync-assets.ts";
+
+function syncFirebaseAssetsIntegration() {
+  return {
+    name: "sync-firebase-assets",
+    hooks: {
+      "astro:build:done": async () => {
+        await syncAssets();
+      },
+    },
+  };
+}
+
 // https://astro.build/config
 export default defineConfig({
   site: "https://www.cwts.edu/",
@@ -36,6 +49,7 @@ export default defineConfig({
     icon({
       iconDir: "src/icons",
     }),
+    syncFirebaseAssetsIntegration(),
     // compress(),
   ],
   vite: {

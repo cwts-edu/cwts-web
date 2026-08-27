@@ -1,4 +1,4 @@
-import { getEntry } from "astro:content";
+import { content } from "./content";
 import { getLanguageBySlug } from "./language";
 
 interface Breadcrumb {
@@ -16,9 +16,9 @@ async function getBreadcrumbBySlug(
 ): Promise<Breadcrumb | undefined> {
   try {
     const { language, slug } = getLanguageBySlug(s);
-    if (slug.startsWith(facultyPrefix) && !slug.endsWith('adjunct-professors')) {
+    if (slug.startsWith(facultyPrefix) && !slug.endsWith("adjunct-professors")) {
       const pageSlug = slug.substring(facultyPrefix.length);
-      const page = await getEntry("faculty", `${language}/${pageSlug}`);
+      const page = await content.faculty.getBySlug(pageSlug, language);
       return (
         page && {
           title: page.data.name,
@@ -30,7 +30,7 @@ async function getBreadcrumbBySlug(
 
     if (slug.startsWith(degreesProgramsPrefix) && language == "zh") {
       const pageSlug = slug.substring(degreesProgramsPrefix.length);
-      const page = await getEntry("degrees-programs", `${language}/${pageSlug}`);
+      const page = await content.degreesPrograms.getBySlug(pageSlug, language);
       return (
         page && {
           title: page.data.title,
@@ -40,7 +40,7 @@ async function getBreadcrumbBySlug(
       );
     }
 
-    const page = await getEntry("pages", s);
+    const page = await content.pages.getById(s);
     return (
       page && {
         title: page.data.title,
