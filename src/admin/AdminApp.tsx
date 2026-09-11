@@ -6,8 +6,6 @@ import { AdminLayout, type AdminTab } from "./components/AdminLayout";
 import { AdminRouter } from "./components/AdminRouter";
 import { parseAdminLocation, buildAdminUrl } from "./utils/routing";
 
-export { parseAdminLocation, buildAdminUrl } from "./utils/routing";
-export type { AdminRouteState } from "./utils/routing";
 
 const AdminDashboard: React.FC = () => {
   const [currentTab, setCurrentTab] = useState<AdminTab>(() => parseAdminLocation().tab);
