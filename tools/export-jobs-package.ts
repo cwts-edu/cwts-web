@@ -103,6 +103,16 @@ async function exportJobsPackage() {
   // Sort descending by date
   documents.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
+  // Also collect all PDF documents in public/docs/jobs so all job documents are migrated
+  const jobsPublicDir = path.join(publicDir, "docs/jobs");
+  if (fs.existsSync(jobsPublicDir)) {
+    for (const f of fs.readdirSync(jobsPublicDir)) {
+      if (!f.startsWith(".")) {
+        referencedAssetPaths.add(`docs/jobs/${f}`);
+      }
+    }
+  }
+
   // 1. Write manifest.json
   const manifest = {
     format: "cwts-cms-package",

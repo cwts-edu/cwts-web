@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import {
   getMediaCollectionConfig,
+  DOC_SUBFOLDERS,
   type MediaCollectionConfig,
   type MediaItem,
 } from "../../config/mediaCollections";
@@ -28,6 +29,7 @@ export const MediaPickerModal: React.FC<Props> = ({
   const [items, setItems] = useState<MediaItem[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [searchQuery, setSearchQuery] = useState<string>("");
+  const [selectedSubfolder, setSelectedSubfolder] = useState<string>("all");
   const [selectedItem, setSelectedItem] = useState<MediaItem | null>(null);
 
   // Cropper state for images
@@ -123,10 +125,16 @@ export const MediaPickerModal: React.FC<Props> = ({
     return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
   };
 
-  const filteredItems = items.filter((item) =>
-    item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    item.siteRelativePath.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const filteredItems = items.filter((item) => {
+    const matchesQuery =
+      item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.siteRelativePath.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesSubfolder =
+      selectedSubfolder === "all" ||
+      item.siteRelativePath.includes(`/${selectedSubfolder}/`) ||
+      item.filePath.includes(`${selectedSubfolder}/`);
+    return matchesQuery && matchesSubfolder;
+  });
 
   if (!isOpen) return null;
 
@@ -190,16 +198,33 @@ export const MediaPickerModal: React.FC<Props> = ({
 
           {/* Search bar & notification */}
           {activeTab === "library" && (
-            <div className="px-6 py-3 border-b border-slate-800 bg-slate-950/40 flex items-center justify-between gap-4">
-              <div className="relative flex-1 max-w-md">
-                <span className="absolute left-3 top-2.5 text-slate-500 text-xs">🔍</span>
-                <input
-                  type="text"
-                  placeholder="Filter by filename or path..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-8 pr-4 py-1.5 bg-slate-950 border border-slate-700/80 rounded-xl text-white text-xs focus:outline-none focus:border-purple-500 transition"
-                />
+            <div className="px-6 py-3 border-b border-slate-800 bg-slate-950/40 flex flex-wrap items-center justify-between gap-3">
+              <div className="flex items-center gap-3 flex-1 min-w-[280px]">
+                <div className="relative flex-1">
+                  <span className="absolute left-3 top-2.5 text-slate-500 text-xs">🔍</span>
+                  <input
+                    type="text"
+                    placeholder="Filter by filename or path..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="w-full pl-8 pr-4 py-1.5 bg-slate-950 border border-slate-700/80 rounded-xl text-white text-xs focus:outline-none focus:border-purple-500 transition"
+                  />
+                </div>
+
+                {collectionConfig.type === "file" && (
+                  <select
+                    value={selectedSubfolder}
+                    onChange={(e) => setSelectedSubfolder(e.target.value)}
+                    className="px-3 py-1.5 bg-slate-950 border border-slate-700/80 rounded-xl text-slate-200 text-xs focus:outline-none focus:border-purple-500 transition shrink-0"
+                    title="Filter by Subfolder"
+                  >
+                    {DOC_SUBFOLDERS.map((f) => (
+                      <option key={f.id} value={f.id}>
+                        {f.name}
+                      </option>
+                    ))}
+                  </select>
+                )}
               </div>
 
               <button
@@ -207,7 +232,7 @@ export const MediaPickerModal: React.FC<Props> = ({
                 onClick={loadItems}
                 disabled={isLoading}
                 title="Refresh library"
-                className="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-xs font-medium text-slate-300 rounded-xl transition flex items-center gap-1.5"
+                className="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-xs font-medium text-slate-300 rounded-xl transition flex items-center gap-1.5 shrink-0"
               >
                 <span>🔄</span>
                 <span>Refresh</span>

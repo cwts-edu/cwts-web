@@ -89,6 +89,7 @@ export const BackupRestoreView: React.FC<Props> = ({ onRefreshData }) => {
           if (data.photo) assetPaths.add(String(data.photo).replace(/^\/+/, ""));
           if (data.thumbnail) assetPaths.add(String(data.thumbnail).replace(/^\/+/, ""));
           if (data.file) assetPaths.add(String(data.file).replace(/^\/+/, ""));
+          if (data.coverImage) assetPaths.add(String(data.coverImage).replace(/^\/+/, ""));
         }
       });
 
@@ -422,6 +423,7 @@ export const BackupRestoreView: React.FC<Props> = ({ onRefreshData }) => {
                   <option value="jobs">💼 Job Postings</option>
                   <option value="assembly">⛪ Assembly (早會) Schedules</option>
                   <option value="newsletter">📰 Newsletter (院訊)</option>
+                  <option value="pages">📄 Content Pages (網站內容頁面)</option>
                 </optgroup>
               </select>
             </div>

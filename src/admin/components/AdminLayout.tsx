@@ -35,6 +35,9 @@ export type AdminTab =
   | "newsletter"
   | "newsletter_new"
   | "newsletter_edit"
+  | "pages"
+  | "pages_new"
+  | "pages_edit"
   | "media"
   | "backup";
 

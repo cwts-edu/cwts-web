@@ -15,11 +15,16 @@ function normalizeSiteUrl(val: string): string {
 // 1. Pages Schema
 export const PageMetadataSchema = z.object({
   title: z.string(),
+  subTitle: z.string().optional(),
   order: z.number(),
+  legacyOrder: z.number().optional(),
   coverImage: z.string().optional().transform((v) => (v ? normalizeSiteUrl(v) : v)),
   thumbnail: z.string().optional().transform((v) => (v ? normalizeSiteUrl(v) : v)),
   showChildren: z.boolean().optional(),
   referencedAssets: z.array(z.string()).optional(),
+  body: z.string().optional(),
+  bodyHtml: z.string().optional(),
+  bodyJson: z.any().optional(),
 });
 export type PageMetadata = z.infer<typeof PageMetadataSchema>;
 

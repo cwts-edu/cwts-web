@@ -25,11 +25,12 @@ export interface Props {
 const { page } = Astro.props;
 const { title, coverImage = site.defaultCover } = page.data;
 const { Content } = await content.render(page);
+const fullSlug = `${page.language}/${page.slug}`;
 ---
 
 <Section
   title={title}
-  slug={page.id}
+  slug={fullSlug}
   coverImage={coverImage}
   mainImage={page.data.thumbnail}
   showChildren={page.data.showChildren}

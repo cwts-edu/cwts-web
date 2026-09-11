@@ -22,6 +22,8 @@ import { AssemblyListView } from "../views/AssemblyListView";
 import { AssemblyEditView } from "../views/AssemblyEditView";
 import { NewsletterListView } from "../views/NewsletterListView";
 import { NewsletterEditView } from "../views/NewsletterEditView";
+import { PagesListView } from "../views/PagesListView";
+import { PagesEditView } from "../views/PagesEditView";
 
 import { useNewsController } from "../hooks/collections/useNewsController";
 import { useJobsController } from "../hooks/collections/useJobsController";
@@ -33,6 +35,7 @@ import { useStudyModesController } from "../hooks/collections/useStudyModesContr
 import { useShortcutsController } from "../hooks/collections/useShortcutsController";
 import { useAssemblyController } from "../hooks/collections/useAssemblyController";
 import { useNewsletterController } from "../hooks/collections/useNewsletterController";
+import { usePagesController } from "../hooks/collections/usePagesController";
 
 interface Props {
   currentTab: AdminTab;
@@ -58,6 +61,7 @@ export const AdminRouter: React.FC<Props> = ({
   const shortcuts = useShortcutsController(currentTab.startsWith("homepage_shortcuts"));
   const assembly = useAssemblyController(currentTab.startsWith("assembly"), onNavigate);
   const newsletter = useNewsletterController(currentTab.startsWith("newsletter"), onNavigate);
+  const pages = usePagesController(currentTab.startsWith("pages"), onNavigate);
 
   // ---- Global reload (used by BackupRestoreView) ----
   const reloadAll = async () => {
@@ -72,6 +76,7 @@ export const AdminRouter: React.FC<Props> = ({
       shortcuts.reload(),
       assembly.reload(),
       newsletter.reload(),
+      pages.reload(),
     ]);
     onRefreshAll();
   };
@@ -422,6 +427,43 @@ export const AdminRouter: React.FC<Props> = ({
         initialItem={newsletter.items.find((a) => a.id === editingId)}
         onSave={newsletter.saveDraft}
         onCancel={() => onNavigate("newsletter")}
+      />
+    );
+  }
+
+  // Pages
+  if (currentTab === "pages") {
+    return (
+      <PagesListView
+        items={pages.items}
+        onNew={() => onNavigate("pages_new")}
+        onEdit={(id) => onNavigate("pages_edit", id)}
+        onDelete={pages.deletePage}
+        onUndoDelete={pages.undoDelete}
+        onUpdateSiblingOrder={pages.updateSiblingOrder}
+        isLoading={pages.isLoading}
+      />
+    );
+  }
+
+  if (currentTab === "pages_new") {
+    return (
+      <PagesEditView
+        allPages={pages.items}
+        onSave={pages.saveDraft}
+        onCancel={() => onNavigate("pages")}
+      />
+    );
+  }
+
+  if (currentTab === "pages_edit") {
+    return (
+      <PagesEditView
+        key={editingId ? `pages-edit-${editingId}` : "pages-new"}
+        initialItem={pages.items.find((p) => p.id === editingId)}
+        allPages={pages.items}
+        onSave={pages.saveDraft}
+        onCancel={() => onNavigate("pages")}
       />
     );
   }

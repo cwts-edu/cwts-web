@@ -357,8 +357,8 @@ export const DegreesProgramsEditView: React.FC<Props> = ({
               label="Program Cover Thumbnail"
               value={thumbnail}
               onChange={setThumbnail}
-              collectionId="page-covers"
-              helpText="Header / listing thumbnail (select or upload under images/covers)."
+              collectionId="page-thumbnails"
+              helpText="Header / listing thumbnail (600×350 px, under images/covers)."
             />
           </div>
         </div>

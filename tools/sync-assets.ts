@@ -272,6 +272,37 @@ async function collectReferencedMediaAssets(): Promise<Set<string>> {
     } catch (e) {
       console.warn("⚠️ Could not query newsletter entries during asset sync:", e);
     }
+
+    // 7. Query pages collection using content client
+    try {
+      const pageEntries = await client.getCollection("pages");
+      console.log(`📄 Loaded ${pageEntries.length} page entries from Firebase content client.`);
+      for (const entry of pageEntries) {
+        if (entry.data?.referencedAssets && Array.isArray(entry.data.referencedAssets)) {
+          for (const assetPath of entry.data.referencedAssets) {
+            const sp = normalizeStoragePath(assetPath);
+            if (sp) referenced.add(sp);
+          }
+        } else {
+          if (entry.data?.coverImage) {
+            const sp = normalizeStoragePath(entry.data.coverImage);
+            if (sp) referenced.add(sp);
+          }
+          if (entry.data?.thumbnail) {
+            const sp = normalizeStoragePath(entry.data.thumbnail);
+            if (sp) referenced.add(sp);
+          }
+          if (entry.body) {
+            scanTextForStoragePaths(entry.body, referenced);
+          }
+          if (entry.bodyHtml) {
+            scanTextForStoragePaths(entry.bodyHtml, referenced);
+          }
+        }
+      }
+    } catch (e) {
+      console.warn("⚠️ Could not query pages entries during asset sync:", e);
+    }
   } catch (err: any) {
     console.error("❌ Error querying collections via Firebase content client:", err.message || err);
     throw err;

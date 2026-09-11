@@ -146,6 +146,17 @@ export const PAGE_TYPES: PageTypeConfig[] = [
     hasEdit: true,
     description: "Seminary quarterly newsletter PDF documents and cover image assets",
   },
+  {
+    id: "pages",
+    title: "Content Pages",
+    path: "/admin/pages",
+    icon: "📄",
+    group: "collections",
+    collectionName: "pages",
+    hasNew: true,
+    hasEdit: true,
+    description: "Main website content pages and hierarchical section tree",
+  },
   // 3. Tools & System
   {
     id: "media",

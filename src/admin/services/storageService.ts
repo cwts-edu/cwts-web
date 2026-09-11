@@ -68,40 +68,67 @@ export async function listMediaItems(collectionConfig: MediaCollectionConfig): P
 
   try {
     const folderRef = ref(storage, collectionConfig.collectionPath);
-    const result = await listAll(folderRef);
 
-    const promises = result.items.map(async (itemRef) => {
-      try {
-        const [downloadUrl, meta] = await Promise.all([
-          getDownloadURL(itemRef),
-          getMetadata(itemRef).catch(() => null),
-        ]);
+    const collectItems = async (currentRef: any, relativeSubfolder: string = ""): Promise<any[]> => {
+      const result = await listAll(currentRef);
+      const filePromises = result.items.map(async (itemRef) => {
+        try {
+          const [downloadUrl, meta] = await Promise.all([
+            getDownloadURL(itemRef),
+            getMetadata(itemRef).catch(() => null),
+          ]);
 
-        const fileName = itemRef.name;
+          const fileName = itemRef.name;
+          const fullRelPath = relativeSubfolder
+            ? `${collectionConfig.collectionPath}/${relativeSubfolder}/${fileName}`
+            : `${collectionConfig.collectionPath}/${fileName}`;
 
-        const mediaItem: MediaItem = {
-          id: `${collectionConfig.collectionPath}/${fileName}`,
-          name: fileName,
-          collectionId: collectionConfig.id,
-          collectionPath: collectionConfig.collectionPath,
-          filePath: fileName,
-          siteRelativePath: `/${collectionConfig.collectionPath}/${fileName}`,
-          downloadUrl,
-          size: meta?.size,
-          contentType: meta?.contentType || (collectionConfig.type === "image" ? "image/jpeg" : "application/pdf"),
-          updatedAt: meta?.updated || meta?.timeCreated || new Date().toISOString(),
-        };
+          const mediaItem: MediaItem = {
+            id: fullRelPath,
+            name: fileName,
+            collectionId: collectionConfig.id,
+            collectionPath: collectionConfig.collectionPath,
+            filePath: relativeSubfolder ? `${relativeSubfolder}/${fileName}` : fileName,
+            siteRelativePath: `/${fullRelPath}`,
+            downloadUrl,
+            size: meta?.size,
+            contentType: meta?.contentType || (collectionConfig.type === "image" ? "image/jpeg" : "application/pdf"),
+            updatedAt: meta?.updated || meta?.timeCreated || new Date().toISOString(),
+          };
 
-        return mediaItem;
-      } catch (err) {
-        console.warn(`Could not load metadata for ${itemRef.name}:`, err);
-        return null;
+          return mediaItem;
+        } catch (err) {
+          console.warn(`Could not load metadata for ${itemRef.name}:`, err);
+          return null;
+        }
+      });
+
+      const currentFiles = await Promise.all(filePromises);
+
+      // Recursively collect from subfolders
+      const subfolderPromises = result.prefixes.map(async (prefixRef) => {
+        const subName = relativeSubfolder
+          ? `${relativeSubfolder}/${prefixRef.name}`
+          : prefixRef.name;
+        return collectItems(prefixRef, subName);
+      });
+
+      const subfolderFiles = await Promise.all(subfolderPromises);
+      return [...currentFiles.filter(Boolean), ...subfolderFiles.flat()];
+    };
+
+    const allCollected = await collectItems(folderRef);
+    for (const item of allCollected) {
+      if (item) {
+        // Segregate page-covers (*.cover.jpg) and page-thumbnails (*.thumbnail.jpg)
+        if (collectionConfig.id === "page-covers" && item.name.includes(".thumbnail.")) {
+          continue;
+        }
+        if (collectionConfig.id === "page-thumbnails" && !item.name.includes(".thumbnail.")) {
+          continue;
+        }
+        items.push(item);
       }
-    });
-
-    const resolved = await Promise.all(promises);
-    for (const item of resolved) {
-      if (item) items.push(item);
     }
   } catch (err) {
     console.warn(`[Firebase Storage] listAll failed for '${collectionConfig.collectionPath}':`, err);
@@ -128,7 +155,13 @@ export async function uploadMediaFile(
 ): Promise<MediaItem> {
   const originalName = customFilename || (fileOrBlob as File).name || `upload-${Date.now()}`;
   const defaultExt = collectionConfig.type === "image" ? ".jpg" : ".pdf";
-  const cleanFilename = sanitizeFileName(originalName, defaultExt);
+  let cleanFilename = sanitizeFileName(originalName, defaultExt);
+
+  if (collectionConfig.id === "page-thumbnails" && !cleanFilename.includes(".thumbnail.")) {
+    cleanFilename = cleanFilename.replace(/(\.[a-zA-Z0-9]+)?$/, ".thumbnail$1");
+  } else if (collectionConfig.id === "page-covers" && !cleanFilename.includes(".cover.") && !cleanFilename.includes(".thumbnail.")) {
+    cleanFilename = cleanFilename.replace(/(\.[a-zA-Z0-9]+)?$/, ".cover$1");
+  }
 
   const storagePath = `${collectionConfig.collectionPath}/${cleanFilename}`;
   const fileRef = ref(storage, storagePath);

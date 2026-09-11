@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import {
   getAllMediaCollections,
   getMediaCollectionConfig,
+  DOC_SUBFOLDERS,
   type MediaCollectionConfig,
   type MediaItem,
 } from "../config/mediaCollections";
@@ -16,6 +17,7 @@ export const MediaLibraryView: React.FC = () => {
   const [items, setItems] = useState<MediaItem[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [searchQuery, setSearchQuery] = useState<string>("");
+  const [selectedSubfolder, setSelectedSubfolder] = useState<string>("all");
   const [copiedId, setCopiedId] = useState<string | null>(null);
 
   // Upload and Cropper State
@@ -102,11 +104,17 @@ export const MediaLibraryView: React.FC = () => {
     return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
   };
 
-  const filteredItems = items.filter(
-    (item) =>
+  const filteredItems = items.filter((item) => {
+    const matchesQuery =
       item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      item.siteRelativePath.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+      item.siteRelativePath.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesSubfolder =
+      selectedCollectionId !== "docs" ||
+      selectedSubfolder === "all" ||
+      item.siteRelativePath.includes(`/${selectedSubfolder}/`) ||
+      item.filePath.includes(`${selectedSubfolder}/`);
+    return matchesQuery && matchesSubfolder;
+  });
 
   return (
     <div className="space-y-8">
@@ -187,17 +195,35 @@ export const MediaLibraryView: React.FC = () => {
         </div>
       </div>
 
-      {/* Search & Upload Bar */}
+      {/* Search & Subfolder Filter Bar */}
       <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-        <div className="relative w-full sm:w-80">
-          <span className="absolute left-3.5 top-2.5 text-slate-500 text-xs">🔍</span>
-          <input
-            type="text"
-            placeholder="Search by name or path..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-9 pr-4 py-2 bg-slate-900 border border-slate-800 rounded-xl text-white text-xs focus:outline-none focus:border-purple-500 transition"
-          />
+        <div className="flex flex-wrap items-center gap-3 w-full sm:w-auto">
+          <div className="relative w-full sm:w-80">
+            <span className="absolute left-3.5 top-2.5 text-slate-500 text-xs">🔍</span>
+            <input
+              type="text"
+              placeholder="Search by name or path..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full pl-9 pr-4 py-2 bg-slate-900 border border-slate-800 rounded-xl text-white text-xs focus:outline-none focus:border-purple-500 transition"
+            />
+          </div>
+
+          {selectedCollectionId === "docs" && (
+            <div className="relative">
+              <select
+                value={selectedSubfolder}
+                onChange={(e) => setSelectedSubfolder(e.target.value)}
+                className="bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-purple-500 font-medium"
+              >
+                {DOC_SUBFOLDERS.map((sub) => (
+                  <option key={sub.id} value={sub.id}>
+                    📁 {sub.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
         </div>
 
         <button

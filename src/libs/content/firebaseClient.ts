@@ -23,6 +23,8 @@ import { createMarkdownProcessor } from "@astrojs/markdown-remark";
 import { textLinesToHtml } from "./textUtils";
 import { sortAssemblyTables } from "./assemblyUtils";
 import { sortNewsletters } from "./newsletterUtils";
+import { sortPagesHierarchically } from "./pageUtils";
+import { obfuscateMailtoLinks } from "./emailObfuscator";
 
 let markdownProcessorPromise: Promise<any> | null = null;
 function getMarkdownProcessor() {
@@ -270,7 +272,7 @@ export class FirebaseContentClient implements IContentClient {
       return { Content: entry.Content };
     }
 
-    let html = entry.html;
+    let html = entry.html || (entry.data as any)?.bodyHtml;
     let headings: any[] = [];
     if (!html && entry.body) {
       const processor = await getMarkdownProcessor();
@@ -279,6 +281,10 @@ export class FirebaseContentClient implements IContentClient {
       headings = result.metadata?.headings || [];
     } else if (!html) {
       html = "";
+    }
+
+    if (html) {
+      html = obfuscateMailtoLinks(html);
     }
 
     const Content = createComponent({
@@ -299,20 +305,27 @@ export class FirebaseContentClient implements IContentClient {
       return this.getEntry("pages", id);
     },
     getById: async (id: string) => {
-      return this.getEntry("pages", id);
+      const normalizedId = id.includes("/") ? id.replace(/\//g, "_") : id;
+      return this.getEntry("pages", normalizedId);
     },
     list: async (language?: Language) => {
       const items = await this.getCollection("pages");
-      return language ? items.filter((p) => p.language === language) : items;
+      const filtered = language ? items.filter((p) => p.language === language) : items;
+      return sortPagesHierarchically(filtered);
     },
     listChildren: async (slug: string) => {
       const items = await this.getCollection("pages");
       const children = items
-        .filter((p) => p.id.startsWith(slug) && p.id !== slug)
+        .filter((p) => {
+          const pSlug = p.slug;
+          if (!pSlug.startsWith(slug + "/")) return false;
+          const sub = pSlug.slice(slug.length + 1);
+          return !sub.includes("/");
+        })
         .sort((a, b) => (a.data.order || 0) - (b.data.order || 0));
 
       return children.map((page) => ({
-        url: "/" + page.id,
+        url: `/${page.language}/${page.slug}`,
         thumbnail: page.data.thumbnail || site.defaultThumbnail,
         title: page.data.title,
       }));

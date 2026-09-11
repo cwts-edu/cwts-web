@@ -52,7 +52,14 @@ export const ImageCropperModal: React.FC<Props> = ({
       return;
     }
 
-    const defaultName = sanitizeFileName(file.name, ".jpg");
+    let defaultName = sanitizeFileName(file.name, ".jpg");
+    if (collectionConfig.id === "page-thumbnails") {
+      const base = file.name.replace(/(\.cover|\.thumbnail)?(\.[a-zA-Z0-9]+)?$/i, "");
+      defaultName = sanitizeFileName(base, "") + ".thumbnail.jpg";
+    } else if (collectionConfig.id === "page-covers") {
+      const base = file.name.replace(/(\.cover|\.thumbnail)?(\.[a-zA-Z0-9]+)?$/i, "");
+      defaultName = sanitizeFileName(base, "") + ".cover.jpg";
+    }
     setCustomFilename(defaultName);
     setZoom(1);
     setError(null);

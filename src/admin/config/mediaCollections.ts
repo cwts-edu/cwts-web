@@ -95,7 +95,20 @@ export const MEDIA_COLLECTIONS: Record<string, MediaCollectionConfig> = {
     targetDimensions: { width: 1440, height: 1080 },
     quality: 0.85,
     maxFileSizeMB: 20,
-    description: "Header cover images for content sections and pages.",
+    description: "Header cover images for content sections and pages (1440×1080).",
+  },
+  "page-thumbnails": {
+    id: "page-thumbnails",
+    title: "Page Thumbnails (頁面縮圖)",
+    collectionPath: "images/covers",
+    type: "image",
+    allowedMimeTypes: ["image/jpeg", "image/png", "image/webp"],
+    aspectRatio: 600 / 350,
+    aspectRatioLabel: "12:7 (600 × 350 px)",
+    targetDimensions: { width: 600, height: 350 },
+    quality: 0.85,
+    maxFileSizeMB: 15,
+    description: "Thumbnail images for sub-page cards, listings, and social sharing previews (600×350).",
   },
   "general-images": {
     id: "general-images",
@@ -129,7 +142,39 @@ export const MEDIA_COLLECTIONS: Record<string, MediaCollectionConfig> = {
     maxFileSizeMB: 50,
     description: "Seminary quarterly newsletter PDF documents and cover image assets.",
   },
+  "docs": {
+    id: "docs",
+    title: "Seminary Documents (PDFs & Forms)",
+    collectionPath: "docs",
+    type: "file",
+    allowedMimeTypes: [
+      "application/pdf",
+      "application/msword",
+      "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+    ],
+    maxFileSizeMB: 50,
+    description: "Official seminary documents, catalogs, schedules, and effectiveness statements.",
+  },
 };
+
+export interface DocSubfolder {
+  id: string;
+  name: string;
+  folderPath: string;
+}
+
+export const DOC_SUBFOLDERS: DocSubfolder[] = [
+  { id: "all", name: "All Folders (所有目錄)", folderPath: "docs" },
+  { id: "effectiveness-statements", name: "Effectiveness Statements (學院成效報告)", folderPath: "docs/effectiveness-statements" },
+  { id: "catalogs", name: "Academic Catalogs (課程概覽)", folderPath: "docs/catalogs" },
+  { id: "course-schedules", name: "Course Schedules (課表)", folderPath: "docs/course-schedules" },
+  { id: "admissions", name: "Admissions & Applications (入學與申請)", folderPath: "docs/admissions" },
+  { id: "dormitory", name: "Dormitory & Housing (宿舍表格)", folderPath: "docs/dormitory" },
+  { id: "jobs", name: "Job Descriptions (聘牧職缺)", folderPath: "docs/jobs" },
+  { id: "newsletter", name: "Newsletters (院訊)", folderPath: "docs/newsletter" },
+  { id: "babc", name: "BABC Convention (教育大會)", folderPath: "docs/babc" },
+  { id: "general", name: "General Documents (一般文件)", folderPath: "docs/general" },
+];
 
 export function getMediaCollectionConfig(collectionId: string): MediaCollectionConfig {
   const config = MEDIA_COLLECTIONS[collectionId];

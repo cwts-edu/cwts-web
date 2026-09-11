@@ -70,7 +70,29 @@ export class HybridContentClient implements IContentClient {
   }
 
   get pages() {
-    return this.isMigrated("pages") ? this.firebase.pages : this.astro.pages;
+    if (!this.isMigrated("pages")) return this.astro.pages;
+    return {
+      list: async (language?: Language) => {
+        const fbItems = await this.firebase.pages.list(language);
+        if (fbItems.length > 0) return fbItems;
+        return this.astro.pages.list(language);
+      },
+      getBySlug: async (slug: string, language: Language) => {
+        const fbItem = await this.firebase.pages.getBySlug(slug, language);
+        if (fbItem) return fbItem;
+        return this.astro.pages.getBySlug(slug, language);
+      },
+      getById: async (id: string) => {
+        const fbItem = await this.firebase.pages.getById(id);
+        if (fbItem) return fbItem;
+        return this.astro.pages.getById(id);
+      },
+      listChildren: async (slug: string) => {
+        const fbChildren = await this.firebase.pages.listChildren(slug);
+        if (fbChildren.length > 0) return fbChildren;
+        return this.astro.pages.listChildren(slug);
+      },
+    };
   }
 
   get news() {
