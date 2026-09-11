@@ -3,6 +3,8 @@ import type { AdminTab } from "./AdminLayout";
 import { DashboardView } from "../views/DashboardView";
 import { MediaLibraryView } from "../views/MediaLibraryView";
 import { BackupRestoreView } from "../views/BackupRestoreView";
+import { AccountManagementView } from "../views/AccountManagementView";
+import { useAuth } from "../context/AuthContext";
 import { NewsListView } from "../views/NewsListView";
 import { NewsEditView } from "../views/NewsEditView";
 import { JobsListView } from "../views/JobsListView";
@@ -52,6 +54,8 @@ export const AdminRouter: React.FC<Props> = ({
   onNavigate,
   onRefreshAll,
 }) => {
+  const { isAdmin } = useAuth();
+
   // ---- Per-collection controllers (each self-contained) ----
   const news = useNewsController(currentTab.startsWith("news"), onNavigate);
   const jobs = useJobsController(currentTab.startsWith("jobs"), onNavigate);
@@ -97,6 +101,25 @@ export const AdminRouter: React.FC<Props> = ({
 
   // ---- Backup ----
   if (currentTab === "backup") {
+    if (!isAdmin) {
+      return (
+        <div className="max-w-md mx-auto my-12 bg-slate-900 border border-slate-800 rounded-2xl p-6 text-center space-y-4">
+          <div className="w-12 h-12 rounded-xl bg-amber-500/10 text-amber-400 border border-amber-500/30 flex items-center justify-center mx-auto text-xl">
+            🔒
+          </div>
+          <h3 className="text-base font-bold text-white">Administrator Access Required</h3>
+          <p className="text-xs text-slate-400">
+            The Backup & Restore tool is restricted to CWTS Administrators only.
+          </p>
+          <button
+            onClick={() => onNavigate("dashboard")}
+            className="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white text-xs font-semibold rounded-xl transition"
+          >
+            Return to Dashboard
+          </button>
+        </div>
+      );
+    }
     return <BackupRestoreView onRefreshData={reloadAll} />;
   }
 
@@ -480,6 +503,10 @@ export const AdminRouter: React.FC<Props> = ({
         onCancel={() => onNavigate("pages")}
       />
     );
+  }
+
+  if (currentTab === "accounts") {
+    return <AccountManagementView />;
   }
 
   return null;

@@ -40,7 +40,8 @@ export type AdminTab =
   | "pages_new"
   | "pages_edit"
   | "media"
-  | "backup";
+  | "backup"
+  | "accounts";
 
 interface Props {
   currentTab: AdminTab;
@@ -49,7 +50,7 @@ interface Props {
 }
 
 export const AdminLayout: React.FC<Props> = ({ currentTab, onNavigate, children }) => {
-  const { user, signOut } = useAuth();
+  const { user, role, isAdmin, signOut } = useAuth();
   const { pendingChanges, isStagingBuilding, stagingUrl } = useDraft();
   const [showReviewModal, setShowReviewModal] = useState(false);
 
@@ -80,22 +81,32 @@ export const AdminLayout: React.FC<Props> = ({ currentTab, onNavigate, children 
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 flex font-sans text-slate-100 antialiased">
+    <div className="h-screen w-full bg-slate-950 flex font-sans text-slate-100 antialiased overflow-hidden">
       {/* Sidebar */}
-      <aside className="w-64 bg-slate-900 border-r border-slate-800 flex flex-col shrink-0">
+      <aside className="w-64 h-full bg-slate-900 border-r border-slate-800 flex flex-col shrink-0">
         {/* Brand */}
-        <div className="h-16 flex items-center gap-3 px-6 border-b border-slate-800">
-          <div className="w-9 h-9 rounded-xl bg-purple-600 flex items-center justify-center font-bold text-white shadow-md">
-            CW
+        <a
+          href="/admin"
+          onClick={(e) => {
+            if (!e.ctrlKey && !e.metaKey && !e.shiftKey) {
+              e.preventDefault();
+              onNavigate("dashboard");
+            }
+          }}
+          className="h-16 shrink-0 flex items-center gap-3 px-6 border-b border-slate-800 hover:bg-slate-800/40 transition group cursor-pointer"
+        >
+          <img
+            src="/favicon.svg"
+            alt="CWTS Logo"
+            className="w-9 h-9 rounded-xl shadow-md object-contain group-hover:scale-105 transition-transform"
+          />
+          <div className="font-bold text-sm text-white tracking-wide group-hover:text-purple-300 transition-colors">
+            Admin Portal
           </div>
-          <div>
-            <div className="font-bold text-sm text-white tracking-wide">CWTS Portal</div>
-            <div className="text-[11px] text-purple-400 font-medium">Headless CMS</div>
-          </div>
-        </div>
+        </a>
 
         {/* Navigation */}
-        <nav className="flex-1 px-3 py-6 space-y-1 overflow-y-auto">
+        <nav className="flex-1 min-h-0 px-3 py-4 space-y-1 overflow-y-auto">
           {/* Overview Section (Dashboard) */}
           <button
             onClick={() => onNavigate("dashboard")}
@@ -111,7 +122,9 @@ export const AdminLayout: React.FC<Props> = ({ currentTab, onNavigate, children 
 
           {/* Grouped Page Types & Collections */}
           {NAV_GROUPS.filter((g) => g.id !== "overview").map((group) => {
-            const groupItems = PAGE_TYPES.filter((pt) => pt.group === group.id);
+            const groupItems = PAGE_TYPES.filter(
+              (pt) => pt.group === group.id && !(pt.adminOnly && !isAdmin)
+            );
             if (groupItems.length === 0) return null;
 
             return (
@@ -144,25 +157,34 @@ export const AdminLayout: React.FC<Props> = ({ currentTab, onNavigate, children 
           })}
         </nav>
 
-        {/* User Footer */}
-        <div className="p-4 border-t border-slate-800 bg-slate-900/60 flex items-center justify-between gap-3">
-          <div className="flex items-center gap-3 overflow-hidden">
+        {/* User Footer (Always pinned at bottom of sidebar) */}
+        <div className="shrink-0 p-3.5 border-t border-slate-800 bg-slate-900 flex items-center justify-between gap-2">
+          <button
+            onClick={() => onNavigate("accounts")}
+            className="flex items-center gap-2.5 overflow-hidden text-left hover:opacity-80 transition group flex-1 min-w-0"
+            title="Manage account & password"
+          >
             {user?.photoURL ? (
-              <img src={user.photoURL} alt="" className="w-8 h-8 rounded-full border border-purple-500" />
+              <img src={user.photoURL} alt="" className="w-8 h-8 rounded-full border border-purple-500 shrink-0" />
             ) : (
-              <div className="w-8 h-8 rounded-full bg-purple-900 text-purple-200 flex items-center justify-center font-bold text-xs border border-purple-700">
+              <div className="w-8 h-8 rounded-full bg-purple-900 text-purple-200 flex items-center justify-center font-bold text-xs border border-purple-700 shrink-0">
                 {user?.email?.charAt(0).toUpperCase() || "U"}
               </div>
             )}
-            <div className="truncate">
-              <div className="text-xs font-medium text-slate-200 truncate">{user?.displayName || user?.email}</div>
-              <div className="text-[10px] text-emerald-400 font-mono">Whitelisted Admin</div>
+            <div className="truncate min-w-0 flex-1">
+              <div className="text-xs font-semibold text-slate-200 truncate group-hover:text-purple-300 transition">
+                {user?.displayName || user?.email}
+              </div>
+              <div className="text-[10px] text-emerald-400 font-mono flex items-center gap-1">
+                <span>🛡️</span>
+                <span>{isAdmin ? "Admin" : "Editor"}</span>
+              </div>
             </div>
-          </div>
+          </button>
           <button
             onClick={() => signOut()}
             title="Sign out"
-            className="p-1.5 text-slate-400 hover:text-red-400 hover:bg-slate-800 rounded-lg transition"
+            className="p-1.5 text-slate-400 hover:text-red-400 hover:bg-slate-800 rounded-lg transition shrink-0"
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path
@@ -177,9 +199,9 @@ export const AdminLayout: React.FC<Props> = ({ currentTab, onNavigate, children 
       </aside>
 
       {/* Main Column */}
-      <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
+      <div className="flex-1 flex flex-col min-w-0 h-full overflow-hidden">
         {/* Top Header */}
-        <header className="h-16 bg-slate-900/90 backdrop-blur border-b border-slate-800 flex items-center justify-between px-8 z-10">
+        <header className="h-16 shrink-0 bg-slate-900/90 backdrop-blur border-b border-slate-800 flex items-center justify-between px-8 z-10">
           <div className="flex items-center gap-3">
             <span className="text-sm font-semibold text-slate-300">
               {currentTab === "dashboard" && "Overview Dashboard"}
@@ -188,6 +210,8 @@ export const AdminLayout: React.FC<Props> = ({ currentTab, onNavigate, children 
               {(currentTab === "assembly" || currentTab === "assembly_new" || currentTab === "assembly_edit") && "Assembly (早會) Schedules"}
               {(currentTab === "newsletter" || currentTab === "newsletter_new" || currentTab === "newsletter_edit") && "Seminary Newsletters (基神院訊)"}
               {currentTab === "media" && "Media Asset Library"}
+              {currentTab === "backup" && "Backup & Restore"}
+              {currentTab === "accounts" && "Account Management"}
             </span>
 
             {pendingChanges.length > 0 && (
@@ -243,7 +267,7 @@ export const AdminLayout: React.FC<Props> = ({ currentTab, onNavigate, children 
         </header>
 
         {/* Content Area */}
-        <main className="flex-1 overflow-y-auto p-8 bg-slate-950">
+        <main className="flex-1 min-h-0 overflow-y-auto p-8 bg-slate-950">
           <div className="max-w-6xl mx-auto">{children}</div>
         </main>
       </div>

@@ -9,6 +9,7 @@ export interface PageTypeConfig {
   collectionName?: string;
   hasNew?: boolean;
   hasEdit?: boolean;
+  adminOnly?: boolean;
   description?: string;
 }
 
@@ -181,7 +182,16 @@ export const PAGE_TYPES: PageTypeConfig[] = [
     path: "/admin/backup",
     icon: "💾",
     group: "tools",
+    adminOnly: true,
     description: "Export full ZIP packages or restore collections cleanly",
+  },
+  {
+    id: "accounts",
+    title: "Account Management",
+    path: "/admin/accounts",
+    icon: "👥",
+    group: "tools",
+    description: "Manage authorized users, roles, and account security",
   },
 ];
 
