@@ -18,7 +18,7 @@ const RAW_CONTENT_BACKEND =
   (typeof process !== "undefined" && (process.env?.CONTENT_SOURCE || process.env?.CONTENT_BACKEND)) ||
   import.meta.env?.CONTENT_SOURCE ||
   import.meta.env?.CONTENT_BACKEND ||
-  (activeDraftId ? "hybrid" : "astro");
+  "firebase";
 
 const FIREBASE_PROJECT_ID =
   (typeof process !== "undefined" &&
