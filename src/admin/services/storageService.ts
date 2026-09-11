@@ -3,6 +3,7 @@ import {
   uploadBytesResumable,
   getDownloadURL,
   getMetadata,
+  getBytes,
   listAll,
   deleteObject,
   type SettableMetadata,
@@ -232,3 +233,65 @@ export async function deleteMediaFile(storagePathOrUrl: string): Promise<void> {
     throw err;
   }
 }
+
+const MIME_BY_EXT: Record<string, string> = {
+  ".jpg": "image/jpeg",
+  ".jpeg": "image/jpeg",
+  ".png": "image/png",
+  ".webp": "image/webp",
+  ".gif": "image/gif",
+  ".svg": "image/svg+xml",
+  ".pdf": "application/pdf",
+  ".xml": "application/xml",
+  ".json": "application/json",
+};
+
+export function getMimeTypeFromPath(filePath: string): string {
+  const lastDot = filePath.lastIndexOf(".");
+  const ext = lastDot !== -1 ? filePath.slice(lastDot).toLowerCase() : "";
+  return MIME_BY_EXT[ext] || "application/octet-stream";
+}
+
+export interface DownloadedAsset {
+  buffer: Uint8Array;
+  contentType: string;
+}
+
+/**
+ * Downloads a media asset from Cloud Storage by its site-relative path (e.g. /images/... or /docs/...).
+ * Encapsulates bucket resolution, SDK credentials, and error handling.
+ * Returns null if the asset does not exist in storage.
+ */
+export async function downloadMediaAsset(
+  siteRelativePath: string
+): Promise<DownloadedAsset | null> {
+  const cleanPath = siteRelativePath.replace(/^\/+/, "").trim();
+  if (!cleanPath) return null;
+
+  try {
+    const fileRef = ref(storage, cleanPath);
+    const [meta, rawBytes] = await Promise.all([
+      getMetadata(fileRef).catch(() => null),
+      getBytes(fileRef),
+    ]);
+
+    const detectedMime = getMimeTypeFromPath(cleanPath);
+    const contentType =
+      meta?.contentType && meta.contentType !== "application/octet-stream"
+        ? meta.contentType
+        : detectedMime;
+
+    return {
+      buffer: new Uint8Array(rawBytes),
+      contentType,
+    };
+  } catch (err: any) {
+    if (err?.code === "storage/object-not-found") {
+      return null;
+    }
+    console.warn(`[StorageService] Failed to download '${cleanPath}':`, err?.message || err);
+    return null;
+  }
+}
+
+

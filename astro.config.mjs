@@ -14,18 +14,7 @@ import {
 import sitemap from "@astrojs/sitemap";
 import icon from "astro-icon";
 
-import { syncAssets } from "./tools/sync-assets.ts";
-
-function syncFirebaseAssetsIntegration() {
-  return {
-    name: "sync-firebase-assets",
-    hooks: {
-      "astro:build:done": async () => {
-        await syncAssets();
-      },
-    },
-  };
-}
+import { syncFirebaseAssetsIntegration } from "./src/integrations/syncFirebaseAssets.ts";
 
 // https://astro.build/config
 export default defineConfig({
