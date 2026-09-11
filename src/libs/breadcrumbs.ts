@@ -40,7 +40,7 @@ async function getBreadcrumbBySlug(
       );
     }
 
-    const page = await content.pages.getById(s);
+    const page = await content.pages.getBySlug(slug, language);
     return (
       page && {
         title: page.data.title,

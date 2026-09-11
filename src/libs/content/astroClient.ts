@@ -33,324 +33,34 @@ import {
 } from "./newsletterUtils";
 import { resolveMenuItems, extractMenuItems } from "./menuUtils";
 
-const allAssemblyCsv = import.meta.glob("/src/content/csv/assembly/*.csv", { as: "raw" });
+const allAssemblyCsv = import.meta.glob<string>("/src/content/csv/assembly/*.csv", { query: "?raw", import: "default" });
 const allNewsletterPdfs = import.meta.glob("/public/docs/newsletter/*.pdf");
 
 
+import { ContentDataStore } from "./store";
+
 export class AstroContentClient implements IContentClient {
-  async getEntry<K extends keyof ContentSchemaMap>(
-    collection: K,
-    id: string
-  ): Promise<ContentEntry<ContentSchemaMap[K]> | null> {
-    try {
-      const entry = await getEntry(collection as any, id);
-      if (!entry) return null;
+  private stores = new Map<string, Promise<ContentDataStore<any>>>();
+  private degreesWidgetCache = new Map<Language, Promise<DegreesWidgetDataItem[]>>();
+  private studyModeWidgetCache = new Map<Language, Promise<StudyModeWidgetDataItem[]>>();
 
-      let language: Language = "zh";
-      let slug = id;
-      try {
-        const parsed = getLanguageBySlug(entry.id);
-        language = parsed.language;
-        slug = parsed.slug;
-      } catch {
-        // Not language prefixed
-      }
-
-      return {
-        id: entry.id,
-        slug,
-        language,
-        status: "published",
-        data: entry.data as ContentSchemaMap[K],
-        rawEntry: entry,
-        body: entry.body,
-        updatedAt: new Date(),
-      };
-    } catch {
-      return null;
+  async getStore<K extends keyof ContentSchemaMap>(
+    collection: K
+  ): Promise<ContentDataStore<ContentSchemaMap[K]>> {
+    const key = String(collection);
+    if (!this.stores.has(key)) {
+      this.stores.set(key, this.loadStore(collection));
     }
+    return this.stores.get(key)!;
   }
 
-  async getCollection<K extends keyof ContentSchemaMap>(
-    collection: K,
-    filter?: (entry: ContentEntry<ContentSchemaMap[K]>) => boolean
-  ): Promise<ContentEntry<ContentSchemaMap[K]>[]> {
-    const rawEntries = await getCollection(collection as any);
-    const results: ContentEntry<ContentSchemaMap[K]>[] = rawEntries.map((entry: any) => {
-      let language: Language = "zh";
-      let slug = entry.id;
-      try {
-        const parsed = getLanguageBySlug(entry.id);
-        language = parsed.language;
-        slug = parsed.slug;
-      } catch {
-        // Not language prefixed
-      }
+  private async loadStore<K extends keyof ContentSchemaMap>(
+    collection: K
+  ): Promise<ContentDataStore<ContentSchemaMap[K]>> {
+    const store = new ContentDataStore<ContentSchemaMap[K]>();
 
-      return {
-        id: entry.id,
-        slug,
-        language,
-        status: "published" as const,
-        data: entry.data as ContentSchemaMap[K],
-        rawEntry: entry,
-        body: entry.body,
-        updatedAt: new Date(),
-      };
-    });
-
-    return filter ? results.filter(filter) : results;
-  }
-
-  async render<T = any>(
-    entry: ContentEntry<T>
-  ): Promise<{ Content: any; headings?: any[] }> {
-    if (entry.rawEntry) {
-      return render(entry.rawEntry);
-    }
-    if (entry.Content) {
-      return { Content: entry.Content };
-    }
-    return {
-      Content: () => entry.html || entry.body || "",
-    };
-  }
-
-  pages = {
-    getBySlug: async (slug: string, language: Language) => {
-      const cleanSlug = slug.replace(/^\/+|\/+$/g, "").replace(/^(zh|en)\//, "");
-      return this.getEntry("pages", `${language}/${cleanSlug}`);
-    },
-    getById: async (id: string) => {
-      return this.getEntry("pages", id);
-    },
-    list: async (language?: Language) => {
-      const all = await this.getCollection("pages");
-      return language ? all.filter((p) => p.language === language) : all;
-    },
-    listChildren: async (slug: string) => {
-      const trimmed = slug.replace(/^\/+|\/+$/g, "");
-      const match = trimmed.match(/^(zh|en)\/(.*)$/);
-      const lang = match ? (match[1] as Language) : undefined;
-      const cleanSlug = match ? match[2] : trimmed;
-
-      const all = await this.getCollection("pages");
-      const children = all
-        .filter((page) => {
-          if (lang && page.language !== lang) return false;
-          const pSlug = page.slug.replace(/^\/+|\/+$/g, "").replace(/^(zh|en)\//, "");
-          if (!pSlug.startsWith(cleanSlug + "/") || pSlug === cleanSlug) return false;
-          const sub = pSlug.slice(cleanSlug.length + 1);
-          return !sub.includes("/");
-        })
-        .sort((a, b) => (a.data.order || 0) - (b.data.order || 0));
-
-      return children.map((page) => {
-        const pageLang = page.language || lang || "zh";
-        const cleanPageSlug = page.slug.replace(/^\/+|\/+$/g, "").replace(/^(zh|en)\//, "");
-        return {
-          url: `/${pageLang}/${cleanPageSlug}`,
-          thumbnail: page.data.thumbnail || site.defaultThumbnail,
-          title: page.data.title,
-        };
-      });
-    },
-  };
-
-  news = {
-    list: async (language?: Language, limit?: number) => {
-      const all = await this.getCollection("news");
-      let filtered = language ? all.filter((n) => n.language === language) : all;
-      filtered.sort((a, b) => {
-        const diff = b.data.date.getTime() - a.data.date.getTime();
-        if (diff !== 0) return diff;
-        return b.id.localeCompare(a.id);
-      });
-      return limit ? filtered.slice(0, limit) : filtered;
-    },
-    getById: async (id: string) => {
-      return this.getEntry("news", id);
-    },
-  };
-
-  faculty = {
-    list: async (language?: Language) => {
-      const all = await this.getCollection("faculty");
-      return language ? all.filter((f) => f.language === language) : all;
-    },
-    listByCategory: async (category: FacultyCategory, language: Language) => {
-      const all = await this.getCollection("faculty");
-      return all
-        .filter((f) => f.language === language && f.data.category === category)
-        .sort((a, b) => (a.data.order || 0) - (b.data.order || 0));
-    },
-    getBySlug: async (slug: string, language: Language) => {
-      return this.getEntry("faculty", `${language}/${slug}`);
-    },
-    getAdjunctList: async (language: Language) => {
-      const entry = await getEntry("adjunct-prof", `${language}/adjunct-prof`);
-      return entry ? (entry.data as FacultyMetadata[]) : [];
-    },
-    getMetadata: async (language: Language, categories?: FacultyCategory[]) => {
-      const facultyPages = await getCollection("faculty");
-      const adjunctEntry = await getEntry("adjunct-prof", `${language}/adjunct-prof`);
-      const adjunctData = (adjunctEntry?.data || []) as FacultyMetadata[];
-
-      const filterByCat = (cat: FacultyCategory) =>
-        facultyPages
-          .filter((p) => {
-            const parsed = getLanguageBySlug(p.id);
-            return parsed.language === language && p.data.category === cat;
-          })
-          .map((p) => {
-            const { slug } = getLanguageBySlug(p.id);
-            return {
-              ...p.data,
-              slug,
-              url: `/${language}/academic/faculty/${slug}`,
-            };
-          })
-          .sort((a, b) => (a.order || 0) - (b.order || 0));
-
-      const adjunctUrl = `/${language}/academic/faculty/adjunct-professors`;
-      const adjunctList = adjunctData.map((person) => ({
-        ...person,
-        url: `${adjunctUrl}#${slugify(person.name)}`,
-      }));
-
-      const dict: Record<FacultyCategory, Array<FacultyMetadata & { slug?: string; url?: string }>> = {
-        faculty: filterByCat("faculty"),
-        "senior-adjunct": filterByCat("senior-adjunct"),
-        adjunct: adjunctList,
-      };
-
-      const requestedCategories = categories || ["faculty", "senior-adjunct", "adjunct"];
-      return requestedCategories.flatMap((cat) => dict[cat]);
-    },
-  };
-
-  degreesPrograms = {
-    list: async (language?: Language) => {
-      const all = await this.getCollection("degrees-programs");
-      const filtered = language ? all.filter((d) => d.language === language) : all;
-      return filtered.sort((a, b) => a.data.order - b.data.order);
-    },
-    getBySlug: async (slug: string, language: Language) => {
-      return this.getEntry("degrees-programs", `${language}/${slug}`);
-    },
-  };
-
-  degreesWidget = {
-    getData: async (language: Language): Promise<DegreesWidgetDataItem[]> => {
-      const contents = await getCollection(
-        "degrees-widget",
-        ({ id }) => getLanguageBySlug(id).language === language
-      );
-
-      const sortedContents = contents.sort(
-        (a, b) => a.data.order - b.data.order
-      );
-
-      return await Promise.all(
-        sortedContents.map(async (page) => {
-          const Content = (await render(page)).Content;
-          const { slug } = getLanguageBySlug(page.id);
-          return {
-            slug: slug.replace(/\.(md|mdx)$/, ""),
-            page: {
-              id: page.id,
-              slug,
-              language,
-              status: "published" as const,
-              data: page.data,
-              rawEntry: page,
-              body: page.body,
-              updatedAt: new Date(),
-            },
-            Content,
-          };
-        })
-      );
-    },
-  };
-
-  studyModeWidget = {
-    getData: async (language: Language): Promise<StudyModeWidgetDataItem[]> => {
-      const pages = (
-        await getCollection(
-          "study-mode-widget",
-          (e) => getLanguageBySlug(e.id).language == language
-        )
-      ).sort((a, b) => a.data.order - b.data.order);
-
-      return await Promise.all(
-        pages.map(async (p) => ({
-          slug: getLanguageBySlug(p.id).slug,
-          page: {
-            id: p.id,
-            slug: getLanguageBySlug(p.id).slug,
-            language,
-            status: "published" as const,
-            data: p.data,
-            rawEntry: p,
-            body: p.body,
-            updatedAt: new Date(),
-          },
-          Content: (await render(p)).Content,
-        }))
-      );
-    },
-  };
-
-  jobs = {
-    list: async (language?: Language) => {
-      const all = await this.getCollection("jobs");
-      const filtered = language ? all.filter((j) => j.language === language) : all;
-      return filtered.sort((a, b) => {
-        if (a.data.date > b.data.date) {
-          return -1;
-        }
-        if (a.data.date < b.data.date) {
-          return 1;
-        }
-        return b.id.localeCompare(a.id);
-      });
-    },
-    getById: async (id: string) => {
-      return this.getEntry("jobs", id);
-    },
-  };
-
-  carousel = {
-    get: async () => {
-      const entry = await getEntry("carousel", "carousel");
-      if (!entry) throw new Error("Carousel data not found");
-      return entry.data;
-    },
-  };
-
-  shortcuts = {
-    get: async (language: Language) => {
-      const entry = await getEntry("shortcuts", "shortcuts");
-      if (!entry) throw new Error("Shortcuts data not found");
-      return (entry.data as any)[language];
-    },
-  };
-
-  menu = {
-    get: async (language: Language): Promise<MenuItem[]> => {
-      const entry = await getEntry("menu", language);
-      if (!entry) throw new Error(`Menu data for ${language} not found`);
-      const items = extractMenuItems(entry.data);
-      return resolveMenuItems(items, this, language);
-    },
-  };
-
-  assembly = {
-    list: async (language: Language = "zh"): Promise<ContentEntry<AssemblyTableMetadata>[]> => {
+    if (collection === "assembly") {
       const keys = Object.keys(allAssemblyCsv);
-      const entries: ContentEntry<AssemblyTableMetadata>[] = [];
-
       for (const key of keys) {
         const rawLoader = allAssemblyCsv[key];
         if (!rawLoader) continue;
@@ -374,34 +84,21 @@ export class AstroContentClient implements IContentClient {
           bodyHtml,
         };
 
-        entries.push({
+        store.set({
           id: filename,
           slug: filename,
-          language,
+          language: "zh",
           status: "published",
           data,
           body: rawContent,
           html: bodyHtml,
           updatedAt: new Date(),
-        });
+        } as any);
       }
+      return store;
+    }
 
-      return sortAssemblyTables(entries);
-    },
-
-    getBySemester: async (
-      semester: string,
-      language: Language = "zh"
-    ): Promise<ContentEntry<AssemblyTableMetadata> | null> => {
-      const list = await this.assembly.list(language);
-      return list.find((item) => item.data.semester === semester || item.id === semester) || null;
-    },
-  };
-
-  newsletter = {
-    list: async (language: Language = "zh"): Promise<ContentEntry<NewsletterMetadata>[]> => {
-      const entries: ContentEntry<NewsletterMetadata>[] = [];
-
+    if (collection === "newsletter") {
       for (const [filePath] of Object.entries(allNewsletterPdfs)) {
         const parts = filePath.split("/");
         const fullFilename = parts[parts.length - 1] || "";
@@ -421,17 +118,372 @@ export class AstroContentClient implements IContentClient {
           ],
         };
 
-        entries.push({
+        store.set({
           id: parsed.id,
           slug: parsed.id,
           language: "zh",
           status: "published",
           data,
           updatedAt: new Date(),
-        });
+        } as any);
+      }
+      return store;
+    }
+
+    if (collection === "menu") {
+      const langs: Language[] = ["zh", "en"];
+      for (const lang of langs) {
+        try {
+          const rawEntry = await getEntry("menu", lang);
+          if (rawEntry) {
+            const items = extractMenuItems(rawEntry.data);
+            const resolved = await resolveMenuItems(items, this, lang);
+            store.set({
+              id: lang,
+              slug: lang,
+              language: lang,
+              status: "published",
+              data: resolved as any,
+              rawEntry,
+              updatedAt: new Date(),
+            });
+          }
+        } catch {
+          // Ignored
+        }
+      }
+      return store;
+    }
+
+    const rawEntries = await getCollection(collection as any);
+    for (const raw of rawEntries) {
+      let language: Language = "zh";
+      let slug = raw.id;
+      const aliases: string[] = [];
+
+      if (collection === "pages") {
+        language = raw.id.startsWith("en/") ? "en" : "zh";
+        const rawSlug = raw.id.startsWith("zh/") || raw.id.startsWith("en/") ? raw.id.slice(3) : raw.id;
+        if (rawSlug === "index") {
+          slug = "";
+        } else if (rawSlug.endsWith("/index")) {
+          slug = rawSlug.slice(0, -6);
+        } else {
+          slug = rawSlug;
+        }
+        aliases.push(raw.id);
+        aliases.push(`${language}/${slug}`);
+        aliases.push(`${language}_${slug.split("/").join("_")}`);
+      } else if (collection === "faculty") {
+        language = raw.id.startsWith("en/") ? "en" : "zh";
+        slug = raw.id.startsWith("zh/") || raw.id.startsWith("en/") ? raw.id.slice(3) : raw.id;
+        aliases.push(slug);
+      } else if (collection === "degrees-programs") {
+        language = "zh";
+        slug = raw.id.startsWith("zh/") ? raw.id.slice(3) : raw.id;
+        aliases.push(slug);
+      } else if (collection === "degrees-widget") {
+        language = raw.id.startsWith("en/") ? "en" : "zh";
+        slug = raw.id.startsWith("zh/") || raw.id.startsWith("en/") ? raw.id.slice(3) : raw.id;
+      } else if (collection === "study-mode-widget") {
+        language = "zh";
+        slug = raw.id.startsWith("zh/") ? raw.id.slice(3) : raw.id;
+      } else if (collection === "news" || collection === "jobs") {
+        language = "zh";
+        slug = raw.id;
       }
 
-      return sortNewsletters(entries, "asc");
+      store.set({
+        id: raw.id,
+        slug,
+        language,
+        status: "published" as const,
+        data: raw.data,
+        rawEntry: raw,
+        body: raw.body,
+        updatedAt: new Date(),
+      } as any, aliases);
+    }
+
+    return store;
+  }
+
+  async getEntry<K extends keyof ContentSchemaMap>(
+    collection: K,
+    id: string
+  ): Promise<ContentEntry<ContentSchemaMap[K]> | null> {
+    const store = await this.getStore(collection);
+    return store.get(id);
+  }
+
+  async getCollection<K extends keyof ContentSchemaMap>(
+    collection: K,
+    filter?: (entry: ContentEntry<ContentSchemaMap[K]>) => boolean
+  ): Promise<ContentEntry<ContentSchemaMap[K]>[]> {
+    const store = await this.getStore(collection);
+    return filter ? store.filter(filter) : store.values();
+  }
+
+  async render<T = any>(
+    entry: ContentEntry<T>
+  ): Promise<{ Content: any; headings?: any[] }> {
+    if (entry.rawEntry) {
+      return render(entry.rawEntry);
+    }
+    if (entry.Content) {
+      return { Content: entry.Content };
+    }
+    return {
+      Content: () => entry.html || entry.body || "",
+    };
+  }
+
+  pages = {
+    getBySlug: async (slug: string, language: Language) => {
+      const store = await this.getStore("pages");
+      return store.getBySlug(slug, language);
+    },
+    getById: async (id: string) => {
+      const store = await this.getStore("pages");
+      return store.get(id);
+    },
+    list: async (language?: Language) => {
+      const store = await this.getStore("pages");
+      return language ? store.filter((p) => p.language === language) : store.values();
+    },
+    listChildren: async (parentPath: string) => {
+      const store = await this.getStore("pages");
+      const isEn = parentPath.startsWith("en/");
+      const isZh = parentPath.startsWith("zh/");
+      const lang: Language = isEn ? "en" : "zh";
+      let parentSlug = isEn || isZh ? parentPath.slice(3) : parentPath;
+      if (parentSlug === "index") {
+        parentSlug = "";
+      } else if (parentSlug.endsWith("/index")) {
+        parentSlug = parentSlug.slice(0, -6);
+      }
+      const prefix = parentSlug ? `${parentSlug}/` : "";
+
+      const children = store
+        .filter((page) => {
+          if (page.language !== lang) return false;
+          if (!page.slug.startsWith(prefix) || page.slug === parentSlug) return false;
+          const sub = page.slug.slice(prefix.length);
+          return sub.length > 0 && !sub.includes("/");
+        })
+        .sort((a, b) => (a.data.order || 0) - (b.data.order || 0));
+
+      return children.map((page) => ({
+        url: `/${page.language}/${page.slug}`,
+        thumbnail: page.data.thumbnail || site.defaultThumbnail,
+        title: page.data.title,
+      }));
+    },
+  };
+
+  news = {
+    list: async (language?: Language, limit?: number) => {
+      const store = await this.getStore("news");
+      let filtered = language ? store.filter((n) => n.language === language) : [...store.values()];
+      filtered.sort((a, b) => {
+        const diff = b.data.date.getTime() - a.data.date.getTime();
+        if (diff !== 0) return diff;
+        return b.id.localeCompare(a.id);
+      });
+      return limit ? filtered.slice(0, limit) : filtered;
+    },
+    getById: async (id: string) => {
+      const store = await this.getStore("news");
+      return store.get(id);
+    },
+  };
+
+  faculty = {
+    list: async (language?: Language) => {
+      const store = await this.getStore("faculty");
+      return language ? store.filter((f) => f.language === language) : store.values();
+    },
+    listByCategory: async (category: FacultyCategory, language: Language) => {
+      const store = await this.getStore("faculty");
+      return store
+        .filter((f) => f.language === language && f.data.category === category)
+        .sort((a, b) => (a.data.order || 0) - (b.data.order || 0));
+    },
+    getBySlug: async (slug: string, language: Language) => {
+      const store = await this.getStore("faculty");
+      return store.getBySlug(slug, language);
+    },
+    getAdjunctList: async (language: Language) => {
+      const store = await this.getStore("adjunct-prof");
+      const entry = store.get(`${language}/adjunct-prof`) || store.getBySlug("adjunct-prof", language);
+      return entry ? (entry.data as FacultyMetadata[]) : [];
+    },
+    getMetadata: async (language: Language, categories?: FacultyCategory[]) => {
+      const facultyStore = await this.getStore("faculty");
+      const adjunctData = await this.faculty.getAdjunctList(language);
+
+      const filterByCat = (cat: FacultyCategory) =>
+        facultyStore
+          .filter((p) => p.language === language && p.data.category === cat)
+          .map((p) => ({
+            ...p.data,
+            slug: p.slug,
+            url: `/${language}/academic/faculty/${p.slug}`,
+          }))
+          .sort((a, b) => (a.order || 0) - (b.order || 0));
+
+      const adjunctUrl = `/${language}/academic/faculty/adjunct-professors`;
+      const adjunctList = adjunctData.map((person) => ({
+        ...person,
+        url: `${adjunctUrl}#${slugify(person.name)}`,
+      }));
+
+      const dict: Record<FacultyCategory, Array<FacultyMetadata & { slug?: string; url?: string }>> = {
+        faculty: filterByCat("faculty"),
+        "senior-adjunct": filterByCat("senior-adjunct"),
+        adjunct: adjunctList,
+      };
+
+      const requestedCategories = categories || ["faculty", "senior-adjunct", "adjunct"];
+      return requestedCategories.flatMap((cat) => dict[cat]);
+    },
+  };
+
+  degreesPrograms = {
+    list: async (language?: Language) => {
+      const store = await this.getStore("degrees-programs");
+      const filtered = language ? store.filter((d) => d.language === language) : [...store.values()];
+      return filtered.sort((a, b) => a.data.order - b.data.order);
+    },
+    getBySlug: async (slug: string, language: Language) => {
+      const store = await this.getStore("degrees-programs");
+      return store.getBySlug(slug, language);
+    },
+  };
+
+  degreesWidget = {
+    getData: async (language: Language): Promise<DegreesWidgetDataItem[]> => {
+      if (!this.degreesWidgetCache.has(language)) {
+        this.degreesWidgetCache.set(
+          language,
+          (async () => {
+            const store = await this.getStore("degrees-widget");
+            const contents = store
+              .filter((e) => e.language === language)
+              .sort((a, b) => a.data.order - b.data.order);
+
+            return await Promise.all(
+              contents.map(async (page) => {
+                const Content = (await render(page.rawEntry)).Content;
+                return {
+                  slug: page.slug,
+                  page,
+                  Content,
+                };
+              })
+            );
+          })()
+        );
+      }
+      return this.degreesWidgetCache.get(language)!;
+    },
+  };
+
+  studyModeWidget = {
+    getData: async (language: Language): Promise<StudyModeWidgetDataItem[]> => {
+      if (!this.studyModeWidgetCache.has(language)) {
+        this.studyModeWidgetCache.set(
+          language,
+          (async () => {
+            const store = await this.getStore("study-mode-widget");
+            const pages = store
+              .filter((e) => e.language === language)
+              .sort((a, b) => a.data.order - b.data.order);
+
+            return await Promise.all(
+              pages.map(async (p) => ({
+                slug: p.slug,
+                page: p,
+                Content: (await render(p.rawEntry)).Content,
+              }))
+            );
+          })()
+        );
+      }
+      return this.studyModeWidgetCache.get(language)!;
+    },
+  };
+
+  jobs = {
+    list: async (language?: Language) => {
+      const store = await this.getStore("jobs");
+      const filtered = language ? store.filter((j) => j.language === language) : [...store.values()];
+      return filtered.sort((a, b) => {
+        if (a.data.date > b.data.date) {
+          return -1;
+        }
+        if (a.data.date < b.data.date) {
+          return 1;
+        }
+        return b.id.localeCompare(a.id);
+      });
+    },
+    getById: async (id: string) => {
+      const store = await this.getStore("jobs");
+      return store.get(id);
+    },
+  };
+
+  carousel = {
+    get: async () => {
+      const store = await this.getStore("carousel");
+      const entry = store.get("carousel") || store.values()[0];
+      if (!entry) throw new Error("Carousel data not found");
+      return entry.data;
+    },
+  };
+
+  shortcuts = {
+    get: async (language: Language) => {
+      const store = await this.getStore("shortcuts");
+      const entry = store.get("shortcuts") || store.values()[0];
+      if (!entry) throw new Error("Shortcuts data not found");
+      return (entry.data as any)[language];
+    },
+  };
+
+  menu = {
+    get: async (language: Language): Promise<MenuItem[]> => {
+      const store = await this.getStore("menu");
+      const entry = store.get(language);
+      if (entry) return entry.data as MenuItem[];
+
+      const rawEntry = await getEntry("menu", language);
+      if (!rawEntry) throw new Error(`Menu data for ${language} not found`);
+      const items = extractMenuItems(rawEntry.data);
+      return resolveMenuItems(items, this, language);
+    },
+  };
+
+  assembly = {
+    list: async (language: Language = "zh"): Promise<ContentEntry<AssemblyTableMetadata>[]> => {
+      const store = await this.getStore("assembly");
+      return sortAssemblyTables(store.values());
+    },
+
+    getBySemester: async (
+      semester: string,
+      language: Language = "zh"
+    ): Promise<ContentEntry<AssemblyTableMetadata> | null> => {
+      const store = await this.getStore("assembly");
+      return store.get(semester) || store.values().find((item) => item.data.semester === semester) || null;
+    },
+  };
+
+  newsletter = {
+    list: async (language: Language = "zh"): Promise<ContentEntry<NewsletterMetadata>[]> => {
+      const store = await this.getStore("newsletter");
+      return sortNewsletters(store.values(), "asc");
     },
 
     getByYearAndIssue: async (
@@ -439,8 +491,8 @@ export class AstroContentClient implements IContentClient {
       issue: number,
       language: Language = "zh"
     ): Promise<ContentEntry<NewsletterMetadata> | null> => {
-      const list = await this.newsletter.list(language);
-      return list.find((item) => item.data.year === year && item.data.issue === issue) || null;
+      const store = await this.getStore("newsletter");
+      return store.values().find((item) => item.data.year === year && item.data.issue === issue) || null;
     },
   };
 }

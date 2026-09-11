@@ -594,7 +594,7 @@ async function exportPagesPackage() {
       legacyOrder,
       coverImage: raw.frontmatter.coverImage,
       thumbnail: raw.frontmatter.thumbnail,
-      showChildren: Boolean(raw.frontmatter.showChildren),
+      showChildren: raw.frontmatter.showChildren !== undefined ? Boolean(raw.frontmatter.showChildren) : true,
       body: raw.body,
       bodyHtml: raw.bodyHtml,
       bodyJson: raw.bodyJson,

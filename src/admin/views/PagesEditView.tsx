@@ -54,7 +54,7 @@ export const PagesEditView: React.FC<Props> = ({
   const [order, setOrder] = useState<number>(currentActive?.order ?? 1);
   const [coverImage, setCoverImage] = useState(currentActive?.coverImage || "");
   const [thumbnail, setThumbnail] = useState(currentActive?.thumbnail || "");
-  const [showChildren, setShowChildren] = useState<boolean>(currentActive?.showChildren ?? false);
+  const [showChildren, setShowChildren] = useState<boolean>(currentActive?.showChildren ?? true);
 
   // Content state
   const [body, setBody] = useState(initialItem?.draftBody || initialItem?.body || "");
@@ -105,7 +105,7 @@ export const PagesEditView: React.FC<Props> = ({
     setOrder(ver.data.order ?? 1);
     setCoverImage(ver.data.coverImage || "");
     setThumbnail(ver.data.thumbnail || "");
-    setShowChildren(ver.data.showChildren ?? false);
+    setShowChildren(ver.data.showChildren ?? true);
     setBody(ver.body || "");
     setBodyHtml(ver.bodyHtml || "");
     setShowHistory(false);

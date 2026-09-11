@@ -35,22 +35,8 @@ export async function resolveMenuItems(
     }
 
     if (m.page) {
-      const targetSlug = m.page.startsWith("zh/") || m.page.startsWith("en/")
-        ? m.page
-        : `${language}/${m.page.replace(/^\/+/, "")}`;
-      let page = await client.getEntry("pages", targetSlug).catch(() => null);
-      if (!page) {
-        page = await client.getEntry("pages", m.page).catch(() => null);
-      }
-      if (!page && client.pages?.getById) {
-        page = await client.pages.getById(targetSlug).catch(() => null);
-      }
-      if (!page && client.pages?.getById) {
-        page = await client.pages.getById(m.page).catch(() => null);
-      }
-      if (!page && client.pages?.getBySlug) {
-        page = await client.pages.getBySlug(targetSlug, language).catch(() => null);
-      }
+      const slug = m.page.startsWith("zh/") || m.page.startsWith("en/") ? m.page.slice(3) : m.page;
+      const page = await client.pages.getBySlug(slug, language).catch(() => null);
 
       const title = m.name || page?.data?.title || m.page.split("/").pop() || m.page;
 

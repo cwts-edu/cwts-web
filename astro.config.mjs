@@ -1,11 +1,12 @@
 import { defineConfig } from "astro/config";
-import tailwind from "@astrojs/tailwind";
 import yaml from "@rollup/plugin-yaml";
-// import compress from "astro-compress";
 import react from "@astrojs/react";
 import postcss_import from "postcss-import";
 import tailwindcss_nesting from "tailwindcss/nesting";
+import tailwindcss from "tailwindcss";
+import autoprefixer from "autoprefixer";
 import mdx from "@astrojs/mdx";
+import { unified } from "@astrojs/markdown-remark";
 import {
   remarkExtendedTable,
   extendedTableHandlers,
@@ -30,11 +31,6 @@ function syncFirebaseAssetsIntegration() {
 export default defineConfig({
   site: "https://www.cwts.edu/",
   integrations: [
-    tailwind({
-      config: {
-        applyBaseStyles: false,
-      },
-    }),
     react(),
     mdx(),
     sitemap({
@@ -50,21 +46,25 @@ export default defineConfig({
       iconDir: "src/icons",
     }),
     syncFirebaseAssetsIntegration(),
-    // compress(),
   ],
+  experimental: {
+    incrementalBuild: true,
+  },
   vite: {
     plugins: [yaml()],
     css: {
       postcss: {
-        plugins: [postcss_import, tailwindcss_nesting],
+        plugins: [postcss_import, tailwindcss_nesting, tailwindcss, autoprefixer],
       },
     },
   },
   markdown: {
-    remarkPlugins: [remarkExtendedTable],
-    remarkRehype: {
-      handlers: Object.assign({}, extendedTableHandlers),
-      footnoteLabelTagName: "h3",
-    },
+    processor: unified({
+      remarkPlugins: [remarkExtendedTable],
+      remarkRehype: {
+        handlers: Object.assign({}, extendedTableHandlers),
+        footnoteLabelTagName: "h3",
+      },
+    }),
   },
 });
