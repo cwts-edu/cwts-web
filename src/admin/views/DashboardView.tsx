@@ -10,6 +10,103 @@ import {
   type MigrationProgress,
 } from "../migrations";
 import { formatDraftChangeTitle } from "../utils/draftUtils";
+import { PAGE_TYPES, type PageTypeConfig } from "../config/pageTypes";
+
+// Frequently updated entry points for Popular section
+const POPULAR_ITEM_IDS = [
+  "homepage_carousel",
+  "news",
+  "assembly",
+  "jobs",
+  "pages",
+];
+
+interface EntryCardProps {
+  item: PageTypeConfig;
+  draftCount?: number;
+  onNavigate: (tab: AdminTab, param?: string) => void;
+  accentColor?: "amber" | "purple" | "blue";
+}
+
+const EntryCard: React.FC<EntryCardProps> = ({
+  item,
+  draftCount = 0,
+  onNavigate,
+  accentColor = "purple",
+}) => {
+  const accentClasses = {
+    amber: {
+      borderHover: "hover:border-amber-500/50",
+      iconBg: "bg-amber-950/40 border-amber-500/30 text-amber-300",
+      textHover: "group-hover:text-amber-300",
+    },
+    purple: {
+      borderHover: "hover:border-purple-500/50",
+      iconBg: "bg-purple-900/30 border-purple-500/30 text-purple-300",
+      textHover: "group-hover:text-purple-300",
+    },
+    blue: {
+      borderHover: "hover:border-blue-500/50",
+      iconBg: "bg-blue-900/30 border-blue-500/30 text-blue-300",
+      textHover: "group-hover:text-blue-300",
+    },
+  }[accentColor];
+
+  return (
+    <div
+      onClick={() => onNavigate(item.id as AdminTab)}
+      className={`bg-slate-900/80 border border-slate-800 ${accentClasses.borderHover} hover:bg-slate-900 rounded-2xl p-5 cursor-pointer transition-all duration-200 shadow-lg hover:shadow-xl group flex flex-col justify-between`}
+    >
+      <div>
+        <div className="flex items-center justify-between gap-2">
+          <div
+            className={`w-11 h-11 rounded-xl border flex items-center justify-center text-xl group-hover:scale-105 transition shrink-0 ${accentClasses.iconBg}`}
+          >
+            {item.icon || "📄"}
+          </div>
+
+          <div className="flex items-center gap-2">
+            {draftCount > 0 && (
+              <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30 flex items-center gap-1">
+                <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />
+                {draftCount}
+              </span>
+            )}
+            {item.hasNew && (
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onNavigate(`${item.id}_new` as AdminTab);
+                }}
+                className="text-[11px] font-medium text-slate-400 hover:text-white px-2 py-0.5 rounded-lg bg-slate-800/80 hover:bg-slate-700 border border-slate-700/60 transition active:scale-95"
+                title={`Create new ${item.title}`}
+              >
+                + New
+              </button>
+            )}
+          </div>
+        </div>
+
+        <h3 className={`text-base font-bold text-white mt-4 ${accentClasses.textHover} transition line-clamp-1`}>
+          {item.title}
+        </h3>
+        <p className="text-xs text-slate-400 mt-1 leading-relaxed line-clamp-2">
+          {item.description}
+        </p>
+      </div>
+
+      <div className="mt-4 pt-3 border-t border-slate-800/60 flex items-center justify-between text-[11px] text-slate-500">
+        <span className="font-mono text-[10px] text-slate-500 truncate max-w-[140px]">
+          {item.collectionName || item.id}
+        </span>
+        <span className="opacity-0 group-hover:opacity-100 transition-opacity text-slate-400 text-[11px] font-medium">
+          Open
+        </span>
+      </div>
+    </div>
+  );
+};
 
 interface Props {
   onNavigate: (tab: AdminTab, param?: string) => void;
@@ -93,6 +190,13 @@ export const DashboardView: React.FC<Props> = ({
   };
 
   const totalPendingDocs = pendingMigrations.reduce((acc, m) => acc + m.pendingCount, 0);
+
+  const popularItems = POPULAR_ITEM_IDS.map((id) =>
+    PAGE_TYPES.find((p) => p.id === id)
+  ).filter((item): item is PageTypeConfig => Boolean(item));
+
+  const homepageItems = PAGE_TYPES.filter((p) => p.group === "homepage");
+  const collectionItems = PAGE_TYPES.filter((p) => p.group === "collections");
 
   return (
     <div className="space-y-8">
@@ -367,88 +471,86 @@ export const DashboardView: React.FC<Props> = ({
         </div>
       )}
 
-      {/* Collection Quick Navigation Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        <div
-          onClick={() => onNavigate("homepage_carousel")}
-          className="bg-slate-900 border border-slate-800 hover:border-purple-500/40 rounded-2xl p-6 cursor-pointer transition shadow-xl group"
-        >
-          <div className="flex items-center justify-between">
-            <div className="w-12 h-12 rounded-xl bg-purple-900/30 border border-purple-500/30 flex items-center justify-center text-2xl group-hover:scale-110 transition">
-              🎠
-            </div>
-            <span className="text-xs text-purple-400 group-hover:text-purple-300 font-semibold flex items-center gap-1">
-              Manage <span>→</span>
+      {/* 1. Popular Section */}
+      <section className="space-y-4">
+        <div className="flex items-center justify-between pb-2 border-b border-slate-800/80">
+          <div className="flex items-center gap-2.5">
+            <span className="flex h-2.5 w-2.5 relative">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-amber-500"></span>
+            </span>
+            <h2 className="text-base font-bold text-white tracking-tight">Popular</h2>
+            <span className="text-xs text-slate-400 font-normal">
+              — Quick access to frequently managed items
             </span>
           </div>
-          <h3 className="text-base font-bold text-white mt-4 group-hover:text-purple-300 transition">Hero Carousel</h3>
-          <p className="text-xs text-slate-400 mt-1">Homepage hero banners, links, and display order.</p>
         </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+          {popularItems.map((item) => (
+            <EntryCard
+              key={`popular_${item.id}`}
+              item={item}
+              accentColor="amber"
+              draftCount={
+                pendingChanges.filter((c) => c.collection === item.collectionName).length
+              }
+              onNavigate={onNavigate}
+            />
+          ))}
+        </div>
+      </section>
 
-        <div
-          onClick={() => onNavigate("news")}
-          className="bg-slate-900 border border-slate-800 hover:border-purple-500/40 rounded-2xl p-6 cursor-pointer transition shadow-xl group"
-        >
-          <div className="flex items-center justify-between">
-            <div className="w-12 h-12 rounded-xl bg-purple-900/30 border border-purple-500/30 flex items-center justify-center text-2xl group-hover:scale-110 transition">
-              📰
-            </div>
-            <span className="text-xs text-purple-400 group-hover:text-purple-300 font-semibold flex items-center gap-1">
-              Manage <span>→</span>
+      {/* 2. Homepage Section */}
+      <section className="space-y-4">
+        <div className="flex items-center justify-between pb-2 border-b border-slate-800/80">
+          <div className="flex items-center gap-2.5">
+            <span className="w-2.5 h-2.5 rounded-full bg-purple-500 shadow-sm shadow-purple-500/50" />
+            <h2 className="text-base font-bold text-white tracking-tight">Homepage</h2>
+            <span className="text-xs text-slate-400 font-normal">
+              — Hero banners, widgets, shortcuts & site navigation
             </span>
           </div>
-          <h3 className="text-base font-bold text-white mt-4 group-hover:text-purple-300 transition">News Articles</h3>
-          <p className="text-xs text-slate-400 mt-1">Homepage news items and newsletter highlights.</p>
         </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {homepageItems.map((item) => (
+            <EntryCard
+              key={`home_${item.id}`}
+              item={item}
+              accentColor="purple"
+              draftCount={
+                pendingChanges.filter((c) => c.collection === item.collectionName).length
+              }
+              onNavigate={onNavigate}
+            />
+          ))}
+        </div>
+      </section>
 
-        <div
-          onClick={() => onNavigate("faculty")}
-          className="bg-slate-900 border border-slate-800 hover:border-purple-500/40 rounded-2xl p-6 cursor-pointer transition shadow-xl group"
-        >
-          <div className="flex items-center justify-between">
-            <div className="w-12 h-12 rounded-xl bg-purple-900/30 border border-purple-500/30 flex items-center justify-center text-2xl group-hover:scale-110 transition">
-              👤
-            </div>
-            <span className="text-xs text-purple-400 group-hover:text-purple-300 font-semibold flex items-center gap-1">
-              Manage <span>→</span>
+      {/* 3. Collections Section */}
+      <section className="space-y-4">
+        <div className="flex items-center justify-between pb-2 border-b border-slate-800/80">
+          <div className="flex items-center gap-2.5">
+            <span className="w-2.5 h-2.5 rounded-full bg-blue-500 shadow-sm shadow-blue-500/50" />
+            <h2 className="text-base font-bold text-white tracking-tight">Collections</h2>
+            <span className="text-xs text-slate-400 font-normal">
+              — Faculty, academic programs, jobs, assembly, newsletter & content pages
             </span>
           </div>
-          <h3 className="text-base font-bold text-white mt-4 group-hover:text-purple-300 transition">Faculty & Adjuncts</h3>
-          <p className="text-xs text-slate-400 mt-1">Core professors, senior adjuncts, and adjunct list.</p>
         </div>
-
-        <div
-          onClick={() => onNavigate("jobs")}
-          className="bg-slate-900 border border-slate-800 hover:border-blue-500/40 rounded-2xl p-6 cursor-pointer transition shadow-xl group"
-        >
-          <div className="flex items-center justify-between">
-            <div className="w-12 h-12 rounded-xl bg-blue-900/30 border border-blue-500/30 flex items-center justify-center text-2xl group-hover:scale-110 transition">
-              💼
-            </div>
-            <span className="text-xs text-blue-400 group-hover:text-blue-300 font-semibold flex items-center gap-1">
-              Manage <span>→</span>
-            </span>
-          </div>
-          <h3 className="text-base font-bold text-white mt-4 group-hover:text-blue-300 transition">Job Postings</h3>
-          <p className="text-xs text-slate-400 mt-1">Seminary job board for pastors and ministry workers.</p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {collectionItems.map((item) => (
+            <EntryCard
+              key={`coll_${item.id}`}
+              item={item}
+              accentColor="blue"
+              draftCount={
+                pendingChanges.filter((c) => c.collection === item.collectionName).length
+              }
+              onNavigate={onNavigate}
+            />
+          ))}
         </div>
-
-        <div
-          onClick={() => onNavigate("homepage_menu")}
-          className="bg-slate-900 border border-slate-800 hover:border-purple-500/40 rounded-2xl p-6 cursor-pointer transition shadow-xl group"
-        >
-          <div className="flex items-center justify-between">
-            <div className="w-12 h-12 rounded-xl bg-purple-900/30 border border-purple-500/30 flex items-center justify-center text-2xl group-hover:scale-110 transition">
-              🧭
-            </div>
-            <span className="text-xs text-purple-400 group-hover:text-purple-300 font-semibold flex items-center gap-1">
-              Manage <span>→</span>
-            </span>
-          </div>
-          <h3 className="text-base font-bold text-white mt-4 group-hover:text-purple-300 transition">Navigation Menu</h3>
-          <p className="text-xs text-slate-400 mt-1">Desktop navbar dropdowns and mobile drawer navigation tree.</p>
-        </div>
-      </div>
+      </section>
     </div>
   );
 };
