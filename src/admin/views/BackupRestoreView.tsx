@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import JSZip from "jszip";
 import { db, storage } from "../config/firebase";
 import { collection, getDocs, doc, writeBatch, setDoc } from "firebase/firestore";
-import { ref, uploadBytes, getBytes, getDownloadURL } from "firebase/storage";
+import { ref, uploadBytes, getBytes, getDownloadURL, getMetadata } from "firebase/storage";
 import { useAuth } from "../context/AuthContext";
 import type { AuditUser } from "../../libs/content/types";
 
@@ -56,6 +56,7 @@ export const BackupRestoreView: React.FC<Props> = ({ onRefreshData }) => {
 
   // Import State
   const [loadedPackage, setLoadedPackage] = useState<LoadedPackage | null>(null);
+  const [skipExistingAssets, setSkipExistingAssets] = useState(true);
   const [isImporting, setIsImporting] = useState(false);
   const [importProgress, setImportProgress] = useState<{ current: number; total: number; status: string } | null>(null);
   const [resultMessage, setResultMessage] = useState<{ success: boolean; text: string } | null>(null);
@@ -271,6 +272,7 @@ export const BackupRestoreView: React.FC<Props> = ({ onRefreshData }) => {
       });
 
       let assetsUploaded = 0;
+      let assetsSkipped = 0;
       for (let i = 0; i < assetEntries.length; i++) {
         const item = assetEntries[i];
         const rawPath = item.name.replace(/^assets\//, "");
@@ -278,11 +280,31 @@ export const BackupRestoreView: React.FC<Props> = ({ onRefreshData }) => {
         setImportProgress({
           current: i + 1,
           total: assetEntries.length + documents.length,
-          status: `Uploading asset [${i + 1}/${assetEntries.length}]: ${rawPath}...`,
+          status: `Processing asset [${i + 1}/${assetEntries.length}]: ${rawPath}...`,
         });
 
         const buffer = await item.async("arraybuffer");
         const fileRef = ref(storage, rawPath);
+
+        if (skipExistingAssets) {
+          try {
+            const meta = await getMetadata(fileRef);
+            if (meta && meta.size === buffer.byteLength) {
+              assetsSkipped++;
+              await new Promise((r) => setTimeout(r, 0));
+              continue;
+            }
+          } catch {
+            // Asset does not exist in storage or lookup failed; proceed to upload
+          }
+        }
+
+        setImportProgress({
+          current: i + 1,
+          total: assetEntries.length + documents.length,
+          status: `Uploading asset [${i + 1}/${assetEntries.length}]: ${rawPath}...`,
+        });
+
         await uploadBytes(fileRef, buffer);
         assetsUploaded++;
 
@@ -343,7 +365,9 @@ export const BackupRestoreView: React.FC<Props> = ({ onRefreshData }) => {
 
       setResultMessage({
         success: true,
-        text: `🎉 Collection '${manifest.collection}' replaced successfully: ${docsWritten} documents written, ${assetsUploaded} assets uploaded.`,
+        text: `🎉 Collection '${manifest.collection}' replaced successfully: ${docsWritten} documents written, ${assetsUploaded} assets uploaded${
+          assetsSkipped > 0 ? `, ${assetsSkipped} unchanged assets skipped` : ""
+        }.`,
       });
 
       setLoadedPackage(null);
@@ -478,7 +502,7 @@ export const BackupRestoreView: React.FC<Props> = ({ onRefreshData }) => {
 
             {/* Loaded Package Preview */}
             {loadedPackage && (
-              <div className="p-4 bg-indigo-950/30 border border-indigo-500/40 rounded-2xl space-y-2 text-xs">
+              <div className="p-4 bg-indigo-950/30 border border-indigo-500/40 rounded-2xl space-y-3 text-xs">
                 <div className="flex items-center justify-between font-bold text-indigo-200">
                   <span>Package: {loadedPackage.manifest.collection}</span>
                   <span className="font-mono text-[10px] uppercase bg-indigo-500/20 px-2 py-0.5 rounded text-indigo-300">
@@ -489,6 +513,24 @@ export const BackupRestoreView: React.FC<Props> = ({ onRefreshData }) => {
                   <div>📄 Documents: {loadedPackage.manifest.documentsCount}</div>
                   <div>🖼️ Assets: {loadedPackage.manifest.assetsCount}</div>
                 </div>
+
+                {loadedPackage.manifest.assetsCount > 0 && (
+                  <div className="pt-2 border-t border-indigo-500/20">
+                    <label className="flex items-center gap-2 cursor-pointer text-xs text-slate-300 hover:text-white select-none">
+                      <input
+                        type="checkbox"
+                        checked={skipExistingAssets}
+                        onChange={(e) => setSkipExistingAssets(e.target.checked)}
+                        disabled={isImporting}
+                        className="rounded bg-slate-950 border-slate-700 text-indigo-600 focus:ring-indigo-500 w-4 h-4 cursor-pointer"
+                      />
+                      <span>Skip uploading assets if already exist in Storage</span>
+                    </label>
+                    <p className="text-[11px] text-slate-400 ml-6 mt-0.5">
+                      Checks Storage and skips uploading unchanged assets with matching file size to reduce write traffic.
+                    </p>
+                  </div>
+                )}
               </div>
             )}
           </div>
