@@ -23,7 +23,8 @@
     "export-assembly-package": "tsx tools/export-assembly-package.ts",
     "export-newsletter-package": "tsx tools/export-newsletter-package.ts",
     "export-pages-package": "tsx tools/export-pages-package.ts",
-    "export-all-packages": "tsx tools/export-homepage-package.ts && tsx tools/export-faculty-package.ts && tsx tools/export-jobs-package.ts && tsx tools/export-degrees-programs-package.ts && tsx tools/export-assembly-package.ts && tsx tools/export-newsletter-package.ts && tsx tools/export-pages-package.ts"
+    "export-menu-package": "tsx tools/export-menu-package.ts",
+    "export-all-packages": "tsx tools/export-homepage-package.ts && tsx tools/export-faculty-package.ts && tsx tools/export-jobs-package.ts && tsx tools/export-degrees-programs-package.ts && tsx tools/export-assembly-package.ts && tsx tools/export-newsletter-package.ts && tsx tools/export-pages-package.ts && tsx tools/export-menu-package.ts"
   },
   "dependencies": {
     "@astrojs/markdown-remark": "^6.1.0",

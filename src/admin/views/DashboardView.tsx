@@ -346,6 +346,7 @@ export const DashboardView: React.FC<Props> = ({
                         if (change.collection === "news") onNavigate("news_edit", change.documentId);
                         if (change.collection === "jobs") onNavigate("jobs_edit", change.documentId);
                         if (change.collection === "faculty") onNavigate("faculty_edit", change.documentId);
+                        if (change.collection === "menu") onNavigate("homepage_menu");
                       }}
                       className="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-lg text-xs"
                     >
@@ -430,6 +431,22 @@ export const DashboardView: React.FC<Props> = ({
           </div>
           <h3 className="text-base font-bold text-white mt-4 group-hover:text-blue-300 transition">Job Postings</h3>
           <p className="text-xs text-slate-400 mt-1">Seminary job board for pastors and ministry workers.</p>
+        </div>
+
+        <div
+          onClick={() => onNavigate("homepage_menu")}
+          className="bg-slate-900 border border-slate-800 hover:border-purple-500/40 rounded-2xl p-6 cursor-pointer transition shadow-xl group"
+        >
+          <div className="flex items-center justify-between">
+            <div className="w-12 h-12 rounded-xl bg-purple-900/30 border border-purple-500/30 flex items-center justify-center text-2xl group-hover:scale-110 transition">
+              🧭
+            </div>
+            <span className="text-xs text-purple-400 group-hover:text-purple-300 font-semibold flex items-center gap-1">
+              Manage <span>→</span>
+            </span>
+          </div>
+          <h3 className="text-base font-bold text-white mt-4 group-hover:text-purple-300 transition">Navigation Menu</h3>
+          <p className="text-xs text-slate-400 mt-1">Desktop navbar dropdowns and mobile drawer navigation tree.</p>
         </div>
       </div>
     </div>

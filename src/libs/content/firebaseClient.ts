@@ -25,6 +25,7 @@ import { sortAssemblyTables } from "./assemblyUtils";
 import { sortNewsletters } from "./newsletterUtils";
 import { sortPagesHierarchically } from "./pageUtils";
 import { obfuscateMailtoLinks } from "./emailObfuscator";
+import { resolveMenuItems, extractMenuItems } from "./menuUtils";
 
 let markdownProcessorPromise: Promise<any> | null = null;
 function getMarkdownProcessor() {
@@ -301,12 +302,21 @@ export class FirebaseContentClient implements IContentClient {
 
   pages = {
     getBySlug: async (slug: string, language: Language) => {
-      const id = `${language}_${slug.replace(/\//g, "_")}`;
+      const cleanSlug = slug.replace(/^\/+|\/+$/g, "").replace(/^(zh|en)\//, "");
+      const id = `${language}_${cleanSlug.replace(/\//g, "_")}`;
       return this.getEntry("pages", id);
     },
     getById: async (id: string) => {
-      const normalizedId = id.includes("/") ? id.replace(/\//g, "_") : id;
-      return this.getEntry("pages", normalizedId);
+      const normalizedId = id.replace(/^\/+|\/+$/g, "").replace(/\//g, "_");
+      const found = await this.getEntry("pages", normalizedId);
+      if (found) return found;
+      if (!normalizedId.startsWith("zh_") && !normalizedId.startsWith("en_")) {
+        const zhDoc = await this.getEntry("pages", `zh_${normalizedId}`);
+        if (zhDoc) return zhDoc;
+        const enDoc = await this.getEntry("pages", `en_${normalizedId}`);
+        if (enDoc) return enDoc;
+      }
+      return null;
     },
     list: async (language?: Language) => {
       const items = await this.getCollection("pages");
@@ -314,21 +324,31 @@ export class FirebaseContentClient implements IContentClient {
       return sortPagesHierarchically(filtered);
     },
     listChildren: async (slug: string) => {
+      const trimmed = slug.replace(/^\/+|\/+$/g, "");
+      const match = trimmed.match(/^(zh|en)\/(.*)$/);
+      const lang = match ? (match[1] as Language) : undefined;
+      const cleanSlug = match ? match[2] : trimmed;
+
       const items = await this.getCollection("pages");
       const children = items
         .filter((p) => {
-          const pSlug = p.slug;
-          if (!pSlug.startsWith(slug + "/")) return false;
-          const sub = pSlug.slice(slug.length + 1);
+          if (lang && p.language && p.language !== lang) return false;
+          const pSlug = p.slug.replace(/^\/+|\/+$/g, "").replace(/^(zh|en)\//, "");
+          if (!pSlug.startsWith(cleanSlug + "/") || pSlug === cleanSlug) return false;
+          const sub = pSlug.slice(cleanSlug.length + 1);
           return !sub.includes("/");
         })
         .sort((a, b) => (a.data.order || 0) - (b.data.order || 0));
 
-      return children.map((page) => ({
-        url: `/${page.language}/${page.slug}`,
-        thumbnail: page.data.thumbnail || site.defaultThumbnail,
-        title: page.data.title,
-      }));
+      return children.map((page) => {
+        const pageLang = page.language || lang || "zh";
+        const cleanPageSlug = page.slug.replace(/^\/+|\/+$/g, "").replace(/^(zh|en)\//, "");
+        return {
+          url: `/${pageLang}/${cleanPageSlug}`,
+          thumbnail: page.data.thumbnail || site.defaultThumbnail,
+          title: page.data.title,
+        };
+      });
     },
   };
 
@@ -493,7 +513,9 @@ export class FirebaseContentClient implements IContentClient {
   menu = {
     get: async (language: Language): Promise<MenuItem[]> => {
       const entry = await this.getEntry("menu", language);
-      return entry ? entry.data : [];
+      if (!entry) return [];
+      const items = extractMenuItems(entry.data);
+      return resolveMenuItems(items, this, language);
     },
   };
 

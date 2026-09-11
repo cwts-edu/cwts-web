@@ -149,6 +149,19 @@ export const MenuItemSchema: z.ZodType<any> = z.lazy(() =>
 );
 export type MenuItem = z.infer<typeof MenuItemSchema>;
 
+export const MenuDocumentMetadataSchema = z.object({
+  language: z.enum(["zh", "en"]).optional(),
+  items: z.array(MenuItemSchema).default([]),
+  referencedAssets: z.array(z.string()).optional(),
+});
+export type MenuDocumentMetadata = z.infer<typeof MenuDocumentMetadataSchema>;
+
+export const MenuSchema = z.union([
+  MenuDocumentMetadataSchema,
+  z.array(MenuItemSchema).transform((items) => ({ items })),
+]);
+
+
 // 11. Assembly Table Schema
 export const AssemblyColumnSchema = z.object({
   id: z.string(),
@@ -198,7 +211,7 @@ export interface ContentSchemaMap {
   jobs: JobMetadata;
   carousel: CarouselItem;
   shortcuts: ShortcutsData;
-  menu: MenuItem[];
+  menu: MenuDocumentMetadata | MenuItem[];
   assembly: AssemblyTableMetadata;
   newsletter: NewsletterMetadata;
 }
@@ -214,7 +227,7 @@ export const SchemaValidators: { [K in keyof ContentSchemaMap]: z.ZodType<any> }
   jobs: JobMetadataSchema,
   carousel: CarouselItemSchema,
   shortcuts: ShortcutsSchema,
-  menu: z.array(MenuItemSchema),
+  menu: MenuSchema,
   assembly: AssemblyTableMetadataSchema,
   newsletter: NewsletterMetadataSchema,
 };

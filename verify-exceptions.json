@@ -18,7 +18,6 @@
     }
   ],
   "ignoredAssets": [
-    "regex:_astro/newsletter-.*\\.pdf",
     "android-chrome-192x192.png",
     "android-chrome-512x512.png",
     "docs/admissions/Application-Form-DMin_111422.pdf",
@@ -88,8 +87,13 @@
     "docs/jobs/2025-02-21-SFCLC-Chinese Pastor.pdf",
     "docs/jobs/2025-03-16-Sunset Church-Assistant Cantonese Pastor.pdf",
     "docs/jobs/2025-03-17-KCCC-EM Pastor.pdf",
+    "docs/ministry-institute/Soul-Emotions.pdf",
+    "docs/ministry-institute/Soul-child-mental-health.pdf",
     "docs/ministry-institute/SoulCare-PersonalitySeminar.png",
     "docs/ministry-institute/SoulCare-SF.jpg",
+    "docs/ministry-institute/SoulCare-Understanding-Emotional-Trauma.jpg",
+    "docs/ministry-institute/asd-family.pdf",
+    "docs/ministry-institute/asd-gender-dysphoria.pdf",
     "docs/ministry-institute/soul-child-psyc.jpg",
     "docs/ministry-institute/soul-emotions-spiritual.png",
     "images/babc/2022/Lu.jpg",
@@ -151,6 +155,7 @@
     "images/covers/admissions/tuition-scholarship.cover.jpg",
     "images/covers/contact.cover.jpg",
     "images/covers/default.cover.jpg",
+    "images/covers/default.thumbnail.jpg",
     "images/covers/degrees-programs/certificate-in-servant-leadership.cover.jpg",
     "images/covers/degrees-programs/certificate-of-children-ministry.cover.jpg",
     "images/covers/degrees-programs/certificate-of-children-ministry.thumbnail.jpg",
@@ -182,6 +187,7 @@
     "images/covers/student-life/calendar.cover.jpg",
     "images/covers/student-life/dormitory.cover.jpg",
     "images/covers/student-life/job-posting.cover.jpg",
+    "images/covers/student-life/job-posting.thumbnail.jpg",
     "images/covers/student-life/prayer.cover.jpg",
     "images/covers/student-life/prayer.thumbnail.jpg",
     "images/degrees-programs/default-cover.jpg",
@@ -198,6 +204,7 @@
     "mstile-150x150.png",
     "mstile-310x150.png",
     "mstile-310x310.png",
-    "mstile-70x70.png"
+    "mstile-70x70.png",
+    "regex:_astro/newsletter-.*\\.pdf"
   ]
 }

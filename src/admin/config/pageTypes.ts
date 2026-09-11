@@ -90,6 +90,15 @@ export const PAGE_TYPES: PageTypeConfig[] = [
     collectionName: "shortcuts",
     description: "Homepage quick action buttons",
   },
+  {
+    id: "homepage_menu",
+    title: "Navigation Menu",
+    path: "/admin/homepage/menu",
+    icon: "🧭",
+    group: "homepage",
+    collectionName: "menu",
+    description: "Desktop navbar dropdowns and mobile drawer navigation tree",
+  },
   // 2. Site Collections
   {
     id: "faculty",

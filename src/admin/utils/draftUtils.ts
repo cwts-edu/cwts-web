@@ -39,7 +39,13 @@ export function formatDraftChangeTitle(change: DraftChangeItem | {
     return orderStr || imgName || change.documentId;
   }
 
-  // 3. News, Faculty, Jobs, or standard document
+  // 3. Navigation Menu
+  if (change.collection === "menu") {
+    const lang = change.documentId === "zh" || change.data?.language === "zh" ? "中文 Traditional Chinese" : "English";
+    return `Navigation Menu (${lang})`;
+  }
+
+  // 4. News, Faculty, Jobs, or standard document
   return (
     change.data?.title ||
     change.data?.zh?.name ||

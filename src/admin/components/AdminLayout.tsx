@@ -20,6 +20,7 @@ export type AdminTab =
   | "homepage_studymodes_new"
   | "homepage_studymodes_edit"
   | "homepage_shortcuts"
+  | "homepage_menu"
   | "faculty"
   | "faculty_new"
   | "faculty_edit"
@@ -75,6 +76,7 @@ export const AdminLayout: React.FC<Props> = ({ currentTab, onNavigate, children 
     if (collection === "degrees-widget") onNavigate("homepage_degrees_edit", docId);
     if (collection === "assembly") onNavigate("assembly_edit", docId);
     if (collection === "newsletter") onNavigate("newsletter_edit", docId);
+    if (collection === "menu") onNavigate("homepage_menu");
   };
 
   return (

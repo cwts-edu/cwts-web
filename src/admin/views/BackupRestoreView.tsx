@@ -416,6 +416,7 @@ export const BackupRestoreView: React.FC<Props> = ({ onRefreshData }) => {
                   <option value="degrees-widget">🎓 Degrees Widget</option>
                   <option value="study-mode-widget">📖 Study Modes</option>
                   <option value="shortcuts">⚡ Shortcuts</option>
+                  <option value="menu">🧭 Navigation Menu</option>
                 </optgroup>
                 <optgroup label="Collections">
                   <option value="degrees-programs">🎓 Degrees & Programs</option>

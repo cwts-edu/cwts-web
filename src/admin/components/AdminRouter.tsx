@@ -18,6 +18,7 @@ import { DegreesWidgetEditView } from "../views/DegreesWidgetEditView";
 import { StudyModeWidgetListView } from "../views/StudyModeWidgetListView";
 import { StudyModeWidgetEditView } from "../views/StudyModeWidgetEditView";
 import { ShortcutsManagerView } from "../views/ShortcutsManagerView";
+import { MenuManagerView } from "../views/MenuManagerView";
 import { AssemblyListView } from "../views/AssemblyListView";
 import { AssemblyEditView } from "../views/AssemblyEditView";
 import { NewsletterListView } from "../views/NewsletterListView";
@@ -33,6 +34,7 @@ import { useCarouselController } from "../hooks/collections/useCarouselControlle
 import { useDegreesWidgetController } from "../hooks/collections/useDegreesWidgetController";
 import { useStudyModesController } from "../hooks/collections/useStudyModesController";
 import { useShortcutsController } from "../hooks/collections/useShortcutsController";
+import { useMenuController } from "../hooks/collections/useMenuController";
 import { useAssemblyController } from "../hooks/collections/useAssemblyController";
 import { useNewsletterController } from "../hooks/collections/useNewsletterController";
 import { usePagesController } from "../hooks/collections/usePagesController";
@@ -59,6 +61,7 @@ export const AdminRouter: React.FC<Props> = ({
   const degreesWidget = useDegreesWidgetController(currentTab.startsWith("homepage_degrees"), onNavigate);
   const studyModes = useStudyModesController(currentTab.startsWith("homepage_studymodes"), onNavigate);
   const shortcuts = useShortcutsController(currentTab.startsWith("homepage_shortcuts"));
+  const menu = useMenuController(currentTab.startsWith("homepage_menu"));
   const assembly = useAssemblyController(currentTab.startsWith("assembly"), onNavigate);
   const newsletter = useNewsletterController(currentTab.startsWith("newsletter"), onNavigate);
   const pages = usePagesController(currentTab.startsWith("pages"), onNavigate);
@@ -74,6 +77,7 @@ export const AdminRouter: React.FC<Props> = ({
       degreesWidget.reload(),
       studyModes.reload(),
       shortcuts.reload(),
+      menu.reload(),
       assembly.reload(),
       newsletter.reload(),
       pages.reload(),
@@ -346,6 +350,16 @@ export const AdminRouter: React.FC<Props> = ({
       <ShortcutsManagerView
         initialData={shortcuts.data}
         isLoading={shortcuts.isLoading}
+      />
+    );
+  }
+
+  // ---- Navigation Menu ----
+  if (currentTab === "homepage_menu") {
+    return (
+      <MenuManagerView
+        initialData={menu.data}
+        isLoading={menu.isLoading}
       />
     );
   }

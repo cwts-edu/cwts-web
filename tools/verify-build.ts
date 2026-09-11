@@ -131,6 +131,13 @@ function resolveDistFile(
     return { exists: true, actualRelPath: indexMatch };
   }
 
+  // 3. Check space vs hyphen variant match (e.g. "vision-and-mission-copy" -> "vision-and-mission copy")
+  const spaceTarget = toSlash(path.join(targetRel.replace(/-/g, " "), "index.html")).toLowerCase();
+  const spaceMatch = distFilesMap.get(spaceTarget);
+  if (spaceMatch) {
+    return { exists: true, actualRelPath: spaceMatch };
+  }
+
   return { exists: false };
 }
 

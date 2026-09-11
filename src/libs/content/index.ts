@@ -7,6 +7,7 @@ import type { ContentSchemaMap } from "./schemas";
 export * from "./types";
 export * from "./schemas";
 export * from "./constants";
+export * from "./menuUtils";
 export { FirebaseContentClient } from "./firebaseClient";
 export { AstroContentClient } from "./astroClient";
 export { HybridContentClient } from "./hybridClient";
@@ -38,6 +39,7 @@ const ALL_MIGRATED_COLLECTIONS: Array<keyof ContentSchemaMap> = [
   "assembly",
   "newsletter",
   "pages",
+  "menu",
 ];
 
 const MIGRATED_RAW =

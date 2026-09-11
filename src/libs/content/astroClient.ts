@@ -31,6 +31,7 @@ import {
   formatNewsletterCoverPath,
   sortNewsletters,
 } from "./newsletterUtils";
+import { resolveMenuItems, extractMenuItems } from "./menuUtils";
 
 const allAssemblyCsv = import.meta.glob("/src/content/csv/assembly/*.csv", { as: "raw" });
 const allNewsletterPdfs = import.meta.glob("/public/docs/newsletter/*.pdf");
@@ -117,7 +118,8 @@ export class AstroContentClient implements IContentClient {
 
   pages = {
     getBySlug: async (slug: string, language: Language) => {
-      return this.getEntry("pages", `${language}/${slug}`);
+      const cleanSlug = slug.replace(/^\/+|\/+$/g, "").replace(/^(zh|en)\//, "");
+      return this.getEntry("pages", `${language}/${cleanSlug}`);
     },
     getById: async (id: string) => {
       return this.getEntry("pages", id);
@@ -127,23 +129,31 @@ export class AstroContentClient implements IContentClient {
       return language ? all.filter((p) => p.language === language) : all;
     },
     listChildren: async (slug: string) => {
-      const descendants = await getCollection(
-        "pages",
-        (page) => page.id.startsWith(slug) && page.id !== slug
-      );
+      const trimmed = slug.replace(/^\/+|\/+$/g, "");
+      const match = trimmed.match(/^(zh|en)\/(.*)$/);
+      const lang = match ? (match[1] as Language) : undefined;
+      const cleanSlug = match ? match[2] : trimmed;
 
-      const children = descendants
+      const all = await this.getCollection("pages");
+      const children = all
         .filter((page) => {
-          const relPath = page.id.slice(slug.length + 1);
-          return !relPath.includes("/");
+          if (lang && page.language !== lang) return false;
+          const pSlug = page.slug.replace(/^\/+|\/+$/g, "").replace(/^(zh|en)\//, "");
+          if (!pSlug.startsWith(cleanSlug + "/") || pSlug === cleanSlug) return false;
+          const sub = pSlug.slice(cleanSlug.length + 1);
+          return !sub.includes("/");
         })
-        .sort((a, b) => a.data.order - b.data.order);
+        .sort((a, b) => (a.data.order || 0) - (b.data.order || 0));
 
-      return children.map((page) => ({
-        url: "/" + page.id,
-        thumbnail: page.data.thumbnail || site.defaultThumbnail,
-        title: page.data.title,
-      }));
+      return children.map((page) => {
+        const pageLang = page.language || lang || "zh";
+        const cleanPageSlug = page.slug.replace(/^\/+|\/+$/g, "").replace(/^(zh|en)\//, "");
+        return {
+          url: `/${pageLang}/${cleanPageSlug}`,
+          thumbnail: page.data.thumbnail || site.defaultThumbnail,
+          title: page.data.title,
+        };
+      });
     },
   };
 
@@ -331,37 +341,8 @@ export class AstroContentClient implements IContentClient {
     get: async (language: Language): Promise<MenuItem[]> => {
       const entry = await getEntry("menu", language);
       if (!entry) throw new Error(`Menu data for ${language} not found`);
-
-      const convertMenuItem = async (m: any): Promise<MenuItem> => {
-        let children: MenuItem[] | undefined;
-        if (m.children) {
-          children = await Promise.all(m.children.map(convertMenuItem));
-        } else if (m.page && m.includeChildren) {
-          const childPages = await this.pages.listChildren(m.page);
-          children = childPages.map((child) => ({
-            name: child.title,
-            url: child.url,
-          }));
-        }
-
-        if (m.page) {
-          const page = await getEntry("pages", m.page);
-          if (!page) throw new Error("Menu page not found: " + m.page);
-          return {
-            name: page.data.title,
-            url: (!m.noUrl && "/" + page.id) || undefined,
-            children,
-          };
-        } else {
-          return {
-            name: m.name,
-            url: m.url,
-            children,
-          };
-        }
-      };
-
-      return await Promise.all((entry.data as any[]).map(convertMenuItem));
+      const items = extractMenuItems(entry.data);
+      return resolveMenuItems(items, this, language);
     },
   };
 
