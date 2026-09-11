@@ -32,8 +32,8 @@
     "@astrojs/react": "^6.0.5",
     "@astrojs/sitemap": "^3.7.4",
     "@rollup/plugin-yaml": "^4.1.1",
-    "@tiptap/extension-color": "^3.30.3",
-    "@tiptap/extension-highlight": "^3.30.3",
+    "@tiptap/extension-color": "^3.30.2",
+    "@tiptap/extension-highlight": "^3.30.2",
     "@tiptap/extension-image": "^3.30.2",
     "@tiptap/extension-link": "^3.30.2",
     "@tiptap/extension-placeholder": "^3.30.2",
@@ -41,8 +41,8 @@
     "@tiptap/extension-table-cell": "^3.30.2",
     "@tiptap/extension-table-header": "^3.30.2",
     "@tiptap/extension-table-row": "^3.30.2",
-    "@tiptap/extension-text-align": "^3.30.3",
-    "@tiptap/extension-text-style": "^3.30.3",
+    "@tiptap/extension-text-align": "^3.30.2",
+    "@tiptap/extension-text-style": "^3.30.2",
     "@tiptap/html": "^3.30.2",
     "@tiptap/pm": "^3.30.2",
     "@tiptap/react": "^3.30.2",
@@ -84,5 +84,10 @@
     "svgo": "^3.3.2",
     "tailwind-scrollbar-hide": "^2.0.0",
     "tsx": "^4.19.3"
+  },
+  "overrides": {
+    "astro-obfuscate": {
+      "astro": "$astro"
+    }
   }
 }
