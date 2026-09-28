@@ -34,7 +34,13 @@ const data = await getStudyModeWidgetData("zh");
             )}
           </div>
           <div class="prose prose-tabs">
-            <item.Content />
+            {item.page.data.bodyHtml ? (
+              <Fragment set:html={item.page.data.bodyHtml} />
+            ) : item.Content ? (
+              <item.Content />
+            ) : (
+              <Fragment set:html={item.page.html} />
+            )}
           </div>
         </div>
       ))

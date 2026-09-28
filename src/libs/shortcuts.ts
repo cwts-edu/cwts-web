@@ -1,26 +1,14 @@
-import { getEntry } from "astro:content";
+import { content } from "./content";
 import type { Language } from "./language";
+import type { ShortcutItem } from "./content/schemas";
 
-export interface Shortcut {
-  name: string;
-  url: string;
-  type?: string;
-  breakBefore?: boolean;
-}
+export type Shortcut = ShortcutItem;
 
-type ShortcutData = {
-  [language in Language]: Shortcut[];
+const shortcuts = {
+  zh: await content.shortcuts.get("zh"),
+  en: await content.shortcuts.get("en"),
 };
 
-const shortcutsEntry = await getEntry("shortcuts", "shortcuts");
-if (!shortcutsEntry) {
-  throw new Error(
-    "Shortcuts data file 'shortcuts.yml' not found in the 'shortcuts' collection. This file is required.",
-  );
-}
-
-const shortcuts = shortcutsEntry.data;
-
 export default function getShortcuts(language: Language): Shortcut[] {
-  return (shortcuts as ShortcutData)[language];
+  return shortcuts[language];
 }

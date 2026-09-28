@@ -1,4 +1,5 @@
-import { defineCollection, z } from "astro:content";
+import { defineCollection } from "astro:content";
+import { z } from "astro/zod";
 import { glob, file } from 'astro/loaders';
 
 const pages = defineCollection({
@@ -26,7 +27,6 @@ const degreesWidget = defineCollection({
   loader: glob({ pattern: ['**/*.md', '**/*.mdx'], base: 'src/content/degrees-widget' }),
   schema: z.object({
     title: z.string(),
-    shortTitle: z.optional(z.string()),
     order: z.number(),
     url: z.optional(z.string()),
   }),

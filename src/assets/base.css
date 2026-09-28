@@ -100,3 +100,29 @@
     @apply max-md:max-h-60;
   }
 }
+
+/* Admin Portal Form Controls: Faded placeholder text so it is clearly distinct from real input values */
+#admin-root input::placeholder,
+#admin-root textarea::placeholder,
+.dark input::placeholder,
+.dark textarea::placeholder {
+  color: #94a3b8 !important;
+  opacity: 0.4 !important;
+}
+
+#admin-root input:focus::placeholder,
+#admin-root textarea:focus::placeholder,
+.dark input:focus::placeholder,
+.dark textarea:focus::placeholder {
+  opacity: 0.25 !important;
+}
+
+/* TipTap rich text editor empty document placeholder */
+.admin-tiptap-editor p.is-editor-empty:first-child::before {
+  color: #94a3b8 !important;
+  opacity: 0.4 !important;
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+}

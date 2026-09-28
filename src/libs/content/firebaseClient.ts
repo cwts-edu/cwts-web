@@ -1,0 +1,837 @@
+import type {
+  IContentClient,
+  ContentEntry,
+  DegreesWidgetDataItem,
+  StudyModeWidgetDataItem,
+  VersionRecord,
+} from "./types";
+import {
+  type ContentSchemaMap,
+  SchemaValidators,
+  FacultyMetadataSchema,
+  type Language,
+  type FacultyCategory,
+  type FacultyMetadata,
+  type MenuItem,
+  type AssemblyTableMetadata,
+  type NewsletterMetadata,
+} from "./schemas";
+import site from "../site";
+import { slug as slugify } from "github-slugger";
+import { createComponent, unescapeHTML } from "astro/runtime/server/index.js";
+import { createMarkdownProcessor } from "@astrojs/markdown-remark";
+import { textLinesToHtml } from "./textUtils";
+import { sortAssemblyTables } from "./assemblyUtils";
+import { sortNewsletters } from "./newsletterUtils";
+import { sortPagesHierarchically } from "./pageUtils";
+import { obfuscateMailtoLinks } from "./emailObfuscator";
+import { resolveMenuItems, extractMenuItems } from "./menuUtils";
+import { ContentDataStore } from "./store";
+
+let markdownProcessorPromise: Promise<any> | null = null;
+function getMarkdownProcessor() {
+  if (!markdownProcessorPromise) {
+    markdownProcessorPromise = createMarkdownProcessor();
+  }
+  return markdownProcessorPromise;
+}
+
+export function resolveActiveDraftId(): string | undefined {
+  // 1. Explicit environment variable (Local dev, CI override)
+  if (typeof process !== "undefined" && process.env?.DRAFT_ID) {
+    return process.env.DRAFT_ID.trim();
+  }
+
+  // 2. Parsed from Netlify Build Hook payload (INCOMING_HOOK_BODY)
+  if (typeof process !== "undefined" && process.env?.INCOMING_HOOK_BODY) {
+    try {
+      const payload = JSON.parse(process.env.INCOMING_HOOK_BODY);
+      if (payload.draftId) {
+        console.log(`🎯 [Netlify Build] Staging Preview active for draft: ${payload.draftId}`);
+        return String(payload.draftId).trim();
+      }
+    } catch (e) {
+      console.warn("⚠️ Could not parse Netlify INCOMING_HOOK_BODY payload:", e);
+    }
+  }
+
+  // 3. Explicit staging environment variable flag
+  if (typeof process !== "undefined" && (process.env?.STAGING === "true" || process.env?.CONTENT_SOURCE === "draft")) {
+    return "auto";
+  }
+
+  return undefined;
+}
+
+export class FirebaseContentClient implements IContentClient {
+  private projectId: string;
+  private baseUrl: string;
+  private draftId?: string;
+
+  constructor(options: { projectId: string; draftId?: string }) {
+    this.projectId = options.projectId;
+    this.baseUrl = `https://firestore.googleapis.com/v1/projects/${this.projectId}/databases/(default)/documents`;
+    this.draftId = options.draftId || resolveActiveDraftId();
+  }
+
+  private stores = new Map<string, Promise<ContentDataStore<any>>>();
+
+  async getStore<K extends keyof ContentSchemaMap>(
+    collection: K
+  ): Promise<ContentDataStore<ContentSchemaMap[K]>> {
+    const key = String(collection);
+    if (!this.stores.has(key)) {
+      this.stores.set(key, this.loadStore(collection));
+    }
+    return this.stores.get(key)!;
+  }
+
+  private async loadStore<K extends keyof ContentSchemaMap>(
+    collection: K
+  ): Promise<ContentDataStore<ContentSchemaMap[K]>> {
+    const store = new ContentDataStore<ContentSchemaMap[K]>();
+    const entries = await this.fetchMergedCollection(collection);
+    for (const entry of entries) {
+      const aliases: string[] = [];
+      if (collection === "pages") {
+        aliases.push(`${entry.language}/${entry.slug}`);
+      } else if (collection === "faculty" || collection === "degrees-programs") {
+        aliases.push(entry.slug);
+      }
+      store.set(entry, aliases);
+    }
+    return store;
+  }
+
+  async getCollection<K extends keyof ContentSchemaMap>(
+    collection: K,
+    filter?: (entry: ContentEntry<ContentSchemaMap[K]>) => boolean
+  ): Promise<ContentEntry<ContentSchemaMap[K]>[]> {
+    const store = await this.getStore(collection);
+    return filter ? store.filter(filter) : store.values();
+  }
+
+  async getEntry<K extends keyof ContentSchemaMap>(
+    collection: K,
+    id: string
+  ): Promise<ContentEntry<ContentSchemaMap[K]> | null> {
+    const store = await this.getStore(collection);
+    const cached = store.get(id);
+    if (cached) return cached;
+
+    // Fallback if not found in collection
+    if (this.draftId) {
+      const draftChange = await this.fetchDraftChangeDoc(this.draftId, String(collection), id);
+      if (draftChange) {
+        if (draftChange.action === "delete") return null;
+        console.log(`✨ [Draft Build] Applied draft entry overlay for '${String(collection)}/${id}'`);
+        const parsedData = SchemaValidators[collection].parse(draftChange.data);
+        const entry: ContentEntry<ContentSchemaMap[K]> = {
+          id: draftChange.documentId || id,
+          slug: draftChange.documentId || id,
+          language: (draftChange.data.language as Language) || "zh",
+          status: "draft",
+          data: parsedData,
+          body: draftChange.body || "",
+          html: draftChange.bodyHtml || draftChange.body || "",
+          updatedAt: new Date(draftChange.updatedAt || Date.now()),
+        };
+        store.set(entry);
+        return entry;
+      }
+    }
+
+    const url = `${this.baseUrl}/${collection}/${id}`;
+    const response = await fetch(url);
+    if (response.status === 404) return null;
+    if (!response.ok) throw new Error(`Failed to fetch entry ${String(collection)}/${id}`);
+
+    const doc = await response.json();
+    const fields = this.decodeFirestoreFields(doc.fields);
+    if (fields.status === "deleted") return null;
+    const parsedData = SchemaValidators[collection].parse(fields);
+    const entry: ContentEntry<ContentSchemaMap[K]> = {
+      id,
+      slug: (fields.slug as string) || id,
+      language: (fields.language as Language) || "zh",
+      status: (fields.status as any) || "published",
+      data: parsedData,
+      body: fields.body || "",
+      html: fields.bodyHtml || fields.body || "",
+      updatedAt: new Date(doc.updateTime || Date.now()),
+    };
+    store.set(entry);
+    return entry;
+  }
+
+  /**
+   * Fetches canonical documents and applies draft changes overlay if draftId is active.
+   */
+  private async fetchMergedCollection<K extends keyof ContentSchemaMap>(
+    collection: K
+  ): Promise<ContentEntry<ContentSchemaMap[K]>[]> {
+    // 1. Fetch canonical published documents
+    const canonicalEntries = await this.fetchCanonicalCollection(collection);
+
+    // 2. If no staging draft is active, return canonical directly
+    if (!this.draftId) {
+      return canonicalEntries;
+    }
+
+    // 3. Fetch draft overlay changes from /drafts/{draftId}/changes
+    const draftChanges = await this.fetchDraftChanges(this.draftId, String(collection));
+    if (draftChanges.length > 0) {
+      console.log(
+        `✨ [Draft Build] Applied ${draftChanges.length} draft change(s) for collection '${collection}' from draft '${this.draftId}'`
+      );
+    }
+
+    // 4. Merge overlay changes
+    const map = new Map<string, ContentEntry<ContentSchemaMap[K]>>(
+      canonicalEntries.map((e) => [e.id, e])
+    );
+
+    const validator = SchemaValidators[collection];
+
+    for (const change of draftChanges) {
+      if (change.documentId === "_order" && change.data?.orderMap) {
+        for (const [docId, newOrder] of Object.entries(change.data.orderMap)) {
+          const direct = map.get(docId);
+          if (direct && direct.data) (direct.data as any).order = Number(newOrder);
+          const zh = map.get(`zh/${docId}`);
+          if (zh && zh.data) (zh.data as any).order = Number(newOrder);
+          const en = map.get(`en/${docId}`);
+          if (en && en.data) (en.data as any).order = Number(newOrder);
+        }
+        continue;
+      }
+
+      if (change.action === "delete") {
+        if (collection === "faculty") {
+          map.delete(`zh/${change.documentId}`);
+          map.delete(`en/${change.documentId}`);
+          map.delete(change.documentId);
+        } else if (collection === "pages") {
+          map.delete(change.documentId);
+          if (change.documentId.startsWith("zh_")) {
+            map.delete("zh/" + change.documentId.slice(3).split("_").join("/"));
+          } else if (change.documentId.startsWith("en_")) {
+            map.delete("en/" + change.documentId.slice(3).split("_").join("/"));
+          }
+        } else {
+          // Exactly delete documentId only - never touch other collections or languages
+          map.delete(change.documentId);
+        }
+      } else if (collection === "faculty" && (change.data?.zh || change.data?.en)) {
+        if (change.data.zh) {
+          const zhParsed = FacultyMetadataSchema.parse({
+            photo: change.data.photo,
+            category: change.data.category,
+            email: change.data.email,
+            order: change.data.order,
+            referencedAssets: change.data.referencedAssets,
+            ...change.data.zh,
+          });
+          map.set(`zh/${change.documentId}`, {
+            id: `zh/${change.documentId}`,
+            slug: change.documentId,
+            language: "zh",
+            status: "draft",
+            data: zhParsed as any,
+            body: change.data.zh.body || "",
+            html: change.data.zh.bodyHtml || change.data.zh.body || "",
+            updatedAt: new Date(change.updatedAt || Date.now()),
+          });
+        }
+        if (change.data.en) {
+          const enParsed = FacultyMetadataSchema.parse({
+            photo: change.data.photo,
+            category: change.data.category,
+            email: change.data.email,
+            order: change.data.order,
+            referencedAssets: change.data.referencedAssets,
+            ...change.data.en,
+          });
+          map.set(`en/${change.documentId}`, {
+            id: `en/${change.documentId}`,
+            slug: change.documentId,
+            language: "en",
+            status: "draft",
+            data: enParsed as any,
+            body: change.data.en.body || "",
+            html: change.data.en.bodyHtml || change.data.en.body || "",
+            updatedAt: new Date(change.updatedAt || Date.now()),
+          });
+        }
+      } else if (collection === "pages") {
+        const lang: Language = (change.data?.language as Language) || (change.documentId.startsWith("en_") ? "en" : "zh");
+        const slug = change.data?.slug || (change.documentId.startsWith("zh_") || change.documentId.startsWith("en_")
+          ? change.documentId.slice(3).split("_").join("/")
+          : change.documentId);
+        const parsedData = validator.parse(change.data);
+        map.set(change.documentId, {
+          id: change.documentId,
+          slug,
+          language: lang,
+          status: "draft",
+          data: parsedData,
+          body: change.body || "",
+          html: change.bodyHtml || change.body || "",
+          updatedAt: new Date(change.updatedAt || Date.now()),
+        });
+      } else {
+        const parsedData = validator.parse(change.data);
+        map.set(change.documentId, {
+          id: change.documentId,
+          slug: change.documentId,
+          language: (change.data.language as Language) || "zh",
+          status: "draft",
+          data: parsedData,
+          body: change.body || "",
+          html: change.bodyHtml || change.body || "",
+          updatedAt: new Date(change.updatedAt || Date.now()),
+        });
+      }
+    }
+
+    return Array.from(map.values());
+  }
+
+  /**
+   * Fetches historical version snapshot from /{collection}/{id}/versions/{versionNumber}
+   */
+  async getVersion<K extends keyof ContentSchemaMap>(
+    collection: K,
+    id: string,
+    versionNumber: number
+  ): Promise<VersionRecord<ContentSchemaMap[K]> | null> {
+    const url = `${this.baseUrl}/${collection}/${id}/versions/${versionNumber}`;
+    const response = await fetch(url);
+    if (response.status === 404) return null;
+    if (!response.ok) throw new Error(`Failed to fetch version ${versionNumber} of ${String(collection)}/${id}`);
+
+    const doc = await response.json();
+    const fields = this.decodeFirestoreFields(doc.fields);
+    const parsedData = SchemaValidators[collection].parse(fields.data);
+
+    return {
+      version: fields.version,
+      status: fields.status,
+      data: parsedData,
+      body: fields.body,
+      html: fields.bodyHtml,
+      author: fields.author,
+      createdAt: fields.createdAt,
+      publishedAt: fields.publishedAt,
+    };
+  }
+
+  async render<T = any>(
+    entry: ContentEntry<T>
+  ): Promise<{ Content: any; headings?: any[] }> {
+    if (entry.Content) {
+      return { Content: entry.Content };
+    }
+
+    let html = entry.html || (entry.data as any)?.bodyHtml;
+    let headings: any[] = [];
+    if (!html && entry.body) {
+      const processor = await getMarkdownProcessor();
+      const result = await processor.render(entry.body);
+      html = result.code;
+      headings = result.metadata?.headings || [];
+    } else if (!html) {
+      html = "";
+    }
+
+    if (html) {
+      html = obfuscateMailtoLinks(html);
+    }
+
+    const Content = createComponent({
+      factory(_result: any, _props: any, _slots: any) {
+        return unescapeHTML(html);
+      },
+    });
+
+    return {
+      Content,
+      headings,
+    };
+  }
+
+  pages = {
+    getBySlug: async (slug: string, language: Language) => {
+      const store = await this.getStore("pages");
+      return store.getBySlug(slug, language);
+    },
+    getById: async (id: string) => {
+      const store = await this.getStore("pages");
+      return store.get(id);
+    },
+    list: async (language?: Language) => {
+      const store = await this.getStore("pages");
+      const items = store.values();
+      const filtered = language ? items.filter((p) => p.language === language) : items;
+      return sortPagesHierarchically(filtered);
+    },
+    listChildren: async (parentPath: string) => {
+      const store = await this.getStore("pages");
+      const isEn = parentPath.startsWith("en/");
+      const isZh = parentPath.startsWith("zh/");
+      const lang: Language = isEn ? "en" : "zh";
+      let parentSlug = isEn || isZh ? parentPath.slice(3) : parentPath;
+      if (parentSlug === "index") {
+        parentSlug = "";
+      } else if (parentSlug.endsWith("/index")) {
+        parentSlug = parentSlug.slice(0, -6);
+      }
+      const prefix = parentSlug ? `${parentSlug}/` : "";
+
+      const children = store
+        .filter((page) => {
+          if (page.language !== lang) return false;
+          if (!page.slug.startsWith(prefix) || page.slug === parentSlug) return false;
+          const sub = page.slug.slice(prefix.length);
+          return sub.length > 0 && !sub.includes("/");
+        })
+        .sort((a, b) => (a.data.order || 0) - (b.data.order || 0));
+
+      return children.map((page) => ({
+        url: `/${page.language}/${page.slug}`,
+        thumbnail: page.data.thumbnail || site.defaultThumbnail,
+        title: page.data.title,
+      }));
+    },
+  };
+
+  news = {
+    list: async (language?: Language, limit?: number) => {
+      const items = await this.getCollection("news");
+      let filtered = language ? items.filter((i) => i.language === language) : items;
+      filtered.sort((a, b) => {
+        const diff = b.data.date.getTime() - a.data.date.getTime();
+        if (diff !== 0) return diff;
+        return b.id.localeCompare(a.id);
+      });
+      return limit ? filtered.slice(0, limit) : filtered;
+    },
+    getById: (id: string) => this.getEntry("news", id),
+  };
+
+  jobs = {
+    list: async (language?: Language) => {
+      const items = await this.getCollection("jobs");
+      const filtered = language ? items.filter((i) => i.language === language) : items;
+      return filtered.sort((a, b) => {
+        const diff = b.data.date.getTime() - a.data.date.getTime();
+        if (diff !== 0) return diff;
+        return b.id.localeCompare(a.id);
+      });
+    },
+    getById: (id: string) => this.getEntry("jobs", id),
+  };
+
+  faculty = {
+    list: async (language?: Language) => {
+      const items = await this.getCollection("faculty");
+      return language ? items.filter((i) => i.language === language) : items;
+    },
+    listByCategory: async (category: FacultyCategory, language: Language) => {
+      const items = await this.getCollection("faculty");
+      return items
+        .filter((i) => i.language === language && i.data.category === category)
+        .sort((a, b) => (a.data.order || 0) - (b.data.order || 0));
+    },
+    getBySlug: async (slug: string, language: Language) => {
+      const store = await this.getStore("faculty");
+      return store.getBySlug(slug, language);
+    },
+    getAdjunctList: async (language: Language) => {
+      const items = await this.getCollection("faculty");
+      const adjuncts = items
+        .filter((i) => i.language === language && i.data.category === "adjunct")
+        .sort((a, b) => (a.data.order || 0) - (b.data.order || 0));
+      if (adjuncts.length > 0) {
+        return adjuncts.map((a) => a.data);
+      }
+      const entry = await this.getEntry("adjunct-prof", `${language}_adjunct`);
+      return entry ? entry.data : [];
+    },
+    getMetadata: async (language: Language, categories?: FacultyCategory[]) => {
+      const facultyList = await this.faculty.list(language);
+      const adjunctData = await this.faculty.getAdjunctList(language);
+
+      const filterByCat = (cat: FacultyCategory) =>
+        facultyList
+          .filter((p) => p.data.category === cat)
+          .map((p) => ({
+            ...p.data,
+            slug: p.slug,
+            url: `/${language}/academic/faculty/${p.slug}`,
+          }))
+          .sort((a, b) => (a.order || 0) - (b.order || 0));
+
+      const adjunctUrl = `/${language}/academic/faculty/adjunct-professors`;
+      const adjunctList = adjunctData.map((person) => ({
+        ...person,
+        url: `${adjunctUrl}#${slugify(person.name)}`,
+      }));
+
+      const dict: Record<FacultyCategory, Array<FacultyMetadata & { slug?: string; url?: string }>> = {
+        faculty: filterByCat("faculty"),
+        "senior-adjunct": filterByCat("senior-adjunct"),
+        adjunct: adjunctList,
+      };
+
+      const requestedCategories = categories || ["faculty", "senior-adjunct", "adjunct"];
+      return requestedCategories.flatMap((cat) => dict[cat]);
+    },
+  };
+
+  degreesPrograms = {
+    list: async (language?: Language) => {
+      const store = await this.getStore("degrees-programs");
+      const filtered = language ? store.filter((d) => d.language === language) : [...store.values()];
+      return filtered.sort((a, b) => (a.data.order || 0) - (b.data.order || 0));
+    },
+    getBySlug: async (slug: string, language: Language) => {
+      const store = await this.getStore("degrees-programs");
+      return store.getBySlug(slug, language);
+    },
+  };
+
+  degreesWidget = {
+    getData: async (language: Language): Promise<DegreesWidgetDataItem[]> => {
+      const items = await this.getCollection("degrees-widget");
+      const filtered = items
+        .filter((d) => d.language === language)
+        .sort((a, b) => a.data.order - b.data.order);
+
+      return filtered.map((item) => ({
+        slug: item.slug,
+        page: item,
+        Content: null,
+      }));
+    },
+  };
+
+  studyModeWidget = {
+    getData: async (language: Language): Promise<StudyModeWidgetDataItem[]> => {
+      const items = await this.getCollection("study-mode-widget");
+      const filtered = items
+        .filter((d) => d.language === language)
+        .sort((a, b) => a.data.order - b.data.order);
+
+      return filtered.map((item) => ({
+        slug: item.slug,
+        page: item,
+        Content: null,
+      }));
+    },
+  };
+
+  carousel = {
+    get: async (): Promise<CarouselItem[]> => {
+      try {
+        const items = await this.getCollection("carousel");
+        if (items && items.length > 0) {
+          return items
+            .map((i) => i.data)
+            .sort((a: any, b: any) => (a.order || 0) - (b.order || 0));
+        }
+      } catch {}
+      const entry = await this.getEntry("carousel", "carousel");
+      return (entry ? (Array.isArray(entry.data) ? entry.data : [entry.data]) : []) as CarouselItem[];
+    },
+  };
+
+  shortcuts = {
+    get: async (language: Language) => {
+      const entry = await this.getEntry("shortcuts", "shortcuts");
+      return entry ? entry.data[language] : [];
+    },
+  };
+
+  private menuCache = new Map<Language, Promise<MenuItem[]>>();
+
+  menu = {
+    get: async (language: Language): Promise<MenuItem[]> => {
+      if (!this.menuCache.has(language)) {
+        this.menuCache.set(
+          language,
+          (async () => {
+            const entry = await this.getEntry("menu", language);
+            if (!entry) return [];
+            const items = extractMenuItems(entry.data);
+            return resolveMenuItems(items, this, language);
+          })()
+        );
+      }
+      return this.menuCache.get(language)!;
+    },
+  };
+
+  assembly = {
+    list: async (language: Language = "zh"): Promise<ContentEntry<AssemblyTableMetadata>[]> => {
+      const items = await this.getCollection("assembly");
+      const filtered = language ? items.filter((d) => !d.language || d.language === language) : items;
+      return sortAssemblyTables(filtered);
+    },
+    getBySemester: async (
+      semester: string,
+      language: Language = "zh"
+    ): Promise<ContentEntry<AssemblyTableMetadata> | null> => {
+      const all = await this.assembly.list(language);
+      const found = all.find(
+        (d) => d.data.semester === semester || d.slug === semester || d.id === semester
+      );
+      if (found) return found;
+      return this.getEntry("assembly", semester);
+    },
+  };
+
+  newsletter = {
+    list: async (language: Language = "zh"): Promise<ContentEntry<NewsletterMetadata>[]> => {
+      const items = await this.getCollection("newsletter");
+      const filtered = language ? items.filter((d) => !d.language || d.language === language) : items;
+      return sortNewsletters(filtered, "asc");
+    },
+    getByYearAndIssue: async (
+      year: number,
+      issue: number,
+      language: Language = "zh"
+    ): Promise<ContentEntry<NewsletterMetadata> | null> => {
+      const all = await this.newsletter.list(language);
+      return all.find((item) => item.data.year === year && item.data.issue === issue) || null;
+    },
+  };
+
+
+  private async fetchCanonicalCollection<K extends keyof ContentSchemaMap>(
+    collection: K
+  ): Promise<ContentEntry<ContentSchemaMap[K]>[]> {
+    const url = `${this.baseUrl}/${collection}`;
+    const response = await fetch(url);
+    if (!response.ok) {
+      if (response.status === 404) return [];
+      throw new Error(`Failed to fetch collection ${String(collection)}: ${response.statusText}`);
+    }
+
+    const { documents } = await response.json();
+    if (!documents) return [];
+
+    const validator = SchemaValidators[collection];
+    const entries: ContentEntry<ContentSchemaMap[K]>[] = [];
+
+    for (const doc of documents) {
+      const id = doc.name.split("/").pop()!;
+      const fields = this.decodeFirestoreFields(doc.fields);
+      if (fields.status === "deleted") continue;
+
+      if (collection === "faculty" && (fields.zh || fields.en)) {
+        if (fields.zh) {
+          const result = FacultyMetadataSchema.safeParse({
+            photo: fields.photo,
+            category: fields.category,
+            email: fields.email,
+            order: fields.order,
+            referencedAssets: fields.referencedAssets,
+            ...fields.zh,
+          });
+          if (!result.success) {
+            console.warn(`[Firebase] Skipping invalid faculty doc ${id}/zh:`, result.error.flatten().fieldErrors);
+          } else {
+            entries.push({
+              id: `zh/${id}`,
+              slug: id,
+              language: "zh",
+              status: fields.status || "published",
+              version: fields.version || 1,
+              publishedVersion: fields.publishedVersion || 1,
+              data: result.data as any,
+              body: fields.zh.body || "",
+              html: fields.zh.bodyHtml || fields.zh.body || "",
+              updatedAt: new Date(doc.updateTime),
+            });
+          }
+        }
+        if (fields.en) {
+          const result = FacultyMetadataSchema.safeParse({
+            photo: fields.photo,
+            category: fields.category,
+            email: fields.email,
+            order: fields.order,
+            referencedAssets: fields.referencedAssets,
+            ...fields.en,
+          });
+          if (!result.success) {
+            console.warn(`[Firebase] Skipping invalid faculty doc ${id}/en:`, result.error.flatten().fieldErrors);
+          } else {
+            entries.push({
+              id: `en/${id}`,
+              slug: id,
+              language: "en",
+              status: fields.status || "published",
+              version: fields.version || 1,
+              publishedVersion: fields.publishedVersion || 1,
+              data: result.data as any,
+              body: fields.en.body || "",
+              html: fields.en.bodyHtml || fields.en.body || "",
+              updatedAt: new Date(doc.updateTime),
+            });
+          }
+        }
+      } else if (collection === "pages") {
+        const result = validator.safeParse(fields);
+        if (!result.success) {
+          console.warn(`[Firebase] Skipping invalid pages doc ${id}:`, result.error.flatten().fieldErrors);
+          continue;
+        }
+        const lang: Language = (fields.language as Language) || (id.startsWith("en_") ? "en" : "zh");
+        const slug = fields.slug || (id.startsWith("zh_") || id.startsWith("en_") ? id.slice(3).split("_").join("/") : id);
+        entries.push({
+          id,
+          slug,
+          language: lang,
+          status: fields.status || "published",
+          version: fields.version || 1,
+          publishedVersion: fields.publishedVersion || 1,
+          data: result.data as any,
+          body: fields.body || "",
+          html: fields.bodyHtml || fields.html || fields.body || "",
+          updatedAt: new Date(doc.updateTime),
+        });
+      } else {
+        const result = validator.safeParse(fields);
+        if (!result.success) {
+          console.warn(`[Firebase] Skipping invalid ${String(collection)} doc ${id}:`, result.error.flatten().fieldErrors);
+          continue;
+        }
+        entries.push({
+          id,
+          slug: fields.slug || id,
+          language: (fields.language as Language) || "zh",
+          status: fields.status || "published",
+          version: fields.version || 1,
+          publishedVersion: fields.publishedVersion || 1,
+          data: result.data as any,
+          body: fields.body || "",
+          html: fields.bodyHtml || fields.html || fields.body || "",
+          updatedAt: new Date(doc.updateTime),
+        });
+      }
+    }
+
+    return entries;
+
+  }
+
+  private async fetchDraftChanges(draftId: string, targetCollection: string): Promise<any[]> {
+    try {
+      const allChanges: any[] = [];
+      const draftIdsToQuery = new Set<string>();
+
+      if (draftId && draftId !== "all" && draftId !== "auto") {
+        draftIdsToQuery.add(draftId);
+      }
+
+      // Query all draft documents from Firestore to discover active drafts
+      const draftsUrl = `${this.baseUrl}/drafts`;
+      const draftsRes = await fetch(draftsUrl).catch(() => null);
+      if (draftsRes && draftsRes.ok) {
+        const data = await draftsRes.json();
+        if (data.documents && Array.isArray(data.documents)) {
+          for (const doc of data.documents) {
+            const id = doc.name.split("/").pop();
+            if (id) draftIdsToQuery.add(id);
+          }
+        }
+      }
+
+      for (const dId of draftIdsToQuery) {
+        const url = `${this.baseUrl}/drafts/${dId}/changes`;
+        const response = await fetch(url).catch(() => null);
+        if (response && response.ok) {
+          const { documents } = await response.json();
+          if (documents && Array.isArray(documents)) {
+            for (const doc of documents) {
+              const decoded = this.decodeFirestoreFields(doc.fields);
+              if (decoded.collection === targetCollection) {
+                allChanges.push(decoded);
+              }
+            }
+          }
+        }
+      }
+
+      return allChanges;
+    } catch {
+      return [];
+    }
+  }
+
+  private async fetchDraftChangeDoc(draftId: string, targetCollection: string, docId: string): Promise<any | null> {
+    try {
+      const draftIdsToQuery = new Set<string>();
+      if (draftId && draftId !== "all" && draftId !== "auto") {
+        draftIdsToQuery.add(draftId);
+      }
+
+      const draftsUrl = `${this.baseUrl}/drafts`;
+      const draftsRes = await fetch(draftsUrl).catch(() => null);
+      if (draftsRes && draftsRes.ok) {
+        const data = await draftsRes.json();
+        if (data.documents && Array.isArray(data.documents)) {
+          for (const doc of data.documents) {
+            const id = doc.name.split("/").pop();
+            if (id) draftIdsToQuery.add(id);
+          }
+        }
+      }
+
+      for (const dId of draftIdsToQuery) {
+        // 1. Try formatted doc name: e.g. news_2026-04-24-newsletter
+        const prefixedUrl = `${this.baseUrl}/drafts/${dId}/changes/${targetCollection}_${docId}`;
+        let response = await fetch(prefixedUrl).catch(() => null);
+
+        // 2. Fallback to raw docId
+        if (!response || !response.ok) {
+          const rawUrl = `${this.baseUrl}/drafts/${dId}/changes/${docId}`;
+          response = await fetch(rawUrl).catch(() => null);
+        }
+
+        if (response && response.ok) {
+          const doc = await response.json();
+          const fields = this.decodeFirestoreFields(doc.fields);
+          if (fields.collection === targetCollection) return fields;
+        }
+      }
+
+      return null;
+    } catch {
+      return null;
+    }
+  }
+
+  private decodeFirestoreFields(fields: Record<string, any>): Record<string, any> {
+    const result: Record<string, any> = {};
+    for (const [key, value] of Object.entries(fields || {})) {
+      if ("stringValue" in value) result[key] = value.stringValue;
+      else if ("integerValue" in value) result[key] = parseInt(value.integerValue, 10);
+      else if ("doubleValue" in value) result[key] = parseFloat(value.doubleValue);
+      else if ("booleanValue" in value) result[key] = value.booleanValue;
+      else if ("timestampValue" in value) result[key] = new Date(value.timestampValue);
+      else if ("arrayValue" in value) {
+        result[key] = (value.arrayValue.values || []).map((v: any) => {
+          if ("mapValue" in v) return this.decodeFirestoreFields(v.mapValue.fields);
+          // scalar: stringValue, integerValue, etc.
+          return Object.values(v)[0];
+        });
+      } else if ("mapValue" in value) {
+        result[key] = this.decodeFirestoreFields(value.mapValue.fields);
+      }
+    }
+    return result;
+  }
+}

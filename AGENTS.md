@@ -204,10 +204,34 @@ While content pages are separated by directory (`src/content/pages/zh/` vs `/en/
 -   **Image Processing:** `npm run process-images` takes raw images from `assets-original/` and outputs optimized versions to `public/images/`.
 -   **PDF Processing:** `npm run process-pdfs` generates cover thumbnails for PDF newsletters.
 
+## Headless CMS Architecture & Progressive Migration
+
+The site includes an embedded Firebase-backed Headless CMS at `/admin` (`src/admin/`) with a unified content client layer (`@libs/content`).
+
+### Tri-Format Content Strategy (`body`, `bodyJson`, `bodyHtml`)
+For rich-text content collections:
+- **`body`**: Raw plain-text or markdown string for fallback and search indexing.
+- **`bodyJson`**: Structured Abstract Syntax Tree (AST) token tree (via `marked.lexer` or TipTap JSON). Used for programmatic manipulation and rich-text editing in TipTap without regex.
+- **`bodyHtml`**: Pre-rendered semantic HTML string stored in Firestore and rendered by Astro components with zero client JS via `<Fragment set:html={item.data.bodyHtml} />`.
+
+### 8-Step Collection Migration SOP
+When migrating a new collection from Astro Git files to Firebase CMS:
+1. **Schema Definition** (`src/libs/content/schemas.ts`): Define Zod schema with `body`, `bodyHtml`, `bodyJson`.
+2. **Client Interface** (`src/libs/content/`): Implement methods in `IContentClient`, `firebaseClient.ts`, `astroClient.ts`, `hybridClient.ts`, and add to `ALL_MIGRATED_COLLECTIONS`.
+3. **CLI Package Exporter** (`tools/export-*-package.ts`): Parse local files into AST JSON/HTML and bundle into `packages/{collection}-package.zip`.
+4. **Admin Management Views** (`src/admin/views/`): Create `{Collection}ListView.tsx` (with URL query param filters `?lang=...`) and `{Collection}EditView.tsx` (clean placeholders & `RichTextEditor`).
+5. **Router & Navigation** (`src/admin/config/pageTypes.ts` & `AdminLayout.tsx`): Register tab and routes.
+6. **Admin Dashboard Wiring** (`src/admin/AdminApp.tsx`): Add Firestore on-demand loader, draft merging, CRUD handlers, and URL param preservation.
+7. **Frontend Integration** (`src/components/` or `src/pages/`): Consume `content.{collection}` and render `bodyHtml` directly.
+8. **Verification & Testing**: Run package exporter and `npm run verify-build` to ensure 0 errors.
+
+Detailed architectural specifications are maintained in [`docs/firebase-headless-cms-design.md`](file:///Users/yusheng/Documents/GitHub/cwts-web/docs/firebase-headless-cms-design.md).
+
 ## Development Workflow
 
 1.  **Start Dev Server:** `npm run dev` (runs on `localhost:3000`).
 2.  **Build & Verification:**
     -   Run `npm run build` to generate the production artifact in `dist/`.
     -   **Important:** Always run the build command locally to verify that changes are made correctly. The build process performs validation on content schemas, internal links, and component logic that might not be caught during development.
+
 
