@@ -15,6 +15,9 @@
   image: /images/carousel/MTE Banner.jpg
   newWindow: true
 - link: /zh/ministry-institute/courses
+  image: /images/carousel/MI-2027-Spring.jpg  
+  newWindow: true
+- link: /zh/ministry-institute/courses
   image: /images/carousel/MI-2026-Fall.jpg  
   newWindow: true
 - link: /zh/about/accreditation
