@@ -13,7 +13,6 @@ thumbnail: "/images/covers/about/board.thumbnail.jpg"
 - 宋曹琍璇 姐妹
 - 歐陽貫宗 牧師/博士
 - 單儉 長老
-- 李光陵 牧師/博士
 - 林恆志 牧師/博士
 - 趙連春 博士
 - 陳光 牧師/博士
