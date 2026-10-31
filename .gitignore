@@ -1,5 +1,6 @@
-# build output
+# build output & cache
 dist/
+.cache/
 
 # generated types
 .astro/
@@ -13,12 +14,20 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
-# environment variables
+# environment variables & credentials
 .env
 .env.production
+service-account*.json
+*.service-account.json
 
 # macOS-specific files
 .DS_Store
 
 # Do not checkin original assets because they are usually quite large
 assets-original/
+
+# Generated fixtures
+data-fixtures/
+
+# Generated backup packages
+packages/

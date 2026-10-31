@@ -1,92 +1,16 @@
-import { getCollection, getEntry } from "astro:content";
-import type { CollectionEntry } from "astro:content";
-import { getLanguageBySlug, type Language } from "./language";
-import { slug as slugify } from "github-slugger";
+import { content } from "./content";
+import type { Language } from "./language";
+import type { FacultyMetadata as BaseFacultyMetadata } from "./content/schemas";
 
-type Category = "faculty" | "senior-adjunct" | "adjunct";
-export type FacultyMetadata = CollectionEntry<"faculty">["data"] & {
+export type Category = "faculty" | "senior-adjunct" | "adjunct";
+export type FacultyMetadata = BaseFacultyMetadata & {
   slug?: string;
   url?: string;
 };
 
-const facultyPages = await getCollection("faculty");
-const adjunctFacultyEnPage = await getEntry("adjunct-prof", "en/adjunct-prof");
-const adjunctFacultyZhPage = await getEntry("adjunct-prof", "zh/adjunct-prof");
-if (!adjunctFacultyEnPage) {
-  throw new Error(
-    "src/content/faculty/en/adjunct-prof.yml does not exist",
-  );
-}
-if (!adjunctFacultyZhPage) {
-  throw new Error(
-    "src/content/faculty/zh/adjunct-prof.yml does not exist",
-  );
-}
-const adjunctFacultyEn = adjunctFacultyEnPage.data;
-const adjunctFacultyZh = adjunctFacultyZhPage.data;
-
-function filterPagesByLanguageCategory(
-  pages: CollectionEntry<"faculty">[],
-  language: Language,
-  category: Category
-): CollectionEntry<"faculty">[] {
-  return pages.filter(
-    (page) =>
-      getLanguageBySlug(page.id).language == language &&
-      page.data.category == category
-  );
-}
-
-function getMetadata(pages: CollectionEntry<"faculty">[]): FacultyMetadata[] {
-  return pages
-    .map((page) => {
-      const { language, slug } = getLanguageBySlug(page.id);
-      return {
-        ...page.data,
-        slug,
-        url: `/${language}/academic/faculty/${slug}`,
-      };
-    })
-    .sort((a, b) => (a.order || 0) - (b.order || 0));
-}
-
-function setAdjunctUrl(
-  faculty: FacultyMetadata[],
-  language: Language
-): FacultyMetadata[] {
-  const url = `/${language}/academic/faculty/adjunct-professors`;
-  return faculty.map((person) => ({
-    ...person,
-    url: `${url}#${slugify(person.name)}`,
-  }));
-}
-
-const facultyMetadata: Record<Language, Record<Category, FacultyMetadata[]>> = {
-  zh: {
-    faculty: getMetadata(
-      filterPagesByLanguageCategory(facultyPages, "zh", "faculty")
-    ),
-    "senior-adjunct": getMetadata(
-      filterPagesByLanguageCategory(facultyPages, "zh", "senior-adjunct")
-    ),
-    adjunct: setAdjunctUrl(adjunctFacultyZh, "zh"),
-  },
-  en: {
-    faculty: getMetadata(
-      filterPagesByLanguageCategory(facultyPages, "en", "faculty")
-    ),
-    "senior-adjunct": getMetadata(
-      filterPagesByLanguageCategory(facultyPages, "en", "senior-adjunct")
-    ),
-    adjunct: setAdjunctUrl(adjunctFacultyEn, "en"),
-  },
-};
-
-export function getFacultyMetadata(
+export async function getFacultyMetadata(
   language: Language,
   categories?: Category[]
-): FacultyMetadata[] {
-  return (categories || ["faculty", "senior-adjunct", "adjunct"]).flatMap(
-    (category) => facultyMetadata[language][category]
-  );
+): Promise<FacultyMetadata[]> {
+  return content.faculty.getMetadata(language, categories);
 }

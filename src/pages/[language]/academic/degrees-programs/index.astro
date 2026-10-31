@@ -1,6 +1,6 @@
 ---
 import { type Language, T } from "@libs/language";
-import { getEntry, render } from "astro:content";
+import { content } from "@libs/content";
 import SectionNoCover from "@layouts/SectionNoCover.astro";
 import DegreesProgramsListing from "@components/section/DegreesProgramsListing";
 import { getDegreesPrograms } from "@libs/degrees_programs";
@@ -23,9 +23,9 @@ function getCategories(data: DegreesProgramsMetadata[]) {
 
 const language = Astro.params.language as Language;
 const slug = `${language}/academic/degrees-programs`;
-const page = await getEntry("pages", slug);
+const page = await content.pages.getBySlug("academic/degrees-programs", language);
 if (!page) return;
-const Content = (await render(page)).Content;
+const { Content } = await content.render(page);
 
 const data = await getDegreesPrograms(language);
 const categories = [

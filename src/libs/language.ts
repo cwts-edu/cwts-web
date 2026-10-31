@@ -11,7 +11,14 @@ export function getLanguageBySlug(slug: string): {
   slug: string;
 } {
   const index = slug.indexOf("/");
-  if (index < 0) throw new Error("Unable to get language from slug: " + slug);
+  if (index < 0) {
+    if (slug.startsWith("zh_") || slug.startsWith("en_")) {
+      const language = slug.substring(0, 2) as Language;
+      const remaining = slug.substring(3).replace(/_/g, "/");
+      return { language, slug: remaining };
+    }
+    throw new Error("Unable to get language from slug: " + slug);
+  }
   const language = slug.substring(0, index);
   const remaining = slug.substring(index + 1);
   if (isLanguage(language)) return { language, slug: remaining };
@@ -19,13 +26,7 @@ export function getLanguageBySlug(slug: string): {
 }
 
 const translationEntry = await getEntry("translation", "translation");
-if (!translationEntry) {
-  throw new Error(
-    "Translation data file 'translation.yml' not found in the 'translation' collection. This file is required.",
-  );
-}
-
-const translation = translationEntry.data;
+const translation = (translationEntry?.data || {}) as Record<string, { zh: string; en: string }>;
 
 export function T(msg: string, language: Language): string {
   if (!(msg in translation)) throw new Error("Unknown message: " + msg);

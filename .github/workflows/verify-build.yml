@@ -2,9 +2,9 @@ name: Build Verification
 
 on:
   push:
-    branches: [ main, master ]
+    branches: [ main, master, cms-exp ]
   pull_request:
-    branches: [ main, master ]
+    branches: [ main, master, cms-exp ]
 
 jobs:
   verify:
@@ -24,5 +24,8 @@ jobs:
         run: npm ci
 
       - name: Verify build integrity
+        env:
+          CONTENT_SOURCE: hybrid
+          PUBLIC_FIREBASE_PROJECT_ID: cwts-cms
         run: npm run verify-build
 

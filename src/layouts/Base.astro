@@ -27,5 +27,31 @@ import "@assets/base.css";
     <Header language={language} />
     <slot />
     <Footer language={language} />
+    <script is:inline>
+      (function() {
+        function revealEmails() {
+          document.querySelectorAll('.cwts-email[data-eo]').forEach(function(el) {
+            try {
+              var href = atob(el.getAttribute('data-eo'));
+              var textAttr = el.getAttribute('data-et');
+              var text = textAttr ? atob(textAttr) : href.replace(/^mailto:/, '');
+              var a = document.createElement('a');
+              a.href = href;
+              a.textContent = text;
+              var cleanClass = (el.className || '').replace(/\bcwts-email\b/, '').trim();
+              if (cleanClass) a.className = cleanClass;
+              el.replaceWith(a);
+            } catch (e) {
+              console.warn('Email decoding error', e);
+            }
+          });
+        }
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', revealEmails);
+        } else {
+          revealEmails();
+        }
+      })();
+    </script>
   </body>
 </html>

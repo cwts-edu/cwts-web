@@ -1,0 +1,53 @@
+---
+import AssemblyTable from "@components/common/AssemblyTable";
+import Section from "@layouts/Section.astro";
+import site from "@libs/site";
+import { content, type Language } from "@libs/content";
+
+export function getStaticPaths() {
+  return ["zh"].map((language) => ({
+    params: {
+      language,
+    },
+  }));
+}
+
+const language = (Astro.params.language || "zh") as Language;
+const slug = `${language}/student-life/assembly`;
+const page = await content.pages.getBySlug("student-life/assembly", language);
+
+const title = page?.data?.title || "早會";
+const coverImage = page?.data?.coverImage || "/images/covers/student-life/assembly.cover.jpg";
+const thumbnail = page?.data?.thumbnail || "/images/covers/student-life/assembly.thumbnail.jpg";
+
+let Content: any = null;
+if (page) {
+  const rendered = await content.render(page);
+  Content = rendered.Content;
+}
+
+const tables = await content.assembly.list(language);
+---
+
+<Section
+  title={title}
+  slug={slug}
+  coverImage={coverImage}
+  mainImage={thumbnail}
+  showChildren={page?.data?.showChildren}
+>
+  <div class="prose max-w-none">
+    {Content && <Content />}
+
+    <div class="space-y-8 my-6">
+      {
+        tables.map((table) => (
+          <div class="assembly-table-section">
+            <h2>{table.data.title}</h2>
+            <AssemblyTable columns={table.data.columns} rows={table.data.rows} />
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</Section>

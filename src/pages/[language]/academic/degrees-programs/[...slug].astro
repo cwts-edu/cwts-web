@@ -4,13 +4,13 @@ import SectionNoCover from "@layouts/SectionNoCover.astro";
 import type { DegreesProgramsMetadata } from "@libs/types";
 import { getDegreesPrograms } from "@libs/degrees_programs";
 import { getLanguageBySlug, T } from "@libs/language";
-import { getCollection, getEntry, render } from "astro:content";
+import { content } from "@libs/content";
 
 export async function getStaticPaths() {
   const languages = [
     ...new Set(
-      (await getCollection("degrees-programs")).map(
-        (page) => getLanguageBySlug(page.id).language,
+      (await content.degreesPrograms.list()).map(
+        (page) => page.language,
       ),
     ),
   ];
@@ -36,16 +36,16 @@ export interface Props {
 
 const { metadata } = Astro.props;
 
-const page = await getEntry(
-  "degrees-programs",
-  `${metadata.language}/${metadata.slug}`,
+const page = await content.degreesPrograms.getBySlug(
+  metadata.slug,
+  metadata.language,
 );
 
 if (!page) {
   throw new Error("Could not find program degree: " + metadata.slug)
 };
 
-const { Content } = await render(page);
+const { Content } = await content.render(page);
 const { language } = metadata;
 ---
 

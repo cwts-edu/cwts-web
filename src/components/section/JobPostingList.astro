@@ -1,18 +1,10 @@
 ---
 import { Icon } from "astro-icon/components";
-import { CollectionEntry, getCollection } from "astro:content";
+import { content, type ContentEntry, type JobMetadata } from "@libs/content";
 
-const jobs = (await getCollection("jobs")).sort((a, b) => {
-  if (a.data.date > b.data.date) {
-    return -1;
-  }
-  if (a.data.date < b.data.date) {
-    return 1;
-  }
-  return b.id.localeCompare(a.id);
-});
+const jobs = await content.jobs.list();
 
-function getJobLink(job: CollectionEntry<"jobs">) {
+function getJobLink(job: ContentEntry<JobMetadata>) {
   return job.data.file || `/zh/student-life/job-posting/${job.id}`;
 }
 ---

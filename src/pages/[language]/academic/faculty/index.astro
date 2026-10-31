@@ -4,7 +4,7 @@ import Section from "@layouts/Section.astro";
 import { type FacultyMetadata, getFacultyMetadata } from "@libs/faculty";
 import { type Language, T } from "@libs/language";
 import site from "@libs/site";
-import { getEntry } from "astro:content";
+import { content } from "@libs/content";
 
 export function getStaticPaths() {
   return ["zh", "en"].map((language) => ({
@@ -16,10 +16,10 @@ export function getStaticPaths() {
 
 const language = Astro.params.language as Language;
 const slug = `${language}/academic/faculty`;
-const page = await getEntry("pages", slug);
+const page = await content.pages.getBySlug("academic/faculty", language);
 if (!page) return;
 const { title, coverImage = site.defaultCover } = page.data;
-const faculty = getFacultyMetadata(language);
+const faculty = await getFacultyMetadata(language);
 const categoryMessages: Record<FacultyMetadata["category"], string> = {
   faculty: T("faculty", language),
   "senior-adjunct": T("senior_adjunct_faculty", language),

@@ -1,0 +1,41 @@
+---
+import NewsletterList from "@components/section/NewsletterList.astro";
+import Section from "@layouts/Section.astro";
+import site from "@libs/site";
+import { content, type Language } from "@libs/content";
+
+export function getStaticPaths() {
+  return ["zh"].map((language) => ({
+    params: {
+      language,
+    },
+  }));
+}
+
+const language = (Astro.params.language || "zh") as Language;
+const slug = `${language}/news-events/newsletter`;
+const page = await content.pages.getBySlug("news-events/newsletter", language);
+
+const title = page?.data?.title || "基神院訊";
+const coverImage = page?.data?.coverImage || "/images/covers/news-events/newsletter.cover.jpg";
+const thumbnail = page?.data?.thumbnail || "/images/covers/news-events/newsletter.thumbnail.jpg";
+
+let Content: any = null;
+if (page) {
+  const rendered = await content.render(page);
+  Content = rendered.Content;
+}
+---
+
+<Section
+  title={title}
+  slug={slug}
+  coverImage={coverImage}
+  mainImage={thumbnail}
+  showChildren={page?.data?.showChildren}
+>
+  <div class="prose max-w-none">
+    {Content && <Content />}
+    <NewsletterList />
+  </div>
+</Section>
