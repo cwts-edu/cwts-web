@@ -1,10 +1,11 @@
 ---
 photo: /images/faculty/dr-tie.jpg
-name: Dr. Peter L. H. Tie
+name: Rev. Dr. Peter L. H. Tie
 category: faculty
 order: 104
 email: peter.tie@cwts.edu
 positions:
+  - Vice President
   - Academic Dean
   - Associate Professor in Theology
 courses:

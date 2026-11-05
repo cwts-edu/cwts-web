@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../../.astro\collections\adjunct-prof.schema.json
+- name: Dr. Yucheng Bai
+  category: adjunct
+  courses:
+    - Church History
+    - Chinese Church History
+    - Ethics
+  degrees:
+    - Ph.D. in World Christianity Track, Minor in American Christianity, Duke University, 2025. 
+    - M.T.S, Duke Divinity School, 2018. 
+    - M.A. in East Asian Language and Culture (focus in Modern Chinese History), Columbia University, 2016. 
+    - B.A. in Global Studies, University of Arizona, 2014.
+
 - name: Rev. Dr. David Chan
   category: adjunct
   courses:

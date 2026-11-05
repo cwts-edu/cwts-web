@@ -18,6 +18,38 @@ const messages: Messages = {
   position_prefix: T("position_prefix", language),
   position_separator: T("position_separator", language),
 };
+
+const CONFIG_1_2_3_4_6 = [
+  "w-[calc((100%-1.5rem)/2)]", // Default: 2 per row
+  "sm:w-[calc((100%-3rem)/3)]", // sm: 3 per row
+  "lg:w-[calc((100%-6rem)/4)]", // lg: 4 per row
+  "xl:w-[calc((100%-10rem)/6)]", // xl: 6 per row
+  "max-xs:w-full", // Very small: 1 per row
+];
+
+const CONFIG_1_2_3_4_5 = [
+  "w-[calc((100%-1.5rem)/2)]", // Default: 2 per row
+  "sm:w-[calc((100%-3rem)/3)]", // sm: 3 per row
+  "lg:w-[calc((100%-6rem)/4)]", // lg: 4 per row
+  "xl:w-[calc((100%-8rem)/5)]", // xl: 5 per row
+  "max-xs:w-full", // Very small: 1 per row
+];
+
+// Map from number of faculties to classes configuration
+const layoutMap: Record<number, string[]> = {
+  6: CONFIG_1_2_3_4_6,
+  7: CONFIG_1_2_3_4_5,
+  8: CONFIG_1_2_3_4_5,
+  9: CONFIG_1_2_3_4_5,
+  10: CONFIG_1_2_3_4_5,
+};
+const facultyCount = faculty.length;
+const cardWidthClasses = layoutMap[facultyCount];
+if (!cardWidthClasses) {
+  throw new Error(
+    `Faculty count ${facultyCount} is not mapped in layoutMap of Faculty.astro. Please add a layout configuration for this count.`
+  );
+}
 ---
 
 <Widget
@@ -37,11 +69,7 @@ const messages: Messages = {
         <a
           class:list={[
             "block bg-[#433434] p-3 rounded-lg flex flex-col gap-1",
-            "w-[calc((100%-1.5rem)/2)]", // Default: 2 per row
-            "sm:w-[calc((100%-3rem)/3)]", // sm: 3 per row (2 gaps)
-            "lg:w-[calc((100%-6rem)/4)]", // lg: 4 per row (3 larger gaps)
-            "xl:w-[calc((100%-8rem)/5)]", // xl: 5 per row (4 larger gaps)
-            "max-xs:w-full", // Very small: 1 per row
+            ...cardWidthClasses,
           ]}
           href={person.url}
         >

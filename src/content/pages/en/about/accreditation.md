@@ -14,6 +14,8 @@ CWTS is an accredited member of ATS, the only professional accrediting agency fo
 - Master of Divinity (MDiv)
 - Master of Christian Ministry (MCM)
 - Master in Biblical Studies (MBS)
+- Master of Theological Essentials (MTE)
+- Master in Cross Cultural Leadership (MCCL)
 
 **Bureau for Private Postsecondary Education (BPPE)**
 

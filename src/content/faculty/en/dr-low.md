@@ -5,6 +5,7 @@ category: faculty
 order: 107
 email: daniel.low@cwts.edu
 positions:
+  - Director of Servant Leadership Center
   - Associate Professor in Practical Theology
 courses:
   - Missions

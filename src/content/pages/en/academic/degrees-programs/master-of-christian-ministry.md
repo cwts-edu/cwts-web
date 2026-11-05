@@ -14,107 +14,73 @@ The objective of this program is to provide fundamental training for those prepa
 | Category            | Credits Required | Courses                                                       | Credits |
 | ------------------- | ---------------- | ------------------------------------------------------------- | ------- |
 | Spiritual Formation | 2                | Spiritual Formation / Foundation of Christian Ministries [^1] | 2       |
-| Biblical Studies    | 21               | Functional Greek + Functional Hebrew                          | 3       |
+| Biblical Studies    | 18               | Functional Greek + Functional Hebrew                          | 2       |
 |                     |                  | Hermeneutics                                                  | 3       |
-|                     |                  | OT Introduction & Theology                                    | 3       |
-|                     |                  | Pentateuch / Historical Books / Wisdom / Prophetic Literature | 3       |
+|                     |                  | NT&OT Introduction                                            | 3       |
+|                     |                  | Pentateuch / Prophetic Literature                             | 3       |
+|                     |                  | Research Methods                                              | 0       |
+|                     |                  | Academic Research Methods                                     | 1       |
 |                     |                  | Gospels                                                       | 3       |
 |                     |                  | NT Epistles                                                   | 3       |
-|                     |                  | Book Electives / Bible Block Electives                        | 3       |
-| Theology & History  | 14               | History & Theology Overview                                   | 2       |
-|                     |                  | Systematic Theology A, B, C                                   | 3       |
-|                     |                  | Church History A, B                                           | 3       |
-|                     |                  | Chin.Church Hist./ Christianity & Chin. Culture / Hist. of NA | 3       |
-|                     |                  | Apologetics / Ethics                                          | 3       |
-| Practical Courses   | 20               | Homiletics                                                    | 3       |
-|                     |                  | Preaching Practicum I                                         | 1       |
-|                     |                  | Preaching Practicum II                                        | 1       |
+| Theology & History  | 15               | Systematic Theology A                                         | 3       |
+|                     |                  | Systematic Theology B / C                                     | 3       |
+|                     |                  | Church History A / B                                          | 3       |
+|                     |                  | Chinese Church History/ Christianity & Chinese Culture        | 3       |
+|                     |                  | Faith in the Public Space / Christian Ethics                  | 3       |
+| Practical Courses   | 15               | Homiletics                                                    | 3       |
+|                     |                  | Preaching Practicum I / II                                    | 1       |
 |                     |                  | Pastoral Theology                                             | 3       |
-|                     |                  | Worship                                                       | 2       |
 |                     |                  | Introduction to Christian Education                           | 3       |
 |                     |                  | Counseling                                                    | 3       |
-|                     |                  | Evangelism / Introduction to Missiology                       | 2       |
 |                     |                  | Field Education                                               | 2       |
-| Electives           | 3                |                                                               |         |
-|                     | 60               |                                                               |         |
+
+Students who wish to pursue a concentration may select from the options listed in the concentration table below; otherwise, please follow the Pastoral/General Track.
+
+| Concentration Electives | 10 |   |                    | Pastoral / General | Family & Children | Mission |  
+| ----------------------- | -- | - | ------------------ | -------- | ---------- | --- |
+|                         |    | 2 | Discipleship       | ✓        | ✓         |  10 credits from MCCL courses.  | 
+|                         |    | 2 | Family Discipleship | ✓       | ✓         |  [(refer to MCCL)](/en/academic/degrees-programs/master-of-cross-cultural-leadership/)  |
+|                         |    | 2 | Worship            | ✓        |           |      | 
+|                         |    | 2 | Intro to Mission / Evangelism | ✓         |      |          
+|                         |    | 2 | Servant Leadership | ✓        | ✓         |      | 
+|                         |    |   |                    |          | (4) MI Family/Children related courses |   
+| Total                   |    |   |                    | 60       | 60         | 60   |
+
+\* Research Methods is a required self-study course, offered every semester and graded on a Pass/Fail basis (passing score: 70% [C-]).
+
+\* 3 MI credits = 1 master’s credit; 4 master’s credit = 12 MI credits.
+
+\* Music (0.5 unit) is required for FT students, but not included in total credits, can be exempt if exam is passed
+
+\* "Spiritual Formation" is a non-credit requirement for part-time students and must complete two semesters of "Spiritual Formation" (course codes: SF001, SF002) before graduation.
 
 1st year
 
-| 1st half of year                                 |     | 2nd half of year                                                   |     |
+| Fall                                             |     | Spring                                                             |     |
 | ------------------------------------------------ | --- | ------------------------------------------------------------------ | --- |
-| Functional Greek +Functional Hebrew              | 3   | Spiritual Formation / Foundation of Christian Ministries / Worship | 2   |
-| History & Theology Overview                      | 2   | Gospels                                                            | 3   |
-| Hermeneutics                                     | 3   | Apologetics / Ethics                                               | 3   |
-| Homiletics                                       | 3   | Church History B / Elective                                        | 3   |
-| Pastoral Counseling / OT Introduction & Theology | 3   | Pentateuch / Prophetic Literature                                  | 3   |
-|                                                  |     | Preaching Practicum I                                              | 1   |
+| Functional Greek +Functional Hebrew              | 2   | Spiritual Formation & Foundation of Ministry                       | 2   |
+| NT&OT Introduction                               | 3   | Pentateuch / Prophetic Literature                                  | 3   |
+| Systematic Theology A / Intro to Christian Education | 3   | Faith in the Public Space / Christian Ethics                   | 3   |
+| Hermeneutics                                     | 3   | Gospels                                                            | 3   |
+| Counseling / Church History A                    | 3   | *Discipleship / Family Discipleship                                | 2   |
+| *Research Methods                                | 0   | Academic Research Methods                                          | 1   |
 |                                                  |     | Field Education                                                    | 1   |
-|                                                  | 14  |                                                                    | 16  |
+|                                                  | 14  |                                                                    | 15  |
 
 2nd year
 
-| 1st half of year                                 |     | 2nd half of year                                                   |     |
+| Fall                                             |     | Spring                                                             |     |
 | ------------------------------------------------ | --- | ------------------------------------------------------------------ | --- |
-| Pastoral Theology                                | 3   | Worship / Spiritual Formation / Foundation of Christian Ministries | 2   |
-| OT Introduction & Theology / Pastoral Counseling | 3   | Systematic Theology B / C                                          | 3   |
-| NT Epistles                                      | 3   | Chin. Church Hist./ Christianity & Chin. Culture / Hist. of NA     | 3   |
-| Book Electives / Bible Block Electives           | 3   | Elective / Church History B                                        | 3   |
-| Introduction to Christian Edu.                   | 3   | Evangelism / Introd. to Missiology                                 | 2   |
-| Preaching Practicum II                           | 1   | Field Education                                                    | 1   |
-|                                                  | 16  |                                                                    | 14  |
+| Homiletics                                       | 3   | Systematic Theology B / C                                          | 3   |
+| NT Epistles                                      | 3   | Chinese Church History/ Christianity & Chinese Culture             | 3   |
+| Church History A/ Counseling                     | 3   | *Evangelism / Intro To Mission                                     | 2   |
+| Pastoral Theology                                | 3   | *Worship                                                           | 2   |
+| Systematic Theology A / Intro to Christian Education | 3   | Family Discipleship                                            | 2   |
+| *Servant Leadership                              | 1   | Preaching Practicum I                                              | 1   |
+|                                                  | 1   | Field Education                                                    | 1   |
+|                                                  | 17  |                                                                    | 14  |
 
-## Master of Christian Ministry (Mission Option)
-
-| Category            | Credits Required | Courses                                                                | Credits |
-| ------------------- | ---------------- | ---------------------------------------------------------------------- | ------- |
-| Spiritual Formation | 2                | Spiritual Formation / Foundation of Christian Ministries [^1]          | 2       |
-| Biblical Studies    | 21               | Functional Greek + Functional Hebrew                                   | 3       |
-|                     |                  | Hermeneutics                                                           | 3       |
-|                     |                  | OT Introduction & Theology                                             | 3       |
-|                     |                  | Pentateuch / Historical Books / Wisdom / Prophetic Literature          | 3       |
-|                     |                  | Gospels                                                                | 3       |
-|                     |                  | NT Epistles                                                            | 3       |
-|                     |                  | Bible Book / Bible Block (Pentateuch, Prophetic Lit. etc.)             | 3       |
-| Theology & History  | 11               | History & Theology Overview                                            | 2       |
-|                     |                  | Systematic Theology A, B, C                                            | 3       |
-|                     |                  | Church History A, B                                                    | 3       |
-|                     |                  | Chin.Church Hist./ Christianity & Chin. Culture / Hist. of NA Churches | 3       |
-| Practical Courses   | 10               | Homiletics                                                             | 3       |
-|                     |                  | Preaching Practicum                                                    | 1       |
-|                     |                  | Pastoral Theology                                                      | 3       |
-|                     |                  | Introduction to Christian Education                                    | 3       |
-| Mission Courses     | 12               | Evangelism                                                             | 2       |
-|                     |                  | Introduction to Missiology                                             | 2       |
-|                     |                  | 3 Mission Courses                                                      | 6       |
-|                     |                  | Mission Internship                                                     | 2       |
-| Electives           | 4                |                                                                        |         |
-|                     | 60               |                                                                        |         |
-
-1st year
-
-| 1st half of year                    |     | 2nd half of year                                                   |     |
-| ----------------------------------- | --- | ------------------------------------------------------------------ | --- |
-| Functional Greek +Functional Hebrew | 3   | Spiritual Formation / Foundation of Christian Ministries / Worship | 2   |
-| OT Introduction & Theology          | 2   | Gospels                                                            | 3   |
-| Hermeneutics                        | 3   | Intro. to Missology                                                | 2   |
-| History & Theology Overview         | 3   | Pentateuch / Prophetic Literature / Church History B               | 3   |
-| Homiletics                          | 3   | Preaching Practicum I                                              | 1   |
-|                                     |     | Mission Elective                                                   | 2   |
-|                                     |     | Elective                                                           | 2   |
-|                                     |     | Mission Internship                                                 | 1   |
-|                                     | 14  |                                                                    | 16  |
-
-2nd year
-
-| 1st half of year                    |     | 2nd half of year                                                           |     |
-| ----------------------------------- | --- | -------------------------------------------------------------------------- | --- |
-| Mission Elective                    | 2   | Evangelism / Spiritual Formation / Foundation of Christian Ministries      | 2   |
-| NT Epistles                         | 3   | Mission Elective                                                           | 2   |
-| Systematic Theology A               | 3   | Bible Book / Bible Block Elective                                          | 3   |
-| Introduction to Christian Education | 3   | Chin. Church History / Christianity & Chin. Culture / Hist. of NA Churches | 3   |
-| Pastoral Theology                   | 3   | Elective                                                                   | 2   |
-| Mission Internship                  | 1   | Church History / Pentateuch / Prophetic Literature                         | 3   |
-|                                     | 15  |                                                                            | 15  |
+*Pastoral/General track electives offered
 
 [^1]: Spiritual Formation / Foundation of Christian Ministries:
 

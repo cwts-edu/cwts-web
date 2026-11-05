@@ -5,7 +5,7 @@ category: faculty
 order: 101
 email: luke.tsai@cwts.edu
 positions:
-  - President in CWTS
+  - President of CWTS
   - Associate Professor in New Testament
 courses:
   - New Testament Greek

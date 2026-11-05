@@ -5,8 +5,8 @@ category: faculty
 order: 106
 email: andrew.lo@cwts.edu
 positions:
-  - 教牧博士科主任
-  - 基督工人神學院學生事務主任
+  - 基督工人神學院教牧博士科主任
+  - 學生事務主任
   - 實踐神學副教授
 courses:
   - 教牧神學
