@@ -1,6 +1,6 @@
 # yaml-language-server: $schema=../../../.astro\collections\carousel.schema.json
-- link: https://form.jotform.com/262877060622156
-  image: /images/carousel/2026F-CWTSDay.jpg
+- link: /zh/donation/
+  image: /images/carousel/2026 Matching Fund.jpg
   newWindow: true
 - link: /zh/about/ctlc
   image: /images/carousel/CTLC Banner.jpg
